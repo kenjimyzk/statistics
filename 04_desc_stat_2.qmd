@@ -1,0 +1,144 @@
+# 第4回 記述統計 (2) データの可視化 {.unnumbered}
+
+
+
+## 今回の目標
+
+-   データの分布をグラフで確認する重要性を理解する。
+-   `ggplot2` を使って基本的なグラフ（ヒストグラム、箱ひげ図、散布図）を作成する。
+
+## 準備
+
+```{r}
+library(tidyverse)
+url <- "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
+tips <- read_csv(url)
+```
+
+## ggplot2の基本
+
+`ggplot2` は、「キャンバスを用意」→「グラフの種類を指定」→「装飾を追加」という層（レイヤー）を重ねる考え方でグラフを作ります。
+
+基本形:
+```{r}
+#| eval: false
+ggplot(data = データフレーム, mapping = aes(x = x軸の変数, y = y軸の変数)) +
+  グラフの種類()
+```
+
+## 1変数の可視化
+
+### ヒストグラム (Histogram)
+
+連続変数の分布を見るのによく使います。`geom_histogram()` を使います。
+
+```{r}
+ggplot(tips, aes(x = total_bill)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_histogram(bins = 30, fill = "skyblue", color = "white") +
+  labs(title = "支払総額のヒストグラム", x = "支払総額 ($)", y = "度数")
+```
+
+### 箱ひげ図 (Boxplot)
+
+データのばらつきや外れ値を確認するのに便利です。`geom_boxplot()` を使います。
+1変数だけでなく、カテゴリごとの分布比較にもよく使われます。
+
+```{r}
+ggplot(tips, aes(x = day, y = total_bill, fill = day)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_boxplot() +
+  labs(title = "曜日別の支払総額", x = "曜日", y = "支払総額")
+```
+
+### 棒グラフ (Bar Plot)
+
+カテゴリ変数（離散変数）の度数（カウント）を見るのに使います。`geom_bar()` を使います。
+曜日ごとのデータ数を見てみましょう。
+
+```{r}
+ggplot(tips, aes(x = day)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_bar(fill = "steelblue") +
+  labs(title = "曜日ごとのデータ数", x = "曜日", y = "件数")
+```
+
+## 2変数の可視化
+
+### 散布図 (Scatter Plot)
+
+2つの連続変数の関係を見るのに使います。`geom_point()` を使います。
+支払総額とチップの関係を見てみましょう。
+
+```{r}
+ggplot(tips, aes(x = total_bill, y = tip)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_point(color = "blue", alpha = 0.5) +
+  labs(title = "支払総額とチップの関係", x = "支払総額", y = "チップ")
+```
+
+さらに、性別で色分けしてみましょう。`aes()` の中に `color = sex` を追加します。
+
+```{r}
+ggplot(tips, aes(x = total_bill, y = tip, color = sex)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_point()
+```
+
+## グラフのカスタマイズ
+
+### 色とテーマの変更
+
+```{r}
+# 色を変更する
+ggplot(tips, aes(x = total_bill, y = tip)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_point(color = "darkblue", alpha = 0.6, size = 2) +
+  labs(title = "支払総額とチップの関係", x = "支払総額", y = "チップ")
+```
+
+### ファセット（グラフを分割）
+
+`facet_wrap()` や `facet_grid()` を使うと、カテゴリごとにグラフを分けて表示できます。
+
+```{r}
+# 時間帯ごとにグラフを分ける
+ggplot(tips, aes(x = total_bill, y = tip)) +
+  theme_gray(base_family = "HiraKakuProN-W3")+
+  geom_point(aes(color = smoker)) +
+  facet_wrap(~ time) +
+  labs(title = "時間帯別の支払総額とチップ", x = "支払総額", y = "チップ")
+```
+
+## 統計量を重ねる
+
+グラフに平均線や回帰直線を追加すると、データの傾向がより分かりやすくなります。
+
+```{r}
+# 平均線を追加
+ggplot(tips, aes(x = day, y = total_bill)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_boxplot(fill = "lightblue") +
+  stat_summary(fun = mean, geom = "point", color = "red", size = 3) +
+  stat_summary(fun = mean, geom = "line", aes(group = 1), color = "red", linetype = "dashed") +
+  labs(title = "曜日別の支払総額（赤点は平均値）", x = "曜日", y = "支払総額")
+```
+
+## データ可視化のベストプラクティス
+
+### 1. グラフの目的を明確に
+- 分布を見たい → ヒストグラム、箱ひげ図
+- 関係を見たい → 散布図
+- カテゴリ別の比較 → 棒グラフ、箱ひげ図
+
+### 2. 軸ラベルとタイトルを必ず付ける
+他人に見せる資料では、何のデータか一目で分かるように`labs()`で設定しましょう。
+
+### 3. 色の使い方に注意
+- 色覚多様性（色覚異常）に配慮した配色を使いましょう
+- 明度の違いも利用すると見やすくなります
+
+## 課題
+
+1.  `tip`（チップ）のヒストグラムを作成してください。
+2.  `total_bill` と `tip` の散布図を作成し、`time`（ランチ/ディナー）で色分けしてください。

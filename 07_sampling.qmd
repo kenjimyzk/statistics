@@ -1,0 +1,94 @@
+# 第7回 標本分布 {.unnumbered}
+
+
+
+## 今回の目標
+
+-   母集団と標本の関係を理解する。
+-   **大数の法則** と **中心極限定理** をシミュレーションで体感する。
+
+## 母集団と標本
+
+-   **母集団 (Population)**: 知りたい対象全体の集まり（例：日本人全員）。
+-   **標本 (Sample)**: 母集団から一部を取り出したもの（例：ランダムに選んだ1000人）。
+-   **推測統計**: 標本のデータから、母集団の性質（パラメータ）を推測すること。
+
+### 母集団と標本のイメージ
+
+```{r}
+library(tidyverse)
+set.seed(1)
+
+# 母集団（例：正規分布） {.unnumbered}
+population <- rnorm(10000, mean = 50, sd = 10)
+
+# 標本（そこから100個ランダムに抽出） {.unnumbered}
+sample_data <- sample(population, 100)
+
+# データフレーム化 {.unnumbered}
+df_pop <- data.frame(value = population, type = "Population")
+df_samp <- data.frame(value = sample_data, type = "Sample")
+df_all <- bind_rows(df_pop, df_samp)
+
+# ヒストグラムで比較（密度表示） {.unnumbered}
+ggplot(df_all, aes(x = value, fill = type)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_density(alpha = 0.5) +
+  labs(title = "母集団と標本の分布比較", x = "値", y = "密度")
+```
+
+## 大数の法則 (Law of Large Numbers)
+
+サンプルサイズ（標本の大きさ）$n$ を大きくしていくと、標本平均は母平均に近づいていくという法則です。
+サイコロで確かめてみましょう。
+
+```{r}
+library(tidyverse)
+
+# サイコロを振る回数を変えて、平均値の推移を見る {.unnumbered}
+set.seed(123)
+n <- 1000
+dice_rolls <- sample(1:6, n, replace = TRUE)
+cumulative_mean <- cumsum(dice_rolls) / (1:n)
+
+# データフレーム作成 {.unnumbered}
+df <- data.frame(n = 1:n, mean = cumulative_mean)
+
+# プロット {.unnumbered}
+ggplot(df, aes(x = n, y = mean)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_line() +
+  geom_hline(yintercept = 3.5, color = "red", linetype = "dashed") +
+  labs(title = "大数の法則のシミュレーション", y = "標本平均")
+```
+
+回数が増えるにつれて、理論的な期待値 3.5 に近づいていく様子がわかります。
+
+## 中心極限定理 (Central Limit Theorem)
+
+母集団がどんな分布であっても、サンプルサイズ $n$ が十分に大きければ、標本平均の分布は **正規分布** に近づくという強力な定理です。
+
+一様分布（0から1の乱数）から、サイズ $n=30$ の標本を取り出し、その平均を計算する作業を1000回繰り返してみましょう。
+
+```{r}
+# シミュレーション {.unnumbered}
+n_samples <- 1000
+sample_size <- 30
+means <- numeric(n_samples)
+
+for (i in 1:n_samples) {
+  means[i] <- mean(runif(sample_size, min = 0, max = 1))
+}
+
+# ヒストグラム {.unnumbered}
+ggplot(data.frame(means), aes(x = means)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_histogram(bins = 30, fill = "orange", color = "white") +
+  labs(title = "標本平均の分布 (n=30)", x = "標本平均")
+```
+
+元の分布は平坦（一様分布）ですが、平均値の分布は釣鐘型（正規分布）になっていることが確認できます。
+
+## 課題
+
+1.  中心極限定理のシミュレーションで、`sample_size` を 5 に減らして実行してみてください。ヒストグラムの形はどう変わりますか？

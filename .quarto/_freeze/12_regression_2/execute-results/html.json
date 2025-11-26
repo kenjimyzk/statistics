@@ -1,0 +1,21 @@
+{
+  "hash": "2bb704953f151af32e6f04f2476c04c1",
+  "result": {
+    "engine": "knitr",
+    "markdown": "# 第12回 重回帰分析と因果推論 {.unnumbered}\n\n## 今回の目標\n\n-   複数の説明変数を使う重回帰分析を理解する。\n-   回帰分析の結果を「因果関係」として解釈する際の注意点（交絡因子など）を学ぶ。\n\n## 重回帰分析 (Multiple Regression)\n\n説明変数が2つ以上ある回帰分析です。\n\n$$ y = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\dots + \\epsilon $$\n\n「他の条件を一定としたとき（ceteris paribus）」の影響力を推定できるのが強みです。\n\n`tips` データで、チップの額 (`tip`) を、支払総額 (`total_bill`) と人数 (`size`) の両方で説明してみましょう。\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nurl <- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips <- read_csv(url)\n\nmodel2 <- lm(tip ~ total_bill + size, data = tips)\nsummary(model2)\n#> \n#> Call:\n#> lm(formula = tip ~ total_bill + size, data = tips)\n#> \n#> Residuals:\n#>     Min      1Q  Median      3Q     Max \n#> -2.9279 -0.5547 -0.0852  0.5095  4.0425 \n#> \n#> Coefficients:\n#>             Estimate Std. Error t value Pr(>|t|)    \n#> (Intercept) 0.668945   0.193609   3.455  0.00065 ***\n#> total_bill  0.092713   0.009115  10.172  < 2e-16 ***\n#> size        0.192598   0.085315   2.258  0.02487 *  \n#> ---\n#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n#> \n#> Residual standard error: 1.014 on 241 degrees of freedom\n#> Multiple R-squared:  0.4679,\tAdjusted R-squared:  0.4635 \n#> F-statistic: 105.9 on 2 and 241 DF,  p-value: < 2.2e-16\n```\n:::\n\n\n結果の解釈:\n\n1.  **`total_bill` の係数**: `0.093`\n    -   **「人数 (`size`) を固定したときに（同じ人数のグループ同士で比べたときに）」**、支払総額が1ドル増えると、チップは約0.093ドル増えることを意味します。\n    -   単回帰のとき（0.105）より少し値が小さくなりました。これは、人数という要因をコントロールしたためです。\n2.  **`size` の係数**: `0.193`\n    -   **「支払総額 (`total_bill`) を固定したときに（同じ支払額のグループ同士で比べたときに）」**、人数が1人増えると、チップは約0.193ドル増えることを意味します。\n    -   p値 (`0.02487`) は 0.05 より小さいので、統計的に有意です。つまり、支払額が同じでも、人数が多いほうがチップが多くなる傾向があると言えます。\n\n\n\n### 係数の可視化 (Coefficient Plot)\n\n重回帰分析の結果（推定値と信頼区間）をグラフにすると、どの変数の影響が大きいか分かりやすくなります。\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(broom)\n\n# モデルの結果を整理されたデータフレームにする {.unnumbered}\ntidy_model <- tidy(model2, conf.int = TRUE)\ntheme_set(theme_gray(base_family = \"HiraKakuProN-W3\"))\n# 切片(Intercept)を除いてプロット {.unnumbered}\ntidy_model %>%\n  filter(term != \"(Intercept)\") %>%\n  ggplot(aes(x = estimate, y = term)) +\n  geom_point() +\n  geom_errorbarh(aes(xmin = conf.low, xmax = conf.high), height = 0.2) +\n  geom_vline(xintercept = 0, color = \"red\", linetype = \"dashed\") +\n  labs(title = \"重回帰分析の係数プロット (95%信頼区間)\", x = \"推定値\", y = \"説明変数\")\n```\n\n::: {.cell-output-display}\n![](12_regression_2_files/figure-html/unnamed-chunk-2-1.png){width=672}\n:::\n:::\n\n\n## 相関と因果\n\n「相関関係がある」ことと「因果関係がある」ことは別です。\n例えば、「アイスクリームの売上」と「水難事故の件数」には正の相関がありますが、アイスクリームが事故を引き起こしているわけではありません。\n「気温」という第3の変数（**交絡因子**）が両方に影響しているからです。\n\n経済学の実証分析では、この交絡因子の影響を取り除き、真の因果効果（因果推論）を明らかにすることを目指します。\n重回帰分析で交絡因子を説明変数として加える（コントロールする）ことは、そのための基本的な手法の一つです。\n\n## 講義のまとめ\n\nこの半期の講義では、以下のことを学びました。\n\n1.  RとRStudioの基本操作\n2.  データの可視化と要約\n3.  確率と分布の基礎\n4.  統計的推測（推定と検定）\n5.  回帰分析による関係性の分析\n\nこれらはデータ分析の入り口に過ぎませんが、経済学の学習や卒業論文、そして社会に出てからのデータ活用において強力な武器となるはずです。\n\n## 最終課題\n\n自分の興味のあるデータセットを見つけて（Rに組み込まれているものでも、Web上のオープンデータでも可）、以下の分析を行ってください。\n\n1.  データの概要を説明する。\n2.  ヒストグラムや散布図で可視化する。\n3.  関心のある2変数について回帰分析を行い、結果を解釈する。\n",
+    "supporting": [
+      "12_regression_2_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<link href=\"site_libs/pagedtable-1.1/css/pagedtable.css\" rel=\"stylesheet\" />\n<script src=\"site_libs/pagedtable-1.1/js/pagedtable.js\"></script>\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

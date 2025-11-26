@@ -1,0 +1,21 @@
+{
+  "hash": "aa824af25fb112a79b3933c7629624d5",
+  "result": {
+    "engine": "knitr",
+    "markdown": "# 第11回 相関と単回帰分析 {.unnumbered}\n\n## 今回の目標\n\n-   相関係数を計算し、2変数の関係の強さを理解する。\n-   単回帰分析を行い、結果（切片、傾き）を解釈する。\n\n## 相関 (Correlation)\n\n2つの変数の間に、直線的な関係があるかどうかを表す指標です。\n相関係数 $r$ は $-1 \\le r \\le 1$ の値をとり、1に近いほど正の相関、-1に近いほど負の相関、0に近いほど無相関を表します。\n\n`tips` データの `total_bill` と `tip` の相関係数を計算してみましょう。\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nurl <- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips <- read_csv(url)\n\ncor(tips$total_bill, tips$tip)\n#> [1] 0.6757341\n```\n:::\n\n\n## 単回帰分析 (Simple Linear Regression)\n\nある変数 $x$（説明変数）を使って、別の変数 $y$（被説明変数）を予測・説明するモデルを作ります。\n\n$$ y = \\beta_0 + \\beta_1 x + \\epsilon $$\n\n-   $\\beta_0$: 切片 (Intercept)\n-   $\\beta_1$: 傾き (Slope)\n-   $\\epsilon$: 誤差項\n\nRでは `lm()` 関数（Linear Model）を使います。\n「支払総額 ($x$) が増えると、チップ ($y$) はどれくらい増えるか？」を分析します。\n\n\n::: {.cell}\n\n```{.r .cell-code}\nmodel <- lm(tip ~ total_bill, data = tips)\nsummary(model)\n#> \n#> Call:\n#> lm(formula = tip ~ total_bill, data = tips)\n#> \n#> Residuals:\n#>     Min      1Q  Median      3Q     Max \n#> -3.1982 -0.5652 -0.0974  0.4863  3.7434 \n#> \n#> Coefficients:\n#>             Estimate Std. Error t value Pr(>|t|)    \n#> (Intercept) 0.920270   0.159735   5.761 2.53e-08 ***\n#> total_bill  0.105025   0.007365  14.260  < 2e-16 ***\n#> ---\n#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n#> \n#> Residual standard error: 1.022 on 242 degrees of freedom\n#> Multiple R-squared:  0.4566,\tAdjusted R-squared:  0.4544 \n#> F-statistic: 203.4 on 1 and 242 DF,  p-value: < 2.2e-16\n```\n:::\n\n\n### 結果の解釈\n\n`Coefficients:` の部分を見ます。\n\n```\n            Estimate Std. Error t value Pr(>|t|)    \n(Intercept) 0.920270   0.159735   5.761 2.53e-08 ***\ntotal_bill  0.105025   0.007365  14.260  < 2e-16 ***\n```\n\n-   `(Intercept)` の Estimate: `0.92`\n    -   切片です。$x$（支払総額）が0のときの $y$（チップ）の予測値です。\n    -   ただし、支払総額が0ドルということは現実にはあり得ないので、この値自体に深い意味はないことが多いです。\n-   `total_bill` の Estimate: `0.105`\n    -   傾きです。これが最も重要な数値です。\n    -   **「支払総額が1ドル増えると、チップは約0.105ドル（約10.5セント）増える傾向がある」** と解釈します。\n-   `Pr(>|t|)`:\n    -   `total_bill` の行を見ると `< 2e-16` となっています。これは $2 \\times 10^{-16}$ 未満という非常に小さな値です。\n    -   0.05よりはるかに小さいため、「傾きは0ではない（支払総額とチップには統計的に有意な関係がある）」と結論づけられます。\n\n### 散布図に回帰直線を引く\n\n`ggplot2` で `geom_smooth(method = \"lm\")` を使うと、簡単に回帰直線を追加できます。\n\n\n::: {.cell}\n\n```{.r .cell-code}\nggplot(tips, aes(x = total_bill, y = tip)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_point() +\n  geom_smooth(method = \"lm\", color = \"red\")\n```\n\n::: {.cell-output-display}\n![](11_regression_1_files/figure-html/unnamed-chunk-3-1.png){width=672}\n:::\n:::\n\n\n\n\n### 残差プロット\n\n回帰分析がうまくいっているか確認するために、予測値と残差（予測とのズレ）の関係を見ることがあります。\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# データフレームに予測値と残差を追加 {.unnumbered}\ntips_aug <- tips %>%\n  mutate(pred = predict(model), resid = residuals(model))\n\nggplot(tips_aug, aes(x = pred, y = resid)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_point() +\n  geom_hline(yintercept = 0, color = \"red\", linetype = \"dashed\") +\n  labs(title = \"残差プロット\", x = \"予測値\", y = \"残差\")\n```\n\n::: {.cell-output-display}\n![](11_regression_1_files/figure-html/unnamed-chunk-4-1.png){width=672}\n:::\n:::\n\n\n## 課題\n\n1.  `tips` データを使って、`size`（人数）を説明変数、`total_bill`（支払総額）を被説明変数とする単回帰分析を行ってください。\n    人数が1人増えると、支払総額は何ドル増えると推定されますか？\n",
+    "supporting": [
+      "11_regression_1_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<link href=\"site_libs/pagedtable-1.1/css/pagedtable.css\" rel=\"stylesheet\" />\n<script src=\"site_libs/pagedtable-1.1/js/pagedtable.js\"></script>\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

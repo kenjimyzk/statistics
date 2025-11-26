@@ -1,0 +1,21 @@
+{
+  "hash": "3ce5fb1b93922efc1b3a33186187a0c0",
+  "result": {
+    "engine": "knitr",
+    "markdown": "# 第9回 仮説検定 (1) {.unnumbered}\n\n## 今回の目標\n\n-   仮説検定の論理（帰無仮説、対立仮説、p値）を理解する。\n-   Rを使って1標本のt検定を行う。\n\n## 仮説検定の考え方\n\n「コインが歪んでいないか？」を確かめたいとします。\n「歪んでいない（表が出る確率は0.5）」と仮定したときに、実際に起きたこと（例：10回中9回表）が「めったに起きないこと」かどうかを確率で評価します。\n\n-   **帰無仮説 ($H_0$)**: 否定したい仮説（例：差はない、効果はない）。\n-   **対立仮説 ($H_1$)**: 主張したい仮説（例：差がある、効果がある）。\n-   **p値 (p-value)**: 帰無仮説が正しいとしたときに、今のデータ（またはそれ以上に極端なデータ）が得られる確率。\n-   **有意水準 ($\\alpha$)**: 帰無仮説を棄却する基準。通常 0.05 (5%) を使います。\n\n**判定ルール**:\n-   p値 < 有意水準 $\\Rightarrow$ 帰無仮説を棄却する（統計的に有意である）。\n-   p値 $\\ge$ 有意水準 $\\Rightarrow$ 帰無仮説を棄却できない（差があるとは言えない）。\n\n### 棄却域のイメージ\n\nt分布において、どの範囲に入ったら「極端」とみなされるか（棄却域）を可視化します。\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\ntheme_set(theme_gray(base_family = \"HiraKakuProN-W3\"))\n\n# t分布 (自由度9) {.unnumbered}\nx <- seq(-4, 4, length.out = 100)\ny <- dt(x, df = 9)\ndf_t <- data.frame(x, y)\n\n# 棄却域 (両側5%) {.unnumbered}\ncritical_val <- qt(0.975, df = 9)\n\nggplot(df_t, aes(x = x, y = y)) +\n  geom_line() +\n  geom_area(data = filter(df_t, x > critical_val), fill = \"red\", alpha = 0.5) +\n  geom_area(data = filter(df_t, x < -critical_val), fill = \"red\", alpha = 0.5) +\n  geom_vline(xintercept = c(critical_val, -critical_val), linetype = \"dashed\") +\n  labs(title = \"t分布と棄却域 (両側5%)\", x = \"t値\", y = \"確率密度\")\n```\n\n::: {.cell-output-display}\n![](09_hypothesis_1_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n:::\n\n\n## 1標本のt検定\n\nあるデータの平均値が、特定の値 $\\mu_0$ と異なるかどうかを検定します。\n\n例：あるクラスのテストの平均点が、全国平均の50点と異なるか？\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# サンプルデータ作成 {.unnumbered}\nscores <- c(55, 60, 45, 70, 58, 62, 48, 52, 65, 50)\n\n# t検定 (mu = 50 と比較) {.unnumbered}\nt.test(scores, mu = 50)\n#> \n#> \tOne Sample t-test\n#> \n#> data:  scores\n#> t = 2.5862, df = 9, p-value = 0.02939\n#> alternative hypothesis: true mean is not equal to 50\n#> 95 percent confidence interval:\n#>  50.81453 62.18547\n#> sample estimates:\n#> mean of x \n#>      56.5\n```\n:::\n\n\n結果の見方:\n\n1.  **p値 (p-value)**: `0.02939` となりました。\n    -   これは、「もし本当にクラスの平均点が50点だとしたら、今回のような（あるいはもっと極端な）データが得られる確率は約2.9%しかない」という意味です。\n    -   この確率は、一般的な基準である有意水準 5% (0.05) よりも小さいです。\n2.  **結論**: 帰無仮説（平均点は50点である）を棄却します。\n    -   つまり、「偶然で片付けるには確率が低すぎる」と判断し、「このクラスの平均点は50点とは統計的に有意に異なる」と結論づけます。\n    -   95%信頼区間 (`50.8` 〜 `62.2`) を見ても、50点が含まれていないことがわかります。\n\n## 課題\n\n1.  `tips` データの `total_bill` の平均値が 20ドル と異なるかどうかを検定してください。\n    帰無仮説、対立仮説、p値、そして結論（棄却するかどうか）を答えてください。\n",
+    "supporting": [
+      "09_hypothesis_1_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<link href=\"site_libs/pagedtable-1.1/css/pagedtable.css\" rel=\"stylesheet\" />\n<script src=\"site_libs/pagedtable-1.1/js/pagedtable.js\"></script>\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

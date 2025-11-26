@@ -1,0 +1,152 @@
+# 第3回 記述統計 (1) 数値要約 {.unnumbered}
+
+
+
+## 今回の目標
+
+-   データの中心を表す指標（代表値）を理解する。
+-   データのばらつきを表す指標（散布度）を理解する。
+-   Rを使ってこれらの指標を計算する。
+
+## 準備
+
+今回も `tidyverse` と `tips` データを使います。
+
+```{r}
+library(tidyverse)
+url <- "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
+tips <- read_csv(url)
+```
+
+## 代表値：データの中心
+
+### 平均値 (Mean)
+
+すべてのデータを足して、データの個数で割ったものです。
+
+```{r}
+mean(tips$total_bill)
+```
+
+### 中央値 (Median)
+
+データを小さい順に並べたときに、ちょうど真ん中にくる値です。
+外れ値（極端に大きい/小さい値）の影響を受けにくいという特徴があります。
+
+```{r}
+median(tips$total_bill)
+```
+
+## 散布度：データのばらつき
+
+### 分散 (Variance)
+
+データが平均値からどれくらい離れているかを表す指標です。
+Rの `var()` 関数は不偏分散を計算します。
+
+```{r}
+var(tips$total_bill)
+```
+
+### 標準偏差 (Standard Deviation)
+
+分散の平方根をとったものです。元のデータと同じ単位になるので直感的に分かりやすいです。
+
+```{r}
+sd(tips$total_bill)
+```
+
+### 四分位数 (Quartiles)
+
+データを小さい順に並べて4等分したときの区切り値です。
+`summary()` 関数を使うと、最小値、第1四分位数、中央値、平均値、第3四分位数、最大値をまとめて表示できます。
+
+```{r}
+summary(tips$total_bill)
+```
+
+結果の見方:
+-   **Min**: 最小値
+-   **1st Qu**: 第1四分位数（データの下位25%の境界値）
+-   **Median**: 中央値
+-   **Mean**: 平均値
+-   **3rd Qu**: 第3四分位数（データの下位75%の境界値）
+-   **Max**: 最大値
+
+### 四分位範囲 (IQR: Interquartile Range)
+
+第3四分位数と第1四分位数の差を **四分位範囲** と呼びます。
+データの中央50%がどれくらいの幅に収まっているかを表します。R では `IQR()` 関数で計算できます。
+
+```{r}
+IQR(tips$total_bill)
+```
+
+四分位範囲は、外れ値の影響を受けにくい散布度の指標として有効です。
+
+## 外れ値の検出
+
+統計分析では、極端に大きい・小さい値（外れ値）がデータに含まれていることがあります。
+外れ値の基準として、以下がよく使われます。
+
+-   第1四分位数 - 1.5 × IQR より小さい値
+-   第3四分位数 + 1.5 × IQR より大きい値
+
+```{r}
+Q1 <- quantile(tips$total_bill, 0.25)
+Q3 <- quantile(tips$total_bill, 0.75)
+IQR_val <- IQR(tips$total_bill)
+
+# 外れ値の境界
+lower_bound <- Q1 - 1.5 * IQR_val
+upper_bound <- Q3 + 1.5 * IQR_val
+
+cat("外れ値の下限:", lower_bound, "\n")
+cat("外れ値の上限:", upper_bound, "\n")
+
+# 外れ値を持つデータを抽出
+tips %>% 
+  filter(total_bill < lower_bound | total_bill > upper_bound) %>% 
+  select(total_bill, tip, day, time)
+```
+
+## 平均値と中央値の違いを可視化
+
+分布が歪んでいる場合、平均値と中央値はずれます。
+ヒストグラムに直線を引いて確認してみましょう。
+
+```{r}
+# 平均と中央値を計算 {.unnumbered}
+mean_val <- mean(tips$total_bill)
+med_val <- median(tips$total_bill)
+
+# プロット {.unnumbered}
+ggplot(tips, aes(x = total_bill)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_histogram(bins = 30, fill = "lightgray", color = "white") +
+  geom_vline(xintercept = mean_val, color = "red", linetype = "dashed", size = 1) +
+  geom_vline(xintercept = med_val, color = "blue", linetype = "solid", size = 1) +
+  annotate("text", x = mean_val + 5, y = 30, label = "Mean (Red)", color = "red") +
+  annotate("text", x = med_val - 5, y = 30, label = "Median (Blue)", color = "blue") +
+  labs(title = "平均値（赤破線）と中央値（青実線）")
+```
+
+## グループごとの集計
+
+`dplyr` の `group_by()` と `summarize()` を組み合わせると、グループごとの統計量を簡単に計算できます。
+例えば、男女別 (`sex`) の支払総額 (`total_bill`) の平均と標準偏差を求めてみましょう。
+
+```{r}
+tips %>% 
+  group_by(sex) %>% 
+  summarize(
+    avg_bill = mean(total_bill),
+    sd_bill = sd(total_bill),
+    count = n() # データの個数
+  )
+```
+
+## 課題
+
+1.  `tips` データを使って、時間帯 (`time`) ごとのチップ (`tip`) の平均値を計算してください。
+2.  `summary()` 関数を使って、チップ (`tip`) の分布を確認してください。

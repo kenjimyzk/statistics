@@ -1,0 +1,122 @@
+# 第6回 主要な確率分布 {.unnumbered}
+
+
+
+## 今回の目標
+
+-   統計学で最も重要な **正規分布** を理解する。
+-   Rを使って確率分布の計算やグラフ描画を行う。
+
+## 正規分布 (Normal Distribution)
+
+自然界や社会現象でよく見られる、釣鐘型の分布です。
+平均 $\mu$ と分散 $\sigma^2$ という2つのパラメータで形が決まります。
+
+Rには正規分布に関する関数が用意されています。
+
+-   `dnorm()`: 確率密度 (Density)
+-   `pnorm()`: 累積確率 (Probability)
+-   `qnorm()`: 分位点 (Quantile)
+-   `rnorm()`: 乱数生成 (Random number)
+
+### 正規分布のグラフを描く
+
+標準正規分布（平均0、分散1）を描いてみましょう。
+
+```{r}
+library(tidyverse)
+
+# x軸の範囲を決める {.unnumbered}
+x <- seq(-4, 4, length.out = 100)
+# y軸（確率密度）を計算 {.unnumbered}
+y <- dnorm(x, mean = 0, sd = 1)
+
+# データフレームにする {.unnumbered}
+df <- data.frame(x, y)
+
+# プロット {.unnumbered}
+ggplot(df, aes(x = x, y = y)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_line() +
+  labs(title = "標準正規分布")
+```
+
+## 確率の計算
+
+「平均50、標準偏差10のテストで、60点以上をとる確率は？」
+
+これは、正規分布の右側の面積を求めることと同じです。
+`pnorm(q, mean, sd)` は、「値 q **以下** になる確率」（左側の面積）を返します。
+したがって、「60点以上」は `1 - pnorm(60, ...)` で求められます。
+
+```{r}
+# 60点以下になる確率 {.unnumbered}
+p_lower <- pnorm(60, mean = 50, sd = 10)
+
+# 60点以上になる確率 {.unnumbered}
+1 - p_lower
+```
+
+約15.9%であることがわかります。
+
+## 二項分布 (Binomial Distribution)
+
+「コイン投げ」のように、結果が2通り（成功/失敗）しかない試行を $n$ 回行ったときの、成功回数の分布です。
+
+例：コインを10回投げて、ちょうど5回表が出る確率。
+`dbinom(x, size, prob)` を使います。
+
+```{r}
+dbinom(5, size = 10, prob = 0.5)
+```
+
+二項分布の形をグラフで確認してみましょう。
+
+```{r}
+x <- 0:10
+prob <- dbinom(x, size = 10, prob = 0.5)
+df_binom <- data.frame(x = factor(x), prob = prob)
+
+ggplot(df_binom, aes(x = x, y = prob)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_col(fill = "lightgreen") +
+  labs(title = "二項分布 (n=10, p=0.5)", x = "表が出る回数", y = "確率")
+```
+
+## 正規分布の重要性
+
+正規分布は統計学で最も重要な分布の一つです。その理由は:
+
+1.  **自然界・社会現象で頻出**: 身長、テストの点数、測定誤差など、多くの現象が正規分布に従います。
+2.  **中心極限定理**: 標本サイズが大きければ、どんな分布でも標本平均の分布は正規分布に近づきます（第7回で詳しく学びます）。
+3.  **計算しやすい**: 数学的に扱いやすい性質があり、多くの統計手法の基礎となっています。
+
+### 正規分布の68-95-99.7ルール
+
+正規分布において、データがどの範囲に収まるかの目安があります。
+
+-   平均 ± 1標準偏差 の範囲に、約68%のデータが含まれる
+-   平均 ± 2標準偏差 の範囲に、約95%のデータが含まれる
+-   平均 ± 3標準偏差 の範囲に、約99.7%のデータが含まれる
+
+```{r}
+# 視覚的に確認
+x <- seq(-4, 4, length.out = 100)
+y <- dnorm(x)
+df <- data.frame(x, y)
+
+ggplot(df, aes(x = x, y = y)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_line() +
+  geom_area(data = filter(df, x >= -1 & x <= 1), fill = "blue", alpha = 0.3) +
+  geom_area(data = filter(df, x >= -2 & x <= 2), fill = "green", alpha = 0.2) +
+  geom_area(data = filter(df, x >= -3 & x <= 3), fill = "red", alpha = 0.1) +
+  labs(title = "正規分布の68-95-99.7ルール", x = "標準偏差", y = "確率密度")
+```
+
+## 課題
+
+1.  日本人の成人男性の平均身長が171cm、標準偏差が6cmの正規分布に従うと仮定します。
+    身長が180cm以上の人は、全体の何パーセントいますか？
+2.  サイコロを10回振って、1の目がちょうど2回出る確率を計算してください。
+```

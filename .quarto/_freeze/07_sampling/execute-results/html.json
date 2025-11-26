@@ -1,0 +1,21 @@
+{
+  "hash": "0a722bacc682b36d52a0e1908d121a9d",
+  "result": {
+    "engine": "knitr",
+    "markdown": "# 第7回 標本分布 {.unnumbered}\n\n\n\n## 今回の目標\n\n-   母集団と標本の関係を理解する。\n-   **大数の法則** と **中心極限定理** をシミュレーションで体感する。\n\n## 母集団と標本\n\n-   **母集団 (Population)**: 知りたい対象全体の集まり（例：日本人全員）。\n-   **標本 (Sample)**: 母集団から一部を取り出したもの（例：ランダムに選んだ1000人）。\n-   **推測統計**: 標本のデータから、母集団の性質（パラメータ）を推測すること。\n\n### 母集団と標本のイメージ\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nset.seed(1)\n\n# 母集団（例：正規分布） {.unnumbered}\npopulation <- rnorm(10000, mean = 50, sd = 10)\n\n# 標本（そこから100個ランダムに抽出） {.unnumbered}\nsample_data <- sample(population, 100)\n\n# データフレーム化 {.unnumbered}\ndf_pop <- data.frame(value = population, type = \"Population\")\ndf_samp <- data.frame(value = sample_data, type = \"Sample\")\ndf_all <- bind_rows(df_pop, df_samp)\n\n# ヒストグラムで比較（密度表示） {.unnumbered}\nggplot(df_all, aes(x = value, fill = type)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_density(alpha = 0.5) +\n  labs(title = \"母集団と標本の分布比較\", x = \"値\", y = \"密度\")\n```\n\n::: {.cell-output-display}\n![](07_sampling_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n:::\n\n\n## 大数の法則 (Law of Large Numbers)\n\nサンプルサイズ（標本の大きさ）$n$ を大きくしていくと、標本平均は母平均に近づいていくという法則です。\nサイコロで確かめてみましょう。\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\n\n# サイコロを振る回数を変えて、平均値の推移を見る {.unnumbered}\nset.seed(123)\nn <- 1000\ndice_rolls <- sample(1:6, n, replace = TRUE)\ncumulative_mean <- cumsum(dice_rolls) / (1:n)\n\n# データフレーム作成 {.unnumbered}\ndf <- data.frame(n = 1:n, mean = cumulative_mean)\n\n# プロット {.unnumbered}\nggplot(df, aes(x = n, y = mean)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_line() +\n  geom_hline(yintercept = 3.5, color = \"red\", linetype = \"dashed\") +\n  labs(title = \"大数の法則のシミュレーション\", y = \"標本平均\")\n```\n\n::: {.cell-output-display}\n![](07_sampling_files/figure-html/unnamed-chunk-2-1.png){width=672}\n:::\n:::\n\n\n回数が増えるにつれて、理論的な期待値 3.5 に近づいていく様子がわかります。\n\n## 中心極限定理 (Central Limit Theorem)\n\n母集団がどんな分布であっても、サンプルサイズ $n$ が十分に大きければ、標本平均の分布は **正規分布** に近づくという強力な定理です。\n\n一様分布（0から1の乱数）から、サイズ $n=30$ の標本を取り出し、その平均を計算する作業を1000回繰り返してみましょう。\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# シミュレーション {.unnumbered}\nn_samples <- 1000\nsample_size <- 30\nmeans <- numeric(n_samples)\n\nfor (i in 1:n_samples) {\n  means[i] <- mean(runif(sample_size, min = 0, max = 1))\n}\n\n# ヒストグラム {.unnumbered}\nggplot(data.frame(means), aes(x = means)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_histogram(bins = 30, fill = \"orange\", color = \"white\") +\n  labs(title = \"標本平均の分布 (n=30)\", x = \"標本平均\")\n```\n\n::: {.cell-output-display}\n![](07_sampling_files/figure-html/unnamed-chunk-3-1.png){width=672}\n:::\n:::\n\n\n元の分布は平坦（一様分布）ですが、平均値の分布は釣鐘型（正規分布）になっていることが確認できます。\n\n## 課題\n\n1.  中心極限定理のシミュレーションで、`sample_size` を 5 に減らして実行してみてください。ヒストグラムの形はどう変わりますか？\n",
+    "supporting": [
+      "07_sampling_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<link href=\"site_libs/pagedtable-1.1/css/pagedtable.css\" rel=\"stylesheet\" />\n<script src=\"site_libs/pagedtable-1.1/js/pagedtable.js\"></script>\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

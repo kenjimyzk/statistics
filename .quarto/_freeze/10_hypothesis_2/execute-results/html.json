@@ -1,0 +1,21 @@
+{
+  "hash": "07728747dcd37b188ba2e9c2d81e9f97",
+  "result": {
+    "engine": "knitr",
+    "markdown": "# 第10回 仮説検定 (2) {.unnumbered}\n\n## 今回の目標\n\n-   2つのグループの平均値に差があるかどうかを検定する。\n-   対応のあるデータと対応のないデータの違いを理解する。\n\n## 2標本のt検定（対応なし）\n\n異なる2つのグループ（例：男性と女性、投薬群とプラセボ群）の平均値を比較します。\n\n`tips` データで、ランチ (`Lunch`) とディナー (`Dinner`) で支払総額 (`total_bill`) に差があるか検定してみましょう。\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nurl <- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips <- read_csv(url)\n\n\n\n# 箱ひげ図で確認 {.unnumbered}\nggplot(tips, aes(x = time, y = total_bill, fill = time)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_boxplot() +\n  labs(title = \"ランチとディナーの支払総額比較\")\n```\n\n::: {.cell-output-display}\n![](10_hypothesis_2_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n\n```{.r .cell-code}\n\n# 密度図でも確認 {.unnumbered}\nggplot(tips, aes(x = total_bill, fill = time)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_density(alpha = 0.5) +\n  labs(title = \"支払総額の分布比較 (密度図)\")\n```\n\n::: {.cell-output-display}\n![](10_hypothesis_2_files/figure-html/unnamed-chunk-1-2.png){width=672}\n:::\n\n```{.r .cell-code}\n\n# t検定 {.unnumbered}\n# total_bill ~ time は「total_bill を time で分ける」という意味 {.unnumbered}\nt.test(total_bill ~ time, data = tips)\n#> \n#> \tWelch Two Sample t-test\n#> \n#> data:  total_bill by time\n#> t = 3.123, df = 143.29, p-value = 0.002167\n#> alternative hypothesis: true difference in means between group Dinner and group Lunch is not equal to 0\n#> 95 percent confidence interval:\n#>  1.331877 5.925088\n#> sample estimates:\n#> mean in group Dinner  mean in group Lunch \n#>             20.79716             17.16868\n```\n:::\n\n\n結果の見方:\n\n1.  **p値 (p-value)**: `0.002167` となりました。\n    -   これは 0.05 よりはるかに小さい値です。したがって、帰無仮説（ランチとディナーで支払総額に差はない）を棄却します。\n    -   結論として、「ランチとディナーの支払総額には統計的に有意な差がある」と言えます。\n2.  **平均値の比較**:\n    -   `mean in group Dinner`: 約 20.8 ドル\n    -   `mean in group Lunch`: 約 17.2 ドル\n    -   ディナーの方が平均して約 3.6 ドル高いことがわかります。95%信頼区間 (`1.33` 〜 `5.93`) も0を含んでおらず、差がプラス（ディナーが高い）であることを示しています。\n\n## 対応のあるt検定 (Paired t-test)\n\n同じ対象に対して2回測定した場合（例：ダイエット前後の体重、テストの事前事後）の比較です。\n`paired = TRUE` オプションを使います。\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# サンプルデータ（ダイエット前後の体重） {.unnumbered}\nbefore <- c(70, 80, 75, 60, 65)\nafter  <- c(68, 78, 74, 58, 64)\n\nt.test(before, after, paired = TRUE)\n#> \n#> \tPaired t-test\n#> \n#> data:  before and after\n#> t = 6.532, df = 4, p-value = 0.002838\n#> alternative hypothesis: true mean difference is not equal to 0\n#> 95 percent confidence interval:\n#>  0.9199126 2.2800874\n#> sample estimates:\n#> mean difference \n#>             1.6\n```\n:::\n\n\n結果の見方:\n\n1.  **p値**: `0.002838` となりました。\n    -   0.05 より小さいため、帰無仮説（ダイエット前後で差はない）を棄却します。\n    -   「ダイエット前後で体重には有意な変化があった」と言えます。\n2.  **平均差 (mean difference)**:\n    -   `1.6` となっています。これは `before - after` の平均値です。\n    -   つまり、平均して 1.6kg 体重が減少したことを意味します（プラスの値なので、beforeの方が大きい）。\n\n## 課題\n\n1.  `tips` データを使って、喫煙者 (`Smoker`) と非喫煙者 (`Non-Smoker`) で、チップの額 (`tip`) に差があるかどうかを検定してください。\n    （注：データ内の値は \"Yes\" / \"No\" です）\n",
+    "supporting": [
+      "10_hypothesis_2_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<link href=\"site_libs/pagedtable-1.1/css/pagedtable.css\" rel=\"stylesheet\" />\n<script src=\"site_libs/pagedtable-1.1/js/pagedtable.js\"></script>\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

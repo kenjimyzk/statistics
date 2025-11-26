@@ -1,0 +1,73 @@
+# 第10回 仮説検定 (2) {.unnumbered}
+
+## 今回の目標
+
+-   2つのグループの平均値に差があるかどうかを検定する。
+-   対応のあるデータと対応のないデータの違いを理解する。
+
+## 2標本のt検定（対応なし）
+
+異なる2つのグループ（例：男性と女性、投薬群とプラセボ群）の平均値を比較します。
+
+`tips` データで、ランチ (`Lunch`) とディナー (`Dinner`) で支払総額 (`total_bill`) に差があるか検定してみましょう。
+
+```{r}
+library(tidyverse)
+url <- "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
+tips <- read_csv(url)
+
+
+
+# 箱ひげ図で確認 {.unnumbered}
+ggplot(tips, aes(x = time, y = total_bill, fill = time)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_boxplot() +
+  labs(title = "ランチとディナーの支払総額比較")
+
+# 密度図でも確認 {.unnumbered}
+ggplot(tips, aes(x = total_bill, fill = time)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_density(alpha = 0.5) +
+  labs(title = "支払総額の分布比較 (密度図)")
+
+# t検定 {.unnumbered}
+# total_bill ~ time は「total_bill を time で分ける」という意味 {.unnumbered}
+t.test(total_bill ~ time, data = tips)
+```
+
+結果の見方:
+
+1.  **p値 (p-value)**: `0.002167` となりました。
+    -   これは 0.05 よりはるかに小さい値です。したがって、帰無仮説（ランチとディナーで支払総額に差はない）を棄却します。
+    -   結論として、「ランチとディナーの支払総額には統計的に有意な差がある」と言えます。
+2.  **平均値の比較**:
+    -   `mean in group Dinner`: 約 20.8 ドル
+    -   `mean in group Lunch`: 約 17.2 ドル
+    -   ディナーの方が平均して約 3.6 ドル高いことがわかります。95%信頼区間 (`1.33` 〜 `5.93`) も0を含んでおらず、差がプラス（ディナーが高い）であることを示しています。
+
+## 対応のあるt検定 (Paired t-test)
+
+同じ対象に対して2回測定した場合（例：ダイエット前後の体重、テストの事前事後）の比較です。
+`paired = TRUE` オプションを使います。
+
+```{r}
+# サンプルデータ（ダイエット前後の体重） {.unnumbered}
+before <- c(70, 80, 75, 60, 65)
+after  <- c(68, 78, 74, 58, 64)
+
+t.test(before, after, paired = TRUE)
+```
+
+結果の見方:
+
+1.  **p値**: `0.002838` となりました。
+    -   0.05 より小さいため、帰無仮説（ダイエット前後で差はない）を棄却します。
+    -   「ダイエット前後で体重には有意な変化があった」と言えます。
+2.  **平均差 (mean difference)**:
+    -   `1.6` となっています。これは `before - after` の平均値です。
+    -   つまり、平均して 1.6kg 体重が減少したことを意味します（プラスの値なので、beforeの方が大きい）。
+
+## 課題
+
+1.  `tips` データを使って、喫煙者 (`Smoker`) と非喫煙者 (`Non-Smoker`) で、チップの額 (`tip`) に差があるかどうかを検定してください。
+    （注：データ内の値は "Yes" / "No" です）

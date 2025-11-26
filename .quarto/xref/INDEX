@@ -1,0 +1,41 @@
+{
+  "index.qmd": {
+    "index.html": "c1511a8e"
+  },
+  "01_intro.qmd": {
+    "01_intro.html": "ada40044"
+  },
+  "02_data.qmd": {
+    "02_data.html": "633c8b2f"
+  },
+  "03_desc_stat_1.qmd": {
+    "03_desc_stat_1.html": "37bbd765"
+  },
+  "04_desc_stat_2.qmd": {
+    "04_desc_stat_2.html": "52758f24"
+  },
+  "05_probability.qmd": {
+    "05_probability.html": "112fe21a"
+  },
+  "06_distributions.qmd": {
+    "06_distributions.html": "b5e11ab2"
+  },
+  "07_sampling.qmd": {
+    "07_sampling.html": "01efddb9"
+  },
+  "08_estimation.qmd": {
+    "08_estimation.html": "b98bbafc"
+  },
+  "09_hypothesis_1.qmd": {
+    "09_hypothesis_1.html": "272cbe5c"
+  },
+  "10_hypothesis_2.qmd": {
+    "10_hypothesis_2.html": "1f9b9560"
+  },
+  "11_regression_1.qmd": {
+    "11_regression_1.html": "30cf9ab1"
+  },
+  "12_regression_2.qmd": {
+    "12_regression_2.html": "9882992e"
+  }
+}
