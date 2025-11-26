@@ -1,3 +1,5 @@
+![重回帰分析と因果推論](./figure/12_regression_2/infographic.png)
+
 # 第12回 重回帰分析と因果推論 {.unnumbered}
 
 ## 今回の目標
