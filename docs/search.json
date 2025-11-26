@@ -854,7 +854,7 @@
     "href": "12_regression_2.html#重回帰分析-multiple-regression",
     "title": "第12回 重回帰分析と因果推論",
     "section": "重回帰分析 (Multiple Regression)",
-    "text": "重回帰分析 (Multiple Regression)\n説明変数が2つ以上ある回帰分析です。\n\\[ y = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\dots + \\epsilon \\]\n「他の条件を一定としたとき（ceteris paribus）」の影響力を推定できるのが強みです。\ntips データで、チップの額 (tip) を、支払総額 (total_bill) と人数 (size) の両方で説明してみましょう。\n\nlibrary(tidyverse)\nurl &lt;- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips &lt;- read_csv(url)\n\nmodel2 &lt;- lm(tip ~ total_bill + size, data = tips)\nsummary(model2)\n#&gt; \n#&gt; Call:\n#&gt; lm(formula = tip ~ total_bill + size, data = tips)\n#&gt; \n#&gt; Residuals:\n#&gt;     Min      1Q  Median      3Q     Max \n#&gt; -2.9279 -0.5547 -0.0852  0.5095  4.0425 \n#&gt; \n#&gt; Coefficients:\n#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    \n#&gt; (Intercept) 0.668945   0.193609   3.455  0.00065 ***\n#&gt; total_bill  0.092713   0.009115  10.172  &lt; 2e-16 ***\n#&gt; size        0.192598   0.085315   2.258  0.02487 *  \n#&gt; ---\n#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n#&gt; \n#&gt; Residual standard error: 1.014 on 241 degrees of freedom\n#&gt; Multiple R-squared:  0.4679, Adjusted R-squared:  0.4635 \n#&gt; F-statistic: 105.9 on 2 and 241 DF,  p-value: &lt; 2.2e-16\n\n結果の解釈:\n\ntotal_bill の係数: 0.093\n\n「人数 (size) を固定したときに（同じ人数のグループ同士で比べたときに）」、支払総額が1ドル増えると、チップは約0.093ドル増えることを意味します。\n単回帰のとき（0.105）より少し値が小さくなりました。これは、人数という要因をコントロールしたためです。\n\nsize の係数: 0.193\n\n「支払総額 (total_bill) を固定したときに（同じ支払額のグループ同士で比べたときに）」、人数が1人増えると、チップは約0.193ドル増えることを意味します。\np値 (0.02487) は 0.05 より小さいので、統計的に有意です。つまり、支払額が同じでも、人数が多いほうがチップが多くなる傾向があると言えます。\n\n\n\n係数の可視化 (Coefficient Plot)\n重回帰分析の結果（推定値と信頼区間）をグラフにすると、どの変数の影響が大きいか分かりやすくなります。\n\nlibrary(broom)\n\n# モデルの結果を整理されたデータフレームにする {.unnumbered}\ntidy_model &lt;- tidy(model2, conf.int = TRUE)\ntheme_set(theme_gray(base_family = \"HiraKakuProN-W3\"))\n# 切片(Intercept)を除いてプロット {.unnumbered}\ntidy_model %&gt;%\n  filter(term != \"(Intercept)\") %&gt;%\n  ggplot(aes(x = estimate, y = term)) +\n  geom_point() +\n  geom_errorbarh(aes(xmin = conf.low, xmax = conf.high), height = 0.2) +\n  geom_vline(xintercept = 0, color = \"red\", linetype = \"dashed\") +\n  labs(title = \"重回帰分析の係数プロット (95%信頼区間)\", x = \"推定値\", y = \"説明変数\")",
+    "text": "重回帰分析 (Multiple Regression)\n\n重回帰分析とは\n説明変数が2つ以上ある回帰分析を重回帰分析といいます。\n\\[ y = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\dots + \\beta_k x_k + \\epsilon \\]\nここで：\n\n\\(y\\)：被説明変数（目的変数）\n\\(x_1, x_2, \\dots, x_k\\)：説明変数\n\\(\\beta_0\\)：切片\n\\(\\beta_1, \\beta_2, \\dots, \\beta_k\\)：偏回帰係数\n\\(\\epsilon\\)：誤差項\n\n重回帰分析の最大の強みは、「他の条件を一定としたとき（ceteris paribus）」の影響力を推定できることです。これは経済学において非常に重要な概念です。\n\n\n基本的な重回帰分析の例\ntips データで、チップの額 (tip) を、支払総額 (total_bill) と人数 (size) の両方で説明してみましょう。\n\nlibrary(tidyverse)\nurl &lt;- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips &lt;- read_csv(url)\n\nmodel2 &lt;- lm(tip ~ total_bill + size, data = tips)\nsummary(model2)\n#&gt; \n#&gt; Call:\n#&gt; lm(formula = tip ~ total_bill + size, data = tips)\n#&gt; \n#&gt; Residuals:\n#&gt;     Min      1Q  Median      3Q     Max \n#&gt; -2.9279 -0.5547 -0.0852  0.5095  4.0425 \n#&gt; \n#&gt; Coefficients:\n#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    \n#&gt; (Intercept) 0.668945   0.193609   3.455  0.00065 ***\n#&gt; total_bill  0.092713   0.009115  10.172  &lt; 2e-16 ***\n#&gt; size        0.192598   0.085315   2.258  0.02487 *  \n#&gt; ---\n#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n#&gt; \n#&gt; Residual standard error: 1.014 on 241 degrees of freedom\n#&gt; Multiple R-squared:  0.4679, Adjusted R-squared:  0.4635 \n#&gt; F-statistic: 105.9 on 2 and 241 DF,  p-value: &lt; 2.2e-16\n\n結果の解釈:\n\ntotal_bill の係数: 0.093\n\n「人数 (size) を固定したときに（同じ人数のグループ同士で比べたときに）」、支払総額が1ドル増えると、チップは約0.093ドル増えることを意味します。\n単回帰のとき（0.105）より少し値が小さくなりました。これは、人数という要因をコントロールしたためです。\n\nsize の係数: 0.193\n\n「支払総額 (total_bill) を固定したときに（同じ支払額のグループ同士で比べたときに）」、人数が1人増えると、チップは約0.193ドル増えることを意味します。\np値 (0.02487) は 0.05 より小さいので、統計的に有意です。つまり、支払額が同じでも、人数が多いほうがチップが多くなる傾向があると言えます。\n\n\n\n\n単回帰と重回帰の比較\n同じデータで単回帰と重回帰を比較してみましょう。\n\n# 単回帰モデル\nmodel_simple &lt;- lm(tip ~ total_bill, data = tips)\n\n# 結果の比較\ncat(\"【単回帰】tip ~ total_bill\\n\")\n#&gt; 【単回帰】tip ~ total_bill\ncoef(model_simple)\n#&gt; (Intercept)  total_bill \n#&gt;   0.9202696   0.1050245\n\ncat(\"\\n【重回帰】tip ~ total_bill + size\\n\")\n#&gt; \n#&gt; 【重回帰】tip ~ total_bill + size\ncoef(model2)\n#&gt; (Intercept)  total_bill        size \n#&gt;  0.66894474  0.09271334  0.19259779\n\ntotal_bill の係数が単回帰では約0.105、重回帰では約0.093となっています。この差は、人数（size）をコントロールすることで生じたものです。\n\n\n決定係数の比較\n\ncat(\"単回帰のR²:\", summary(model_simple)$r.squared, \"\\n\")\n#&gt; 単回帰のR²: 0.4566166\ncat(\"重回帰のR²:\", summary(model2)$r.squared, \"\\n\")\n#&gt; 重回帰のR²: 0.4678693\n\n説明変数を追加することで、モデルの説明力（\\(R^2\\)）が向上していることがわかります。\n\n\n係数の可視化 (Coefficient Plot)\n重回帰分析の結果（推定値と信頼区間）をグラフにすると、どの変数の影響が大きいか分かりやすくなります。\n\nlibrary(broom)\n\n# モデルの結果を整理されたデータフレームにする {.unnumbered}\ntidy_model &lt;- tidy(model2, conf.int = TRUE)\ntheme_set(theme_gray(base_family = \"HiraKakuProN-W3\"))\n# 切片(Intercept)を除いてプロット {.unnumbered}\ntidy_model %&gt;%\n  filter(term != \"(Intercept)\") %&gt;%\n  ggplot(aes(x = estimate, y = term)) +\n  geom_point() +\n  geom_errorbarh(aes(xmin = conf.low, xmax = conf.high), height = 0.2) +\n  geom_vline(xintercept = 0, color = \"red\", linetype = \"dashed\") +\n  labs(title = \"重回帰分析の係数プロット (95%信頼区間)\", x = \"推定値\", y = \"説明変数\")",
     "crumbs": [
       "第12回 重回帰分析と因果推論"
     ]
@@ -864,7 +864,7 @@
     "href": "12_regression_2.html#相関と因果",
     "title": "第12回 重回帰分析と因果推論",
     "section": "相関と因果",
-    "text": "相関と因果\n「相関関係がある」ことと「因果関係がある」ことは別です。 例えば、「アイスクリームの売上」と「水難事故の件数」には正の相関がありますが、アイスクリームが事故を引き起こしているわけではありません。 「気温」という第3の変数（交絡因子）が両方に影響しているからです。\n経済学の実証分析では、この交絡因子の影響を取り除き、真の因果効果（因果推論）を明らかにすることを目指します。 重回帰分析で交絡因子を説明変数として加える（コントロールする）ことは、そのための基本的な手法の一つです。",
+    "text": "相関と因果\n\n相関関係と因果関係の違い\n「相関関係がある」ことと「因果関係がある」ことは別です。 例えば、「アイスクリームの売上」と「水難事故の件数」には正の相関がありますが、アイスクリームが事故を引き起こしているわけではありません。 「気温」という第3の変数（交絡因子）が両方に影響しているからです。\n\n\n交絡因子 (Confounding Variable)\n交絡因子とは、原因と結果の両方に影響を与える第3の変数のことです。\n        気温（交絡因子）\n       /    \\\n      ↓      ↓\nアイス売上 → 水難事故（見せかけの相関）\nこの場合、アイスクリームの売上と水難事故の間に直接の因果関係はありませんが、両方とも気温の影響を受けるため、データ上では相関が観察されます。\n\n\n交絡因子をコントロールする\n重回帰分析で交絡因子を説明変数として加えることで、その影響を取り除くことができます。\n例えば、「教育年数が賃金に与える影響」を分析する場合：\n\n# シミュレーションデータの作成\nset.seed(123)\nn &lt;- 200\n\n# 能力（交絡因子）\nability &lt;- rnorm(n, mean = 100, sd = 15)\n\n# 教育年数（能力の影響を受ける）\neducation &lt;- 12 + 0.05 * ability + rnorm(n, sd = 2)\n\n# 賃金（教育と能力の両方の影響を受ける）\nwage &lt;- 20 + 2 * education + 0.3 * ability + rnorm(n, sd = 5)\n\nsim_data &lt;- tibble(wage, education, ability)\n\n能力をコントロールしない場合としない場合を比較：\n\n# 能力をコントロールしない単回帰\nmodel_biased &lt;- lm(wage ~ education, data = sim_data)\n\n# 能力をコントロールした重回帰\nmodel_unbiased &lt;- lm(wage ~ education + ability, data = sim_data)\n\ncat(\"【能力をコントロールしない場合】\\n\")\n#&gt; 【能力をコントロールしない場合】\ncat(\"教育年数の係数:\", coef(model_biased)[\"education\"], \"\\n\\n\")\n#&gt; 教育年数の係数: 2.494524\n\ncat(\"【能力をコントロールした場合】\\n\")\n#&gt; 【能力をコントロールした場合】\ncat(\"教育年数の係数:\", coef(model_unbiased)[\"education\"], \"\\n\")\n#&gt; 教育年数の係数: 1.873354\n\n真の効果は2ですが、能力をコントロールしないと過大評価されることがわかります。\n\n\n因果推論の手法\n経済学の実証分析では、交絡因子の影響を取り除き、真の因果効果を明らかにするために様々な手法が使われます：\n\n重回帰分析：観測可能な交絡因子をコントロール\n操作変数法 (IV)：交絡因子が観測できない場合に使用\n差の差法 (DID)：政策介入の効果を推定\n回帰不連続デザイン (RDD)：閾値を利用した因果推論\n傾向スコアマッチング：処置群と対照群を比較可能にする\n\nこれらの手法は、計量経済学の上級コースで詳しく学ぶことになります。",
     "crumbs": [
       "第12回 重回帰分析と因果推論"
     ]
@@ -884,7 +884,57 @@
     "href": "12_regression_2.html#最終課題",
     "title": "第12回 重回帰分析と因果推論",
     "section": "最終課題",
-    "text": "最終課題\n自分の興味のあるデータセットを見つけて（Rに組み込まれているものでも、Web上のオープンデータでも可）、以下の分析を行ってください。\n\nデータの概要を説明する。\nヒストグラムや散布図で可視化する。\n関心のある2変数について回帰分析を行い、結果を解釈する。",
+    "text": "最終課題\n自分の興味のあるデータセットを見つけて（Rに組み込まれているものでも、Web上のオープンデータでも可）、以下の分析を行ってください。\n\nデータの概要を説明する。\nヒストグラムや散布図で可視化する。\n関心のある2変数について回帰分析を行い、結果を解釈する。\n\n\n参考：利用可能なデータセット\nRには多くのデータセットが組み込まれています：\n\n# 利用可能なデータセットの一覧\ndata()\n\n# 例：mtcars（自動車データ）\nhead(mtcars)\n\n# 例：iris（アヤメのデータ）\nhead(iris)\n\nWeb上のオープンデータの例：\n\ne-Stat（日本の政府統計）: https://www.e-stat.go.jp/\nWorld Bank Open Data: https://data.worldbank.org/\nKaggle Datasets: https://www.kaggle.com/datasets",
+    "crumbs": [
+      "第12回 重回帰分析と因果推論"
+    ]
+  },
+  {
+    "objectID": "12_regression_2.html#ダミー変数を使った回帰分析",
+    "href": "12_regression_2.html#ダミー変数を使った回帰分析",
+    "title": "第12回 重回帰分析と因果推論",
+    "section": "ダミー変数を使った回帰分析",
+    "text": "ダミー変数を使った回帰分析\n\nダミー変数とは\nカテゴリ変数（性別、曜日、地域など）を回帰分析に組み込むために使う0/1の変数です。Rでは、カテゴリ変数（factor型）を説明変数にすると、自動的にダミー変数を作成してくれます。\n\n# 喫煙者かどうかを追加したモデル\nmodel3 &lt;- lm(tip ~ total_bill + size + smoker, data = tips)\nsummary(model3)\n#&gt; \n#&gt; Call:\n#&gt; lm(formula = tip ~ total_bill + size + smoker, data = tips)\n#&gt; \n#&gt; Residuals:\n#&gt;     Min      1Q  Median      3Q     Max \n#&gt; -2.8986 -0.5697 -0.0643  0.5115  4.0630 \n#&gt; \n#&gt; Coefficients:\n#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    \n#&gt; (Intercept)  0.709016   0.204881   3.461 0.000638 ***\n#&gt; total_bill   0.093888   0.009331  10.062  &lt; 2e-16 ***\n#&gt; size         0.180332   0.087803   2.054 0.041077 *  \n#&gt; smokerYes   -0.083433   0.138000  -0.605 0.546028    \n#&gt; ---\n#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n#&gt; \n#&gt; Residual standard error: 1.015 on 240 degrees of freedom\n#&gt; Multiple R-squared:  0.4687, Adjusted R-squared:  0.462 \n#&gt; F-statistic: 70.57 on 3 and 240 DF,  p-value: &lt; 2.2e-16\n\nsmokerYes の係数は、非喫煙者（No）を基準としたときの喫煙者（Yes）の効果を表しています。\n\n\n複数のカテゴリ変数を使う\n曜日と時間帯も追加してみましょう。\n\nmodel4 &lt;- lm(tip ~ total_bill + size + smoker + day + time, data = tips)\nsummary(model4)\n#&gt; \n#&gt; Call:\n#&gt; lm(formula = tip ~ total_bill + size + smoker + day + time, data = tips)\n#&gt; \n#&gt; Residuals:\n#&gt;     Min      1Q  Median      3Q     Max \n#&gt; -2.8551 -0.5733 -0.0863  0.4866  4.1034 \n#&gt; \n#&gt; Coefficients:\n#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    \n#&gt; (Intercept)  0.789582   0.346487   2.279   0.0236 *  \n#&gt; total_bill   0.094277   0.009538   9.884   &lt;2e-16 ***\n#&gt; size         0.176374   0.089332   1.974   0.0495 *  \n#&gt; smokerYes   -0.086470   0.146292  -0.591   0.5550    \n#&gt; daySat      -0.125864   0.308524  -0.408   0.6837    \n#&gt; daySun      -0.032578   0.319158  -0.102   0.9188    \n#&gt; dayThur     -0.160946   0.392573  -0.410   0.6822    \n#&gt; timeLunch    0.068146   0.443723   0.154   0.8781    \n#&gt; ---\n#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n#&gt; \n#&gt; Residual standard error: 1.022 on 236 degrees of freedom\n#&gt; Multiple R-squared:   0.47,  Adjusted R-squared:  0.4542 \n#&gt; F-statistic: 29.89 on 7 and 236 DF,  p-value: &lt; 2.2e-16\n\n曜日については、Fri（金曜）が基準カテゴリとなり、他の曜日との差が表示されています。",
+    "crumbs": [
+      "第12回 重回帰分析と因果推論"
+    ]
+  },
+  {
+    "objectID": "12_regression_2.html#交互作用項-interaction-term",
+    "href": "12_regression_2.html#交互作用項-interaction-term",
+    "title": "第12回 重回帰分析と因果推論",
+    "section": "交互作用項 (Interaction Term)",
+    "text": "交互作用項 (Interaction Term)\n\n交互作用とは\nある説明変数の効果が、別の説明変数の値によって変わる場合があります。例えば、「支払総額がチップに与える影響が、喫煙者と非喫煙者で異なる」といった状況です。\nこれを分析するために、交互作用項を使います。\n\n# 交互作用を含むモデル\nmodel_interaction &lt;- lm(tip ~ total_bill * smoker, data = tips)\nsummary(model_interaction)\n#&gt; \n#&gt; Call:\n#&gt; lm(formula = tip ~ total_bill * smoker, data = tips)\n#&gt; \n#&gt; Residuals:\n#&gt;     Min      1Q  Median      3Q     Max \n#&gt; -2.6789 -0.5238 -0.1205  0.4749  4.8999 \n#&gt; \n#&gt; Coefficients:\n#&gt;                       Estimate Std. Error t value Pr(&gt;|t|)    \n#&gt; (Intercept)           0.360069   0.202058   1.782 0.076012 .  \n#&gt; total_bill            0.137156   0.009678  14.172  &lt; 2e-16 ***\n#&gt; smokerYes             1.204203   0.312263   3.856 0.000148 ***\n#&gt; total_bill:smokerYes -0.067566   0.014189  -4.762 3.32e-06 ***\n#&gt; ---\n#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n#&gt; \n#&gt; Residual standard error: 0.9785 on 240 degrees of freedom\n#&gt; Multiple R-squared:  0.506,  Adjusted R-squared:  0.4998 \n#&gt; F-statistic: 81.95 on 3 and 240 DF,  p-value: &lt; 2.2e-16\n\n結果の見方：\n\ntotal_bill：非喫煙者における支払総額の効果\nsmokerYes：支払総額が0のときの喫煙者と非喫煙者の差（実質的な意味は薄い）\ntotal_bill:smokerYes：交互作用項。喫煙者における支払総額の効果が、非喫煙者と比べてどれだけ異なるか\n\n\n\n交互作用の可視化\n\ntips %&gt;%\n  ggplot(aes(x = total_bill, y = tip, color = smoker)) +\n  geom_point(alpha = 0.5) +\n  geom_smooth(method = \"lm\", se = FALSE) +\n  labs(\n    title = \"喫煙者・非喫煙者別の回帰直線\",\n    x = \"支払総額 (ドル)\",\n    y = \"チップ (ドル)\",\n    color = \"喫煙者\"\n  )",
+    "crumbs": [
+      "第12回 重回帰分析と因果推論"
+    ]
+  },
+  {
+    "objectID": "12_regression_2.html#多重共線性-multicollinearity",
+    "href": "12_regression_2.html#多重共線性-multicollinearity",
+    "title": "第12回 重回帰分析と因果推論",
+    "section": "多重共線性 (Multicollinearity)",
+    "text": "多重共線性 (Multicollinearity)\n\n多重共線性とは\n説明変数同士が強く相関している場合、多重共線性の問題が生じます。これにより：\n\n係数の推定が不安定になる\n標準誤差が大きくなる\n係数の解釈が困難になる\n\n\n\nVIF（分散膨張因子）による診断\n多重共線性の程度は、VIF (Variance Inflation Factor) で確認できます。一般的に VIF &gt; 10 の場合、多重共線性が問題となっている可能性があります。\n\nlibrary(car)\nvif(model2)\n#&gt; total_bill       size \n#&gt;   1.557586   1.557586\n\nVIF が小さい値であれば、多重共線性の問題は深刻ではありません。",
+    "crumbs": [
+      "第12回 重回帰分析と因果推論"
+    ]
+  },
+  {
+    "objectID": "12_regression_2.html#モデルの比較と選択",
+    "href": "12_regression_2.html#モデルの比較と選択",
+    "title": "第12回 重回帰分析と因果推論",
+    "section": "モデルの比較と選択",
+    "text": "モデルの比較と選択\n\n調整済み決定係数\n複数のモデルを比較する際、単純な \\(R^2\\) は説明変数を増やすほど大きくなるため、調整済み決定係数 (\\(\\bar{R}^2\\)) を使います。\n\\[ \\bar{R}^2 = 1 - \\frac{(1 - R^2)(n - 1)}{n - k - 1} \\]\nここで \\(n\\) は標本サイズ、\\(k\\) は説明変数の数です。\n\n# 異なるモデルの調整済みR²を比較\nmodels &lt;- list(\n  \"model1: tip ~ total_bill\" = model_simple,\n  \"model2: tip ~ total_bill + size\" = model2,\n  \"model3: tip ~ total_bill + size + smoker\" = model3,\n  \"model4: tip ~ total_bill + size + smoker + day + time\" = model4\n)\n\nsapply(models, function(m) summary(m)$adj.r.squared)\n#&gt;                              model1: tip ~ total_bill \n#&gt;                                             0.4543712 \n#&gt;                       model2: tip ~ total_bill + size \n#&gt;                                             0.4634533 \n#&gt;              model3: tip ~ total_bill + size + smoker \n#&gt;                                             0.4620370 \n#&gt; model4: tip ~ total_bill + size + smoker + day + time \n#&gt;                                             0.4542383\n\n\n\nAIC と BIC\nAIC (赤池情報量規準) と BIC (ベイズ情報量規準) は、モデルの適合度と複雑さのバランスを評価する指標です。値が小さいほど良いモデルとされます。\n\n# AIC と BIC の比較\ntibble(\n  model = names(models),\n  AIC = sapply(models, AIC),\n  BIC = sapply(models, BIC)\n)",
+    "crumbs": [
+      "第12回 重回帰分析と因果推論"
+    ]
+  },
+  {
+    "objectID": "12_regression_2.html#練習問題",
+    "href": "12_regression_2.html#練習問題",
+    "title": "第12回 重回帰分析と因果推論",
+    "section": "練習問題",
+    "text": "練習問題\n\ntips データを使って、チップ率（tip / total_bill）を被説明変数とした重回帰分析を行い、どの要因がチップ率に影響を与えるか調べてください。\nmtcars データを使って、燃費（mpg）を被説明変数とした重回帰分析を行い、結果を解釈してください。\n交互作用項を含むモデルを作成し、通常のモデルと比較してください。",
     "crumbs": [
       "第12回 重回帰分析と因果推論"
     ]

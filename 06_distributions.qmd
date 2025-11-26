@@ -1,16 +1,28 @@
 # 第6回 主要な確率分布 {.unnumbered}
 
-
-
 ## 今回の目標
 
 -   統計学で最も重要な **正規分布** を理解する。
+-   **二項分布** を理解する。
 -   Rを使って確率分布の計算やグラフ描画を行う。
+
+## Rにおける確率分布関数
+
+Rでは、各確率分布に対して4種類の関数が用意されています：
+
+| 接頭辞 | 意味 | 例（正規分布） |
+|--------|------|---------------|
+| `d` | 確率密度（density） | `dnorm()` |
+| `p` | 累積確率（probability） | `pnorm()` |
+| `q` | 分位点（quantile） | `qnorm()` |
+| `r` | 乱数生成（random） | `rnorm()` |
 
 ## 正規分布 (Normal Distribution)
 
 自然界や社会現象でよく見られる、釣鐘型の分布です。
 平均 $\mu$ と分散 $\sigma^2$ という2つのパラメータで形が決まります。
+
+$$f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
 
 Rには正規分布に関する関数が用意されています。
 
@@ -41,6 +53,25 @@ ggplot(df, aes(x = x, y = y)) +
   labs(title = "標準正規分布")
 ```
 
+### 平均と標準偏差の影響
+
+```{r}
+# 異なるパラメータの正規分布を比較
+x <- seq(-10, 15, length.out = 200)
+df_compare <- data.frame(
+  x = rep(x, 3),
+  y = c(dnorm(x, mean = 0, sd = 1),
+        dnorm(x, mean = 5, sd = 1),
+        dnorm(x, mean = 0, sd = 2)),
+  type = rep(c("μ=0, σ=1", "μ=5, σ=1", "μ=0, σ=2"), each = length(x))
+)
+
+ggplot(df_compare, aes(x = x, y = y, color = type)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_line(size = 1) +
+  labs(title = "正規分布のパラメータによる変化", color = "パラメータ")
+```
+
 ## 確率の計算
 
 「平均50、標準偏差10のテストで、60点以上をとる確率は？」
@@ -63,6 +94,13 @@ p_lower <- pnorm(60, mean = 50, sd = 10)
 
 「コイン投げ」のように、結果が2通り（成功/失敗）しかない試行を $n$ 回行ったときの、成功回数の分布です。
 
+$$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}$$
+
+ここで：
+- $n$: 試行回数
+- $p$: 1回の試行で成功する確率
+- $k$: 成功回数
+
 例：コインを10回投げて、ちょうど5回表が出る確率。
 `dbinom(x, size, prob)` を使います。
 
@@ -81,6 +119,59 @@ ggplot(df_binom, aes(x = x, y = prob)) +
   theme_gray(base_family = "HiraKakuProN-W3") +
   geom_col(fill = "lightgreen") +
   labs(title = "二項分布 (n=10, p=0.5)", x = "表が出る回数", y = "確率")
+```
+
+### 成功確率の影響
+
+```{r}
+# 成功確率が異なる場合の比較
+x <- 0:20
+df_binom_compare <- data.frame(
+  x = rep(x, 3),
+  prob = c(dbinom(x, size = 20, prob = 0.3),
+           dbinom(x, size = 20, prob = 0.5),
+           dbinom(x, size = 20, prob = 0.7)),
+  p = rep(c("p=0.3", "p=0.5", "p=0.7"), each = length(x))
+)
+
+ggplot(df_binom_compare, aes(x = x, y = prob, fill = p)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_col(position = "dodge") +
+  labs(title = "二項分布 (n=20) の成功確率による変化", x = "成功回数", y = "確率")
+```
+
+### 二項分布の期待値と分散
+
+- 期待値: $E[X] = np$
+- 分散: $V[X] = np(1-p)$
+
+```{r}
+n <- 10
+p <- 0.5
+
+# 理論値
+cat("期待値:", n * p, "\n")
+cat("分散:", n * p * (1-p), "\n")
+```
+
+## ポアソン分布 (Poisson Distribution)
+
+一定期間・一定空間内でまれに起こる事象の回数を表す分布です。
+
+例：1時間あたりに店に来る客の数、1ページあたりの誤字の数
+
+$$P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}$$
+
+```{r}
+# 平均5回の事象が起こるとき
+x <- 0:15
+prob <- dpois(x, lambda = 5)
+df_pois <- data.frame(x = factor(x), prob = prob)
+
+ggplot(df_pois, aes(x = x, y = prob)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_col(fill = "coral") +
+  labs(title = "ポアソン分布 (λ=5)", x = "事象の発生回数", y = "確率")
 ```
 
 ## 正規分布の重要性
@@ -119,4 +210,31 @@ ggplot(df, aes(x = x, y = y)) +
 1.  日本人の成人男性の平均身長が171cm、標準偏差が6cmの正規分布に従うと仮定します。
     身長が180cm以上の人は、全体の何パーセントいますか？
 2.  サイコロを10回振って、1の目がちょうど2回出る確率を計算してください。
-```
+
+## 練習問題
+
+### 練習1: 正規分布の確率計算
+平均50点、標準偏差10点のテストについて：
+1. 40点以下になる確率を求めてください
+2. 40点から60点の間に入る確率を求めてください
+3. 上位10%に入るには何点以上必要ですか？（ヒント: `qnorm()` を使います）
+
+### 練習2: 二項分布
+歩留まり率が90%（不良品率10%）の製品を20個作るとき：
+1. 不良品が1つも出ない確率を求めてください
+2. 不良品が3つ以上出る確率を求めてください
+
+### 練習3: 分布の比較
+正規分布から100個の乱数を生成し（`rnorm(100, mean=0, sd=1)`）、ヒストグラムを描いてください。
+乱数の個数を1000個、10000個に増やすとどうなりますか？
+
+## 主要な確率分布のまとめ
+
+| 分布 | 用途 | R関数 | パラメータ |
+|------|------|-------|-----------|
+| 正規分布 | 連続データの分布 | `norm` | mean, sd |
+| 二項分布 | 成功/失敗の回数 | `binom` | size, prob |
+| ポアソン分布 | まれな事象の回数 | `pois` | lambda |
+| t分布 | 小標本の推定 | `t` | df |
+| カイ二乗分布 | 分散の検定 | `chisq` | df |
+| F分布 | 分散比の検定 | `f` | df1, df2 |

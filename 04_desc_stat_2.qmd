@@ -1,16 +1,50 @@
 # 第4回 記述統計 (2) データの可視化 {.unnumbered}
 
-
-
 ## 今回の目標
 
 -   データの分布をグラフで確認する重要性を理解する。
 -   `ggplot2` を使って基本的なグラフ（ヒストグラム、箱ひげ図、散布図）を作成する。
+-   グラフの種類と使い分けを学ぶ。
+
+## なぜ可視化が重要か
+
+数値だけではデータの特徴を見落とすことがあります。有名な「アンスコムのカルテット」という例があります。
+
+```{r}
+library(tidyverse)
+
+# アンスコムのカルテット（Rに組み込み済み）
+anscombe_long <- anscombe %>%
+  pivot_longer(everything(),
+               names_to = c(".value", "set"),
+               names_pattern = "(.)(.)")
+
+# 各セットの統計量
+anscombe_long %>%
+  group_by(set) %>%
+  summarize(
+    mean_x = mean(x),
+    mean_y = mean(y),
+    sd_x = sd(x),
+    sd_y = sd(y),
+    cor = cor(x, y)
+  )
+```
+
+統計量はほぼ同じですが、グラフにすると全く異なるパターンが見えます。
+
+```{r}
+ggplot(anscombe_long, aes(x = x, y = y)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  facet_wrap(~set) +
+  labs(title = "アンスコムのカルテット: 統計量は同じでもパターンは異なる")
+```
 
 ## 準備
 
 ```{r}
-library(tidyverse)
 url <- "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
 tips <- read_csv(url)
 ```
@@ -49,6 +83,28 @@ ggplot(tips, aes(x = day, y = total_bill, fill = day)) +
   theme_gray(base_family = "HiraKakuProN-W3") +
   geom_boxplot() +
   labs(title = "曜日別の支払総額", x = "曜日", y = "支払総額")
+```
+
+### 箱ひげ図の読み方
+
+箱ひげ図の各部分は以下を表しています：
+
+- **箱の下端**: 第1四分位数（Q1、下位25%）
+- **箱の中の線**: 中央値（Q2、下位50%）
+- **箱の上端**: 第3四分位数（Q3、下位75%）
+- **ひげ**: Q1 - 1.5×IQR から Q3 + 1.5×IQR の範囲
+- **点**: 外れ値
+
+### バイオリンプロット
+
+箱ひげ図の代替として、分布の形状をより詳しく見られるバイオリンプロットがあります。
+
+```{r}
+ggplot(tips, aes(x = day, y = total_bill, fill = day)) +
+  theme_gray(base_family = "HiraKakuProN-W3") +
+  geom_violin() +
+  geom_boxplot(width = 0.1, fill = "white") +
+  labs(title = "曜日別の支払総額（バイオリンプロット）", x = "曜日", y = "支払総額")
 ```
 
 ### 棒グラフ (Bar Plot)
@@ -142,3 +198,31 @@ ggplot(tips, aes(x = day, y = total_bill)) +
 
 1.  `tip`（チップ）のヒストグラムを作成してください。
 2.  `total_bill` と `tip` の散布図を作成し、`time`（ランチ/ディナー）で色分けしてください。
+
+## 練習問題
+
+### 練習1: ヒストグラムのカスタマイズ
+1. `tip` のヒストグラムを作成し、ビンの数を10に変更してください
+2. 色を自分の好きな色に変更してください
+3. 適切なタイトルと軸ラベルを追加してください
+
+### 練習2: 複数のグラフの作成
+1. 性別 (`sex`) ごとの `tip` の箱ひげ図を作成してください
+2. 喫煙者 (`smoker`) ごとの `total_bill` のヒストグラムを、`facet_wrap()` を使って並べて表示してください
+
+### 練習3: 散布図の応用
+1. `total_bill` と `tip` の散布図を作成してください
+2. 点の大きさを `size`（人数）に対応させてください（ヒント: `aes(size = size)`）
+3. 回帰直線を追加してください
+
+## グラフ選択のガイド
+
+| 目的 | グラフの種類 | ggplot2の関数 |
+|------|-------------|---------------|
+| 1変数の分布（連続） | ヒストグラム | `geom_histogram()` |
+| 1変数の分布（連続） | 密度プロット | `geom_density()` |
+| 1変数の分布（カテゴリ） | 棒グラフ | `geom_bar()` |
+| 2変数の関係（連続×連続） | 散布図 | `geom_point()` |
+| グループ比較（連続×カテゴリ） | 箱ひげ図 | `geom_boxplot()` |
+| グループ比較（連続×カテゴリ） | バイオリンプロット | `geom_violin()` |
+| 時系列データ | 折れ線グラフ | `geom_line()` |
