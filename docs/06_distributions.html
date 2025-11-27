@@ -577,11 +577,21 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="確率質量関数">確率質量関数</h3>
 <p><span class="math inline">\(n\)</span> 回の試行のうち、ちょうど <span class="math inline">\(k\)</span> 回成功する確率は：</p>
 <p><span class="math display">\[P(Y = k) = \binom{n}{k} p^k (1-p)^{n-k}\]</span></p>
-<p>ここで： - <span class="math inline">\(n\)</span>: 試行回数 - <span class="math inline">\(p\)</span>: 1回の試行で成功する確率（ベルヌーイ試行の成功確率） - <span class="math inline">\(k\)</span>: 成功回数（<span class="math inline">\(k = 0, 1, 2, \ldots, n\)</span>） - <span class="math inline">\(\binom{n}{k} = \frac{n!}{k!(n-k)!}\)</span>: 二項係数（<span class="math inline">\(n\)</span> 個から <span class="math inline">\(k\)</span> 個を選ぶ組み合わせの数）</p>
+<p>ここで：</p>
+<ul>
+<li><span class="math inline">\(n\)</span>: 試行回数</li>
+<li><span class="math inline">\(p\)</span>: 1回の試行で成功する確率（ベルヌーイ試行の成功確率）</li>
+<li><span class="math inline">\(k\)</span>: 成功回数（<span class="math inline">\(k = 0, 1, 2, \ldots, n\)</span>）</li>
+<li><span class="math inline">\(\binom{n}{k} = \frac{n!}{k!(n-k)!}\)</span>: 二項係数（<span class="math inline">\(n\)</span> 個から <span class="math inline">\(k\)</span> 個を選ぶ組み合わせの数）</li>
+</ul>
 </section>
 <section id="期待値と分散-1" class="level3">
 <h3 class="anchored" data-anchor-id="期待値と分散-1">期待値と分散</h3>
-<p>二項分布の期待値と分散は： - <strong>期待値</strong>: <span class="math inline">\(E[Y] = np\)</span>（ベルヌーイ分布の期待値 <span class="math inline">\(p\)</span> の <span class="math inline">\(n\)</span> 倍） - <strong>分散</strong>: <span class="math inline">\(V[Y] = np(1-p)\)</span>（ベルヌーイ分布の分散 <span class="math inline">\(p(1-p)\)</span> の <span class="math inline">\(n\)</span> 倍）</p>
+<p>二項分布の期待値と分散は：</p>
+<ul>
+<li><strong>期待値</strong>: <span class="math inline">\(E[Y] = np\)</span>（ベルヌーイ分布の期待値 <span class="math inline">\(p\)</span> の <span class="math inline">\(n\)</span> 倍）</li>
+<li><strong>分散</strong>: <span class="math inline">\(V[Y] = np(1-p)\)</span>（ベルヌーイ分布の分散 <span class="math inline">\(p(1-p)\)</span> の <span class="math inline">\(n\)</span> 倍）</li>
+</ul>
 </section>
 <section id="rでの計算例" class="level3">
 <h3 class="anchored" data-anchor-id="rでの計算例">Rでの計算例</h3>
@@ -820,11 +830,20 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="練習問題">練習問題</h2>
 <section id="練習1-正規分布の確率計算" class="level3">
 <h3 class="anchored" data-anchor-id="練習1-正規分布の確率計算">練習1: 正規分布の確率計算</h3>
-<p>平均50点、標準偏差10点のテストについて： 1. 40点以下になる確率を求めてください 2. 40点から60点の間に入る確率を求めてください 3. 上位10%に入るには何点以上必要ですか？（ヒント: <code>qnorm()</code> を使います）</p>
+<p>平均50点、標準偏差10点のテストについて：</p>
+<ol type="1">
+<li>40点以下になる確率を求めてください</li>
+<li>40点から60点の間に入る確率を求めてください</li>
+<li>上位10%に入るには何点以上必要ですか？（ヒント: <code>qnorm()</code> を使います）</li>
+</ol>
 </section>
 <section id="練習2-二項分布" class="level3">
 <h3 class="anchored" data-anchor-id="練習2-二項分布">練習2: 二項分布</h3>
-<p>歩留まり率が90%（不良品率10%）の製品を20個作るとき： 1. 不良品が1つも出ない確率を求めてください 2. 不良品が3つ以上出る確率を求めてください</p>
+<p>歩留まり率が90%（不良品率10%）の製品を20個作るとき：</p>
+<ol type="1">
+<li>不良品が1つも出ない確率を求めてください</li>
+<li>不良品が3つ以上出る確率を求めてください</li>
+</ol>
 </section>
 <section id="練習3-分布の比較" class="level3">
 <h3 class="anchored" data-anchor-id="練習3-分布の比較">練習3: 分布の比較</h3>
