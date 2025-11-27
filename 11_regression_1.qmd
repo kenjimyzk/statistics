@@ -1,5 +1,7 @@
 # 第11回 相関と単回帰分析 {.unnumbered}
 
+![相関と単回帰分析](figure/11_regression_1/infographic.png)
+
 ## 今回の目標
 
 -   相関係数を計算し、2変数の関係の強さを理解する。

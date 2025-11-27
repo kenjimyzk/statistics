@@ -1,5 +1,7 @@
 # 第10回 仮説検定 (2) {.unnumbered}
 
+![仮説検定 (2)](figure/10_hypothesis_2/infographic.png)
+
 ## 今回の目標
 
 -   2つのグループの平均値に差があるかどうかを検定する。
