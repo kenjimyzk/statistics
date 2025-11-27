@@ -262,11 +262,25 @@ window.Quarto = {
   <li><a href="#今回の目標" id="toc-今回の目標" class="nav-link active" data-scroll-target="#今回の目標">今回の目標</a></li>
   <li><a href="#母集団と標本" id="toc-母集団と標本" class="nav-link" data-scroll-target="#母集団と標本">母集団と標本</a>
   <ul class="collapse">
+  <li><a href="#なぜ標本を使うのか" id="toc-なぜ標本を使うのか" class="nav-link" data-scroll-target="#なぜ標本を使うのか">なぜ標本を使うのか</a></li>
+  <li><a href="#母数と統計量" id="toc-母数と統計量" class="nav-link" data-scroll-target="#母数と統計量">母数と統計量</a></li>
   <li><a href="#母集団と標本のイメージ" id="toc-母集団と標本のイメージ" class="nav-link" data-scroll-target="#母集団と標本のイメージ">母集団と標本のイメージ</a></li>
   </ul></li>
   <li><a href="#大数の法則-law-of-large-numbers" id="toc-大数の法則-law-of-large-numbers" class="nav-link" data-scroll-target="#大数の法則-law-of-large-numbers">大数の法則 (Law of Large Numbers)</a></li>
-  <li><a href="#中心極限定理-central-limit-theorem" id="toc-中心極限定理-central-limit-theorem" class="nav-link" data-scroll-target="#中心極限定理-central-limit-theorem">中心極限定理 (Central Limit Theorem)</a></li>
+  <li><a href="#中心極限定理-central-limit-theorem" id="toc-中心極限定理-central-limit-theorem" class="nav-link" data-scroll-target="#中心極限定理-central-limit-theorem">中心極限定理 (Central Limit Theorem)</a>
+  <ul class="collapse">
+  <li><a href="#サンプルサイズによる変化" id="toc-サンプルサイズによる変化" class="nav-link" data-scroll-target="#サンプルサイズによる変化">サンプルサイズによる変化</a></li>
+  </ul></li>
+  <li><a href="#標本平均の分散" id="toc-標本平均の分散" class="nav-link" data-scroll-target="#標本平均の分散">標本平均の分散</a></li>
+  <li><a href="#標準誤差-standard-error" id="toc-標準誤差-standard-error" class="nav-link" data-scroll-target="#標準誤差-standard-error">標準誤差 (Standard Error)</a></li>
   <li><a href="#課題" id="toc-課題" class="nav-link" data-scroll-target="#課題">課題</a></li>
+  <li><a href="#練習問題" id="toc-練習問題" class="nav-link" data-scroll-target="#練習問題">練習問題</a>
+  <ul class="collapse">
+  <li><a href="#練習1-大数の法則" id="toc-練習1-大数の法則" class="nav-link" data-scroll-target="#練習1-大数の法則">練習1: 大数の法則</a></li>
+  <li><a href="#練習2-中心極限定理の応用" id="toc-練習2-中心極限定理の応用" class="nav-link" data-scroll-target="#練習2-中心極限定理の応用">練習2: 中心極限定理の応用</a></li>
+  <li><a href="#練習3-標準誤差の計算" id="toc-練習3-標準誤差の計算" class="nav-link" data-scroll-target="#練習3-標準誤差の計算">練習3: 標準誤差の計算</a></li>
+  </ul></li>
+  <li><a href="#まとめ" id="toc-まとめ" class="nav-link" data-scroll-target="#まとめ">まとめ</a></li>
   </ul>
 </nav>
     </div>
@@ -292,11 +306,18 @@ window.Quarto = {
 </header>
 
 
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figure/07_sampling/infographic.png" class="img-fluid figure-img"></p>
+<figcaption>標本分布</figcaption>
+</figure>
+</div>
 <section id="今回の目標" class="level2">
 <h2 class="anchored" data-anchor-id="今回の目標">今回の目標</h2>
 <ul>
 <li>母集団と標本の関係を理解する。</li>
 <li><strong>大数の法則</strong> と <strong>中心極限定理</strong> をシミュレーションで体感する。</li>
+<li>標本分布の概念を理解する。</li>
 </ul>
 </section>
 <section id="母集団と標本" class="level2">
@@ -306,6 +327,48 @@ window.Quarto = {
 <li><strong>標本 (Sample)</strong>: 母集団から一部を取り出したもの（例：ランダムに選んだ1000人）。</li>
 <li><strong>推測統計</strong>: 標本のデータから、母集団の性質（パラメータ）を推測すること。</li>
 </ul>
+<section id="なぜ標本を使うのか" class="level3">
+<h3 class="anchored" data-anchor-id="なぜ標本を使うのか">なぜ標本を使うのか</h3>
+<ul>
+<li>母集団全体を調べるのはコストがかかる（全数調査）</li>
+<li>時間的・物理的に不可能な場合もある</li>
+<li>少数のサンプルから全体の傾向を推測できる</li>
+</ul>
+</section>
+<section id="母数と統計量" class="level3">
+<h3 class="anchored" data-anchor-id="母数と統計量">母数と統計量</h3>
+<table class="table">
+<thead>
+<tr class="header">
+<th>用語</th>
+<th>説明</th>
+<th>記号</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>母平均</td>
+<td>母集団の平均</td>
+<td><span class="math inline">\(\mu\)</span></td>
+</tr>
+<tr class="even">
+<td>母分散</td>
+<td>母集団の分散</td>
+<td><span class="math inline">\(\sigma^2\)</span></td>
+</tr>
+<tr class="odd">
+<td>標本平均</td>
+<td>標本の平均</td>
+<td><span class="math inline">\(\bar{x}\)</span></td>
+</tr>
+<tr class="even">
+<td>標本分散</td>
+<td>標本の分散</td>
+<td><span class="math inline">\(s^2\)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="母集団と標本のイメージ" class="level3">
 <h3 class="anchored" data-anchor-id="母集団と標本のイメージ">母集団と標本のイメージ</h3>
 <div class="cell">
@@ -397,12 +460,113 @@ window.Quarto = {
 </div>
 </div>
 <p>元の分布は平坦（一様分布）ですが、平均値の分布は釣鐘型（正規分布）になっていることが確認できます。</p>
+<section id="サンプルサイズによる変化" class="level3">
+<h3 class="anchored" data-anchor-id="サンプルサイズによる変化">サンプルサイズによる変化</h3>
+<p>サンプルサイズを変えて、中心極限定理の効果を確認してみましょう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 異なるサンプルサイズでのシミュレーション</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sample_sizes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">30</span>, <span class="dv">100</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>n_samples <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (n <span class="cf">in</span> sample_sizes) {</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  means <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_samples, <span class="fu">mean</span>(<span class="fu">runif</span>(n)))</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  results[[<span class="fu">paste0</span>(<span class="st">"n="</span>, n)]] <span class="ot">&lt;-</span> means</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># データフレームにまとめる</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>df_clt <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">means =</span> <span class="fu">unlist</span>(results),</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_size =</span> <span class="fu">rep</span>(<span class="fu">paste0</span>(<span class="st">"n="</span>, sample_sizes), <span class="at">each =</span> n_samples)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># プロット</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_clt, <span class="fu">aes</span>(<span class="at">x =</span> means)) <span class="sc">+</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sample_size, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"中心極限定理: サンプルサイズによる変化"</span>, <span class="at">x =</span> <span class="st">"標本平均"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07_sampling_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>サンプルサイズが大きくなるほど、分布が正規分布に近づき、ばらつきも小さくなることがわかります。</p>
+</section>
+</section>
+<section id="標本平均の分散" class="level2">
+<h2 class="anchored" data-anchor-id="標本平均の分散">標本平均の分散</h2>
+<p>標本平均の分散は、母分散をサンプルサイズで割ったものになります。</p>
+<p><span class="math display">\[V[\bar{X}] = \frac{\sigma^2}{n}\]</span></p>
+<p>これは、サンプルサイズが大きいほど、標本平均のばらつきが小さくなることを示しています。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 理論値と実際の値を比較</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"母分散（一様分布）:"</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">12</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 母分散（一様分布）: 0.08333333</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"標本平均の理論分散 (n=30):"</span>, (<span class="dv">1</span><span class="sc">/</span><span class="dv">12</span>) <span class="sc">/</span> <span class="dv">30</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 標本平均の理論分散 (n=30): 0.002777778</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"シミュレーションでの分散:"</span>, <span class="fu">var</span>(results[[<span class="st">"n=30"</span>]]), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; シミュレーションでの分散: 0.00278787</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="標準誤差-standard-error" class="level2">
+<h2 class="anchored" data-anchor-id="標準誤差-standard-error">標準誤差 (Standard Error)</h2>
+<p>標本平均の標準偏差を<strong>標準誤差</strong>といいます。</p>
+<p><span class="math display">\[SE = \frac{\sigma}{\sqrt{n}}\]</span></p>
+<p>標準誤差は、推定の精度を表す重要な指標です。</p>
 </section>
 <section id="課題" class="level2">
 <h2 class="anchored" data-anchor-id="課題">課題</h2>
 <ol type="1">
 <li>中心極限定理のシミュレーションで、<code>sample_size</code> を 5 に減らして実行してみてください。ヒストグラムの形はどう変わりますか？</li>
 </ol>
+</section>
+<section id="練習問題" class="level2">
+<h2 class="anchored" data-anchor-id="練習問題">練習問題</h2>
+<section id="練習1-大数の法則" class="level3">
+<h3 class="anchored" data-anchor-id="練習1-大数の法則">練習1: 大数の法則</h3>
+<p>コインを投げるシミュレーションを行い、大数の法則を確認してください： 1. <code>sample(c(0, 1), 1000, replace = TRUE)</code> でコイン投げをシミュレート 2. 累積の表の割合を計算し、グラフにプロット 3. 回数が増えると0.5に近づくことを確認</p>
+</section>
+<section id="練習2-中心極限定理の応用" class="level3">
+<h3 class="anchored" data-anchor-id="練習2-中心極限定理の応用">練習2: 中心極限定理の応用</h3>
+<p>指数分布（右に歪んだ分布）を使って中心極限定理を確認してください： 1. <code>rexp(n, rate = 1)</code> で指数分布から乱数を生成 2. サンプルサイズ30で1000回のシミュレーションを行い、標本平均の分布を描画 3. 正規分布に近づいているか確認</p>
+</section>
+<section id="練習3-標準誤差の計算" class="level3">
+<h3 class="anchored" data-anchor-id="練習3-標準誤差の計算">練習3: 標準誤差の計算</h3>
+<p>母平均50、母標準偏差10の正規分布から： 1. サンプルサイズ25のときの標準誤差を計算 2. サンプルサイズ100のときの標準誤差を計算 3. 標準誤差を半分にするには、サンプルサイズを何倍にする必要がありますか？</p>
+</section>
+</section>
+<section id="まとめ" class="level2">
+<h2 class="anchored" data-anchor-id="まとめ">まとめ</h2>
+<table class="table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 24%">
+<col style="width: 52%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>定理</th>
+<th>内容</th>
+<th>実務的な意味</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>大数の法則</td>
+<td><span class="math inline">\(n \to \infty\)</span> で <span class="math inline">\(\bar{X} \to \mu\)</span></td>
+<td>サンプルが多いほど推定が正確</td>
+</tr>
+<tr class="even">
+<td>中心極限定理</td>
+<td><span class="math inline">\(\bar{X}\)</span> の分布は正規分布に近づく</td>
+<td>正規分布を前提とした推測が可能</td>
+</tr>
+</tbody>
+</table>
 
 
 </section>

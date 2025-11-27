@@ -1,5 +1,7 @@
 # 第9回 仮説検定 (1) {.unnumbered}
 
+![仮説検定 (1)](figure/09_hypothesis_1/infographic.png)
+
 ## 今回の目標
 
 -   仮説検定の論理（帰無仮説、対立仮説、p値）を理解する。

@@ -44,7 +44,7 @@
     "href": "01_intro.html#rとrstudioとは",
     "title": "第1回 RとRStudioの基礎",
     "section": "RとRStudioとは",
-    "text": "RとRStudioとは\n\nR: 統計解析やデータ分析に特化したプログラミング言語です。無料で使えて、世界中の研究者やデータサイエンティストが利用しています。\nRStudio: Rを便利に使うためのソフトウェア（IDE）です。コードを書く、実行する、グラフを見る、といった作業を一つの画面で行えます。",
+    "text": "RとRStudioとは\n\nR: 統計解析やデータ分析に特化したプログラミング言語です。無料で使えて、世界中の研究者やデータサイエンティストが利用しています。\nRStudio: Rを便利に使うためのソフトウェア（IDE）です。コードを書く、実行する、グラフを見る、といった作業を一つの画面で行えます。\n\n\nなぜRを学ぶのか\n\n無料でオープンソース: 誰でも無料で使えます\n強力な統計機能: 統計学者が開発したため、統計分析に最適です\n豊富なパッケージ: 世界中のユーザーが作った便利な追加機能が20,000以上あります\n再現性: コードで分析を記録するため、後から同じ分析を再現できます\n就職に有利: データサイエンティストや研究者に必須のスキルです\n\n\n\nRとExcelの違い\n\n\n\n項目\nR\nExcel\n\n\n\n\n価格\n無料\n有料\n\n\n再現性\n◎（コードで記録）\n△（手作業が多い）\n\n\n大規模データ\n◎（数百万行も可）\n×（約100万行が限界）\n\n\n学習コスト\nやや高い\n低い\n\n\n統計分析\n◎（専門的な分析可能）\n△（基本的な分析のみ）",
     "crumbs": [
       "第1回 RとRStudioの基礎"
     ]
@@ -94,7 +94,7 @@
     "href": "01_intro.html#関数",
     "title": "第1回 RとRStudioの基礎",
     "section": "関数",
-    "text": "関数\nRには便利な機能が 関数 としてたくさん用意されています。 例えば、平方根（ルート）を計算する sqrt() 関数を使ってみましょう。\n\nsqrt(16)\n#&gt; [1] 4\n\n数字の列（ベクトル）を作るには c() 関数を使います。\n\nscores &lt;- c(80, 90, 75, 60, 95)\nscores\n#&gt; [1] 80 90 75 60 95\n\n平均値を計算する mean() 関数を使ってみましょう。\n\nmean(scores)\n#&gt; [1] 80",
+    "text": "関数\nRには便利な機能が 関数 としてたくさん用意されています。 例えば、平方根（ルート）を計算する sqrt() 関数を使ってみましょう。\n\nsqrt(16)\n#&gt; [1] 4\n\n数字の列（ベクトル）を作るには c() 関数を使います。\n\nscores &lt;- c(80, 90, 75, 60, 95)\nscores\n#&gt; [1] 80 90 75 60 95\n\n平均値を計算する mean() 関数を使ってみましょう。\n\nmean(scores)\n#&gt; [1] 80\n\n\n関数の構造\n関数は「関数名(引数)」という形で使います。\n\n# 複数の引数を持つ関数の例\nround(3.14159, digits = 2)  # 小数点以下2桁に丸める\n#&gt; [1] 3.14\n\n\n\nよく使う関数一覧\n\n\n\n関数\n説明\n例\n\n\n\n\nmean()\n平均値\nmean(c(1,2,3)) → 2\n\n\nmedian()\n中央値\nmedian(c(1,2,10)) → 2\n\n\nsum()\n合計\nsum(c(1,2,3)) → 6\n\n\nmax()\n最大値\nmax(c(1,2,3)) → 3\n\n\nmin()\n最小値\nmin(c(1,2,3)) → 1\n\n\nsqrt()\n平方根\nsqrt(16) → 4\n\n\nabs()\n絶対値\nabs(-5) → 5\n\n\nround()\n四捨五入\nround(3.7) → 4\n\n\nlength()\n要素数\nlength(c(1,2,3)) → 3",
     "crumbs": [
       "第1回 RとRStudioの基礎"
     ]
@@ -140,6 +140,16 @@
     ]
   },
   {
+    "objectID": "01_intro.html#練習問題",
+    "href": "01_intro.html#練習問題",
+    "title": "第1回 RとRStudioの基礎",
+    "section": "練習問題",
+    "text": "練習問題\n\n練習1: 基本計算\n次の計算をRで行ってください。\n\n\\(25 \\times 4 + 100\\)\n\\(\\sqrt{144}\\)\n\\(2^{10}\\)（2の10乗）\n\n\n\n練習2: 変数の操作\n\n変数 price に 1500 を代入してください\n変数 quantity に 3 を代入してください\nprice * quantity で合計金額を計算してください\n\n\n\n練習3: ベクトルの操作\n\n1から10までの数字を含むベクトルを作ってください（ヒント: 1:10 が使えます）\nそのベクトルの合計を sum() で計算してください\nそのベクトルの平均を mean() で計算してください",
+    "crumbs": [
+      "第1回 RとRStudioの基礎"
+    ]
+  },
+  {
     "objectID": "02_data.html",
     "href": "02_data.html",
     "title": "第2回 データの構造と扱い",
@@ -164,7 +174,7 @@
     "href": "02_data.html#パッケージの準備",
     "title": "第2回 データの構造と扱い",
     "section": "パッケージの準備",
-    "text": "パッケージの準備\nRには便利な機能を追加する パッケージ という仕組みがあります。 この講義では、データ分析に必須のパッケージ群 Tidyverse を使います。\n初回のみインストールが必要です（前回の課題で実施済みなら不要）。\n\n# install.packages(\"tidyverse\") {.unnumbered}\n\n使うときは毎回 library() 関数で読み込みます。\n\nlibrary(tidyverse)",
+    "text": "パッケージの準備\nRには便利な機能を追加する パッケージ という仕組みがあります。 この講義では、データ分析に必須のパッケージ群 Tidyverse を使います。\n\nTidyverseとは\nTidyverseは、データサイエンスのために設計されたパッケージの集合体です。主に以下のパッケージが含まれています：\n\n\n\nパッケージ\n主な用途\n\n\n\n\nggplot2\nデータの可視化（グラフ作成）\n\n\ndplyr\nデータの操作・加工\n\n\ntidyr\nデータの整形\n\n\nreadr\nデータの読み込み\n\n\nstringr\n文字列の操作\n\n\nforcats\nカテゴリ変数（因子）の操作\n\n\n\n初回のみインストールが必要です（前回の課題で実施済みなら不要）。\n\n# install.packages(\"tidyverse\") {.unnumbered}\n\n使うときは毎回 library() 関数で読み込みます。\n\nlibrary(tidyverse)",
     "crumbs": [
       "第2回 データの構造と扱い"
     ]
@@ -174,7 +184,7 @@
     "href": "02_data.html#データフレーム",
     "title": "第2回 データの構造と扱い",
     "section": "データフレーム",
-    "text": "データフレーム\n統計分析では、Excelのような表形式のデータを扱います。Rではこれを データフレーム と呼びます。 Rには練習用のデータセットがいくつか入っています。iris（アヤメのデータ）を見てみましょう。\n\nhead(iris) # 最初の6行を表示",
+    "text": "データフレーム\n統計分析では、Excelのような表形式のデータを扱います。Rではこれを データフレーム と呼びます。 Rには練習用のデータセットがいくつか入っています。iris（アヤメのデータ）を見てみましょう。\n\nhead(iris) # 最初の6行を表示\n\n\n  \n\n\n\n\nデータフレームの構造を確認する\n\n# データの次元（行数 × 列数）\ndim(iris)\n#&gt; [1] 150   5\n\n# 列名の確認\nnames(iris)\n#&gt; [1] \"Sepal.Length\" \"Sepal.Width\"  \"Petal.Length\" \"Petal.Width\"  \"Species\"\n\n# データの構造を確認\nstr(iris)\n#&gt; 'data.frame':    150 obs. of  5 variables:\n#&gt;  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...\n#&gt;  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...\n#&gt;  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...\n#&gt;  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...\n#&gt;  $ Species     : Factor w/ 3 levels \"setosa\",\"versicolor\",..: 1 1 1 1 1 1 1 1 1 1 ...\n\n\n\nデータ型について\nRには主に以下のデータ型があります：\n\n\n\nデータ型\n説明\n例\n\n\n\n\nnumeric\n数値\n1.5, 100, -3.14\n\n\ninteger\n整数\n1L, 2L, 100L\n\n\ncharacter\n文字列\n“東京”, “hello”\n\n\nlogical\n論理値\nTRUE, FALSE\n\n\nfactor\nカテゴリ\n男性/女性, 大/中/小",
     "crumbs": [
       "第2回 データの構造と扱い"
     ]
@@ -184,7 +194,7 @@
     "href": "02_data.html#データの読み込み",
     "title": "第2回 データの構造と扱い",
     "section": "データの読み込み",
-    "text": "データの読み込み\n自分のデータを分析するには、CSVファイルなどを読み込む必要があります。 read_csv() 関数を使います。\n\n# data.csv というファイルがある場合の例 {.unnumbered}\n# df &lt;- read_csv(\"data.csv\") {.unnumbered}\n\n今回は、Web上のCSVデータを読み込んでみましょう。\n\nurl &lt;- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips &lt;- read_csv(url)\n\nデータの概要を確認します。\n\nglimpse(tips)\n#&gt; Rows: 244\n#&gt; Columns: 7\n#&gt; $ total_bill &lt;dbl&gt; 16.99, 10.34, 21.01, 23.68, 24.59, 25.29, 8.77, 26.88, 15.0…\n#&gt; $ tip        &lt;dbl&gt; 1.01, 1.66, 3.50, 3.31, 3.61, 4.71, 2.00, 3.12, 1.96, 3.23,…\n#&gt; $ sex        &lt;chr&gt; \"Female\", \"Male\", \"Male\", \"Male\", \"Female\", \"Male\", \"Male\",…\n#&gt; $ smoker     &lt;chr&gt; \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\",…\n#&gt; $ day        &lt;chr&gt; \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Su…\n#&gt; $ time       &lt;chr&gt; \"Dinner\", \"Dinner\", \"Dinner\", \"Dinner\", \"Dinner\", \"Dinner\",…\n#&gt; $ size       &lt;dbl&gt; 2, 3, 3, 2, 4, 4, 2, 4, 2, 2, 2, 4, 2, 4, 2, 2, 3, 3, 3, 3,…",
+    "text": "データの読み込み\n自分のデータを分析するには、CSVファイルなどを読み込む必要があります。 read_csv() 関数を使います。\n\n# data.csv というファイルがある場合の例 {.unnumbered}\n# df &lt;- read_csv(\"data.csv\") {.unnumbered}\n\n\nよく使うデータ読み込み関数\n\n\n\n関数\nファイル形式\nパッケージ\n\n\n\n\nread_csv()\nCSV（カンマ区切り）\nreadr (tidyverse)\n\n\nread_tsv()\nTSV（タブ区切り）\nreadr (tidyverse)\n\n\nread_excel()\nExcel (.xlsx)\nreadxl\n\n\nread.csv()\nCSV\nbase R\n\n\n\n今回は、Web上のCSVデータを読み込んでみましょう。\n\nurl &lt;- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips &lt;- read_csv(url)\n\nデータの概要を確認します。\n\nglimpse(tips)\n#&gt; Rows: 244\n#&gt; Columns: 7\n#&gt; $ total_bill &lt;dbl&gt; 16.99, 10.34, 21.01, 23.68, 24.59, 25.29, 8.77, 26.88, 15.0…\n#&gt; $ tip        &lt;dbl&gt; 1.01, 1.66, 3.50, 3.31, 3.61, 4.71, 2.00, 3.12, 1.96, 3.23,…\n#&gt; $ sex        &lt;chr&gt; \"Female\", \"Male\", \"Male\", \"Male\", \"Female\", \"Male\", \"Male\",…\n#&gt; $ smoker     &lt;chr&gt; \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\",…\n#&gt; $ day        &lt;chr&gt; \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Su…\n#&gt; $ time       &lt;chr&gt; \"Dinner\", \"Dinner\", \"Dinner\", \"Dinner\", \"Dinner\", \"Dinner\",…\n#&gt; $ size       &lt;dbl&gt; 2, 3, 3, 2, 4, 4, 2, 4, 2, 2, 2, 4, 2, 4, 2, 2, 3, 3, 3, 3,…\n\n\n\ntipsデータの説明\nこのデータはレストランでのチップに関するデータです。\n\n\n\n変数名\n説明\n\n\n\n\ntotal_bill\n支払総額（ドル）\n\n\ntip\nチップの額（ドル）\n\n\nsex\n支払者の性別\n\n\nsmoker\n喫煙者かどうか\n\n\nday\n曜日\n\n\ntime\n時間帯（ランチ/ディナー）\n\n\nsize\nグループの人数",
     "crumbs": [
       "第2回 データの構造と扱い"
     ]
@@ -230,6 +240,26 @@
     ]
   },
   {
+    "objectID": "02_data.html#練習問題",
+    "href": "02_data.html#練習問題",
+    "title": "第2回 データの構造と扱い",
+    "section": "練習問題",
+    "text": "練習問題\n\n練習1: データの確認\n\ntips データの行数と列数を確認してください\ntips データの最後の6行を表示してください（ヒント: tail() 関数）\n\n\n\n練習2: フィルタリング\n\nチップ (tip) が3ドル以上のデータだけを抽出してください\n女性 (sex == \"Female\") かつディナー (time == \"Dinner\") のデータを抽出してください\n\n\n\n練習3: データ加工の組み合わせ\n以下の操作を1つのパイプでつなげて実行してください： 1. 土曜日 (day == \"Sat\") のデータを抽出 2. チップ率 (tip / total_bill * 100) を新しい列として追加 3. チップ率の高い順に並び替え 4. 上位5件を表示",
+    "crumbs": [
+      "第2回 データの構造と扱い"
+    ]
+  },
+  {
+    "objectID": "02_data.html#dplyr関数のまとめ",
+    "href": "02_data.html#dplyr関数のまとめ",
+    "title": "第2回 データの構造と扱い",
+    "section": "dplyr関数のまとめ",
+    "text": "dplyr関数のまとめ\n\n\n\n関数\n用途\n例\n\n\n\n\nselect()\n列を選択\nselect(data, col1, col2)\n\n\nfilter()\n行を抽出\nfilter(data, x &gt; 10)\n\n\nmutate()\n新しい列を作成\nmutate(data, new = x + y)\n\n\narrange()\n並び替え\narrange(data, x)\n\n\nsummarize()\n要約統計量\nsummarize(data, mean(x))\n\n\ngroup_by()\nグループ化\ngroup_by(data, category)",
+    "crumbs": [
+      "第2回 データの構造と扱い"
+    ]
+  },
+  {
     "objectID": "03_desc_stat_1.html",
     "href": "03_desc_stat_1.html",
     "title": "第3回 記述統計 (1) 数値要約",
@@ -250,6 +280,16 @@
     ]
   },
   {
+    "objectID": "03_desc_stat_1.html#記述統計とは",
+    "href": "03_desc_stat_1.html#記述統計とは",
+    "title": "第3回 記述統計 (1) 数値要約",
+    "section": "記述統計とは",
+    "text": "記述統計とは\n記述統計（Descriptive Statistics）とは、データの特徴を数値やグラフで要約・記述する方法です。主に以下の2つの側面からデータを把握します：\n\n中心的傾向（代表値）: データの「中心」がどこにあるか\n散布度（ばらつき）: データがどれくらい広がっているか",
+    "crumbs": [
+      "第3回 記述統計 (1) 数値要約"
+    ]
+  },
+  {
     "objectID": "03_desc_stat_1.html#準備",
     "href": "03_desc_stat_1.html#準備",
     "title": "第3回 記述統計 (1) 数値要約",
@@ -264,7 +304,7 @@
     "href": "03_desc_stat_1.html#代表値データの中心",
     "title": "第3回 記述統計 (1) 数値要約",
     "section": "代表値：データの中心",
-    "text": "代表値：データの中心\n\n平均値 (Mean)\nすべてのデータを足して、データの個数で割ったものです。\n\nmean(tips$total_bill)\n#&gt; [1] 19.78594\n\n\n\n中央値 (Median)\nデータを小さい順に並べたときに、ちょうど真ん中にくる値です。 外れ値（極端に大きい/小さい値）の影響を受けにくいという特徴があります。\n\nmedian(tips$total_bill)\n#&gt; [1] 17.795",
+    "text": "代表値：データの中心\n\n平均値 (Mean)\nすべてのデータを足して、データの個数で割ったものです。\n\\[\\bar{x} = \\frac{1}{n}\\sum_{i=1}^{n} x_i\\]\n\nmean(tips$total_bill)\n#&gt; [1] 19.78594\n\n\n\n中央値 (Median)\nデータを小さい順に並べたときに、ちょうど真ん中にくる値です。 外れ値（極端に大きい/小さい値）の影響を受けにくいという特徴があります。\n\nmedian(tips$total_bill)\n#&gt; [1] 17.795\n\n\n\n最頻値 (Mode)\nデータの中で最も頻繁に出現する値です。Rには標準で最頻値を求める関数がないため、自分で計算します。\n\n# カテゴリ変数の最頻値を確認\ntips %&gt;% \n  count(day) %&gt;% \n  arrange(desc(n))\n\n\n  \n\n\n\n\n\n平均値 vs 中央値：どちらを使うべきか\n\n\n\n状況\n推奨される代表値\n\n\n\n\n左右対称な分布\n平均値\n\n\n歪んだ分布（外れ値あり）\n中央値\n\n\n所得や資産のデータ\n中央値\n\n\nテストの点数\n平均値",
     "crumbs": [
       "第3回 記述統計 (1) 数値要約"
     ]
@@ -274,7 +314,7 @@
     "href": "03_desc_stat_1.html#散布度データのばらつき",
     "title": "第3回 記述統計 (1) 数値要約",
     "section": "散布度：データのばらつき",
-    "text": "散布度：データのばらつき\n\n分散 (Variance)\nデータが平均値からどれくらい離れているかを表す指標です。 Rの var() 関数は不偏分散を計算します。\n\nvar(tips$total_bill)\n#&gt; [1] 79.25294\n\n\n\n標準偏差 (Standard Deviation)\n分散の平方根をとったものです。元のデータと同じ単位になるので直感的に分かりやすいです。\n\nsd(tips$total_bill)\n#&gt; [1] 8.902412\n\n\n\n四分位数 (Quartiles)\nデータを小さい順に並べて4等分したときの区切り値です。 summary() 関数を使うと、最小値、第1四分位数、中央値、平均値、第3四分位数、最大値をまとめて表示できます。\n\nsummary(tips$total_bill)\n#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n#&gt;    3.07   13.35   17.80   19.79   24.13   50.81\n\n結果の見方: - Min: 最小値 - 1st Qu: 第1四分位数（データの下位25%の境界値） - Median: 中央値 - Mean: 平均値 - 3rd Qu: 第3四分位数（データの下位75%の境界値） - Max: 最大値\n\n\n四分位範囲 (IQR: Interquartile Range)\n第3四分位数と第1四分位数の差を 四分位範囲 と呼びます。 データの中央50%がどれくらいの幅に収まっているかを表します。R では IQR() 関数で計算できます。\n\nIQR(tips$total_bill)\n#&gt; [1] 10.78\n\n四分位範囲は、外れ値の影響を受けにくい散布度の指標として有効です。",
+    "text": "散布度：データのばらつき\n\n範囲 (Range)\n最大値と最小値の差です。\n\nrange(tips$total_bill)  # 最小値と最大値\n#&gt; [1]  3.07 50.81\n\nmax(tips$total_bill) - min(tips$total_bill)  # 範囲\n#&gt; [1] 47.74\n\n\n\n分散 (Variance)\nデータが平均値からどれくらい離れているかを表す指標です。 Rの var() 関数は不偏分散を計算します。\n\\[s^2 = \\frac{1}{n-1}\\sum_{i=1}^{n} (x_i - \\bar{x})^2\\]\n\nvar(tips$total_bill)\n#&gt; [1] 79.25294\n\n\n\n標準偏差 (Standard Deviation)\n分散の平方根をとったものです。元のデータと同じ単位になるので直感的に分かりやすいです。\n\\[s = \\sqrt{s^2}\\]\n\nsd(tips$total_bill)\n#&gt; [1] 8.902412\n\n\n\n変動係数 (Coefficient of Variation)\n標準偏差を平均値で割ったもので、単位に依存しないばらつきの指標です。異なる単位のデータのばらつきを比較するときに便利です。\n\\[CV = \\frac{s}{\\bar{x}} \\times 100\\%\\]\n\n# チップと支払総額のばらつきを比較\ncv_tip &lt;- sd(tips$tip) / mean(tips$tip) * 100\ncv_bill &lt;- sd(tips$total_bill) / mean(tips$total_bill) * 100\n\ncat(\"チップの変動係数:\", cv_tip, \"%\\n\")\n#&gt; チップの変動係数: 46.14775 %\ncat(\"支払総額の変動係数:\", cv_bill, \"%\\n\")\n#&gt; 支払総額の変動係数: 44.99362 %\n\n\n\n四分位数 (Quartiles)\nデータを小さい順に並べて4等分したときの区切り値です。 summary() 関数を使うと、最小値、第1四分位数、中央値、平均値、第3四分位数、最大値をまとめて表示できます。\n\nsummary(tips$total_bill)\n#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n#&gt;    3.07   13.35   17.80   19.79   24.13   50.81\n\n結果の見方: - Min: 最小値 - 1st Qu: 第1四分位数（データの下位25%の境界値） - Median: 中央値 - Mean: 平均値 - 3rd Qu: 第3四分位数（データの下位75%の境界値） - Max: 最大値\n\n\n四分位範囲 (IQR: Interquartile Range)\n第3四分位数と第1四分位数の差を 四分位範囲 と呼びます。 データの中央50%がどれくらいの幅に収まっているかを表します。R では IQR() 関数で計算できます。\n\nIQR(tips$total_bill)\n#&gt; [1] 10.78\n\n四分位範囲は、外れ値の影響を受けにくい散布度の指標として有効です。",
     "crumbs": [
       "第3回 記述統計 (1) 数値要約"
     ]
@@ -320,6 +360,26 @@
     ]
   },
   {
+    "objectID": "03_desc_stat_1.html#練習問題",
+    "href": "03_desc_stat_1.html#練習問題",
+    "title": "第3回 記述統計 (1) 数値要約",
+    "section": "練習問題",
+    "text": "練習問題\n\n練習1: 基本的な記述統計\ntips データの size（グループの人数）について以下を計算してください： 1. 平均値 2. 中央値 3. 標準偏差 4. 最小値と最大値\n\n\n練習2: グループ別の比較\n喫煙者 (smoker == \"Yes\") と非喫煙者 (smoker == \"No\") で、支払総額の平均値と標準偏差を比較してください。\n\n\n練習3: 外れ値の影響\n\ntips データに外れ値（total_bill = 100）を1つ追加したデータを作成してください\n元のデータと新しいデータで、平均値と中央値を比較してください\nどちらの代表値が外れ値の影響を受けやすいですか？",
+    "crumbs": [
+      "第3回 記述統計 (1) 数値要約"
+    ]
+  },
+  {
+    "objectID": "03_desc_stat_1.html#記述統計量のまとめ",
+    "href": "03_desc_stat_1.html#記述統計量のまとめ",
+    "title": "第3回 記述統計 (1) 数値要約",
+    "section": "記述統計量のまとめ",
+    "text": "記述統計量のまとめ\n\n\n\n種類\n指標\nR関数\n特徴\n\n\n\n\n代表値\n平均値\nmean()\n全データを使用、外れ値に敏感\n\n\n代表値\n中央値\nmedian()\n外れ値に頑健\n\n\n散布度\n分散\nvar()\n単位が元の2乗\n\n\n散布度\n標準偏差\nsd()\n元の単位と同じ\n\n\n散布度\n四分位範囲\nIQR()\n外れ値に頑健\n\n\n位置\n四分位数\nquantile()\nデータの位置を表す",
+    "crumbs": [
+      "第3回 記述統計 (1) 数値要約"
+    ]
+  },
+  {
     "objectID": "04_desc_stat_2.html",
     "href": "04_desc_stat_2.html",
     "title": "第4回 記述統計 (2) データの可視化",
@@ -334,7 +394,17 @@
     "href": "04_desc_stat_2.html#今回の目標",
     "title": "第4回 記述統計 (2) データの可視化",
     "section": "",
-    "text": "データの分布をグラフで確認する重要性を理解する。\nggplot2 を使って基本的なグラフ（ヒストグラム、箱ひげ図、散布図）を作成する。",
+    "text": "データの分布をグラフで確認する重要性を理解する。\nggplot2 を使って基本的なグラフ（ヒストグラム、箱ひげ図、散布図）を作成する。\nグラフの種類と使い分けを学ぶ。",
+    "crumbs": [
+      "第4回 記述統計 (2) データの可視化"
+    ]
+  },
+  {
+    "objectID": "04_desc_stat_2.html#なぜ可視化が重要か",
+    "href": "04_desc_stat_2.html#なぜ可視化が重要か",
+    "title": "第4回 記述統計 (2) データの可視化",
+    "section": "なぜ可視化が重要か",
+    "text": "なぜ可視化が重要か\n数値だけではデータの特徴を見落とすことがあります。有名な「アンスコムのカルテット」という例があります。\n\nlibrary(tidyverse)\n\n# アンスコムのカルテット（Rに組み込み済み）\nanscombe_long &lt;- anscombe %&gt;%\n  pivot_longer(everything(),\n               names_to = c(\".value\", \"set\"),\n               names_pattern = \"(.)(.)\")\n\n# 各セットの統計量\nanscombe_long %&gt;%\n  group_by(set) %&gt;%\n  summarize(\n    mean_x = mean(x),\n    mean_y = mean(y),\n    sd_x = sd(x),\n    sd_y = sd(y),\n    cor = cor(x, y)\n  )\n\n\n  \n\n\n\n統計量はほぼ同じですが、グラフにすると全く異なるパターンが見えます。\n\nggplot(anscombe_long, aes(x = x, y = y)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_point() +\n  geom_smooth(method = \"lm\", se = FALSE) +\n  facet_wrap(~set) +\n  labs(title = \"アンスコムのカルテット: 統計量は同じでもパターンは異なる\")",
     "crumbs": [
       "第4回 記述統計 (2) データの可視化"
     ]
@@ -344,7 +414,7 @@
     "href": "04_desc_stat_2.html#準備",
     "title": "第4回 記述統計 (2) データの可視化",
     "section": "準備",
-    "text": "準備\n\nlibrary(tidyverse)\nurl &lt;- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips &lt;- read_csv(url)",
+    "text": "準備\n\nurl &lt;- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips &lt;- read_csv(url)",
     "crumbs": [
       "第4回 記述統計 (2) データの可視化"
     ]
@@ -364,7 +434,7 @@
     "href": "04_desc_stat_2.html#変数の可視化",
     "title": "第4回 記述統計 (2) データの可視化",
     "section": "1変数の可視化",
-    "text": "1変数の可視化\n\nヒストグラム (Histogram)\n連続変数の分布を見るのによく使います。geom_histogram() を使います。\n\nggplot(tips, aes(x = total_bill)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_histogram(bins = 30, fill = \"skyblue\", color = \"white\") +\n  labs(title = \"支払総額のヒストグラム\", x = \"支払総額 ($)\", y = \"度数\")\n\n\n\n\n\n\n\n\n\n\n箱ひげ図 (Boxplot)\nデータのばらつきや外れ値を確認するのに便利です。geom_boxplot() を使います。 1変数だけでなく、カテゴリごとの分布比較にもよく使われます。\n\nggplot(tips, aes(x = day, y = total_bill, fill = day)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_boxplot() +\n  labs(title = \"曜日別の支払総額\", x = \"曜日\", y = \"支払総額\")\n\n\n\n\n\n\n\n\n\n\n棒グラフ (Bar Plot)\nカテゴリ変数（離散変数）の度数（カウント）を見るのに使います。geom_bar() を使います。 曜日ごとのデータ数を見てみましょう。\n\nggplot(tips, aes(x = day)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_bar(fill = \"steelblue\") +\n  labs(title = \"曜日ごとのデータ数\", x = \"曜日\", y = \"件数\")",
+    "text": "1変数の可視化\n\nヒストグラム (Histogram)\n連続変数の分布を見るのによく使います。geom_histogram() を使います。\n\nggplot(tips, aes(x = total_bill)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_histogram(bins = 30, fill = \"skyblue\", color = \"white\") +\n  labs(title = \"支払総額のヒストグラム\", x = \"支払総額 ($)\", y = \"度数\")\n\n\n\n\n\n\n\n\n\n\n箱ひげ図 (Boxplot)\nデータのばらつきや外れ値を確認するのに便利です。geom_boxplot() を使います。 1変数だけでなく、カテゴリごとの分布比較にもよく使われます。\n\nggplot(tips, aes(x = day, y = total_bill, fill = day)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_boxplot() +\n  labs(title = \"曜日別の支払総額\", x = \"曜日\", y = \"支払総額\")\n\n\n\n\n\n\n\n\n\n\n箱ひげ図の読み方\n箱ひげ図の各部分は以下を表しています：\n\n箱の下端: 第1四分位数（Q1、下位25%）\n箱の中の線: 中央値（Q2、下位50%）\n箱の上端: 第3四分位数（Q3、下位75%）\nひげ: Q1 - 1.5×IQR から Q3 + 1.5×IQR の範囲\n点: 外れ値\n\n\n\nバイオリンプロット\n箱ひげ図の代替として、分布の形状をより詳しく見られるバイオリンプロットがあります。\n\nggplot(tips, aes(x = day, y = total_bill, fill = day)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_violin() +\n  geom_boxplot(width = 0.1, fill = \"white\") +\n  labs(title = \"曜日別の支払総額（バイオリンプロット）\", x = \"曜日\", y = \"支払総額\")\n\n\n\n\n\n\n\n\n\n\n棒グラフ (Bar Plot)\nカテゴリ変数（離散変数）の度数（カウント）を見るのに使います。geom_bar() を使います。 曜日ごとのデータ数を見てみましょう。\n\nggplot(tips, aes(x = day)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_bar(fill = \"steelblue\") +\n  labs(title = \"曜日ごとのデータ数\", x = \"曜日\", y = \"件数\")",
     "crumbs": [
       "第4回 記述統計 (2) データの可視化"
     ]
@@ -420,6 +490,26 @@
     ]
   },
   {
+    "objectID": "04_desc_stat_2.html#練習問題",
+    "href": "04_desc_stat_2.html#練習問題",
+    "title": "第4回 記述統計 (2) データの可視化",
+    "section": "練習問題",
+    "text": "練習問題\n\n練習1: ヒストグラムのカスタマイズ\n\ntip のヒストグラムを作成し、ビンの数を10に変更してください\n色を自分の好きな色に変更してください\n適切なタイトルと軸ラベルを追加してください\n\n\n\n練習2: 複数のグラフの作成\n\n性別 (sex) ごとの tip の箱ひげ図を作成してください\n喫煙者 (smoker) ごとの total_bill のヒストグラムを、facet_wrap() を使って並べて表示してください\n\n\n\n練習3: 散布図の応用\n\ntotal_bill と tip の散布図を作成してください\n点の大きさを size（人数）に対応させてください（ヒント: aes(size = size)）\n回帰直線を追加してください",
+    "crumbs": [
+      "第4回 記述統計 (2) データの可視化"
+    ]
+  },
+  {
+    "objectID": "04_desc_stat_2.html#グラフ選択のガイド",
+    "href": "04_desc_stat_2.html#グラフ選択のガイド",
+    "title": "第4回 記述統計 (2) データの可視化",
+    "section": "グラフ選択のガイド",
+    "text": "グラフ選択のガイド\n\n\n\n目的\nグラフの種類\nggplot2の関数\n\n\n\n\n1変数の分布（連続）\nヒストグラム\ngeom_histogram()\n\n\n1変数の分布（連続）\n密度プロット\ngeom_density()\n\n\n1変数の分布（カテゴリ）\n棒グラフ\ngeom_bar()\n\n\n2変数の関係（連続×連続）\n散布図\ngeom_point()\n\n\nグループ比較（連続×カテゴリ）\n箱ひげ図\ngeom_boxplot()\n\n\nグループ比較（連続×カテゴリ）\nバイオリンプロット\ngeom_violin()\n\n\n時系列データ\n折れ線グラフ\ngeom_line()",
+    "crumbs": [
+      "第4回 記述統計 (2) データの可視化"
+    ]
+  },
+  {
     "objectID": "05_probability.html",
     "href": "05_probability.html",
     "title": "第5回 確率論の基礎",
@@ -440,11 +530,31 @@
     ]
   },
   {
+    "objectID": "05_probability.html#なぜ確率を学ぶのか",
+    "href": "05_probability.html#なぜ確率を学ぶのか",
+    "title": "第5回 確率論の基礎",
+    "section": "なぜ確率を学ぶのか",
+    "text": "なぜ確率を学ぶのか\n統計学は「不確実性」を扱う学問です。サンプルから母集団を推測するとき、そこには常に不確実性があります。この不確実性を数学的に扱うために、確率論の知識が必要です。",
+    "crumbs": [
+      "第5回 確率論の基礎"
+    ]
+  },
+  {
+    "objectID": "05_probability.html#確率の基本",
+    "href": "05_probability.html#確率の基本",
+    "title": "第5回 確率論の基礎",
+    "section": "確率の基本",
+    "text": "確率の基本\n\n確率の定義\n確率とは、ある事象が起こる可能性を0から1の間の数値で表したものです。\n\n確率 = 0: 絶対に起こらない\n確率 = 1: 必ず起こる\n確率 = 0.5: 半々の可能性\n\n\n\n確率の計算\n公正なサイコロを1回振ったとき、特定の目が出る確率：\n\n# 1の目が出る確率\n1 / 6\n#&gt; [1] 0.1666667\n\n# 偶数の目が出る確率\n3 / 6\n#&gt; [1] 0.5",
+    "crumbs": [
+      "第5回 確率論の基礎"
+    ]
+  },
+  {
     "objectID": "05_probability.html#確率変数と確率分布",
     "href": "05_probability.html#確率変数と確率分布",
     "title": "第5回 確率論の基礎",
     "section": "確率変数と確率分布",
-    "text": "確率変数と確率分布\n\n確率変数 (Random Variable): サイコロの目やコインの裏表のように、とる値が確率的に決まる変数のこと。通常 \\(X\\) や \\(Y\\) などの大文字で表します。\n確率分布 (Probability Distribution): 確率変数がどのような値をどのような確率でとるかを表したものです。\n\n\n例：サイコロ\nサイコロを1回振ったときの出る目を \\(X\\) とすると、\\(X\\) は \\(\\{1, 2, 3, 4, 5, 6\\}\\) のいずれかの値をとります。 それぞれの目が出る確率は \\(1/6\\) です。\nRで表してみましょう。\n\nx &lt;- 1:6\nprob &lt;- rep(1/6, 6) # 1/6 を 6回繰り返す\n\ndata.frame(x, prob)\n\n\n  \n\n\n\nこれをグラフ（確率分布図）にしてみましょう。\n\nlibrary(tidyverse)\ntheme_set(theme_gray(base_family = \"HiraKakuProN-W3\"))\n\ndf &lt;- data.frame(x = factor(x), prob = prob)\n\nggplot(df, aes(x = x, y = prob)) +\n  geom_col(fill = \"orange\") +\n  ylim(0, 0.5) +\n  labs(title = \"サイコロの確率分布\", x = \"出る目\", y = \"確率\")",
+    "text": "確率変数と確率分布\n\n確率変数 (Random Variable): サイコロの目やコインの裏表のように、とる値が確率的に決まる変数のこと。通常 \\(X\\) や \\(Y\\) などの大文字で表します。\n確率分布 (Probability Distribution): 確率変数がどのような値をどのような確率でとるかを表したものです。\n\n\n離散型と連続型\n\n離散型確率変数: とりうる値が飛び飛び（例：サイコロの目、コインの裏表）\n連続型確率変数: とりうる値が連続的（例：身長、気温）\n\n\n\n例：サイコロ\nサイコロを1回振ったときの出る目を \\(X\\) とすると、\\(X\\) は \\(\\{1, 2, 3, 4, 5, 6\\}\\) のいずれかの値をとります。 それぞれの目が出る確率は \\(1/6\\) です。\nRで表してみましょう。\n\nx &lt;- 1:6\nprob &lt;- rep(1/6, 6) # 1/6 を 6回繰り返す\n\ndata.frame(x, prob)\n\n\n  \n\n\n\nこれをグラフ（確率分布図）にしてみましょう。\n\nlibrary(tidyverse)\ntheme_set(theme_gray(base_family = \"HiraKakuProN-W3\"))\n\ndf &lt;- data.frame(x = factor(x), prob = prob)\n\nggplot(df, aes(x = x, y = prob)) +\n  geom_col(fill = \"orange\") +\n  ylim(0, 0.5) +\n  labs(title = \"サイコロの確率分布\", x = \"出る目\", y = \"確率\")",
     "crumbs": [
       "第5回 確率論の基礎"
     ]
@@ -464,7 +574,17 @@
     "href": "05_probability.html#分散-variance",
     "title": "第5回 確率論の基礎",
     "section": "分散 (Variance)",
-    "text": "分散 (Variance)\n確率変数の「ばらつき」を表す指標です。\\(V[X]\\) と書きます。 「（値 - 期待値）の2乗」の期待値として定義されます。\n\\[ V[X] = E[(X - E[X])^2] = \\sum (x_i - E[X])^2 P(X=x_i) \\]\nサイコロの分散を計算してみましょう。",
+    "text": "分散 (Variance)\n確率変数の「ばらつき」を表す指標です。\\(V[X]\\) と書きます。 「（値 - 期待値）の2乗」の期待値として定義されます。\n\\[ V[X] = E[(X - E[X])^2] = \\sum (x_i - E[X])^2 P(X=x_i) \\]\nサイコロの分散を計算してみましょう。\n\n# 分散の計算\nV_X &lt;- sum((x - E_X)^2 * prob)\nV_X\n#&gt; [1] 2.916667\n\n# 標準偏差\nsqrt(V_X)\n#&gt; [1] 1.707825\n\n\n分散の性質\n分散には以下のような便利な性質があります。\n\n定数を足す: \\(V[X + c] = V[X]\\)（定数を足しても分散は変わらない）\n定数を掛ける: \\(V[cX] = c^2 \\cdot V[X]\\)\n別の計算式: \\(V[X] = E[X^2] - (E[X])^2\\)\n\n\n# 別の計算式で確認\nE_X2 &lt;- sum(x^2 * prob)  # E[X^2]\nE_X2 - E_X^2  # V[X] = E[X^2] - (E[X])^2\n#&gt; [1] 2.916667",
+    "crumbs": [
+      "第5回 確率論の基礎"
+    ]
+  },
+  {
+    "objectID": "05_probability.html#同時確率と条件付き確率",
+    "href": "05_probability.html#同時確率と条件付き確率",
+    "title": "第5回 確率論の基礎",
+    "section": "同時確率と条件付き確率",
+    "text": "同時確率と条件付き確率\n\n同時確率\n2つの事象が同時に起こる確率を同時確率といいます。\n例：2つのサイコロを振って、両方とも6が出る確率\n\n# 両方6が出る確率\n(1/6) * (1/6)\n#&gt; [1] 0.02777778\n\n\n\n条件付き確率\nある事象が起こったという条件のもとで、別の事象が起こる確率を条件付き確率といいます。\n\\[P(A|B) = \\frac{P(A \\cap B)}{P(B)}\\]\n\n\n独立性\n事象 \\(A\\) と \\(B\\) が独立であるとは：\n\\[P(A \\cap B) = P(A) \\times P(B)\\]\nが成り立つことをいいます。サイコロを2回振る場合、1回目の結果と2回目の結果は独立です。",
     "crumbs": [
       "第5回 確率論の基礎"
     ]
@@ -475,6 +595,26 @@
     "title": "第5回 確率論の基礎",
     "section": "課題",
     "text": "課題\n\nコインを1回投げて、表が出たら 100円、裏が出たら 0円もらえるギャンブルがあります。 表が出る確率を 0.5、裏が出る確率を 0.5 とするとき、もらえる金額の期待値を計算してください。\nもし表が出る確率が 0.1、裏が出る確率が 0.9 だったら、期待値はどうなりますか？",
+    "crumbs": [
+      "第5回 確率論の基礎"
+    ]
+  },
+  {
+    "objectID": "05_probability.html#練習問題",
+    "href": "05_probability.html#練習問題",
+    "title": "第5回 確率論の基礎",
+    "section": "練習問題",
+    "text": "練習問題\n\n練習1: サイコロの問題\n\n2つのサイコロを振ったとき、目の合計が7になる確率を計算してください\n目の合計の期待値を計算してください\n\n\n\n練習2: 宝くじの期待値\n1等（100万円）が当たる確率が 1/10000、2等（10万円）が当たる確率が 1/1000、ハズレ（0円）がそれ以外の宝くじがあります。この宝くじの期待値を計算してください。\n\n\n練習3: ギャンブルの期待値\nコインを3回投げて、表が出た回数 × 100円がもらえるゲームがあります。 1. とりうる値（0円、100円、200円、300円）それぞれの確率を計算してください 2. 期待値を計算してください",
+    "crumbs": [
+      "第5回 確率論の基礎"
+    ]
+  },
+  {
+    "objectID": "05_probability.html#確率の公式まとめ",
+    "href": "05_probability.html#確率の公式まとめ",
+    "title": "第5回 確率論の基礎",
+    "section": "確率の公式まとめ",
+    "text": "確率の公式まとめ\n\n\n\n公式\n説明\n\n\n\n\n\\(P(A \\cup B) = P(A) + P(B) - P(A \\cap B)\\)\n加法定理\n\n\n\\(P(A \\cap B) = P(A) \\times P(B\\|A)\\)\n乗法定理\n\n\n\\(P(A\\|B) = \\frac{P(A \\cap B)}{P(B)}\\)\n条件付き確率\n\n\n\\(E[X] = \\sum x_i P(X=x_i)\\)\n期待値\n\n\n\\(V[X] = E[(X-E[X])^2]\\)\n分散",
     "crumbs": [
       "第5回 確率論の基礎"
     ]
@@ -494,7 +634,17 @@
     "href": "06_distributions.html#今回の目標",
     "title": "第6回 主要な確率分布",
     "section": "",
-    "text": "統計学で最も重要な 正規分布 を理解する。\nRを使って確率分布の計算やグラフ描画を行う。",
+    "text": "統計学で最も重要な 正規分布 を理解する。\n二項分布 を理解する。\nRを使って確率分布の計算やグラフ描画を行う。",
+    "crumbs": [
+      "第6回 主要な確率分布"
+    ]
+  },
+  {
+    "objectID": "06_distributions.html#rにおける確率分布関数",
+    "href": "06_distributions.html#rにおける確率分布関数",
+    "title": "第6回 主要な確率分布",
+    "section": "Rにおける確率分布関数",
+    "text": "Rにおける確率分布関数\nRでは、各確率分布に対して4種類の関数が用意されています：\n\n\n\n接頭辞\n意味\n例（正規分布）\n\n\n\n\nd\n確率密度（density）\ndnorm()\n\n\np\n累積確率（probability）\npnorm()\n\n\nq\n分位点（quantile）\nqnorm()\n\n\nr\n乱数生成（random）\nrnorm()",
     "crumbs": [
       "第6回 主要な確率分布"
     ]
@@ -504,7 +654,7 @@
     "href": "06_distributions.html#正規分布-normal-distribution",
     "title": "第6回 主要な確率分布",
     "section": "正規分布 (Normal Distribution)",
-    "text": "正規分布 (Normal Distribution)\n自然界や社会現象でよく見られる、釣鐘型の分布です。 平均 \\(\\mu\\) と分散 \\(\\sigma^2\\) という2つのパラメータで形が決まります。\nRには正規分布に関する関数が用意されています。\n\ndnorm(): 確率密度 (Density)\npnorm(): 累積確率 (Probability)\nqnorm(): 分位点 (Quantile)\nrnorm(): 乱数生成 (Random number)\n\n\n正規分布のグラフを描く\n標準正規分布（平均0、分散1）を描いてみましょう。\n\nlibrary(tidyverse)\n\n# x軸の範囲を決める {.unnumbered}\nx &lt;- seq(-4, 4, length.out = 100)\n# y軸（確率密度）を計算 {.unnumbered}\ny &lt;- dnorm(x, mean = 0, sd = 1)\n\n# データフレームにする {.unnumbered}\ndf &lt;- data.frame(x, y)\n\n# プロット {.unnumbered}\nggplot(df, aes(x = x, y = y)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_line() +\n  labs(title = \"標準正規分布\")",
+    "text": "正規分布 (Normal Distribution)\n自然界や社会現象でよく見られる、釣鐘型の分布です。 平均 \\(\\mu\\) と分散 \\(\\sigma^2\\) という2つのパラメータで形が決まります。\n\\[f(x) = \\frac{1}{\\sqrt{2\\pi\\sigma^2}} \\exp\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2}\\right)\\]\nRには正規分布に関する関数が用意されています。\n\ndnorm(): 確率密度 (Density)\npnorm(): 累積確率 (Probability)\nqnorm(): 分位点 (Quantile)\nrnorm(): 乱数生成 (Random number)\n\n\n正規分布のグラフを描く\n標準正規分布（平均0、分散1）を描いてみましょう。\n\nlibrary(tidyverse)\n\n# x軸の範囲を決める {.unnumbered}\nx &lt;- seq(-4, 4, length.out = 100)\n# y軸（確率密度）を計算 {.unnumbered}\ny &lt;- dnorm(x, mean = 0, sd = 1)\n\n# データフレームにする {.unnumbered}\ndf &lt;- data.frame(x, y)\n\n# プロット {.unnumbered}\nggplot(df, aes(x = x, y = y)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_line() +\n  labs(title = \"標準正規分布\")\n\n\n\n\n\n\n\n\n\n\n平均と標準偏差の影響\n\n# 異なるパラメータの正規分布を比較\nx &lt;- seq(-10, 15, length.out = 200)\ndf_compare &lt;- data.frame(\n  x = rep(x, 3),\n  y = c(dnorm(x, mean = 0, sd = 1),\n        dnorm(x, mean = 5, sd = 1),\n        dnorm(x, mean = 0, sd = 2)),\n  type = rep(c(\"μ=0, σ=1\", \"μ=5, σ=1\", \"μ=0, σ=2\"), each = length(x))\n)\n\nggplot(df_compare, aes(x = x, y = y, color = type)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_line(size = 1) +\n  labs(title = \"正規分布のパラメータによる変化\", color = \"パラメータ\")",
     "crumbs": [
       "第6回 主要な確率分布"
     ]
@@ -524,7 +674,17 @@
     "href": "06_distributions.html#二項分布-binomial-distribution",
     "title": "第6回 主要な確率分布",
     "section": "二項分布 (Binomial Distribution)",
-    "text": "二項分布 (Binomial Distribution)\n「コイン投げ」のように、結果が2通り（成功/失敗）しかない試行を \\(n\\) 回行ったときの、成功回数の分布です。\n例：コインを10回投げて、ちょうど5回表が出る確率。 dbinom(x, size, prob) を使います。\n\ndbinom(5, size = 10, prob = 0.5)\n#&gt; [1] 0.2460938\n\n二項分布の形をグラフで確認してみましょう。\n\nx &lt;- 0:10\nprob &lt;- dbinom(x, size = 10, prob = 0.5)\ndf_binom &lt;- data.frame(x = factor(x), prob = prob)\n\nggplot(df_binom, aes(x = x, y = prob)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_col(fill = \"lightgreen\") +\n  labs(title = \"二項分布 (n=10, p=0.5)\", x = \"表が出る回数\", y = \"確率\")",
+    "text": "二項分布 (Binomial Distribution)\n「コイン投げ」のように、結果が2通り（成功/失敗）しかない試行を \\(n\\) 回行ったときの、成功回数の分布です。\n\\[P(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}\\]\nここで： - \\(n\\): 試行回数 - \\(p\\): 1回の試行で成功する確率 - \\(k\\): 成功回数\n例：コインを10回投げて、ちょうど5回表が出る確率。 dbinom(x, size, prob) を使います。\n\ndbinom(5, size = 10, prob = 0.5)\n#&gt; [1] 0.2460938\n\n二項分布の形をグラフで確認してみましょう。\n\nx &lt;- 0:10\nprob &lt;- dbinom(x, size = 10, prob = 0.5)\ndf_binom &lt;- data.frame(x = factor(x), prob = prob)\n\nggplot(df_binom, aes(x = x, y = prob)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_col(fill = \"lightgreen\") +\n  labs(title = \"二項分布 (n=10, p=0.5)\", x = \"表が出る回数\", y = \"確率\")\n\n\n\n\n\n\n\n\n\n成功確率の影響\n\n# 成功確率が異なる場合の比較\nx &lt;- 0:20\ndf_binom_compare &lt;- data.frame(\n  x = rep(x, 3),\n  prob = c(dbinom(x, size = 20, prob = 0.3),\n           dbinom(x, size = 20, prob = 0.5),\n           dbinom(x, size = 20, prob = 0.7)),\n  p = rep(c(\"p=0.3\", \"p=0.5\", \"p=0.7\"), each = length(x))\n)\n\nggplot(df_binom_compare, aes(x = x, y = prob, fill = p)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_col(position = \"dodge\") +\n  labs(title = \"二項分布 (n=20) の成功確率による変化\", x = \"成功回数\", y = \"確率\")\n\n\n\n\n\n\n\n\n\n\n二項分布の期待値と分散\n\n期待値: \\(E[X] = np\\)\n分散: \\(V[X] = np(1-p)\\)\n\n\nn &lt;- 10\np &lt;- 0.5\n\n# 理論値\ncat(\"期待値:\", n * p, \"\\n\")\n#&gt; 期待値: 5\ncat(\"分散:\", n * p * (1-p), \"\\n\")\n#&gt; 分散: 2.5",
+    "crumbs": [
+      "第6回 主要な確率分布"
+    ]
+  },
+  {
+    "objectID": "06_distributions.html#ポアソン分布-poisson-distribution",
+    "href": "06_distributions.html#ポアソン分布-poisson-distribution",
+    "title": "第6回 主要な確率分布",
+    "section": "ポアソン分布 (Poisson Distribution)",
+    "text": "ポアソン分布 (Poisson Distribution)\n一定期間・一定空間内でまれに起こる事象の回数を表す分布です。\n例：1時間あたりに店に来る客の数、1ページあたりの誤字の数\n\\[P(X = k) = \\frac{\\lambda^k e^{-\\lambda}}{k!}\\]\n\n# 平均5回の事象が起こるとき\nx &lt;- 0:15\nprob &lt;- dpois(x, lambda = 5)\ndf_pois &lt;- data.frame(x = factor(x), prob = prob)\n\nggplot(df_pois, aes(x = x, y = prob)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_col(fill = \"coral\") +\n  labs(title = \"ポアソン分布 (λ=5)\", x = \"事象の発生回数\", y = \"確率\")",
     "crumbs": [
       "第6回 主要な確率分布"
     ]
@@ -544,7 +704,27 @@
     "href": "06_distributions.html#課題",
     "title": "第6回 主要な確率分布",
     "section": "課題",
-    "text": "課題\n\n日本人の成人男性の平均身長が171cm、標準偏差が6cmの正規分布に従うと仮定します。 身長が180cm以上の人は、全体の何パーセントいますか？\nサイコロを10回振って、1の目がちょうど2回出る確率を計算してください。 ```",
+    "text": "課題\n\n日本人の成人男性の平均身長が171cm、標準偏差が6cmの正規分布に従うと仮定します。 身長が180cm以上の人は、全体の何パーセントいますか？\nサイコロを10回振って、1の目がちょうど2回出る確率を計算してください。",
+    "crumbs": [
+      "第6回 主要な確率分布"
+    ]
+  },
+  {
+    "objectID": "06_distributions.html#練習問題",
+    "href": "06_distributions.html#練習問題",
+    "title": "第6回 主要な確率分布",
+    "section": "練習問題",
+    "text": "練習問題\n\n練習1: 正規分布の確率計算\n平均50点、標準偏差10点のテストについて： 1. 40点以下になる確率を求めてください 2. 40点から60点の間に入る確率を求めてください 3. 上位10%に入るには何点以上必要ですか？（ヒント: qnorm() を使います）\n\n\n練習2: 二項分布\n歩留まり率が90%（不良品率10%）の製品を20個作るとき： 1. 不良品が1つも出ない確率を求めてください 2. 不良品が3つ以上出る確率を求めてください\n\n\n練習3: 分布の比較\n正規分布から100個の乱数を生成し（rnorm(100, mean=0, sd=1)）、ヒストグラムを描いてください。 乱数の個数を1000個、10000個に増やすとどうなりますか？",
+    "crumbs": [
+      "第6回 主要な確率分布"
+    ]
+  },
+  {
+    "objectID": "06_distributions.html#主要な確率分布のまとめ",
+    "href": "06_distributions.html#主要な確率分布のまとめ",
+    "title": "第6回 主要な確率分布",
+    "section": "主要な確率分布のまとめ",
+    "text": "主要な確率分布のまとめ\n\n\n\n分布\n用途\nR関数\nパラメータ\n\n\n\n\n正規分布\n連続データの分布\nnorm\nmean, sd\n\n\n二項分布\n成功/失敗の回数\nbinom\nsize, prob\n\n\nポアソン分布\nまれな事象の回数\npois\nlambda\n\n\nt分布\n小標本の推定\nt\ndf\n\n\nカイ二乗分布\n分散の検定\nchisq\ndf\n\n\nF分布\n分散比の検定\nf\ndf1, df2",
     "crumbs": [
       "第6回 主要な確率分布"
     ]
@@ -564,7 +744,7 @@
     "href": "07_sampling.html#今回の目標",
     "title": "第7回 標本分布",
     "section": "",
-    "text": "母集団と標本の関係を理解する。\n大数の法則 と 中心極限定理 をシミュレーションで体感する。",
+    "text": "母集団と標本の関係を理解する。\n大数の法則 と 中心極限定理 をシミュレーションで体感する。\n標本分布の概念を理解する。",
     "crumbs": [
       "第7回 標本分布"
     ]
@@ -574,7 +754,7 @@
     "href": "07_sampling.html#母集団と標本",
     "title": "第7回 標本分布",
     "section": "母集団と標本",
-    "text": "母集団と標本\n\n母集団 (Population): 知りたい対象全体の集まり（例：日本人全員）。\n標本 (Sample): 母集団から一部を取り出したもの（例：ランダムに選んだ1000人）。\n推測統計: 標本のデータから、母集団の性質（パラメータ）を推測すること。\n\n\n母集団と標本のイメージ\n\nlibrary(tidyverse)\nset.seed(1)\n\n# 母集団（例：正規分布） {.unnumbered}\npopulation &lt;- rnorm(10000, mean = 50, sd = 10)\n\n# 標本（そこから100個ランダムに抽出） {.unnumbered}\nsample_data &lt;- sample(population, 100)\n\n# データフレーム化 {.unnumbered}\ndf_pop &lt;- data.frame(value = population, type = \"Population\")\ndf_samp &lt;- data.frame(value = sample_data, type = \"Sample\")\ndf_all &lt;- bind_rows(df_pop, df_samp)\n\n# ヒストグラムで比較（密度表示） {.unnumbered}\nggplot(df_all, aes(x = value, fill = type)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_density(alpha = 0.5) +\n  labs(title = \"母集団と標本の分布比較\", x = \"値\", y = \"密度\")",
+    "text": "母集団と標本\n\n母集団 (Population): 知りたい対象全体の集まり（例：日本人全員）。\n標本 (Sample): 母集団から一部を取り出したもの（例：ランダムに選んだ1000人）。\n推測統計: 標本のデータから、母集団の性質（パラメータ）を推測すること。\n\n\nなぜ標本を使うのか\n\n母集団全体を調べるのはコストがかかる（全数調査）\n時間的・物理的に不可能な場合もある\n少数のサンプルから全体の傾向を推測できる\n\n\n\n母数と統計量\n\n\n\n用語\n説明\n記号\n\n\n\n\n母平均\n母集団の平均\n\\(\\mu\\)\n\n\n母分散\n母集団の分散\n\\(\\sigma^2\\)\n\n\n標本平均\n標本の平均\n\\(\\bar{x}\\)\n\n\n標本分散\n標本の分散\n\\(s^2\\)\n\n\n\n\n\n母集団と標本のイメージ\n\nlibrary(tidyverse)\nset.seed(1)\n\n# 母集団（例：正規分布） {.unnumbered}\npopulation &lt;- rnorm(10000, mean = 50, sd = 10)\n\n# 標本（そこから100個ランダムに抽出） {.unnumbered}\nsample_data &lt;- sample(population, 100)\n\n# データフレーム化 {.unnumbered}\ndf_pop &lt;- data.frame(value = population, type = \"Population\")\ndf_samp &lt;- data.frame(value = sample_data, type = \"Sample\")\ndf_all &lt;- bind_rows(df_pop, df_samp)\n\n# ヒストグラムで比較（密度表示） {.unnumbered}\nggplot(df_all, aes(x = value, fill = type)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_density(alpha = 0.5) +\n  labs(title = \"母集団と標本の分布比較\", x = \"値\", y = \"密度\")",
     "crumbs": [
       "第7回 標本分布"
     ]
@@ -594,7 +774,27 @@
     "href": "07_sampling.html#中心極限定理-central-limit-theorem",
     "title": "第7回 標本分布",
     "section": "中心極限定理 (Central Limit Theorem)",
-    "text": "中心極限定理 (Central Limit Theorem)\n母集団がどんな分布であっても、サンプルサイズ \\(n\\) が十分に大きければ、標本平均の分布は 正規分布 に近づくという強力な定理です。\n一様分布（0から1の乱数）から、サイズ \\(n=30\\) の標本を取り出し、その平均を計算する作業を1000回繰り返してみましょう。\n\n# シミュレーション {.unnumbered}\nn_samples &lt;- 1000\nsample_size &lt;- 30\nmeans &lt;- numeric(n_samples)\n\nfor (i in 1:n_samples) {\n  means[i] &lt;- mean(runif(sample_size, min = 0, max = 1))\n}\n\n# ヒストグラム {.unnumbered}\nggplot(data.frame(means), aes(x = means)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_histogram(bins = 30, fill = \"orange\", color = \"white\") +\n  labs(title = \"標本平均の分布 (n=30)\", x = \"標本平均\")\n\n\n\n\n\n\n\n\n元の分布は平坦（一様分布）ですが、平均値の分布は釣鐘型（正規分布）になっていることが確認できます。",
+    "text": "中心極限定理 (Central Limit Theorem)\n母集団がどんな分布であっても、サンプルサイズ \\(n\\) が十分に大きければ、標本平均の分布は 正規分布 に近づくという強力な定理です。\n一様分布（0から1の乱数）から、サイズ \\(n=30\\) の標本を取り出し、その平均を計算する作業を1000回繰り返してみましょう。\n\n# シミュレーション {.unnumbered}\nn_samples &lt;- 1000\nsample_size &lt;- 30\nmeans &lt;- numeric(n_samples)\n\nfor (i in 1:n_samples) {\n  means[i] &lt;- mean(runif(sample_size, min = 0, max = 1))\n}\n\n# ヒストグラム {.unnumbered}\nggplot(data.frame(means), aes(x = means)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_histogram(bins = 30, fill = \"orange\", color = \"white\") +\n  labs(title = \"標本平均の分布 (n=30)\", x = \"標本平均\")\n\n\n\n\n\n\n\n\n元の分布は平坦（一様分布）ですが、平均値の分布は釣鐘型（正規分布）になっていることが確認できます。\n\nサンプルサイズによる変化\nサンプルサイズを変えて、中心極限定理の効果を確認してみましょう。\n\n# 異なるサンプルサイズでのシミュレーション\nsample_sizes &lt;- c(5, 30, 100)\nn_samples &lt;- 1000\n\nresults &lt;- list()\nfor (n in sample_sizes) {\n  means &lt;- replicate(n_samples, mean(runif(n)))\n  results[[paste0(\"n=\", n)]] &lt;- means\n}\n\n# データフレームにまとめる\ndf_clt &lt;- data.frame(\n  means = unlist(results),\n  sample_size = rep(paste0(\"n=\", sample_sizes), each = n_samples)\n)\n\n# プロット\nggplot(df_clt, aes(x = means)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"white\") +\n  facet_wrap(~sample_size, scales = \"free_y\") +\n  labs(title = \"中心極限定理: サンプルサイズによる変化\", x = \"標本平均\")\n\n\n\n\n\n\n\n\nサンプルサイズが大きくなるほど、分布が正規分布に近づき、ばらつきも小さくなることがわかります。",
+    "crumbs": [
+      "第7回 標本分布"
+    ]
+  },
+  {
+    "objectID": "07_sampling.html#標本平均の分散",
+    "href": "07_sampling.html#標本平均の分散",
+    "title": "第7回 標本分布",
+    "section": "標本平均の分散",
+    "text": "標本平均の分散\n標本平均の分散は、母分散をサンプルサイズで割ったものになります。\n\\[V[\\bar{X}] = \\frac{\\sigma^2}{n}\\]\nこれは、サンプルサイズが大きいほど、標本平均のばらつきが小さくなることを示しています。\n\n# 理論値と実際の値を比較\ncat(\"母分散（一様分布）:\", 1/12, \"\\n\")\n#&gt; 母分散（一様分布）: 0.08333333\ncat(\"標本平均の理論分散 (n=30):\", (1/12) / 30, \"\\n\")\n#&gt; 標本平均の理論分散 (n=30): 0.002777778\ncat(\"シミュレーションでの分散:\", var(results[[\"n=30\"]]), \"\\n\")\n#&gt; シミュレーションでの分散: 0.00278787",
+    "crumbs": [
+      "第7回 標本分布"
+    ]
+  },
+  {
+    "objectID": "07_sampling.html#標準誤差-standard-error",
+    "href": "07_sampling.html#標準誤差-standard-error",
+    "title": "第7回 標本分布",
+    "section": "標準誤差 (Standard Error)",
+    "text": "標準誤差 (Standard Error)\n標本平均の標準偏差を標準誤差といいます。\n\\[SE = \\frac{\\sigma}{\\sqrt{n}}\\]\n標準誤差は、推定の精度を表す重要な指標です。",
     "crumbs": [
       "第7回 標本分布"
     ]
@@ -605,6 +805,26 @@
     "title": "第7回 標本分布",
     "section": "課題",
     "text": "課題\n\n中心極限定理のシミュレーションで、sample_size を 5 に減らして実行してみてください。ヒストグラムの形はどう変わりますか？",
+    "crumbs": [
+      "第7回 標本分布"
+    ]
+  },
+  {
+    "objectID": "07_sampling.html#練習問題",
+    "href": "07_sampling.html#練習問題",
+    "title": "第7回 標本分布",
+    "section": "練習問題",
+    "text": "練習問題\n\n練習1: 大数の法則\nコインを投げるシミュレーションを行い、大数の法則を確認してください： 1. sample(c(0, 1), 1000, replace = TRUE) でコイン投げをシミュレート 2. 累積の表の割合を計算し、グラフにプロット 3. 回数が増えると0.5に近づくことを確認\n\n\n練習2: 中心極限定理の応用\n指数分布（右に歪んだ分布）を使って中心極限定理を確認してください： 1. rexp(n, rate = 1) で指数分布から乱数を生成 2. サンプルサイズ30で1000回のシミュレーションを行い、標本平均の分布を描画 3. 正規分布に近づいているか確認\n\n\n練習3: 標準誤差の計算\n母平均50、母標準偏差10の正規分布から： 1. サンプルサイズ25のときの標準誤差を計算 2. サンプルサイズ100のときの標準誤差を計算 3. 標準誤差を半分にするには、サンプルサイズを何倍にする必要がありますか？",
+    "crumbs": [
+      "第7回 標本分布"
+    ]
+  },
+  {
+    "objectID": "07_sampling.html#まとめ",
+    "href": "07_sampling.html#まとめ",
+    "title": "第7回 標本分布",
+    "section": "まとめ",
+    "text": "まとめ\n\n\n\n\n\n\n\n\n定理\n内容\n実務的な意味\n\n\n\n\n大数の法則\n\\(n \\to \\infty\\) で \\(\\bar{X} \\to \\mu\\)\nサンプルが多いほど推定が正確\n\n\n中心極限定理\n\\(\\bar{X}\\) の分布は正規分布に近づく\n正規分布を前提とした推測が可能",
     "crumbs": [
       "第7回 標本分布"
     ]
@@ -630,11 +850,21 @@
     ]
   },
   {
+    "objectID": "08_estimation.html#推定とは",
+    "href": "08_estimation.html#推定とは",
+    "title": "第8回 統計的推定",
+    "section": "推定とは",
+    "text": "推定とは\n推定とは、標本のデータから母集団のパラメータ（母数）を推測することです。\n\n良い推定量の性質\n\n不偏性: 推定量の期待値が真の値に等しい（\\(E[\\hat{\\theta}] = \\theta\\)）\n一致性: サンプルサイズが大きくなると真の値に近づく\n効率性: 分散が小さい（ばらつきが少ない）",
+    "crumbs": [
+      "第8回 統計的推定"
+    ]
+  },
+  {
     "objectID": "08_estimation.html#点推定-point-estimation",
     "href": "08_estimation.html#点推定-point-estimation",
     "title": "第8回 統計的推定",
     "section": "点推定 (Point Estimation)",
-    "text": "点推定 (Point Estimation)\n母数（母平均など）を一つの値でピンポイントに推定することです。 例えば、標本平均 \\(\\bar{x}\\) は母平均 \\(\\mu\\) の点推定値として使われます。",
+    "text": "点推定 (Point Estimation)\n母数（母平均など）を一つの値でピンポイントに推定することです。 例えば、標本平均 \\(\\bar{x}\\) は母平均 \\(\\mu\\) の点推定値として使われます。\n\nlibrary(tidyverse)\nurl &lt;- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips &lt;- read_csv(url)\n\n# 点推定\nmean(tips$total_bill)  # 母平均の点推定\n#&gt; [1] 19.78594\n\n\n点推定の限界\n点推定だけでは、その推定がどれくらい信頼できるか分かりません。そこで区間推定が必要になります。",
     "crumbs": [
       "第8回 統計的推定"
     ]
@@ -654,7 +884,17 @@
     "href": "08_estimation.html#母平均の信頼区間母分散が未知の場合",
     "title": "第8回 統計的推定",
     "section": "母平均の信頼区間（母分散が未知の場合）",
-    "text": "母平均の信頼区間（母分散が未知の場合）\nt分布を使って計算します。Rでは t.test() 関数を使うと簡単に計算できます。 tips データの total_bill の平均値の95%信頼区間を求めてみましょう。\n\nlibrary(tidyverse)\nurl &lt;- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips &lt;- read_csv(url)\n\nt.test(tips$total_bill)\n#&gt; \n#&gt;  One Sample t-test\n#&gt; \n#&gt; data:  tips$total_bill\n#&gt; t = 34.717, df = 243, p-value &lt; 2.2e-16\n#&gt; alternative hypothesis: true mean is not equal to 0\n#&gt; 95 percent confidence interval:\n#&gt;  18.66333 20.90855\n#&gt; sample estimates:\n#&gt; mean of x \n#&gt;  19.78594\n\n出力結果の 95 percent confidence interval: の部分を見ます。\n95 percent confidence interval:\n 18.66333 20.90855\nこれは、「支払総額の母平均は、約18.66ドルから20.91ドルの間にあると考えられる」ことを示しています。",
+    "text": "母平均の信頼区間（母分散が未知の場合）\nt分布を使って計算します。Rでは t.test() 関数を使うと簡単に計算できます。 tips データの total_bill の平均値の95%信頼区間を求めてみましょう。\n\nlibrary(tidyverse)\nurl &lt;- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips &lt;- read_csv(url)\n\nt.test(tips$total_bill)\n#&gt; \n#&gt;  One Sample t-test\n#&gt; \n#&gt; data:  tips$total_bill\n#&gt; t = 34.717, df = 243, p-value &lt; 2.2e-16\n#&gt; alternative hypothesis: true mean is not equal to 0\n#&gt; 95 percent confidence interval:\n#&gt;  18.66333 20.90855\n#&gt; sample estimates:\n#&gt; mean of x \n#&gt;  19.78594\n\n出力結果の 95 percent confidence interval: の部分を見ます。\n95 percent confidence interval:\n 18.66333 20.90855\nこれは、「支払総額の母平均は、約18.66ドルから20.91ドルの間にあると考えられる」ことを示しています。\n\n信頼区間の幅に影響する要因\n\n信頼係数: 信頼係数を上げる（95%→99%）と、区間は広くなる\nサンプルサイズ: サンプルサイズが大きいほど、区間は狭くなる\nデータのばらつき: 標準偏差が大きいほど、区間は広くなる\n\n\n# 信頼係数を変えた比較\nci_90 &lt;- t.test(tips$total_bill, conf.level = 0.90)$conf.int\nci_95 &lt;- t.test(tips$total_bill, conf.level = 0.95)$conf.int\nci_99 &lt;- t.test(tips$total_bill, conf.level = 0.99)$conf.int\n\ndata.frame(\n  信頼係数 = c(\"90%\", \"95%\", \"99%\"),\n  下限 = c(ci_90[1], ci_95[1], ci_99[1]),\n  上限 = c(ci_90[2], ci_95[2], ci_99[2]),\n  幅 = c(ci_90[2] - ci_90[1], ci_95[2] - ci_95[1], ci_99[2] - ci_99[1])\n)",
+    "crumbs": [
+      "第8回 統計的推定"
+    ]
+  },
+  {
+    "objectID": "08_estimation.html#t分布",
+    "href": "08_estimation.html#t分布",
+    "title": "第8回 統計的推定",
+    "section": "t分布",
+    "text": "t分布\n母分散が未知の場合（通常はこのケース）、正規分布ではなくt分布を使います。\nt分布は正規分布に似ていますが、裾が厚い（外れ値が出やすい）特徴があります。 サンプルサイズが大きくなると、正規分布に近づきます。\n\n# t分布と正規分布の比較\nx &lt;- seq(-4, 4, length.out = 100)\ndf_dist &lt;- data.frame(\n  x = rep(x, 3),\n  y = c(dnorm(x), dt(x, df = 3), dt(x, df = 30)),\n  分布 = rep(c(\"正規分布\", \"t分布 (df=3)\", \"t分布 (df=30)\"), each = length(x))\n)\n\nggplot(df_dist, aes(x = x, y = y, color = 分布)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_line(size = 1) +\n  labs(title = \"t分布と正規分布の比較\")",
     "crumbs": [
       "第8回 統計的推定"
     ]
@@ -680,6 +920,26 @@
     ]
   },
   {
+    "objectID": "08_estimation.html#練習問題",
+    "href": "08_estimation.html#練習問題",
+    "title": "第8回 統計的推定",
+    "section": "練習問題",
+    "text": "練習問題\n\n練習1: 信頼区間の計算\n\ntips データの size（人数）の95%信頼区間を計算してください\n90%信頼区間と99%信頼区間も計算し、幅を比較してください\n\n\n\n練習2: サンプルサイズの影響\n\ntips データから50件をランダムに抽出し、total_bill の95%信頼区間を計算\n100件、200件でも同様に計算\nサンプルサイズと信頼区間の幅の関係を確認\n\n\n# ヒント\nsample_data &lt;- tips[sample(nrow(tips), 50), ]\nt.test(sample_data$total_bill)\n\n\n\n練習3: 母比率の信頼区間\ntips データで、喫煙者の割合の95%信頼区間を求めてください。\n\n# ヒント: 喫煙者の数と全体の数を使う\nsmokers &lt;- sum(tips$smoker == \"Yes\")\ntotal &lt;- nrow(tips)\nprop.test(smokers, total)",
+    "crumbs": [
+      "第8回 統計的推定"
+    ]
+  },
+  {
+    "objectID": "08_estimation.html#推定のまとめ",
+    "href": "08_estimation.html#推定のまとめ",
+    "title": "第8回 統計的推定",
+    "section": "推定のまとめ",
+    "text": "推定のまとめ\n\n\n\n推定の種類\n説明\n例\n\n\n\n\n点推定\n1つの値で推定\n\\(\\bar{x} = 19.8\\)\n\n\n区間推定\n範囲で推定\n\\([18.7, 20.9]\\)\n\n\n\n\n\n\n信頼区間の種類\nR関数\n用途\n\n\n\n\n母平均の信頼区間\nt.test()\n連続変数の平均\n\n\n母比率の信頼区間\nprop.test()\n割合・比率",
+    "crumbs": [
+      "第8回 統計的推定"
+    ]
+  },
+  {
     "objectID": "09_hypothesis_1.html",
     "href": "09_hypothesis_1.html",
     "title": "第9回 仮説検定 (1)",
@@ -694,7 +954,17 @@
     "href": "09_hypothesis_1.html#今回の目標",
     "title": "第9回 仮説検定 (1)",
     "section": "",
-    "text": "仮説検定の論理（帰無仮説、対立仮説、p値）を理解する。\nRを使って1標本のt検定を行う。",
+    "text": "仮説検定の論理（帰無仮説、対立仮説、p値）を理解する。\nRを使って1標本のt検定を行う。\n検定の結果を正しく解釈する。",
+    "crumbs": [
+      "第9回 仮説検定 (1)"
+    ]
+  },
+  {
+    "objectID": "09_hypothesis_1.html#仮説検定とは",
+    "href": "09_hypothesis_1.html#仮説検定とは",
+    "title": "第9回 仮説検定 (1)",
+    "section": "仮説検定とは",
+    "text": "仮説検定とは\n仮説検定は、データに基づいて仮説の真偽を判断する統計的手法です。\n例えば「新しい薬には効果がある」という主張を検証したいとき： 1. まず「効果がない」という仮説を立てる 2. データを集める 3. 「効果がない」という仮説のもとで、このデータが得られる確率を計算 4. その確率が十分に小さければ、「効果がない」は間違いと判断",
     "crumbs": [
       "第9回 仮説検定 (1)"
     ]
@@ -704,7 +974,7 @@
     "href": "09_hypothesis_1.html#仮説検定の考え方",
     "title": "第9回 仮説検定 (1)",
     "section": "仮説検定の考え方",
-    "text": "仮説検定の考え方\n「コインが歪んでいないか？」を確かめたいとします。 「歪んでいない（表が出る確率は0.5）」と仮定したときに、実際に起きたこと（例：10回中9回表）が「めったに起きないこと」かどうかを確率で評価します。\n\n帰無仮説 (\\(H_0\\)): 否定したい仮説（例：差はない、効果はない）。\n対立仮説 (\\(H_1\\)): 主張したい仮説（例：差がある、効果がある）。\np値 (p-value): 帰無仮説が正しいとしたときに、今のデータ（またはそれ以上に極端なデータ）が得られる確率。\n有意水準 (\\(\\alpha\\)): 帰無仮説を棄却する基準。通常 0.05 (5%) を使います。\n\n判定ルール: - p値 &lt; 有意水準 \\(\\Rightarrow\\) 帰無仮説を棄却する（統計的に有意である）。 - p値 \\(\\ge\\) 有意水準 \\(\\Rightarrow\\) 帰無仮説を棄却できない（差があるとは言えない）。\n\n棄却域のイメージ\nt分布において、どの範囲に入ったら「極端」とみなされるか（棄却域）を可視化します。\n\nlibrary(tidyverse)\ntheme_set(theme_gray(base_family = \"HiraKakuProN-W3\"))\n\n# t分布 (自由度9) {.unnumbered}\nx &lt;- seq(-4, 4, length.out = 100)\ny &lt;- dt(x, df = 9)\ndf_t &lt;- data.frame(x, y)\n\n# 棄却域 (両側5%) {.unnumbered}\ncritical_val &lt;- qt(0.975, df = 9)\n\nggplot(df_t, aes(x = x, y = y)) +\n  geom_line() +\n  geom_area(data = filter(df_t, x &gt; critical_val), fill = \"red\", alpha = 0.5) +\n  geom_area(data = filter(df_t, x &lt; -critical_val), fill = \"red\", alpha = 0.5) +\n  geom_vline(xintercept = c(critical_val, -critical_val), linetype = \"dashed\") +\n  labs(title = \"t分布と棄却域 (両側5%)\", x = \"t値\", y = \"確率密度\")",
+    "text": "仮説検定の考え方\n「コインが歪んでいないか？」を確かめたいとします。 「歪んでいない（表が出る確率は0.5）」と仮定したときに、実際に起きたこと（例：10回中9回表）が「めったに起きないこと」かどうかを確率で評価します。\n\n帰無仮説 (\\(H_0\\)): 否定したい仮説（例：差はない、効果はない）。\n対立仮説 (\\(H_1\\)): 主張したい仮説（例：差がある、効果がある）。\np値 (p-value): 帰無仮説が正しいとしたときに、今のデータ（またはそれ以上に極端なデータ）が得られる確率。\n有意水準 (\\(\\alpha\\)): 帰無仮説を棄却する基準。通常 0.05 (5%) を使います。\n\n判定ルール: - p値 &lt; 有意水準 \\(\\Rightarrow\\) 帰無仮説を棄却する（統計的に有意である）。 - p値 \\(\\ge\\) 有意水準 \\(\\Rightarrow\\) 帰無仮説を棄却できない（差があるとは言えない）。\n\n検定の手順\n\n帰無仮説と対立仮説を設定\n有意水準を決める（通常5%）\n検定統計量を計算\np値を求める\n結論を出す\n\n\n\n棄却域のイメージ\nt分布において、どの範囲に入ったら「極端」とみなされるか（棄却域）を可視化します。\n\nlibrary(tidyverse)\ntheme_set(theme_gray(base_family = \"HiraKakuProN-W3\"))\n\n# t分布 (自由度9) {.unnumbered}\nx &lt;- seq(-4, 4, length.out = 100)\ny &lt;- dt(x, df = 9)\ndf_t &lt;- data.frame(x, y)\n\n# 棄却域 (両側5%) {.unnumbered}\ncritical_val &lt;- qt(0.975, df = 9)\n\nggplot(df_t, aes(x = x, y = y)) +\n  geom_line() +\n  geom_area(data = filter(df_t, x &gt; critical_val), fill = \"red\", alpha = 0.5) +\n  geom_area(data = filter(df_t, x &lt; -critical_val), fill = \"red\", alpha = 0.5) +\n  geom_vline(xintercept = c(critical_val, -critical_val), linetype = \"dashed\") +\n  labs(title = \"t分布と棄却域 (両側5%)\", x = \"t値\", y = \"確率密度\")",
     "crumbs": [
       "第9回 仮説検定 (1)"
     ]
@@ -720,11 +990,51 @@
     ]
   },
   {
+    "objectID": "09_hypothesis_1.html#両側検定と片側検定",
+    "href": "09_hypothesis_1.html#両側検定と片側検定",
+    "title": "第9回 仮説検定 (1)",
+    "section": "両側検定と片側検定",
+    "text": "両側検定と片側検定\n\n両側検定（デフォルト）\n「等しくない」ことを検定します。\n\\(H_0: \\mu = \\mu_0\\) vs \\(H_1: \\mu \\neq \\mu_0\\)\n\n\n片側検定\n「大きい」または「小さい」ことを検定します。\n\n# 「50点より大きい」ことを検定（片側検定）\nt.test(scores, mu = 50, alternative = \"greater\")\n#&gt; \n#&gt;  One Sample t-test\n#&gt; \n#&gt; data:  scores\n#&gt; t = 2.5862, df = 9, p-value = 0.0147\n#&gt; alternative hypothesis: true mean is greater than 50\n#&gt; 95 percent confidence interval:\n#&gt;  51.89284      Inf\n#&gt; sample estimates:\n#&gt; mean of x \n#&gt;      56.5",
+    "crumbs": [
+      "第9回 仮説検定 (1)"
+    ]
+  },
+  {
+    "objectID": "09_hypothesis_1.html#検定の誤り",
+    "href": "09_hypothesis_1.html#検定の誤り",
+    "title": "第9回 仮説検定 (1)",
+    "section": "検定の誤り",
+    "text": "検定の誤り\n仮説検定では2種類の誤りがありえます。\n\n\n\n\n帰無仮説が真\n帰無仮説が偽\n\n\n\n\n帰無仮説を棄却\n第1種の誤り（α）\n正しい判断\n\n\n帰無仮説を棄却しない\n正しい判断\n第2種の誤り（β）\n\n\n\n\n第1種の誤り（偽陽性）: 実際には差がないのに「差がある」と判断してしまう\n第2種の誤り（偽陰性）: 実際には差があるのに「差がない」と判断してしまう\n検出力 (Power): \\(1 - \\beta\\)。真の差を検出できる確率\n\n\n有意水準と検出力のトレードオフ\n有意水準を厳しくすると（5%→1%）： - 第1種の誤りは減る - 第2種の誤りは増える（検出力が下がる）",
+    "crumbs": [
+      "第9回 仮説検定 (1)"
+    ]
+  },
+  {
     "objectID": "09_hypothesis_1.html#課題",
     "href": "09_hypothesis_1.html#課題",
     "title": "第9回 仮説検定 (1)",
     "section": "課題",
     "text": "課題\n\ntips データの total_bill の平均値が 20ドル と異なるかどうかを検定してください。 帰無仮説、対立仮説、p値、そして結論（棄却するかどうか）を答えてください。",
+    "crumbs": [
+      "第9回 仮説検定 (1)"
+    ]
+  },
+  {
+    "objectID": "09_hypothesis_1.html#練習問題",
+    "href": "09_hypothesis_1.html#練習問題",
+    "title": "第9回 仮説検定 (1)",
+    "section": "練習問題",
+    "text": "練習問題\n\n練習1: 1標本t検定\nある会社の従業員10人の残業時間（月間）が以下のデータだとします：\n\novertime &lt;- c(45, 50, 38, 55, 42, 48, 52, 40, 35, 50)\n\n法定の残業上限である月45時間と比較して、この会社の残業時間は有意に多いですか？\n\n\n練習2: 片側検定と両側検定\n\n上の練習問題を両側検定で行ってください\n「45時間より多い」かどうかを片側検定で行ってください\n結果の違いを確認してください\n\n\n\n練習3: p値の解釈\n以下の場合、帰無仮説を棄却しますか？理由も答えてください。 1. p値 = 0.03, 有意水準 = 0.05 2. p値 = 0.08, 有意水準 = 0.05 3. p値 = 0.001, 有意水準 = 0.01",
+    "crumbs": [
+      "第9回 仮説検定 (1)"
+    ]
+  },
+  {
+    "objectID": "09_hypothesis_1.html#仮説検定の注意点",
+    "href": "09_hypothesis_1.html#仮説検定の注意点",
+    "title": "第9回 仮説検定 (1)",
+    "section": "仮説検定の注意点",
+    "text": "仮説検定の注意点\n\n統計的有意 ≠ 実質的に重要: p値が小さくても、効果の大きさが小さい場合がある\n「棄却しない」≠「帰無仮説が正しい」: 差がないと証明したわけではない\np値は確率ではない: 「帰無仮説が正しい確率」ではない\n多重検定の問題: 何度も検定を繰り返すと、偶然有意になりやすい",
     "crumbs": [
       "第9回 仮説検定 (1)"
     ]
@@ -744,7 +1054,17 @@
     "href": "10_hypothesis_2.html#今回の目標",
     "title": "第10回 仮説検定 (2)",
     "section": "",
-    "text": "2つのグループの平均値に差があるかどうかを検定する。\n対応のあるデータと対応のないデータの違いを理解する。",
+    "text": "2つのグループの平均値に差があるかどうかを検定する。\n対応のあるデータと対応のないデータの違いを理解する。\n効果量の概念を理解する。",
+    "crumbs": [
+      "第10回 仮説検定 (2)"
+    ]
+  },
+  {
+    "objectID": "10_hypothesis_2.html#標本のt検定の種類",
+    "href": "10_hypothesis_2.html#標本のt検定の種類",
+    "title": "第10回 仮説検定 (2)",
+    "section": "2標本のt検定の種類",
+    "text": "2標本のt検定の種類\n\n\n\n種類\n状況\n例\n\n\n\n\n対応なし\n独立した2群を比較\n男性vs女性、薬vsプラセボ\n\n\n対応あり\n同じ対象の前後を比較\nダイエット前後、学習前後",
     "crumbs": [
       "第10回 仮説検定 (2)"
     ]
@@ -770,11 +1090,51 @@
     ]
   },
   {
+    "objectID": "10_hypothesis_2.html#等分散の仮定",
+    "href": "10_hypothesis_2.html#等分散の仮定",
+    "title": "第10回 仮説検定 (2)",
+    "section": "等分散の仮定",
+    "text": "等分散の仮定\n2標本t検定には、両群の分散が等しいという仮定があります。Rの t.test() はデフォルトでWelchのt検定（等分散を仮定しない）を使用します。\n\n# Welchのt検定（デフォルト）\nt.test(total_bill ~ time, data = tips)\n#&gt; \n#&gt;  Welch Two Sample t-test\n#&gt; \n#&gt; data:  total_bill by time\n#&gt; t = 3.123, df = 143.29, p-value = 0.002167\n#&gt; alternative hypothesis: true difference in means between group Dinner and group Lunch is not equal to 0\n#&gt; 95 percent confidence interval:\n#&gt;  1.331877 5.925088\n#&gt; sample estimates:\n#&gt; mean in group Dinner  mean in group Lunch \n#&gt;             20.79716             17.16868\n\n# Studentのt検定（等分散を仮定）\nt.test(total_bill ~ time, data = tips, var.equal = TRUE)\n#&gt; \n#&gt;  Two Sample t-test\n#&gt; \n#&gt; data:  total_bill by time\n#&gt; t = 2.8976, df = 242, p-value = 0.004105\n#&gt; alternative hypothesis: true difference in means between group Dinner and group Lunch is not equal to 0\n#&gt; 95 percent confidence interval:\n#&gt;  1.161839 6.095127\n#&gt; sample estimates:\n#&gt; mean in group Dinner  mean in group Lunch \n#&gt;             20.79716             17.16868\n\n等分散かどうかは、F検定やLevene検定で確認できます。\n\n# F検定（等分散の検定）\nvar.test(total_bill ~ time, data = tips)\n#&gt; \n#&gt;  F test to compare two variances\n#&gt; \n#&gt; data:  total_bill by time\n#&gt; F = 1.4046, num df = 175, denom df = 67, p-value = 0.1109\n#&gt; alternative hypothesis: true ratio of variances is not equal to 1\n#&gt; 95 percent confidence interval:\n#&gt;  0.9237626 2.0595995\n#&gt; sample estimates:\n#&gt; ratio of variances \n#&gt;           1.404557",
+    "crumbs": [
+      "第10回 仮説検定 (2)"
+    ]
+  },
+  {
+    "objectID": "10_hypothesis_2.html#効果量-effect-size",
+    "href": "10_hypothesis_2.html#効果量-effect-size",
+    "title": "第10回 仮説検定 (2)",
+    "section": "効果量 (Effect Size)",
+    "text": "効果量 (Effect Size)\np値だけでは効果の大きさがわかりません。効果量を計算することで、実質的な差の大きさを評価できます。\n\nCohen’s d\n2群の平均値の差を標準偏差で割った指標です。\n\\[d = \\frac{\\bar{x}_1 - \\bar{x}_2}{s_{pooled}}\\]\n\n\\(|d| &lt; 0.2\\): 小さい効果\n\\(0.2 \\le |d| &lt; 0.8\\): 中程度の効果\n\\(|d| \\ge 0.8\\): 大きい効果\n\n\n# Cohen's d の計算\ndinner &lt;- tips$total_bill[tips$time == \"Dinner\"]\nlunch &lt;- tips$total_bill[tips$time == \"Lunch\"]\n\nmean_diff &lt;- mean(dinner) - mean(lunch)\npooled_sd &lt;- sqrt(((length(dinner)-1)*var(dinner) + (length(lunch)-1)*var(lunch)) / \n                   (length(dinner) + length(lunch) - 2))\n\ncohens_d &lt;- mean_diff / pooled_sd\ncat(\"Cohen's d:\", cohens_d, \"\\n\")\n#&gt; Cohen's d: 0.4137406",
+    "crumbs": [
+      "第10回 仮説検定 (2)"
+    ]
+  },
+  {
     "objectID": "10_hypothesis_2.html#課題",
     "href": "10_hypothesis_2.html#課題",
     "title": "第10回 仮説検定 (2)",
     "section": "課題",
     "text": "課題\n\ntips データを使って、喫煙者 (Smoker) と非喫煙者 (Non-Smoker) で、チップの額 (tip) に差があるかどうかを検定してください。 （注：データ内の値は “Yes” / “No” です）",
+    "crumbs": [
+      "第10回 仮説検定 (2)"
+    ]
+  },
+  {
+    "objectID": "10_hypothesis_2.html#練習問題",
+    "href": "10_hypothesis_2.html#練習問題",
+    "title": "第10回 仮説検定 (2)",
+    "section": "練習問題",
+    "text": "練習問題\n\n練習1: 2標本t検定\ntips データを使って以下の検定を行ってください： 1. 男性と女性で支払総額 (total_bill) に差があるか 2. 土曜日と日曜日でチップ (tip) に差があるか\n\n\n練習2: 対応のあるt検定\n以下は10人の学生のテスト前後の点数です：\n\npre_test &lt;- c(65, 70, 75, 60, 80, 55, 70, 65, 75, 70)\npost_test &lt;- c(70, 75, 80, 65, 85, 60, 78, 70, 80, 75)\n\n\n対応のあるt検定で、テストの点数が向上したか検定してください\n効果量（Cohen’s d）を計算してください\n\n\n\n練習3: 検定の選択\n以下の状況では、どの検定を使うべきですか？ 1. 新薬を投与した群とプラセボ群の血圧を比較 2. 同じ患者の治療前と治療後の血圧を比較 3. 3つの異なる運動プログラムの効果を比較",
+    "crumbs": [
+      "第10回 仮説検定 (2)"
+    ]
+  },
+  {
+    "objectID": "10_hypothesis_2.html#検定のまとめ",
+    "href": "10_hypothesis_2.html#検定のまとめ",
+    "title": "第10回 仮説検定 (2)",
+    "section": "検定のまとめ",
+    "text": "検定のまとめ\n\n\n\n\n\n\n\n\n検定\n用途\nR関数\n\n\n\n\n1標本t検定\n1群の平均と特定の値の比較\nt.test(x, mu = value)\n\n\n2標本t検定（対応なし）\n独立した2群の平均の比較\nt.test(y ~ group, data)\n\n\n2標本t検定（対応あり）\n対応のある2群の平均の比較\nt.test(x, y, paired = TRUE)\n\n\nF検定\n2群の分散の比較\nvar.test(y ~ group, data)",
     "crumbs": [
       "第10回 仮説検定 (2)"
     ]
@@ -794,7 +1154,7 @@
     "href": "11_regression_1.html#今回の目標",
     "title": "第11回 相関と単回帰分析",
     "section": "",
-    "text": "相関係数を計算し、2変数の関係の強さを理解する。\n単回帰分析を行い、結果（切片、傾き）を解釈する。",
+    "text": "相関係数を計算し、2変数の関係の強さを理解する。\n単回帰分析を行い、結果（切片、傾き）を解釈する。\n回帰分析の仮定と診断を学ぶ。",
     "crumbs": [
       "第11回 相関と単回帰分析"
     ]
@@ -804,7 +1164,7 @@
     "href": "11_regression_1.html#相関-correlation",
     "title": "第11回 相関と単回帰分析",
     "section": "相関 (Correlation)",
-    "text": "相関 (Correlation)\n2つの変数の間に、直線的な関係があるかどうかを表す指標です。 相関係数 \\(r\\) は \\(-1 \\le r \\le 1\\) の値をとり、1に近いほど正の相関、-1に近いほど負の相関、0に近いほど無相関を表します。\ntips データの total_bill と tip の相関係数を計算してみましょう。\n\nlibrary(tidyverse)\nurl &lt;- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips &lt;- read_csv(url)\n\ncor(tips$total_bill, tips$tip)\n#&gt; [1] 0.6757341",
+    "text": "相関 (Correlation)\n2つの変数の間に、直線的な関係があるかどうかを表す指標です。 相関係数 \\(r\\) は \\(-1 \\le r \\le 1\\) の値をとり、1に近いほど正の相関、-1に近いほど負の相関、0に近いほど無相関を表します。\n\n相関係数の計算\n\\[r = \\frac{\\sum_{i=1}^{n}(x_i - \\bar{x})(y_i - \\bar{y})}{\\sqrt{\\sum_{i=1}^{n}(x_i - \\bar{x})^2 \\sum_{i=1}^{n}(y_i - \\bar{y})^2}}\\]\ntips データの total_bill と tip の相関係数を計算してみましょう。\n\nlibrary(tidyverse)\nurl &lt;- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips &lt;- read_csv(url)\n\ncor(tips$total_bill, tips$tip)\n#&gt; [1] 0.6757341\n\n\n\n相関係数の解釈\n\n\n\n相関係数の絶対値\n解釈\n\n\n\n\n0.0 - 0.2\nほぼ相関なし\n\n\n0.2 - 0.4\n弱い相関\n\n\n0.4 - 0.7\n中程度の相関\n\n\n0.7 - 1.0\n強い相関\n\n\n\n\n\n相関行列\n複数の変数間の相関を一度に確認できます。\n\n# 数値変数だけを選んで相関行列を作成\ntips %&gt;%\n  select(total_bill, tip, size) %&gt;%\n  cor()\n#&gt;            total_bill       tip      size\n#&gt; total_bill  1.0000000 0.6757341 0.5983151\n#&gt; tip         0.6757341 1.0000000 0.4892988\n#&gt; size        0.5983151 0.4892988 1.0000000\n\n\n\n相関係数の検定\n相関係数が0と有意に異なるかを検定できます。\n\ncor.test(tips$total_bill, tips$tip)\n#&gt; \n#&gt;  Pearson's product-moment correlation\n#&gt; \n#&gt; data:  tips$total_bill and tips$tip\n#&gt; t = 14.26, df = 242, p-value &lt; 2.2e-16\n#&gt; alternative hypothesis: true correlation is not equal to 0\n#&gt; 95 percent confidence interval:\n#&gt;  0.6011647 0.7386372\n#&gt; sample estimates:\n#&gt;       cor \n#&gt; 0.6757341",
     "crumbs": [
       "第11回 相関と単回帰分析"
     ]
@@ -814,7 +1174,27 @@
     "href": "11_regression_1.html#単回帰分析-simple-linear-regression",
     "title": "第11回 相関と単回帰分析",
     "section": "単回帰分析 (Simple Linear Regression)",
-    "text": "単回帰分析 (Simple Linear Regression)\nある変数 \\(x\\)（説明変数）を使って、別の変数 \\(y\\)（被説明変数）を予測・説明するモデルを作ります。\n\\[ y = \\beta_0 + \\beta_1 x + \\epsilon \\]\n\n\\(\\beta_0\\): 切片 (Intercept)\n\\(\\beta_1\\): 傾き (Slope)\n\\(\\epsilon\\): 誤差項\n\nRでは lm() 関数（Linear Model）を使います。 「支払総額 (\\(x\\)) が増えると、チップ (\\(y\\)) はどれくらい増えるか？」を分析します。\n\nmodel &lt;- lm(tip ~ total_bill, data = tips)\nsummary(model)\n#&gt; \n#&gt; Call:\n#&gt; lm(formula = tip ~ total_bill, data = tips)\n#&gt; \n#&gt; Residuals:\n#&gt;     Min      1Q  Median      3Q     Max \n#&gt; -3.1982 -0.5652 -0.0974  0.4863  3.7434 \n#&gt; \n#&gt; Coefficients:\n#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    \n#&gt; (Intercept) 0.920270   0.159735   5.761 2.53e-08 ***\n#&gt; total_bill  0.105025   0.007365  14.260  &lt; 2e-16 ***\n#&gt; ---\n#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n#&gt; \n#&gt; Residual standard error: 1.022 on 242 degrees of freedom\n#&gt; Multiple R-squared:  0.4566, Adjusted R-squared:  0.4544 \n#&gt; F-statistic: 203.4 on 1 and 242 DF,  p-value: &lt; 2.2e-16\n\n\n結果の解釈\nCoefficients: の部分を見ます。\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) 0.920270   0.159735   5.761 2.53e-08 ***\ntotal_bill  0.105025   0.007365  14.260  &lt; 2e-16 ***\n\n(Intercept) の Estimate: 0.92\n\n切片です。\\(x\\)（支払総額）が0のときの \\(y\\)（チップ）の予測値です。\nただし、支払総額が0ドルということは現実にはあり得ないので、この値自体に深い意味はないことが多いです。\n\ntotal_bill の Estimate: 0.105\n\n傾きです。これが最も重要な数値です。\n「支払総額が1ドル増えると、チップは約0.105ドル（約10.5セント）増える傾向がある」 と解釈します。\n\nPr(&gt;|t|):\n\ntotal_bill の行を見ると &lt; 2e-16 となっています。これは \\(2 \\times 10^{-16}\\) 未満という非常に小さな値です。\n0.05よりはるかに小さいため、「傾きは0ではない（支払総額とチップには統計的に有意な関係がある）」と結論づけられます。\n\n\n\n\n散布図に回帰直線を引く\nggplot2 で geom_smooth(method = \"lm\") を使うと、簡単に回帰直線を追加できます。\n\nggplot(tips, aes(x = total_bill, y = tip)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_point() +\n  geom_smooth(method = \"lm\", color = \"red\")\n\n\n\n\n\n\n\n\n\n\n残差プロット\n回帰分析がうまくいっているか確認するために、予測値と残差（予測とのズレ）の関係を見ることがあります。\n\n# データフレームに予測値と残差を追加 {.unnumbered}\ntips_aug &lt;- tips %&gt;%\n  mutate(pred = predict(model), resid = residuals(model))\n\nggplot(tips_aug, aes(x = pred, y = resid)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_point() +\n  geom_hline(yintercept = 0, color = \"red\", linetype = \"dashed\") +\n  labs(title = \"残差プロット\", x = \"予測値\", y = \"残差\")",
+    "text": "単回帰分析 (Simple Linear Regression)\nある変数 \\(x\\)（説明変数）を使って、別の変数 \\(y\\)（被説明変数）を予測・説明するモデルを作ります。\n\\[ y = \\beta_0 + \\beta_1 x + \\epsilon \\]\n\n\\(\\beta_0\\): 切片 (Intercept)\n\\(\\beta_1\\): 傾き (Slope)\n\\(\\epsilon\\): 誤差項\n\nRでは lm() 関数（Linear Model）を使います。 「支払総額 (\\(x\\)) が増えると、チップ (\\(y\\)) はどれくらい増えるか？」を分析します。\n\nmodel &lt;- lm(tip ~ total_bill, data = tips)\nsummary(model)\n#&gt; \n#&gt; Call:\n#&gt; lm(formula = tip ~ total_bill, data = tips)\n#&gt; \n#&gt; Residuals:\n#&gt;     Min      1Q  Median      3Q     Max \n#&gt; -3.1982 -0.5652 -0.0974  0.4863  3.7434 \n#&gt; \n#&gt; Coefficients:\n#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    \n#&gt; (Intercept) 0.920270   0.159735   5.761 2.53e-08 ***\n#&gt; total_bill  0.105025   0.007365  14.260  &lt; 2e-16 ***\n#&gt; ---\n#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n#&gt; \n#&gt; Residual standard error: 1.022 on 242 degrees of freedom\n#&gt; Multiple R-squared:  0.4566, Adjusted R-squared:  0.4544 \n#&gt; F-statistic: 203.4 on 1 and 242 DF,  p-value: &lt; 2.2e-16\n\n\n結果の解釈\nCoefficients: の部分を見ます。\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) 0.920270   0.159735   5.761 2.53e-08 ***\ntotal_bill  0.105025   0.007365  14.260  &lt; 2e-16 ***\n\n(Intercept) の Estimate: 0.92\n\n切片です。\\(x\\)（支払総額）が0のときの \\(y\\)（チップ）の予測値です。\nただし、支払総額が0ドルということは現実にはあり得ないので、この値自体に深い意味はないことが多いです。\n\ntotal_bill の Estimate: 0.105\n\n傾きです。これが最も重要な数値です。\n「支払総額が1ドル増えると、チップは約0.105ドル（約10.5セント）増える傾向がある」 と解釈します。\n\nPr(&gt;|t|):\n\ntotal_bill の行を見ると &lt; 2e-16 となっています。これは \\(2 \\times 10^{-16}\\) 未満という非常に小さな値です。\n0.05よりはるかに小さいため、「傾きは0ではない（支払総額とチップには統計的に有意な関係がある）」と結論づけられます。\n\n\n\n\n散布図に回帰直線を引く\nggplot2 で geom_smooth(method = \"lm\") を使うと、簡単に回帰直線を追加できます。\n\nggplot(tips, aes(x = total_bill, y = tip)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_point() +\n  geom_smooth(method = \"lm\", color = \"red\")\n\n\n\n\n\n\n\n\n\n\n残差プロット\n回帰分析がうまくいっているか確認するために、予測値と残差（予測とのズレ）の関係を見ることがあります。\n\n# データフレームに予測値と残差を追加 {.unnumbered}\ntips_aug &lt;- tips %&gt;%\n  mutate(pred = predict(model), resid = residuals(model))\n\nggplot(tips_aug, aes(x = pred, y = resid)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_point() +\n  geom_hline(yintercept = 0, color = \"red\", linetype = \"dashed\") +\n  labs(title = \"残差プロット\", x = \"予測値\", y = \"残差\")\n\n\n\n\n\n\n\n\n良い回帰モデルでは： - 残差が0の周りにランダムに散らばっている - 残差にパターンがない（扇形になっていない等）",
+    "crumbs": [
+      "第11回 相関と単回帰分析"
+    ]
+  },
+  {
+    "objectID": "11_regression_1.html#決定係数-r-squared",
+    "href": "11_regression_1.html#決定係数-r-squared",
+    "title": "第11回 相関と単回帰分析",
+    "section": "決定係数 (R-squared)",
+    "text": "決定係数 (R-squared)\n回帰モデルがデータをどれくらい説明できているかを表す指標です。\n\\[R^2 = 1 - \\frac{\\sum(y_i - \\hat{y}_i)^2}{\\sum(y_i - \\bar{y})^2}\\]\n\n\\(R^2 = 0\\): モデルは全く説明力がない\n\\(R^2 = 1\\): モデルはデータを完全に説明できる\n\n\n# summaryから決定係数を確認\nsummary(model)$r.squared\n#&gt; [1] 0.4566166\n\n今回のモデルでは約0.46、つまりチップの変動の約46%を支払総額で説明できています。",
+    "crumbs": [
+      "第11回 相関と単回帰分析"
+    ]
+  },
+  {
+    "objectID": "11_regression_1.html#回帰分析の仮定",
+    "href": "11_regression_1.html#回帰分析の仮定",
+    "title": "第11回 相関と単回帰分析",
+    "section": "回帰分析の仮定",
+    "text": "回帰分析の仮定\n回帰分析が正しく機能するためには、いくつかの仮定が必要です：\n\n線形性: \\(x\\) と \\(y\\) の関係が線形である\n独立性: 観測値が互いに独立\n等分散性: 残差の分散が一定\n正規性: 残差が正規分布に従う\n\n\n仮定の診断\n\n# 残差の正規性を確認（Q-Qプロット）\nggplot(tips_aug, aes(sample = resid)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  stat_qq() +\n  stat_qq_line(color = \"red\") +\n  labs(title = \"残差のQ-Qプロット\")",
     "crumbs": [
       "第11回 相関と単回帰分析"
     ]
@@ -825,6 +1205,26 @@
     "title": "第11回 相関と単回帰分析",
     "section": "課題",
     "text": "課題\n\ntips データを使って、size（人数）を説明変数、total_bill（支払総額）を被説明変数とする単回帰分析を行ってください。 人数が1人増えると、支払総額は何ドル増えると推定されますか？",
+    "crumbs": [
+      "第11回 相関と単回帰分析"
+    ]
+  },
+  {
+    "objectID": "11_regression_1.html#練習問題",
+    "href": "11_regression_1.html#練習問題",
+    "title": "第11回 相関と単回帰分析",
+    "section": "練習問題",
+    "text": "練習問題\n\n練習1: 相関分析\nmtcars データ（Rに組み込み済み）を使って： 1. mpg（燃費）と wt（重量）の相関係数を計算 2. 相関係数の検定を行い、有意かどうか判断 3. 散布図を作成\n\n\n練習2: 単回帰分析\nmtcars データを使って、wt を説明変数、mpg を被説明変数とする単回帰分析を行ってください： 1. モデルを作成し、係数を解釈 2. 決定係数を確認 3. 回帰直線付きの散布図を作成\n\n\n練習3: 残差診断\n練習2のモデルについて： 1. 残差プロットを作成 2. Q-Qプロットを作成 3. モデルの仮定が満たされているか評価",
+    "crumbs": [
+      "第11回 相関と単回帰分析"
+    ]
+  },
+  {
+    "objectID": "11_regression_1.html#回帰分析のまとめ",
+    "href": "11_regression_1.html#回帰分析のまとめ",
+    "title": "第11回 相関と単回帰分析",
+    "section": "回帰分析のまとめ",
+    "text": "回帰分析のまとめ\n\n\n\n用語\n説明\n\n\n\n\n被説明変数（目的変数）\n予測したい変数 \\(y\\)\n\n\n説明変数（予測変数）\n予測に使う変数 \\(x\\)\n\n\n切片\n\\(x = 0\\) のときの \\(y\\) の値\n\n\n傾き\n\\(x\\) が1単位増えたときの \\(y\\) の変化量\n\n\n残差\n実測値と予測値の差\n\n\n決定係数\nモデルの説明力（0〜1）",
     "crumbs": [
       "第11回 相関と単回帰分析"
     ]
@@ -860,36 +1260,6 @@
     ]
   },
   {
-    "objectID": "12_regression_2.html#相関と因果",
-    "href": "12_regression_2.html#相関と因果",
-    "title": "第12回 重回帰分析と因果推論",
-    "section": "相関と因果",
-    "text": "相関と因果\n\n相関関係と因果関係の違い\n「相関関係がある」ことと「因果関係がある」ことは別です。 例えば、「アイスクリームの売上」と「水難事故の件数」には正の相関がありますが、アイスクリームが事故を引き起こしているわけではありません。 「気温」という第3の変数（交絡因子）が両方に影響しているからです。\n\n\n交絡因子 (Confounding Variable)\n交絡因子とは、原因と結果の両方に影響を与える第3の変数のことです。\n        気温（交絡因子）\n       /    \\\n      ↓      ↓\nアイス売上 → 水難事故（見せかけの相関）\nこの場合、アイスクリームの売上と水難事故の間に直接の因果関係はありませんが、両方とも気温の影響を受けるため、データ上では相関が観察されます。\n\n\n交絡因子をコントロールする\n重回帰分析で交絡因子を説明変数として加えることで、その影響を取り除くことができます。\n例えば、「教育年数が賃金に与える影響」を分析する場合：\n\n# シミュレーションデータの作成\nset.seed(123)\nn &lt;- 200\n\n# 能力（交絡因子）\nability &lt;- rnorm(n, mean = 100, sd = 15)\n\n# 教育年数（能力の影響を受ける）\neducation &lt;- 12 + 0.05 * ability + rnorm(n, sd = 2)\n\n# 賃金（教育と能力の両方の影響を受ける）\nwage &lt;- 20 + 2 * education + 0.3 * ability + rnorm(n, sd = 5)\n\nsim_data &lt;- tibble(wage, education, ability)\n\n能力をコントロールしない場合としない場合を比較：\n\n# 能力をコントロールしない単回帰\nmodel_biased &lt;- lm(wage ~ education, data = sim_data)\n\n# 能力をコントロールした重回帰\nmodel_unbiased &lt;- lm(wage ~ education + ability, data = sim_data)\n\ncat(\"【能力をコントロールしない場合】\\n\")\n#&gt; 【能力をコントロールしない場合】\ncat(\"教育年数の係数:\", coef(model_biased)[\"education\"], \"\\n\\n\")\n#&gt; 教育年数の係数: 2.494524\n\ncat(\"【能力をコントロールした場合】\\n\")\n#&gt; 【能力をコントロールした場合】\ncat(\"教育年数の係数:\", coef(model_unbiased)[\"education\"], \"\\n\")\n#&gt; 教育年数の係数: 1.873354\n\n真の効果は2ですが、能力をコントロールしないと過大評価されることがわかります。\n\n\n因果推論の手法\n経済学の実証分析では、交絡因子の影響を取り除き、真の因果効果を明らかにするために様々な手法が使われます：\n\n重回帰分析：観測可能な交絡因子をコントロール\n操作変数法 (IV)：交絡因子が観測できない場合に使用\n差の差法 (DID)：政策介入の効果を推定\n回帰不連続デザイン (RDD)：閾値を利用した因果推論\n傾向スコアマッチング：処置群と対照群を比較可能にする\n\nこれらの手法は、計量経済学の上級コースで詳しく学ぶことになります。",
-    "crumbs": [
-      "第12回 重回帰分析と因果推論"
-    ]
-  },
-  {
-    "objectID": "12_regression_2.html#講義のまとめ",
-    "href": "12_regression_2.html#講義のまとめ",
-    "title": "第12回 重回帰分析と因果推論",
-    "section": "講義のまとめ",
-    "text": "講義のまとめ\nこの半期の講義では、以下のことを学びました。\n\nRとRStudioの基本操作\nデータの可視化と要約\n確率と分布の基礎\n統計的推測（推定と検定）\n回帰分析による関係性の分析\n\nこれらはデータ分析の入り口に過ぎませんが、経済学の学習や卒業論文、そして社会に出てからのデータ活用において強力な武器となるはずです。",
-    "crumbs": [
-      "第12回 重回帰分析と因果推論"
-    ]
-  },
-  {
-    "objectID": "12_regression_2.html#最終課題",
-    "href": "12_regression_2.html#最終課題",
-    "title": "第12回 重回帰分析と因果推論",
-    "section": "最終課題",
-    "text": "最終課題\n自分の興味のあるデータセットを見つけて（Rに組み込まれているものでも、Web上のオープンデータでも可）、以下の分析を行ってください。\n\nデータの概要を説明する。\nヒストグラムや散布図で可視化する。\n関心のある2変数について回帰分析を行い、結果を解釈する。\n\n\n参考：利用可能なデータセット\nRには多くのデータセットが組み込まれています：\n\n# 利用可能なデータセットの一覧\ndata()\n\n# 例：mtcars（自動車データ）\nhead(mtcars)\n\n# 例：iris（アヤメのデータ）\nhead(iris)\n\nWeb上のオープンデータの例：\n\ne-Stat（日本の政府統計）: https://www.e-stat.go.jp/\nWorld Bank Open Data: https://data.worldbank.org/\nKaggle Datasets: https://www.kaggle.com/datasets",
-    "crumbs": [
-      "第12回 重回帰分析と因果推論"
-    ]
-  },
-  {
     "objectID": "12_regression_2.html#ダミー変数を使った回帰分析",
     "href": "12_regression_2.html#ダミー変数を使った回帰分析",
     "title": "第12回 重回帰分析と因果推論",
@@ -920,11 +1290,41 @@
     ]
   },
   {
+    "objectID": "12_regression_2.html#相関と因果",
+    "href": "12_regression_2.html#相関と因果",
+    "title": "第12回 重回帰分析と因果推論",
+    "section": "相関と因果",
+    "text": "相関と因果\n\n相関関係と因果関係の違い\n「相関関係がある」ことと「因果関係がある」ことは別です。 例えば、「アイスクリームの売上」と「水難事故の件数」には正の相関がありますが、アイスクリームが事故を引き起こしているわけではありません。 「気温」という第3の変数（交絡因子）が両方に影響しているからです。\n\n\n交絡因子 (Confounding Variable)\n交絡因子とは、原因と結果の両方に影響を与える第3の変数のことです。\n        気温（交絡因子）\n       /    \\\n      ↓      ↓\nアイス売上 → 水難事故（見せかけの相関）\nこの場合、アイスクリームの売上と水難事故の間に直接の因果関係はありませんが、両方とも気温の影響を受けるため、データ上では相関が観察されます。\n\n\n交絡因子をコントロールする\n重回帰分析で交絡因子を説明変数として加えることで、その影響を取り除くことができます。\n例えば、「教育年数が賃金に与える影響」を分析する場合：\n\n# シミュレーションデータの作成\nset.seed(123)\nn &lt;- 200\n\n# 能力（交絡因子）\nability &lt;- rnorm(n, mean = 100, sd = 15)\n\n# 教育年数（能力の影響を受ける）\neducation &lt;- 12 + 0.05 * ability + rnorm(n, sd = 2)\n\n# 賃金（教育と能力の両方の影響を受ける）\nwage &lt;- 20 + 2 * education + 0.3 * ability + rnorm(n, sd = 5)\n\nsim_data &lt;- tibble(wage, education, ability)\n\n能力をコントロールしない場合としない場合を比較：\n\n# 能力をコントロールしない単回帰\nmodel_biased &lt;- lm(wage ~ education, data = sim_data)\n\n# 能力をコントロールした重回帰\nmodel_unbiased &lt;- lm(wage ~ education + ability, data = sim_data)\n\ncat(\"【能力をコントロールしない場合】\\n\")\n#&gt; 【能力をコントロールしない場合】\ncat(\"教育年数の係数:\", coef(model_biased)[\"education\"], \"\\n\\n\")\n#&gt; 教育年数の係数: 2.494524\n\ncat(\"【能力をコントロールした場合】\\n\")\n#&gt; 【能力をコントロールした場合】\ncat(\"教育年数の係数:\", coef(model_unbiased)[\"education\"], \"\\n\")\n#&gt; 教育年数の係数: 1.873354\n\n真の効果は2ですが、能力をコントロールしないと過大評価されることがわかります。\n\n\n因果推論の手法\n経済学の実証分析では、交絡因子の影響を取り除き、真の因果効果を明らかにするために様々な手法が使われます：\n\n重回帰分析：観測可能な交絡因子をコントロール\n操作変数法 (IV)：交絡因子が観測できない場合に使用\n差の差法 (DID)：政策介入の効果を推定\n回帰不連続デザイン (RDD)：閾値を利用した因果推論\n傾向スコアマッチング：処置群と対照群を比較可能にする\n\nこれらの手法は、計量経済学の上級コースで詳しく学ぶことになります。",
+    "crumbs": [
+      "第12回 重回帰分析と因果推論"
+    ]
+  },
+  {
     "objectID": "12_regression_2.html#モデルの比較と選択",
     "href": "12_regression_2.html#モデルの比較と選択",
     "title": "第12回 重回帰分析と因果推論",
     "section": "モデルの比較と選択",
     "text": "モデルの比較と選択\n\n調整済み決定係数\n複数のモデルを比較する際、単純な \\(R^2\\) は説明変数を増やすほど大きくなるため、調整済み決定係数 (\\(\\bar{R}^2\\)) を使います。\n\\[ \\bar{R}^2 = 1 - \\frac{(1 - R^2)(n - 1)}{n - k - 1} \\]\nここで \\(n\\) は標本サイズ、\\(k\\) は説明変数の数です。\n\n# 異なるモデルの調整済みR²を比較\nmodels &lt;- list(\n  \"model1: tip ~ total_bill\" = model_simple,\n  \"model2: tip ~ total_bill + size\" = model2,\n  \"model3: tip ~ total_bill + size + smoker\" = model3,\n  \"model4: tip ~ total_bill + size + smoker + day + time\" = model4\n)\n\nsapply(models, function(m) summary(m)$adj.r.squared)\n#&gt;                              model1: tip ~ total_bill \n#&gt;                                             0.4543712 \n#&gt;                       model2: tip ~ total_bill + size \n#&gt;                                             0.4634533 \n#&gt;              model3: tip ~ total_bill + size + smoker \n#&gt;                                             0.4620370 \n#&gt; model4: tip ~ total_bill + size + smoker + day + time \n#&gt;                                             0.4542383\n\n\n\nAIC と BIC\nAIC (赤池情報量規準) と BIC (ベイズ情報量規準) は、モデルの適合度と複雑さのバランスを評価する指標です。値が小さいほど良いモデルとされます。\n\n# AIC と BIC の比較\ntibble(\n  model = names(models),\n  AIC = sapply(models, AIC),\n  BIC = sapply(models, BIC)\n)",
+    "crumbs": [
+      "第12回 重回帰分析と因果推論"
+    ]
+  },
+  {
+    "objectID": "12_regression_2.html#講義のまとめ",
+    "href": "12_regression_2.html#講義のまとめ",
+    "title": "第12回 重回帰分析と因果推論",
+    "section": "講義のまとめ",
+    "text": "講義のまとめ\nこの半期の講義では、以下のことを学びました。\n\nRとRStudioの基本操作\nデータの可視化と要約\n確率と分布の基礎\n統計的推測（推定と検定）\n回帰分析による関係性の分析\n\nこれらはデータ分析の入り口に過ぎませんが、経済学の学習や卒業論文、そして社会に出てからのデータ活用において強力な武器となるはずです。",
+    "crumbs": [
+      "第12回 重回帰分析と因果推論"
+    ]
+  },
+  {
+    "objectID": "12_regression_2.html#最終課題",
+    "href": "12_regression_2.html#最終課題",
+    "title": "第12回 重回帰分析と因果推論",
+    "section": "最終課題",
+    "text": "最終課題\n自分の興味のあるデータセットを見つけて（Rに組み込まれているものでも、Web上のオープンデータでも可）、以下の分析を行ってください。\n\nデータの概要を説明する。\nヒストグラムや散布図で可視化する。\n関心のある2変数について回帰分析を行い、結果を解釈する。\n\n\n参考：利用可能なデータセット\nRには多くのデータセットが組み込まれています：\n\n# 利用可能なデータセットの一覧\ndata()\n\n# 例：mtcars（自動車データ）\nhead(mtcars)\n\n# 例：iris（アヤメのデータ）\nhead(iris)\n\nWeb上のオープンデータの例：\n\ne-Stat（日本の政府統計）: https://www.e-stat.go.jp/\nWorld Bank Open Data: https://data.worldbank.org/\nKaggle Datasets: https://www.kaggle.com/datasets",
     "crumbs": [
       "第12回 重回帰分析と因果推論"
     ]

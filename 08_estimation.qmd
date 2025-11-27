@@ -1,5 +1,7 @@
 # 第8回 統計的推定 {.unnumbered}
 
+![統計的推定](figure/08_estimation/infographic.png)
+
 ## 今回の目標
 
 -   点推定と区間推定の違いを理解する。

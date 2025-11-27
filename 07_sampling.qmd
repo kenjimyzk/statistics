@@ -1,5 +1,7 @@
 # 第7回 標本分布 {.unnumbered}
 
+![標本分布](figure/07_sampling/infographic.png)
+
 ## 今回の目標
 
 -   母集団と標本の関係を理解する。

@@ -1,5 +1,7 @@
 # 第5回 確率論の基礎 {.unnumbered}
 
+![確率論の基礎](figure/05_probability/infographic.png)
+
 ## 今回の目標
 
 -   確率変数、確率分布の意味を理解する。

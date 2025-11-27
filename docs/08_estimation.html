@@ -260,14 +260,32 @@ window.Quarto = {
    
   <ul>
   <li><a href="#今回の目標" id="toc-今回の目標" class="nav-link active" data-scroll-target="#今回の目標">今回の目標</a></li>
-  <li><a href="#点推定-point-estimation" id="toc-点推定-point-estimation" class="nav-link" data-scroll-target="#点推定-point-estimation">点推定 (Point Estimation)</a></li>
+  <li><a href="#推定とは" id="toc-推定とは" class="nav-link" data-scroll-target="#推定とは">推定とは</a>
+  <ul class="collapse">
+  <li><a href="#良い推定量の性質" id="toc-良い推定量の性質" class="nav-link" data-scroll-target="#良い推定量の性質">良い推定量の性質</a></li>
+  </ul></li>
+  <li><a href="#点推定-point-estimation" id="toc-点推定-point-estimation" class="nav-link" data-scroll-target="#点推定-point-estimation">点推定 (Point Estimation)</a>
+  <ul class="collapse">
+  <li><a href="#点推定の限界" id="toc-点推定の限界" class="nav-link" data-scroll-target="#点推定の限界">点推定の限界</a></li>
+  </ul></li>
   <li><a href="#区間推定-interval-estimation" id="toc-区間推定-interval-estimation" class="nav-link" data-scroll-target="#区間推定-interval-estimation">区間推定 (Interval Estimation)</a>
   <ul class="collapse">
   <li><a href="#信頼区間の意味" id="toc-信頼区間の意味" class="nav-link" data-scroll-target="#信頼区間の意味">信頼区間の意味</a></li>
   </ul></li>
-  <li><a href="#母平均の信頼区間母分散が未知の場合" id="toc-母平均の信頼区間母分散が未知の場合" class="nav-link" data-scroll-target="#母平均の信頼区間母分散が未知の場合">母平均の信頼区間（母分散が未知の場合）</a></li>
+  <li><a href="#母平均の信頼区間母分散が未知の場合" id="toc-母平均の信頼区間母分散が未知の場合" class="nav-link" data-scroll-target="#母平均の信頼区間母分散が未知の場合">母平均の信頼区間（母分散が未知の場合）</a>
+  <ul class="collapse">
+  <li><a href="#信頼区間の幅に影響する要因" id="toc-信頼区間の幅に影響する要因" class="nav-link" data-scroll-target="#信頼区間の幅に影響する要因">信頼区間の幅に影響する要因</a></li>
+  </ul></li>
+  <li><a href="#t分布" id="toc-t分布" class="nav-link" data-scroll-target="#t分布">t分布</a></li>
   <li><a href="#母比率の信頼区間" id="toc-母比率の信頼区間" class="nav-link" data-scroll-target="#母比率の信頼区間">母比率の信頼区間</a></li>
   <li><a href="#課題" id="toc-課題" class="nav-link" data-scroll-target="#課題">課題</a></li>
+  <li><a href="#練習問題" id="toc-練習問題" class="nav-link" data-scroll-target="#練習問題">練習問題</a>
+  <ul class="collapse">
+  <li><a href="#練習1-信頼区間の計算" id="toc-練習1-信頼区間の計算" class="nav-link" data-scroll-target="#練習1-信頼区間の計算">練習1: 信頼区間の計算</a></li>
+  <li><a href="#練習2-サンプルサイズの影響" id="toc-練習2-サンプルサイズの影響" class="nav-link" data-scroll-target="#練習2-サンプルサイズの影響">練習2: サンプルサイズの影響</a></li>
+  <li><a href="#練習3-母比率の信頼区間" id="toc-練習3-母比率の信頼区間" class="nav-link" data-scroll-target="#練習3-母比率の信頼区間">練習3: 母比率の信頼区間</a></li>
+  </ul></li>
+  <li><a href="#推定のまとめ" id="toc-推定のまとめ" class="nav-link" data-scroll-target="#推定のまとめ">推定のまとめ</a></li>
   </ul>
 </nav>
     </div>
@@ -293,6 +311,12 @@ window.Quarto = {
 </header>
 
 
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figure/08_estimation/infographic.png" class="img-fluid figure-img"></p>
+<figcaption>統計的推定</figcaption>
+</figure>
+</div>
 <section id="今回の目標" class="level2">
 <h2 class="anchored" data-anchor-id="今回の目標">今回の目標</h2>
 <ul>
@@ -301,9 +325,34 @@ window.Quarto = {
 <li>Rで信頼区間を計算する。</li>
 </ul>
 </section>
+<section id="推定とは" class="level2">
+<h2 class="anchored" data-anchor-id="推定とは">推定とは</h2>
+<p>推定とは、標本のデータから母集団のパラメータ（母数）を推測することです。</p>
+<section id="良い推定量の性質" class="level3">
+<h3 class="anchored" data-anchor-id="良い推定量の性質">良い推定量の性質</h3>
+<ol type="1">
+<li><strong>不偏性</strong>: 推定量の期待値が真の値に等しい（<span class="math inline">\(E[\hat{\theta}] = \theta\)</span>）</li>
+<li><strong>一致性</strong>: サンプルサイズが大きくなると真の値に近づく</li>
+<li><strong>効率性</strong>: 分散が小さい（ばらつきが少ない）</li>
+</ol>
+</section>
+</section>
 <section id="点推定-point-estimation" class="level2">
 <h2 class="anchored" data-anchor-id="点推定-point-estimation">点推定 (Point Estimation)</h2>
 <p>母数（母平均など）を一つの値でピンポイントに推定することです。 例えば、標本平均 <span class="math inline">\(\bar{x}\)</span> は母平均 <span class="math inline">\(\mu\)</span> の点推定値として使われます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>tips <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 点推定</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(tips<span class="sc">$</span>total_bill)  <span class="co"># 母平均の点推定</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 19.78594</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="点推定の限界" class="level3">
+<h3 class="anchored" data-anchor-id="点推定の限界">点推定の限界</h3>
+<p>点推定だけでは、その推定がどれくらい信頼できるか分かりません。そこで区間推定が必要になります。</p>
+</section>
 </section>
 <section id="区間推定-interval-estimation" class="level2">
 <h2 class="anchored" data-anchor-id="区間推定-interval-estimation">区間推定 (Interval Estimation)</h2>
@@ -313,40 +362,40 @@ window.Quarto = {
 <p>「95%の確率で母数がこの区間に入る」というのは少し不正確です。 正しくは、「同じ手順で標本抽出と区間推定を100回繰り返したら、そのうち約95回の区間には母数が含まれる」という意味です。</p>
 <p>これをシミュレーションで可視化してみましょう。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># シミュレーション設定 {.unnumbered}</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>n_sim <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>n_sample <span class="ot">&lt;-</span> <span class="dv">30</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">50</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 結果を格納するデータフレーム {.unnumbered}</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span>n_sim, <span class="at">lower =</span> <span class="cn">NA</span>, <span class="at">upper =</span> <span class="cn">NA</span>, <span class="at">hit =</span> <span class="cn">NA</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_sim) {</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 標本抽出</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_sample, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># t検定で信頼区間を計算</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>lower[i] <span class="ot">&lt;-</span> test<span class="sc">$</span>conf.int[<span class="dv">1</span>]</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>upper[i] <span class="ot">&lt;-</span> test<span class="sc">$</span>conf.int[<span class="dv">2</span>]</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 母平均が含まれているか判定</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>hit[i] <span class="ot">&lt;-</span> (mu <span class="sc">&gt;=</span> results<span class="sc">$</span>lower[i] <span class="sc">&amp;</span> mu <span class="sc">&lt;=</span> results<span class="sc">$</span>upper[i])</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># プロット {.unnumbered}</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results, <span class="fu">aes</span>(<span class="at">x =</span> id, <span class="at">ymin =</span> lower, <span class="at">ymax =</span> upper, <span class="at">color =</span> hit)) <span class="sc">+</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> mu, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"95%信頼区間のシミュレーション (100回)"</span>, <span class="at">x =</span> <span class="st">"試行回数"</span>, <span class="at">y =</span> <span class="st">"推定された区間"</span>) <span class="sc">+</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"TRUE"</span> <span class="ot">=</span> <span class="st">"gray"</span>, <span class="st">"FALSE"</span> <span class="ot">=</span> <span class="st">"red"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># シミュレーション設定 {.unnumbered}</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>n_sim <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>n_sample <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 結果を格納するデータフレーム {.unnumbered}</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span>n_sim, <span class="at">lower =</span> <span class="cn">NA</span>, <span class="at">upper =</span> <span class="cn">NA</span>, <span class="at">hit =</span> <span class="cn">NA</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_sim) {</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 標本抽出</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_sample, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># t検定で信頼区間を計算</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>lower[i] <span class="ot">&lt;-</span> test<span class="sc">$</span>conf.int[<span class="dv">1</span>]</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>upper[i] <span class="ot">&lt;-</span> test<span class="sc">$</span>conf.int[<span class="dv">2</span>]</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 母平均が含まれているか判定</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>hit[i] <span class="ot">&lt;-</span> (mu <span class="sc">&gt;=</span> results<span class="sc">$</span>lower[i] <span class="sc">&amp;</span> mu <span class="sc">&lt;=</span> results<span class="sc">$</span>upper[i])</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co"># プロット {.unnumbered}</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results, <span class="fu">aes</span>(<span class="at">x =</span> id, <span class="at">ymin =</span> lower, <span class="at">ymax =</span> upper, <span class="at">color =</span> hit)) <span class="sc">+</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> mu, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"95%信頼区間のシミュレーション (100回)"</span>, <span class="at">x =</span> <span class="st">"試行回数"</span>, <span class="at">y =</span> <span class="st">"推定された区間"</span>) <span class="sc">+</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"TRUE"</span> <span class="ot">=</span> <span class="st">"gray"</span>, <span class="st">"FALSE"</span> <span class="ot">=</span> <span class="st">"red"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="08_estimation_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="08_estimation_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -357,44 +406,98 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="母平均の信頼区間母分散が未知の場合">母平均の信頼区間（母分散が未知の場合）</h2>
 <p>t分布を使って計算します。Rでは <code>t.test()</code> 関数を使うと簡単に計算できます。 <code>tips</code> データの <code>total_bill</code> の平均値の95%信頼区間を求めてみましょう。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>tips <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(tips<span class="sc">$</span>total_bill)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  One Sample t-test</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  tips$total_bill</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 34.717, df = 243, p-value &lt; 2.2e-16</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true mean is not equal to 0</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  18.66333 20.90855</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean of x </span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  19.78594</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>tips <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(tips<span class="sc">$</span>total_bill)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  One Sample t-test</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  tips$total_bill</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 34.717, df = 243, p-value &lt; 2.2e-16</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true mean is not equal to 0</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  18.66333 20.90855</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean of x </span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  19.78594</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>出力結果の <code>95 percent confidence interval:</code> の部分を見ます。</p>
 <pre><code>95 percent confidence interval:
  18.66333 20.90855</code></pre>
 <p>これは、「支払総額の母平均は、約18.66ドルから20.91ドルの間にあると考えられる」ことを示しています。</p>
+<section id="信頼区間の幅に影響する要因" class="level3">
+<h3 class="anchored" data-anchor-id="信頼区間の幅に影響する要因">信頼区間の幅に影響する要因</h3>
+<ol type="1">
+<li><strong>信頼係数</strong>: 信頼係数を上げる（95%→99%）と、区間は広くなる</li>
+<li><strong>サンプルサイズ</strong>: サンプルサイズが大きいほど、区間は狭くなる</li>
+<li><strong>データのばらつき</strong>: 標準偏差が大きいほど、区間は広くなる</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 信頼係数を変えた比較</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ci_90 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(tips<span class="sc">$</span>total_bill, <span class="at">conf.level =</span> <span class="fl">0.90</span>)<span class="sc">$</span>conf.int</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>ci_95 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(tips<span class="sc">$</span>total_bill, <span class="at">conf.level =</span> <span class="fl">0.95</span>)<span class="sc">$</span>conf.int</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>ci_99 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(tips<span class="sc">$</span>total_bill, <span class="at">conf.level =</span> <span class="fl">0.99</span>)<span class="sc">$</span>conf.int</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  信頼係数 <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"90%"</span>, <span class="st">"95%"</span>, <span class="st">"99%"</span>),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  下限 <span class="ot">=</span> <span class="fu">c</span>(ci_90[<span class="dv">1</span>], ci_95[<span class="dv">1</span>], ci_99[<span class="dv">1</span>]),</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  上限 <span class="ot">=</span> <span class="fu">c</span>(ci_90[<span class="dv">2</span>], ci_95[<span class="dv">2</span>], ci_99[<span class="dv">2</span>]),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  幅 <span class="ot">=</span> <span class="fu">c</span>(ci_90[<span class="dv">2</span>] <span class="sc">-</span> ci_90[<span class="dv">1</span>], ci_95[<span class="dv">2</span>] <span class="sc">-</span> ci_95[<span class="dv">1</span>], ci_99[<span class="dv">2</span>] <span class="sc">-</span> ci_99[<span class="dv">1</span>])</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["信頼係数"],"name":[1],"type":["chr"],"align":["left"]},{"label":["下限"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["上限"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["幅"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"90%","2":"18.84492","3":"20.72696","4":"1.882040"},{"1":"95%","2":"18.66333","3":"20.90855","4":"2.245222"},{"1":"99%","2":"18.30631","3":"21.26557","4":"2.959259"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="t分布" class="level2">
+<h2 class="anchored" data-anchor-id="t分布">t分布</h2>
+<p>母分散が未知の場合（通常はこのケース）、正規分布ではなく<strong>t分布</strong>を使います。</p>
+<p>t分布は正規分布に似ていますが、裾が厚い（外れ値が出やすい）特徴があります。 サンプルサイズが大きくなると、正規分布に近づきます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># t分布と正規分布の比較</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df_dist <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">rep</span>(x, <span class="dv">3</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="fu">dnorm</span>(x), <span class="fu">dt</span>(x, <span class="at">df =</span> <span class="dv">3</span>), <span class="fu">dt</span>(x, <span class="at">df =</span> <span class="dv">30</span>)),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  分布 <span class="ot">=</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"正規分布"</span>, <span class="st">"t分布 (df=3)"</span>, <span class="st">"t分布 (df=30)"</span>), <span class="at">each =</span> <span class="fu">length</span>(x))</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_dist, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> 分布)) <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"t分布と正規分布の比較"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_estimation_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="母比率の信頼区間" class="level2">
 <h2 class="anchored" data-anchor-id="母比率の信頼区間">母比率の信頼区間</h2>
 <p>「支持率」や「喫煙率」などの割合（比率）の推定には <code>prop.test()</code> を使います。 例：100人中60人が賛成した場合の、母集団での賛成率の95%信頼区間。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="at">x =</span> <span class="dv">60</span>, <span class="at">n =</span> <span class="dv">100</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1-sample proportions test with continuity correction</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  60 out of 100, null probability 0.5</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; X-squared = 3.61, df = 1, p-value = 0.05743</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true p is not equal to 0.5</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.4970036 0.6952199</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   p </span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="at">x =</span> <span class="dv">60</span>, <span class="at">n =</span> <span class="dv">100</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1-sample proportions test with continuity correction</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  60 out of 100, null probability 0.5</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; X-squared = 3.61, df = 1, p-value = 0.05743</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true p is not equal to 0.5</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.4970036 0.6952199</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   p </span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="課題" class="level2">
@@ -402,6 +505,84 @@ window.Quarto = {
 <ol type="1">
 <li><code>tips</code> データの <code>tip</code>（チップ）について、平均値の99%信頼区間を求めてください。 （ヒント: <code>t.test()</code> の引数に <code>conf.level = 0.99</code> を指定します）</li>
 </ol>
+</section>
+<section id="練習問題" class="level2">
+<h2 class="anchored" data-anchor-id="練習問題">練習問題</h2>
+<section id="練習1-信頼区間の計算" class="level3">
+<h3 class="anchored" data-anchor-id="練習1-信頼区間の計算">練習1: 信頼区間の計算</h3>
+<ol type="1">
+<li><code>tips</code> データの <code>size</code>（人数）の95%信頼区間を計算してください</li>
+<li>90%信頼区間と99%信頼区間も計算し、幅を比較してください</li>
+</ol>
+</section>
+<section id="練習2-サンプルサイズの影響" class="level3">
+<h3 class="anchored" data-anchor-id="練習2-サンプルサイズの影響">練習2: サンプルサイズの影響</h3>
+<ol type="1">
+<li><code>tips</code> データから50件をランダムに抽出し、<code>total_bill</code> の95%信頼区間を計算</li>
+<li>100件、200件でも同様に計算</li>
+<li>サンプルサイズと信頼区間の幅の関係を確認</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ヒント</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sample_data <span class="ot">&lt;-</span> tips[<span class="fu">sample</span>(<span class="fu">nrow</span>(tips), <span class="dv">50</span>), ]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(sample_data<span class="sc">$</span>total_bill)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="練習3-母比率の信頼区間" class="level3">
+<h3 class="anchored" data-anchor-id="練習3-母比率の信頼区間">練習3: 母比率の信頼区間</h3>
+<p><code>tips</code> データで、喫煙者の割合の95%信頼区間を求めてください。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ヒント: 喫煙者の数と全体の数を使う</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>smokers <span class="ot">&lt;-</span> <span class="fu">sum</span>(tips<span class="sc">$</span>smoker <span class="sc">==</span> <span class="st">"Yes"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">nrow</span>(tips)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(smokers, total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="推定のまとめ" class="level2">
+<h2 class="anchored" data-anchor-id="推定のまとめ">推定のまとめ</h2>
+<table class="table">
+<thead>
+<tr class="header">
+<th>推定の種類</th>
+<th>説明</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>点推定</td>
+<td>1つの値で推定</td>
+<td><span class="math inline">\(\bar{x} = 19.8\)</span></td>
+</tr>
+<tr class="even">
+<td>区間推定</td>
+<td>範囲で推定</td>
+<td><span class="math inline">\([18.7, 20.9]\)</span></td>
+</tr>
+</tbody>
+</table>
+<table class="table">
+<thead>
+<tr class="header">
+<th>信頼区間の種類</th>
+<th>R関数</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>母平均の信頼区間</td>
+<td><code>t.test()</code></td>
+<td>連続変数の平均</td>
+</tr>
+<tr class="even">
+<td>母比率の信頼区間</td>
+<td><code>prop.test()</code></td>
+<td>割合・比率</td>
+</tr>
+</tbody>
+</table>
 
 
 </section>

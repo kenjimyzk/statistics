@@ -260,12 +260,30 @@ window.Quarto = {
    
   <ul>
   <li><a href="#今回の目標" id="toc-今回の目標" class="nav-link active" data-scroll-target="#今回の目標">今回の目標</a></li>
+  <li><a href="#仮説検定とは" id="toc-仮説検定とは" class="nav-link" data-scroll-target="#仮説検定とは">仮説検定とは</a></li>
   <li><a href="#仮説検定の考え方" id="toc-仮説検定の考え方" class="nav-link" data-scroll-target="#仮説検定の考え方">仮説検定の考え方</a>
   <ul class="collapse">
+  <li><a href="#検定の手順" id="toc-検定の手順" class="nav-link" data-scroll-target="#検定の手順">検定の手順</a></li>
   <li><a href="#棄却域のイメージ" id="toc-棄却域のイメージ" class="nav-link" data-scroll-target="#棄却域のイメージ">棄却域のイメージ</a></li>
   </ul></li>
   <li><a href="#標本のt検定" id="toc-標本のt検定" class="nav-link" data-scroll-target="#標本のt検定">1標本のt検定</a></li>
+  <li><a href="#両側検定と片側検定" id="toc-両側検定と片側検定" class="nav-link" data-scroll-target="#両側検定と片側検定">両側検定と片側検定</a>
+  <ul class="collapse">
+  <li><a href="#両側検定デフォルト" id="toc-両側検定デフォルト" class="nav-link" data-scroll-target="#両側検定デフォルト">両側検定（デフォルト）</a></li>
+  <li><a href="#片側検定" id="toc-片側検定" class="nav-link" data-scroll-target="#片側検定">片側検定</a></li>
+  </ul></li>
+  <li><a href="#検定の誤り" id="toc-検定の誤り" class="nav-link" data-scroll-target="#検定の誤り">検定の誤り</a>
+  <ul class="collapse">
+  <li><a href="#有意水準と検出力のトレードオフ" id="toc-有意水準と検出力のトレードオフ" class="nav-link" data-scroll-target="#有意水準と検出力のトレードオフ">有意水準と検出力のトレードオフ</a></li>
+  </ul></li>
   <li><a href="#課題" id="toc-課題" class="nav-link" data-scroll-target="#課題">課題</a></li>
+  <li><a href="#練習問題" id="toc-練習問題" class="nav-link" data-scroll-target="#練習問題">練習問題</a>
+  <ul class="collapse">
+  <li><a href="#練習1-1標本t検定" id="toc-練習1-1標本t検定" class="nav-link" data-scroll-target="#練習1-1標本t検定">練習1: 1標本t検定</a></li>
+  <li><a href="#練習2-片側検定と両側検定" id="toc-練習2-片側検定と両側検定" class="nav-link" data-scroll-target="#練習2-片側検定と両側検定">練習2: 片側検定と両側検定</a></li>
+  <li><a href="#練習3-p値の解釈" id="toc-練習3-p値の解釈" class="nav-link" data-scroll-target="#練習3-p値の解釈">練習3: p値の解釈</a></li>
+  </ul></li>
+  <li><a href="#仮説検定の注意点" id="toc-仮説検定の注意点" class="nav-link" data-scroll-target="#仮説検定の注意点">仮説検定の注意点</a></li>
   </ul>
 </nav>
     </div>
@@ -291,12 +309,24 @@ window.Quarto = {
 </header>
 
 
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figure/09_hypothesis_1/infographic.png" class="img-fluid figure-img"></p>
+<figcaption>仮説検定 (1)</figcaption>
+</figure>
+</div>
 <section id="今回の目標" class="level2">
 <h2 class="anchored" data-anchor-id="今回の目標">今回の目標</h2>
 <ul>
 <li>仮説検定の論理（帰無仮説、対立仮説、p値）を理解する。</li>
 <li>Rを使って1標本のt検定を行う。</li>
+<li>検定の結果を正しく解釈する。</li>
 </ul>
+</section>
+<section id="仮説検定とは" class="level2">
+<h2 class="anchored" data-anchor-id="仮説検定とは">仮説検定とは</h2>
+<p>仮説検定は、データに基づいて仮説の真偽を判断する統計的手法です。</p>
+<p>例えば「新しい薬には効果がある」という主張を検証したいとき： 1. まず「効果がない」という仮説を立てる 2. データを集める 3. 「効果がない」という仮説のもとで、このデータが得られる確率を計算 4. その確率が十分に小さければ、「効果がない」は間違いと判断</p>
 </section>
 <section id="仮説検定の考え方" class="level2">
 <h2 class="anchored" data-anchor-id="仮説検定の考え方">仮説検定の考え方</h2>
@@ -308,6 +338,16 @@ window.Quarto = {
 <li><strong>有意水準 (<span class="math inline">\(\alpha\)</span>)</strong>: 帰無仮説を棄却する基準。通常 0.05 (5%) を使います。</li>
 </ul>
 <p><strong>判定ルール</strong>: - p値 &lt; 有意水準 <span class="math inline">\(\Rightarrow\)</span> 帰無仮説を棄却する（統計的に有意である）。 - p値 <span class="math inline">\(\ge\)</span> 有意水準 <span class="math inline">\(\Rightarrow\)</span> 帰無仮説を棄却できない（差があるとは言えない）。</p>
+<section id="検定の手順" class="level3">
+<h3 class="anchored" data-anchor-id="検定の手順">検定の手順</h3>
+<ol type="1">
+<li>帰無仮説と対立仮説を設定</li>
+<li>有意水準を決める（通常5%）</li>
+<li>検定統計量を計算</li>
+<li>p値を求める</li>
+<li>結論を出す</li>
+</ol>
+</section>
 <section id="棄却域のイメージ" class="level3">
 <h3 class="anchored" data-anchor-id="棄却域のイメージ">棄却域のイメージ</h3>
 <p>t分布において、どの範囲に入ったら「極端」とみなされるか（棄却域）を可視化します。</p>
@@ -375,10 +415,103 @@ window.Quarto = {
 </ul></li>
 </ol>
 </section>
+<section id="両側検定と片側検定" class="level2">
+<h2 class="anchored" data-anchor-id="両側検定と片側検定">両側検定と片側検定</h2>
+<section id="両側検定デフォルト" class="level3">
+<h3 class="anchored" data-anchor-id="両側検定デフォルト">両側検定（デフォルト）</h3>
+<p>「等しくない」ことを検定します。</p>
+<p><span class="math inline">\(H_0: \mu = \mu_0\)</span> vs <span class="math inline">\(H_1: \mu \neq \mu_0\)</span></p>
+</section>
+<section id="片側検定" class="level3">
+<h3 class="anchored" data-anchor-id="片側検定">片側検定</h3>
+<p>「大きい」または「小さい」ことを検定します。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 「50点より大きい」ことを検定（片側検定）</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(scores, <span class="at">mu =</span> <span class="dv">50</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  One Sample t-test</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  scores</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 2.5862, df = 9, p-value = 0.0147</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true mean is greater than 50</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  51.89284      Inf</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean of x </span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      56.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="検定の誤り" class="level2">
+<h2 class="anchored" data-anchor-id="検定の誤り">検定の誤り</h2>
+<p>仮説検定では2種類の誤りがありえます。</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>帰無仮説が真</th>
+<th>帰無仮説が偽</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>帰無仮説を棄却</td>
+<td><strong>第1種の誤り（α）</strong></td>
+<td>正しい判断</td>
+</tr>
+<tr class="even">
+<td>帰無仮説を棄却しない</td>
+<td>正しい判断</td>
+<td><strong>第2種の誤り（β）</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>第1種の誤り（偽陽性）</strong>: 実際には差がないのに「差がある」と判断してしまう</li>
+<li><strong>第2種の誤り（偽陰性）</strong>: 実際には差があるのに「差がない」と判断してしまう</li>
+<li><strong>検出力 (Power)</strong>: <span class="math inline">\(1 - \beta\)</span>。真の差を検出できる確率</li>
+</ul>
+<section id="有意水準と検出力のトレードオフ" class="level3">
+<h3 class="anchored" data-anchor-id="有意水準と検出力のトレードオフ">有意水準と検出力のトレードオフ</h3>
+<p>有意水準を厳しくすると（5%→1%）： - 第1種の誤りは減る - 第2種の誤りは増える（検出力が下がる）</p>
+</section>
+</section>
 <section id="課題" class="level2">
 <h2 class="anchored" data-anchor-id="課題">課題</h2>
 <ol type="1">
 <li><code>tips</code> データの <code>total_bill</code> の平均値が 20ドル と異なるかどうかを検定してください。 帰無仮説、対立仮説、p値、そして結論（棄却するかどうか）を答えてください。</li>
+</ol>
+</section>
+<section id="練習問題" class="level2">
+<h2 class="anchored" data-anchor-id="練習問題">練習問題</h2>
+<section id="練習1-1標本t検定" class="level3">
+<h3 class="anchored" data-anchor-id="練習1-1標本t検定">練習1: 1標本t検定</h3>
+<p>ある会社の従業員10人の残業時間（月間）が以下のデータだとします：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>overtime <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">50</span>, <span class="dv">38</span>, <span class="dv">55</span>, <span class="dv">42</span>, <span class="dv">48</span>, <span class="dv">52</span>, <span class="dv">40</span>, <span class="dv">35</span>, <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>法定の残業上限である月45時間と比較して、この会社の残業時間は有意に多いですか？</p>
+</section>
+<section id="練習2-片側検定と両側検定" class="level3">
+<h3 class="anchored" data-anchor-id="練習2-片側検定と両側検定">練習2: 片側検定と両側検定</h3>
+<ol type="1">
+<li>上の練習問題を両側検定で行ってください</li>
+<li>「45時間より多い」かどうかを片側検定で行ってください</li>
+<li>結果の違いを確認してください</li>
+</ol>
+</section>
+<section id="練習3-p値の解釈" class="level3">
+<h3 class="anchored" data-anchor-id="練習3-p値の解釈">練習3: p値の解釈</h3>
+<p>以下の場合、帰無仮説を棄却しますか？理由も答えてください。 1. p値 = 0.03, 有意水準 = 0.05 2. p値 = 0.08, 有意水準 = 0.05 3. p値 = 0.001, 有意水準 = 0.01</p>
+</section>
+</section>
+<section id="仮説検定の注意点" class="level2">
+<h2 class="anchored" data-anchor-id="仮説検定の注意点">仮説検定の注意点</h2>
+<ol type="1">
+<li><strong>統計的有意 ≠ 実質的に重要</strong>: p値が小さくても、効果の大きさが小さい場合がある</li>
+<li><strong>「棄却しない」≠「帰無仮説が正しい」</strong>: 差がないと証明したわけではない</li>
+<li><strong>p値は確率ではない</strong>: 「帰無仮説が正しい確率」ではない</li>
+<li><strong>多重検定の問題</strong>: 何度も検定を繰り返すと、偶然有意になりやすい</li>
 </ol>
 
 

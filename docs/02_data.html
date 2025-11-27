@@ -231,9 +231,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#今回の目標" id="toc-今回の目標" class="nav-link active" data-scroll-target="#今回の目標">今回の目標</a></li>
-  <li><a href="#パッケージの準備" id="toc-パッケージの準備" class="nav-link" data-scroll-target="#パッケージの準備">パッケージの準備</a></li>
-  <li><a href="#データフレーム" id="toc-データフレーム" class="nav-link" data-scroll-target="#データフレーム">データフレーム</a></li>
-  <li><a href="#データの読み込み" id="toc-データの読み込み" class="nav-link" data-scroll-target="#データの読み込み">データの読み込み</a></li>
+  <li><a href="#パッケージの準備" id="toc-パッケージの準備" class="nav-link" data-scroll-target="#パッケージの準備">パッケージの準備</a>
+  <ul class="collapse">
+  <li><a href="#tidyverseとは" id="toc-tidyverseとは" class="nav-link" data-scroll-target="#tidyverseとは">Tidyverseとは</a></li>
+  </ul></li>
+  <li><a href="#データフレーム" id="toc-データフレーム" class="nav-link" data-scroll-target="#データフレーム">データフレーム</a>
+  <ul class="collapse">
+  <li><a href="#データフレームの構造を確認する" id="toc-データフレームの構造を確認する" class="nav-link" data-scroll-target="#データフレームの構造を確認する">データフレームの構造を確認する</a></li>
+  <li><a href="#データ型について" id="toc-データ型について" class="nav-link" data-scroll-target="#データ型について">データ型について</a></li>
+  </ul></li>
+  <li><a href="#データの読み込み" id="toc-データの読み込み" class="nav-link" data-scroll-target="#データの読み込み">データの読み込み</a>
+  <ul class="collapse">
+  <li><a href="#よく使うデータ読み込み関数" id="toc-よく使うデータ読み込み関数" class="nav-link" data-scroll-target="#よく使うデータ読み込み関数">よく使うデータ読み込み関数</a></li>
+  <li><a href="#tipsデータの説明" id="toc-tipsデータの説明" class="nav-link" data-scroll-target="#tipsデータの説明">tipsデータの説明</a></li>
+  </ul></li>
   <li><a href="#データの操作-dplyr" id="toc-データの操作-dplyr" class="nav-link" data-scroll-target="#データの操作-dplyr">データの操作 (dplyr)</a>
   <ul class="collapse">
   <li><a href="#列を選ぶ-select" id="toc-列を選ぶ-select" class="nav-link" data-scroll-target="#列を選ぶ-select">1. 列を選ぶ: <code>select()</code></a></li>
@@ -250,6 +261,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#データの可視化チラ見せ" id="toc-データの可視化チラ見せ" class="nav-link" data-scroll-target="#データの可視化チラ見せ">4. データの可視化（チラ見せ）</a></li>
   </ul></li>
   <li><a href="#課題" id="toc-課題" class="nav-link" data-scroll-target="#課題">課題</a></li>
+  <li><a href="#練習問題" id="toc-練習問題" class="nav-link" data-scroll-target="#練習問題">練習問題</a>
+  <ul class="collapse">
+  <li><a href="#練習1-データの確認" id="toc-練習1-データの確認" class="nav-link" data-scroll-target="#練習1-データの確認">練習1: データの確認</a></li>
+  <li><a href="#練習2-フィルタリング" id="toc-練習2-フィルタリング" class="nav-link" data-scroll-target="#練習2-フィルタリング">練習2: フィルタリング</a></li>
+  <li><a href="#練習3-データ加工の組み合わせ" id="toc-練習3-データ加工の組み合わせ" class="nav-link" data-scroll-target="#練習3-データ加工の組み合わせ">練習3: データ加工の組み合わせ</a></li>
+  </ul></li>
+  <li><a href="#dplyr関数のまとめ" id="toc-dplyr関数のまとめ" class="nav-link" data-scroll-target="#dplyr関数のまとめ">dplyr関数のまとめ</a></li>
   </ul>
 </nav>
     </div>
@@ -292,6 +310,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="パッケージの準備" class="level2">
 <h2 class="anchored" data-anchor-id="パッケージの準備">パッケージの準備</h2>
 <p>Rには便利な機能を追加する <strong>パッケージ</strong> という仕組みがあります。 この講義では、データ分析に必須のパッケージ群 <strong>Tidyverse</strong> を使います。</p>
+<section id="tidyverseとは" class="level3">
+<h3 class="anchored" data-anchor-id="tidyverseとは">Tidyverseとは</h3>
+<p>Tidyverseは、データサイエンスのために設計されたパッケージの集合体です。主に以下のパッケージが含まれています：</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>パッケージ</th>
+<th>主な用途</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ggplot2</code></td>
+<td>データの可視化（グラフ作成）</td>
+</tr>
+<tr class="even">
+<td><code>dplyr</code></td>
+<td>データの操作・加工</td>
+</tr>
+<tr class="odd">
+<td><code>tidyr</code></td>
+<td>データの整形</td>
+</tr>
+<tr class="even">
+<td><code>readr</code></td>
+<td>データの読み込み</td>
+</tr>
+<tr class="odd">
+<td><code>stringr</code></td>
+<td>文字列の操作</td>
+</tr>
+<tr class="even">
+<td><code>forcats</code></td>
+<td>カテゴリ変数（因子）の操作</td>
+</tr>
+</tbody>
+</table>
 <p>初回のみインストールが必要です（前回の課題で実施済みなら不要）。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("tidyverse") {.unnumbered}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -300,6 +355,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
 </section>
 <section id="データフレーム" class="level2">
 <h2 class="anchored" data-anchor-id="データフレーム">データフレーム</h2>
@@ -314,32 +370,169 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<section id="データフレームの構造を確認する" class="level3">
+<h3 class="anchored" data-anchor-id="データフレームの構造を確認する">データフレームの構造を確認する</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># データの次元（行数 × 列数）</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(iris)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 150   5</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 列名の確認</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(iris)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "Sepal.Length" "Sepal.Width"  "Petal.Length" "Petal.Width"  "Species"</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># データの構造を確認</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(iris)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 'data.frame':    150 obs. of  5 variables:</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="データ型について" class="level3">
+<h3 class="anchored" data-anchor-id="データ型について">データ型について</h3>
+<p>Rには主に以下のデータ型があります：</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>データ型</th>
+<th>説明</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>numeric</td>
+<td>数値</td>
+<td>1.5, 100, -3.14</td>
+</tr>
+<tr class="even">
+<td>integer</td>
+<td>整数</td>
+<td>1L, 2L, 100L</td>
+</tr>
+<tr class="odd">
+<td>character</td>
+<td>文字列</td>
+<td>“東京”, “hello”</td>
+</tr>
+<tr class="even">
+<td>logical</td>
+<td>論理値</td>
+<td>TRUE, FALSE</td>
+</tr>
+<tr class="odd">
+<td>factor</td>
+<td>カテゴリ</td>
+<td>男性/女性, 大/中/小</td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 <section id="データの読み込み" class="level2">
 <h2 class="anchored" data-anchor-id="データの読み込み">データの読み込み</h2>
 <p>自分のデータを分析するには、CSVファイルなどを読み込む必要があります。 <code>read_csv()</code> 関数を使います。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data.csv というファイルがある場合の例 {.unnumbered}</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df &lt;- read_csv("data.csv") {.unnumbered}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data.csv というファイルがある場合の例 {.unnumbered}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df &lt;- read_csv("data.csv") {.unnumbered}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<section id="よく使うデータ読み込み関数" class="level3">
+<h3 class="anchored" data-anchor-id="よく使うデータ読み込み関数">よく使うデータ読み込み関数</h3>
+<table class="table">
+<thead>
+<tr class="header">
+<th>関数</th>
+<th>ファイル形式</th>
+<th>パッケージ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>read_csv()</code></td>
+<td>CSV（カンマ区切り）</td>
+<td>readr (tidyverse)</td>
+</tr>
+<tr class="even">
+<td><code>read_tsv()</code></td>
+<td>TSV（タブ区切り）</td>
+<td>readr (tidyverse)</td>
+</tr>
+<tr class="odd">
+<td><code>read_excel()</code></td>
+<td>Excel (.xlsx)</td>
+<td>readxl</td>
+</tr>
+<tr class="even">
+<td><code>read.csv()</code></td>
+<td>CSV</td>
+<td>base R</td>
+</tr>
+</tbody>
+</table>
 <p>今回は、Web上のCSVデータを読み込んでみましょう。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>tips <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>tips <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>データの概要を確認します。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(tips)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 244</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Columns: 7</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ total_bill &lt;dbl&gt; 16.99, 10.34, 21.01, 23.68, 24.59, 25.29, 8.77, 26.88, 15.0…</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ tip        &lt;dbl&gt; 1.01, 1.66, 3.50, 3.31, 3.61, 4.71, 2.00, 3.12, 1.96, 3.23,…</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ sex        &lt;chr&gt; "Female", "Male", "Male", "Male", "Female", "Male", "Male",…</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ smoker     &lt;chr&gt; "No", "No", "No", "No", "No", "No", "No", "No", "No", "No",…</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ day        &lt;chr&gt; "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Su…</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ time       &lt;chr&gt; "Dinner", "Dinner", "Dinner", "Dinner", "Dinner", "Dinner",…</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ size       &lt;dbl&gt; 2, 3, 3, 2, 4, 4, 2, 4, 2, 2, 2, 4, 2, 4, 2, 2, 3, 3, 3, 3,…</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(tips)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 244</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Columns: 7</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ total_bill &lt;dbl&gt; 16.99, 10.34, 21.01, 23.68, 24.59, 25.29, 8.77, 26.88, 15.0…</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ tip        &lt;dbl&gt; 1.01, 1.66, 3.50, 3.31, 3.61, 4.71, 2.00, 3.12, 1.96, 3.23,…</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ sex        &lt;chr&gt; "Female", "Male", "Male", "Male", "Female", "Male", "Male",…</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ smoker     &lt;chr&gt; "No", "No", "No", "No", "No", "No", "No", "No", "No", "No",…</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ day        &lt;chr&gt; "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Su…</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ time       &lt;chr&gt; "Dinner", "Dinner", "Dinner", "Dinner", "Dinner", "Dinner",…</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ size       &lt;dbl&gt; 2, 3, 3, 2, 4, 4, 2, 4, 2, 2, 2, 4, 2, 4, 2, 2, 3, 3, 3, 3,…</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="tipsデータの説明" class="level3">
+<h3 class="anchored" data-anchor-id="tipsデータの説明">tipsデータの説明</h3>
+<p>このデータはレストランでのチップに関するデータです。</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>変数名</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>total_bill</td>
+<td>支払総額（ドル）</td>
+</tr>
+<tr class="even">
+<td>tip</td>
+<td>チップの額（ドル）</td>
+</tr>
+<tr class="odd">
+<td>sex</td>
+<td>支払者の性別</td>
+</tr>
+<tr class="even">
+<td>smoker</td>
+<td>喫煙者かどうか</td>
+</tr>
+<tr class="odd">
+<td>day</td>
+<td>曜日</td>
+</tr>
+<tr class="even">
+<td>time</td>
+<td>時間帯（ランチ/ディナー）</td>
+</tr>
+<tr class="odd">
+<td>size</td>
+<td>グループの人数</td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 <section id="データの操作-dplyr" class="level2">
 <h2 class="anchored" data-anchor-id="データの操作-dplyr">データの操作 (dplyr)</h2>
@@ -348,9 +541,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="列を選ぶ-select">1. 列を選ぶ: <code>select()</code></h3>
 <p>特定の列だけを取り出します。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(total_bill, tip) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(total_bill, tip) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -365,9 +558,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="行を選ぶ-filter">2. 行を選ぶ: <code>filter()</code></h3>
 <p>条件に合う行だけを取り出します。 例えば、<code>time</code> が “Dinner” のデータだけ抽出します。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time <span class="sc">==</span> <span class="st">"Dinner"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time <span class="sc">==</span> <span class="st">"Dinner"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -381,10 +574,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="新しい列を作る-mutate">3. 新しい列を作る: <code>mutate()</code></h3>
 <p>計算結果などを新しい列として追加します。 チップの割合（チップ / 総額）を計算してみましょう。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tip_rate =</span> tip <span class="sc">/</span> total_bill) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(total_bill, tip, tip_rate) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tip_rate =</span> tip <span class="sc">/</span> total_bill) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(total_bill, tip, tip_rate) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -398,10 +591,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="データの並び替え-arrange">5. データの並び替え: <code>arrange()</code></h3>
 <p>データを特定の列の値で並び替えます。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 支払総額の小さい順に並べる</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(total_bill) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 支払総額の小さい順に並べる</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(total_bill) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -409,11 +602,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 降順（大きい順）にする場合は desc() を使う</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_bill)) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 降順（大きい順）にする場合は desc() を使う</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_bill)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -427,12 +620,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="要約統計量を計算-summarize">6. 要約統計量を計算: <code>summarize()</code></h3>
 <p>データの要約統計量（平均、合計など）を計算します。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    平均支払額 <span class="ot">=</span> <span class="fu">mean</span>(total_bill),</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    平均チップ <span class="ot">=</span> <span class="fu">mean</span>(tip),</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    データ数 <span class="ot">=</span> <span class="fu">n</span>()</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    平均支払額 <span class="ot">=</span> <span class="fu">mean</span>(total_bill),</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    平均チップ <span class="ot">=</span> <span class="fu">mean</span>(tip),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    データ数 <span class="ot">=</span> <span class="fu">n</span>()</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -443,13 +636,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>グループごとに集計する場合は、<code>group_by()</code> と組み合わせます。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 曜日ごとの平均支払額を計算</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(day) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    平均支払額 <span class="ot">=</span> <span class="fu">mean</span>(total_bill),</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    データ数 <span class="ot">=</span> <span class="fu">n</span>()</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 曜日ごとの平均支払額を計算</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(day) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    平均支払額 <span class="ot">=</span> <span class="fu">mean</span>(total_bill),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    データ数 <span class="ot">=</span> <span class="fu">n</span>()</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -464,13 +657,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="パイプ演算子-の活用">パイプ演算子 <code>%&gt;%</code> の活用</h2>
 <p>パイプ演算子を使うと、複数の操作を順番につなげられます。 「データを読み込んで、フィルタして、新しい列を作って、並び替える」といった一連の操作を、読みやすく書けます。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 例: ディナーのデータだけを抽出し、チップ率を計算し、支払額の大きい順に並べる</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time <span class="sc">==</span> <span class="st">"Dinner"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tip_rate =</span> tip <span class="sc">/</span> total_bill <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span>  <span class="co"># パーセントで表示</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_bill)) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(total_bill, tip, tip_rate, day) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)  <span class="co"># 上位10件のみ表示</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 例: ディナーのデータだけを抽出し、チップ率を計算し、支払額の大きい順に並べる</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time <span class="sc">==</span> <span class="st">"Dinner"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tip_rate =</span> tip <span class="sc">/</span> total_bill <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span>  <span class="co"># パーセントで表示</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_bill)) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(total_bill, tip, tip_rate, day) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)  <span class="co"># 上位10件のみ表示</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -486,21 +679,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="ヒント1-列名の指定方法">ヒント1: 列名の指定方法</h3>
 <p>列を指定する方法は2つあります。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 方法1: $ を使う</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>tips<span class="sc">$</span>total_bill</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 方法2: dplyrで直接列名を書く（パイプと相性が良い）</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> <span class="fu">select</span>(total_bill)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 方法1: $ を使う</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>tips<span class="sc">$</span>total_bill</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 方法2: dplyrで直接列名を書く（パイプと相性が良い）</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> <span class="fu">select</span>(total_bill)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="ヒント2-複数の条件を組み合わせる" class="level3">
 <h3 class="anchored" data-anchor-id="ヒント2-複数の条件を組み合わせる">ヒント2: 複数の条件を組み合わせる</h3>
 <p><code>filter()</code> では、<code>&amp;</code>（かつ）や <code>|</code>（または）を使って複数の条件を組み合わせられます。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 支払額が20ドル以上、かつディナーのデータ</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(total_bill <span class="sc">&gt;=</span> <span class="dv">20</span> <span class="sc">&amp;</span> time <span class="sc">==</span> <span class="st">"Dinner"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 支払額が20ドル以上、かつディナーのデータ</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(total_bill <span class="sc">&gt;=</span> <span class="dv">20</span> <span class="sc">&amp;</span> time <span class="sc">==</span> <span class="st">"Dinner"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -514,13 +707,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="データの可視化チラ見せ">4. データの可視化（チラ見せ）</h3>
 <p><code>ggplot2</code> を使うと、データの分布を簡単に可視化できます。 例えば、男女 (<code>sex</code>) の人数を棒グラフにしてみましょう。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> sex)) <span class="sc">+</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> sex)) <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="02_data_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="02_data_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -534,6 +727,71 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>day</code> が “Sun”（日曜日）のデータだけを <code>filter()</code> で抽出してください。</li>
 <li>抽出したデータから、<code>total_bill</code> と <code>size</code> の列だけを <code>select()</code> で選んで表示してください。</li>
 </ol>
+</section>
+<section id="練習問題" class="level2">
+<h2 class="anchored" data-anchor-id="練習問題">練習問題</h2>
+<section id="練習1-データの確認" class="level3">
+<h3 class="anchored" data-anchor-id="練習1-データの確認">練習1: データの確認</h3>
+<ol type="1">
+<li><code>tips</code> データの行数と列数を確認してください</li>
+<li><code>tips</code> データの最後の6行を表示してください（ヒント: <code>tail()</code> 関数）</li>
+</ol>
+</section>
+<section id="練習2-フィルタリング" class="level3">
+<h3 class="anchored" data-anchor-id="練習2-フィルタリング">練習2: フィルタリング</h3>
+<ol type="1">
+<li>チップ (<code>tip</code>) が3ドル以上のデータだけを抽出してください</li>
+<li>女性 (<code>sex == "Female"</code>) かつディナー (<code>time == "Dinner"</code>) のデータを抽出してください</li>
+</ol>
+</section>
+<section id="練習3-データ加工の組み合わせ" class="level3">
+<h3 class="anchored" data-anchor-id="練習3-データ加工の組み合わせ">練習3: データ加工の組み合わせ</h3>
+<p>以下の操作を1つのパイプでつなげて実行してください： 1. 土曜日 (<code>day == "Sat"</code>) のデータを抽出 2. チップ率 (<code>tip / total_bill * 100</code>) を新しい列として追加 3. チップ率の高い順に並び替え 4. 上位5件を表示</p>
+</section>
+</section>
+<section id="dplyr関数のまとめ" class="level2">
+<h2 class="anchored" data-anchor-id="dplyr関数のまとめ">dplyr関数のまとめ</h2>
+<table class="table">
+<thead>
+<tr class="header">
+<th>関数</th>
+<th>用途</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>select()</code></td>
+<td>列を選択</td>
+<td><code>select(data, col1, col2)</code></td>
+</tr>
+<tr class="even">
+<td><code>filter()</code></td>
+<td>行を抽出</td>
+<td><code>filter(data, x &gt; 10)</code></td>
+</tr>
+<tr class="odd">
+<td><code>mutate()</code></td>
+<td>新しい列を作成</td>
+<td><code>mutate(data, new = x + y)</code></td>
+</tr>
+<tr class="even">
+<td><code>arrange()</code></td>
+<td>並び替え</td>
+<td><code>arrange(data, x)</code></td>
+</tr>
+<tr class="odd">
+<td><code>summarize()</code></td>
+<td>要約統計量</td>
+<td><code>summarize(data, mean(x))</code></td>
+</tr>
+<tr class="even">
+<td><code>group_by()</code></td>
+<td>グループ化</td>
+<td><code>group_by(data, category)</code></td>
+</tr>
+</tbody>
+</table>
 
 
 </section>

@@ -1,5 +1,7 @@
 # 第3回 記述統計 (1) 数値要約 {.unnumbered}
 
+![記述統計 (1) 数値要約](figure/03_desc_stat_1/infographic.png)
+
 ## 今回の目標
 
 -   データの中心を表す指標（代表値）を理解する。

@@ -231,12 +231,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#今回の目標" id="toc-今回の目標" class="nav-link active" data-scroll-target="#今回の目標">今回の目標</a></li>
+  <li><a href="#なぜ可視化が重要か" id="toc-なぜ可視化が重要か" class="nav-link" data-scroll-target="#なぜ可視化が重要か">なぜ可視化が重要か</a></li>
   <li><a href="#準備" id="toc-準備" class="nav-link" data-scroll-target="#準備">準備</a></li>
   <li><a href="#ggplot2の基本" id="toc-ggplot2の基本" class="nav-link" data-scroll-target="#ggplot2の基本">ggplot2の基本</a></li>
   <li><a href="#変数の可視化" id="toc-変数の可視化" class="nav-link" data-scroll-target="#変数の可視化">1変数の可視化</a>
   <ul class="collapse">
   <li><a href="#ヒストグラム-histogram" id="toc-ヒストグラム-histogram" class="nav-link" data-scroll-target="#ヒストグラム-histogram">ヒストグラム (Histogram)</a></li>
   <li><a href="#箱ひげ図-boxplot" id="toc-箱ひげ図-boxplot" class="nav-link" data-scroll-target="#箱ひげ図-boxplot">箱ひげ図 (Boxplot)</a></li>
+  <li><a href="#箱ひげ図の読み方" id="toc-箱ひげ図の読み方" class="nav-link" data-scroll-target="#箱ひげ図の読み方">箱ひげ図の読み方</a></li>
+  <li><a href="#バイオリンプロット" id="toc-バイオリンプロット" class="nav-link" data-scroll-target="#バイオリンプロット">バイオリンプロット</a></li>
   <li><a href="#棒グラフ-bar-plot" id="toc-棒グラフ-bar-plot" class="nav-link" data-scroll-target="#棒グラフ-bar-plot">棒グラフ (Bar Plot)</a></li>
   </ul></li>
   <li><a href="#変数の可視化-1" id="toc-変数の可視化-1" class="nav-link" data-scroll-target="#変数の可視化-1">2変数の可視化</a>
@@ -256,6 +259,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#色の使い方に注意" id="toc-色の使い方に注意" class="nav-link" data-scroll-target="#色の使い方に注意">3. 色の使い方に注意</a></li>
   </ul></li>
   <li><a href="#課題" id="toc-課題" class="nav-link" data-scroll-target="#課題">課題</a></li>
+  <li><a href="#練習問題" id="toc-練習問題" class="nav-link" data-scroll-target="#練習問題">練習問題</a>
+  <ul class="collapse">
+  <li><a href="#練習1-ヒストグラムのカスタマイズ" id="toc-練習1-ヒストグラムのカスタマイズ" class="nav-link" data-scroll-target="#練習1-ヒストグラムのカスタマイズ">練習1: ヒストグラムのカスタマイズ</a></li>
+  <li><a href="#練習2-複数のグラフの作成" id="toc-練習2-複数のグラフの作成" class="nav-link" data-scroll-target="#練習2-複数のグラフの作成">練習2: 複数のグラフの作成</a></li>
+  <li><a href="#練習3-散布図の応用" id="toc-練習3-散布図の応用" class="nav-link" data-scroll-target="#練習3-散布図の応用">練習3: 散布図の応用</a></li>
+  </ul></li>
+  <li><a href="#グラフ選択のガイド" id="toc-グラフ選択のガイド" class="nav-link" data-scroll-target="#グラフ選択のガイド">グラフ選択のガイド</a></li>
   </ul>
 </nav>
     </div>
@@ -281,19 +291,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figure/04_desc_stat_2/infographic.png" class="img-fluid figure-img"></p>
+<figcaption>データの可視化</figcaption>
+</figure>
+</div>
 <section id="今回の目標" class="level2">
 <h2 class="anchored" data-anchor-id="今回の目標">今回の目標</h2>
 <ul>
 <li>データの分布をグラフで確認する重要性を理解する。</li>
 <li><code>ggplot2</code> を使って基本的なグラフ（ヒストグラム、箱ひげ図、散布図）を作成する。</li>
+<li>グラフの種類と使い分けを学ぶ。</li>
 </ul>
+</section>
+<section id="なぜ可視化が重要か" class="level2">
+<h2 class="anchored" data-anchor-id="なぜ可視化が重要か">なぜ可視化が重要か</h2>
+<p>数値だけではデータの特徴を見落とすことがあります。有名な「アンスコムのカルテット」という例があります。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># アンスコムのカルテット（Rに組み込み済み）</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>anscombe_long <span class="ot">&lt;-</span> anscombe <span class="sc">%&gt;%</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">".value"</span>, <span class="st">"set"</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_pattern =</span> <span class="st">"(.)(.)"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 各セットの統計量</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>anscombe_long <span class="sc">%&gt;%</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(set) <span class="sc">%&gt;%</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_x =</span> <span class="fu">mean</span>(x),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_y =</span> <span class="fu">mean</span>(y),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_x =</span> <span class="fu">sd</span>(x),</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_y =</span> <span class="fu">sd</span>(y),</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">cor =</span> <span class="fu">cor</span>(x, y)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["set"],"name":[1],"type":["chr"],"align":["left"]},{"label":["mean_x"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["mean_y"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["sd_x"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["sd_y"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["cor"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"9","3":"7.500909","4":"3.316625","5":"2.031568","6":"0.8164205"},{"1":"2","2":"9","3":"7.500909","4":"3.316625","5":"2.031657","6":"0.8162365"},{"1":"3","2":"9","3":"7.500000","4":"3.316625","5":"2.030424","6":"0.8162867"},{"1":"4","2":"9","3":"7.500909","4":"3.316625","5":"2.030579","6":"0.8165214"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>統計量はほぼ同じですが、グラフにすると全く異なるパターンが見えます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(anscombe_long, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>set) <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"アンスコムのカルテット: 統計量は同じでもパターンは異なる"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_desc_stat_2_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="準備" class="level2">
 <h2 class="anchored" data-anchor-id="準備">準備</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>tips <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>tips <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="ggplot2の基本" class="level2">
@@ -301,8 +364,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>ggplot2</code> は、「キャンバスを用意」→「グラフの種類を指定」→「装飾を追加」という層（レイヤー）を重ねる考え方でグラフを作ります。</p>
 <p>基本形:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> データフレーム, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x軸の変数, <span class="at">y =</span> y軸の変数)) <span class="sc">+</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  グラフの種類()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> データフレーム, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x軸の変数, <span class="at">y =</span> y軸の変数)) <span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  グラフの種類()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="変数の可視化" class="level2">
@@ -311,14 +374,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="ヒストグラム-histogram">ヒストグラム (Histogram)</h3>
 <p>連続変数の分布を見るのによく使います。<code>geom_histogram()</code> を使います。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> total_bill)) <span class="sc">+</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"支払総額のヒストグラム"</span>, <span class="at">x =</span> <span class="st">"支払総額 ($)"</span>, <span class="at">y =</span> <span class="st">"度数"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> total_bill)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"支払総額のヒストグラム"</span>, <span class="at">x =</span> <span class="st">"支払総額 ($)"</span>, <span class="at">y =</span> <span class="st">"度数"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_desc_stat_2_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_desc_stat_2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -328,14 +391,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="箱ひげ図-boxplot">箱ひげ図 (Boxplot)</h3>
 <p>データのばらつきや外れ値を確認するのに便利です。<code>geom_boxplot()</code> を使います。 1変数だけでなく、カテゴリごとの分布比較にもよく使われます。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> day, <span class="at">y =</span> total_bill, <span class="at">fill =</span> day)) <span class="sc">+</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"曜日別の支払総額"</span>, <span class="at">x =</span> <span class="st">"曜日"</span>, <span class="at">y =</span> <span class="st">"支払総額"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> day, <span class="at">y =</span> total_bill, <span class="at">fill =</span> day)) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"曜日別の支払総額"</span>, <span class="at">x =</span> <span class="st">"曜日"</span>, <span class="at">y =</span> <span class="st">"支払総額"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_desc_stat_2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_desc_stat_2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="箱ひげ図の読み方" class="level3">
+<h3 class="anchored" data-anchor-id="箱ひげ図の読み方">箱ひげ図の読み方</h3>
+<p>箱ひげ図の各部分は以下を表しています：</p>
+<ul>
+<li><strong>箱の下端</strong>: 第1四分位数（Q1、下位25%）</li>
+<li><strong>箱の中の線</strong>: 中央値（Q2、下位50%）</li>
+<li><strong>箱の上端</strong>: 第3四分位数（Q3、下位75%）</li>
+<li><strong>ひげ</strong>: Q1 - 1.5×IQR から Q3 + 1.5×IQR の範囲</li>
+<li><strong>点</strong>: 外れ値</li>
+</ul>
+</section>
+<section id="バイオリンプロット" class="level3">
+<h3 class="anchored" data-anchor-id="バイオリンプロット">バイオリンプロット</h3>
+<p>箱ひげ図の代替として、分布の形状をより詳しく見られるバイオリンプロットがあります。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> day, <span class="at">y =</span> total_bill, <span class="at">fill =</span> day)) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"曜日別の支払総額（バイオリンプロット）"</span>, <span class="at">x =</span> <span class="st">"曜日"</span>, <span class="at">y =</span> <span class="st">"支払総額"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_desc_stat_2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -345,14 +437,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="棒グラフ-bar-plot">棒グラフ (Bar Plot)</h3>
 <p>カテゴリ変数（離散変数）の度数（カウント）を見るのに使います。<code>geom_bar()</code> を使います。 曜日ごとのデータ数を見てみましょう。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> day)) <span class="sc">+</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"曜日ごとのデータ数"</span>, <span class="at">x =</span> <span class="st">"曜日"</span>, <span class="at">y =</span> <span class="st">"件数"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> day)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"曜日ごとのデータ数"</span>, <span class="at">x =</span> <span class="st">"曜日"</span>, <span class="at">y =</span> <span class="st">"件数"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_desc_stat_2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_desc_stat_2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -365,27 +457,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="散布図-scatter-plot">散布図 (Scatter Plot)</h3>
 <p>2つの連続変数の関係を見るのに使います。<code>geom_point()</code> を使います。 支払総額とチップの関係を見てみましょう。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> total_bill, <span class="at">y =</span> tip)) <span class="sc">+</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"支払総額とチップの関係"</span>, <span class="at">x =</span> <span class="st">"支払総額"</span>, <span class="at">y =</span> <span class="st">"チップ"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> total_bill, <span class="at">y =</span> tip)) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"支払総額とチップの関係"</span>, <span class="at">x =</span> <span class="st">"支払総額"</span>, <span class="at">y =</span> <span class="st">"チップ"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_desc_stat_2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_desc_stat_2_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>さらに、性別で色分けしてみましょう。<code>aes()</code> の中に <code>color = sex</code> を追加します。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> total_bill, <span class="at">y =</span> tip, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> total_bill, <span class="at">y =</span> tip, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_desc_stat_2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_desc_stat_2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -397,15 +489,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="色とテーマの変更" class="level3">
 <h3 class="anchored" data-anchor-id="色とテーマの変更">色とテーマの変更</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 色を変更する</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> total_bill, <span class="at">y =</span> tip)) <span class="sc">+</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"darkblue"</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"支払総額とチップの関係"</span>, <span class="at">x =</span> <span class="st">"支払総額"</span>, <span class="at">y =</span> <span class="st">"チップ"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 色を変更する</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> total_bill, <span class="at">y =</span> tip)) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"darkblue"</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"支払総額とチップの関係"</span>, <span class="at">x =</span> <span class="st">"支払総額"</span>, <span class="at">y =</span> <span class="st">"チップ"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_desc_stat_2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_desc_stat_2_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -415,16 +507,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="ファセットグラフを分割">ファセット（グラフを分割）</h3>
 <p><code>facet_wrap()</code> や <code>facet_grid()</code> を使うと、カテゴリごとにグラフを分けて表示できます。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 時間帯ごとにグラフを分ける</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> total_bill, <span class="at">y =</span> tip)) <span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>)<span class="sc">+</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> smoker)) <span class="sc">+</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> time) <span class="sc">+</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"時間帯別の支払総額とチップ"</span>, <span class="at">x =</span> <span class="st">"支払総額"</span>, <span class="at">y =</span> <span class="st">"チップ"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 時間帯ごとにグラフを分ける</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> total_bill, <span class="at">y =</span> tip)) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>)<span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> smoker)) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> time) <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"時間帯別の支払総額とチップ"</span>, <span class="at">x =</span> <span class="st">"支払総額"</span>, <span class="at">y =</span> <span class="st">"チップ"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_desc_stat_2_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_desc_stat_2_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -435,17 +527,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="統計量を重ねる">統計量を重ねる</h2>
 <p>グラフに平均線や回帰直線を追加すると、データの傾向がより分かりやすくなります。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 平均線を追加</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> day, <span class="at">y =</span> total_bill)) <span class="sc">+</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>) <span class="sc">+</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="fu">aes</span>(<span class="at">group =</span> <span class="dv">1</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"曜日別の支払総額（赤点は平均値）"</span>, <span class="at">x =</span> <span class="st">"曜日"</span>, <span class="at">y =</span> <span class="st">"支払総額"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 平均線を追加</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> day, <span class="at">y =</span> total_bill)) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="fu">aes</span>(<span class="at">group =</span> <span class="dv">1</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"曜日別の支払総額（赤点は平均値）"</span>, <span class="at">x =</span> <span class="st">"曜日"</span>, <span class="at">y =</span> <span class="st">"支払総額"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_desc_stat_2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_desc_stat_2_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -479,6 +571,81 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>tip</code>（チップ）のヒストグラムを作成してください。</li>
 <li><code>total_bill</code> と <code>tip</code> の散布図を作成し、<code>time</code>（ランチ/ディナー）で色分けしてください。</li>
 </ol>
+</section>
+<section id="練習問題" class="level2">
+<h2 class="anchored" data-anchor-id="練習問題">練習問題</h2>
+<section id="練習1-ヒストグラムのカスタマイズ" class="level3">
+<h3 class="anchored" data-anchor-id="練習1-ヒストグラムのカスタマイズ">練習1: ヒストグラムのカスタマイズ</h3>
+<ol type="1">
+<li><code>tip</code> のヒストグラムを作成し、ビンの数を10に変更してください</li>
+<li>色を自分の好きな色に変更してください</li>
+<li>適切なタイトルと軸ラベルを追加してください</li>
+</ol>
+</section>
+<section id="練習2-複数のグラフの作成" class="level3">
+<h3 class="anchored" data-anchor-id="練習2-複数のグラフの作成">練習2: 複数のグラフの作成</h3>
+<ol type="1">
+<li>性別 (<code>sex</code>) ごとの <code>tip</code> の箱ひげ図を作成してください</li>
+<li>喫煙者 (<code>smoker</code>) ごとの <code>total_bill</code> のヒストグラムを、<code>facet_wrap()</code> を使って並べて表示してください</li>
+</ol>
+</section>
+<section id="練習3-散布図の応用" class="level3">
+<h3 class="anchored" data-anchor-id="練習3-散布図の応用">練習3: 散布図の応用</h3>
+<ol type="1">
+<li><code>total_bill</code> と <code>tip</code> の散布図を作成してください</li>
+<li>点の大きさを <code>size</code>（人数）に対応させてください（ヒント: <code>aes(size = size)</code>）</li>
+<li>回帰直線を追加してください</li>
+</ol>
+</section>
+</section>
+<section id="グラフ選択のガイド" class="level2">
+<h2 class="anchored" data-anchor-id="グラフ選択のガイド">グラフ選択のガイド</h2>
+<table class="table">
+<thead>
+<tr class="header">
+<th>目的</th>
+<th>グラフの種類</th>
+<th>ggplot2の関数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1変数の分布（連続）</td>
+<td>ヒストグラム</td>
+<td><code>geom_histogram()</code></td>
+</tr>
+<tr class="even">
+<td>1変数の分布（連続）</td>
+<td>密度プロット</td>
+<td><code>geom_density()</code></td>
+</tr>
+<tr class="odd">
+<td>1変数の分布（カテゴリ）</td>
+<td>棒グラフ</td>
+<td><code>geom_bar()</code></td>
+</tr>
+<tr class="even">
+<td>2変数の関係（連続×連続）</td>
+<td>散布図</td>
+<td><code>geom_point()</code></td>
+</tr>
+<tr class="odd">
+<td>グループ比較（連続×カテゴリ）</td>
+<td>箱ひげ図</td>
+<td><code>geom_boxplot()</code></td>
+</tr>
+<tr class="even">
+<td>グループ比較（連続×カテゴリ）</td>
+<td>バイオリンプロット</td>
+<td><code>geom_violin()</code></td>
+</tr>
+<tr class="odd">
+<td>時系列データ</td>
+<td>折れ線グラフ</td>
+<td><code>geom_line()</code></td>
+</tr>
+</tbody>
+</table>
 
 
 </section>

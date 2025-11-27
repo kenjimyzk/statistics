@@ -1,5 +1,7 @@
 # 第6回 主要な確率分布 {.unnumbered}
 
+![主要な確率分布](figure/06_distributions/infographic.png)
+
 ## 今回の目標
 
 -   統計学で最も重要な **正規分布** を理解する。
