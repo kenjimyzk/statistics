@@ -262,6 +262,11 @@ window.Quarto = {
   <li><a href="#今回の目標" id="toc-今回の目標" class="nav-link active" data-scroll-target="#今回の目標">今回の目標</a></li>
   <li><a href="#母集団と標本" id="toc-母集団と標本" class="nav-link" data-scroll-target="#母集団と標本">母集団と標本</a>
   <ul class="collapse">
+  <li><a href="#基本的な定義" id="toc-基本的な定義" class="nav-link" data-scroll-target="#基本的な定義">基本的な定義</a></li>
+  <li><a href="#ランダム標本-random-sample" id="toc-ランダム標本-random-sample" class="nav-link" data-scroll-target="#ランダム標本-random-sample">ランダム標本 (Random Sample)</a></li>
+  <li><a href="#推測統計学-inferential-statistics" id="toc-推測統計学-inferential-statistics" class="nav-link" data-scroll-target="#推測統計学-inferential-statistics">推測統計学 (Inferential Statistics)</a></li>
+  <li><a href="#確率変数としての母集団" id="toc-確率変数としての母集団" class="nav-link" data-scroll-target="#確率変数としての母集団">確率変数としての母集団</a></li>
+  <li><a href="#ランダム標本の数学的性質" id="toc-ランダム標本の数学的性質" class="nav-link" data-scroll-target="#ランダム標本の数学的性質">ランダム標本の数学的性質</a></li>
   <li><a href="#なぜ標本を使うのか" id="toc-なぜ標本を使うのか" class="nav-link" data-scroll-target="#なぜ標本を使うのか">なぜ標本を使うのか</a></li>
   <li><a href="#母数と統計量" id="toc-母数と統計量" class="nav-link" data-scroll-target="#母数と統計量">母数と統計量</a></li>
   <li><a href="#母集団と標本のイメージ" id="toc-母集団と標本のイメージ" class="nav-link" data-scroll-target="#母集団と標本のイメージ">母集団と標本のイメージ</a></li>
@@ -322,11 +327,45 @@ window.Quarto = {
 </section>
 <section id="母集団と標本" class="level2">
 <h2 class="anchored" data-anchor-id="母集団と標本">母集団と標本</h2>
+<section id="基本的な定義" class="level3">
+<h3 class="anchored" data-anchor-id="基本的な定義">基本的な定義</h3>
 <ul>
-<li><strong>母集団 (Population)</strong>: 知りたい対象全体の集まり（例：日本人全員）。</li>
-<li><strong>標本 (Sample)</strong>: 母集団から一部を取り出したもの（例：ランダムに選んだ1000人）。</li>
-<li><strong>推測統計</strong>: 標本のデータから、母集団の性質（パラメータ）を推測すること。</li>
+<li><strong>母集団 (Population)</strong>: 調査対象全体の集まり。知りたい情報を持つ全ての対象を指します（例：日本人全員の身長、ある企業の全製品）。</li>
+<li><strong>標本 (Sample)</strong>: 母集団から一部を取り出したもの（例：ランダムに選んだ1000人、工場から抜き取った100個の製品）。</li>
 </ul>
+<p><strong>重要な事実</strong>: 私たちが実際に手にするデータの多くは<strong>標本</strong>です。母集団全体のデータを得ることは、コストや時間の制約から現実的ではありません。</p>
+</section>
+<section id="ランダム標本-random-sample" class="level3">
+<h3 class="anchored" data-anchor-id="ランダム標本-random-sample">ランダム標本 (Random Sample)</h3>
+<p>標本が母集団から<strong>無作為に抽出</strong>されたとき、これを<strong>ランダム標本</strong>と呼びます。</p>
+<p>ランダム標本の特徴： - 母集団のどの要素も等しい確率で選ばれる - 各抽出が互いに独立である - 母集団を偏りなく代表する</p>
+<p><strong>横断面データ</strong>（ある時点での複数の個体のデータ）は、通常ランダム標本と考えます。 例：2024年1月に実施した1000人の消費者調査データ</p>
+</section>
+<section id="推測統計学-inferential-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="推測統計学-inferential-statistics">推測統計学 (Inferential Statistics)</h3>
+<p><strong>標本から母集団の特徴を推測すること</strong>を推測統計学といいます。</p>
+<ul>
+<li><strong>記述統計学</strong>：手元のデータを要約・記述する（これまで学んできたこと）</li>
+<li><strong>推測統計学</strong>：標本データから母集団について結論を導く（これから学ぶこと）</li>
+</ul>
+</section>
+<section id="確率変数としての母集団" class="level3">
+<h3 class="anchored" data-anchor-id="確率変数としての母集団">確率変数としての母集団</h3>
+<p>推測統計学では、母集団を<strong>確率変数</strong>と仮定します。</p>
+<p>なぜ確率変数として扱うのか： - 母集団から標本を抽出する行為は「ランダムな試行」 - 同じ母集団から何度も標本を取れば、毎回異なる値が得られる - この不確実性を数学的に扱うために、確率変数の枠組みを使う</p>
+</section>
+<section id="ランダム標本の数学的性質" class="level3">
+<h3 class="anchored" data-anchor-id="ランダム標本の数学的性質">ランダム標本の数学的性質</h3>
+<p>サイズ <span class="math inline">\(N\)</span> のランダム標本 <span class="math inline">\(X_1, X_2, \ldots, X_N\)</span> は：</p>
+<ol type="1">
+<li><strong>N個の母集団のコピー</strong>と考えることができる</li>
+<li>それぞれが<strong>独立同一分布 (i.i.d.: independent and identically distributed)</strong> に従う確率変数</li>
+</ol>
+<p><strong>独立同一分布とは</strong>： - <strong>同一分布 (identically distributed)</strong>: 全ての <span class="math inline">\(X_i\)</span> が同じ母集団分布に従う - <strong>独立 (independent)</strong>: 各 <span class="math inline">\(X_i\)</span> の値は互いに影響を与えない</p>
+<p>数学的には： <span class="math display">\[X_1, X_2, \ldots, X_N \sim \text{i.i.d.} \quad F(\cdot)\]</span></p>
+<p>ここで <span class="math inline">\(F(\cdot)\)</span> は母集団の分布を表します。</p>
+<p><strong>具体例</strong>： - 母集団：ある会社の全従業員の年収（平均500万円、標準偏差100万円の正規分布に従うと仮定） - ランダム標本（N=100）：無作為に選んだ100人の年収データ <span class="math inline">\(X_1, \ldots, X_{100}\)</span> - 各 <span class="math inline">\(X_i\)</span> は独立に <span class="math inline">\(N(500, 100^2)\)</span> から抽出された確率変数</p>
+</section>
 <section id="なぜ標本を使うのか" class="level3">
 <h3 class="anchored" data-anchor-id="なぜ標本を使うのか">なぜ標本を使うのか</h3>
 <ul>
@@ -480,12 +519,15 @@ window.Quarto = {
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_size =</span> <span class="fu">rep</span>(<span class="fu">paste0</span>(<span class="st">"n="</span>, sample_sizes), <span class="at">each =</span> n_samples)</span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># プロット</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_clt, <span class="fu">aes</span>(<span class="at">x =</span> means)) <span class="sc">+</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sample_size, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"中心極限定理: サンプルサイズによる変化"</span>, <span class="at">x =</span> <span class="st">"標本平均"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># サンプルサイズの順序を明示的に設定</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>df_clt<span class="sc">$</span>sample_size <span class="ot">&lt;-</span> <span class="fu">factor</span>(df_clt<span class="sc">$</span>sample_size, <span class="at">levels =</span> <span class="fu">paste0</span>(<span class="st">"n="</span>, sample_sizes))</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co"># プロット</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_clt, <span class="fu">aes</span>(<span class="at">x =</span> means)) <span class="sc">+</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sample_size, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"中心極限定理: サンプルサイズによる変化"</span>, <span class="at">x =</span> <span class="st">"標本平均"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
