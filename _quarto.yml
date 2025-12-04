@@ -4,8 +4,8 @@ project:
 
 book:
   title: "経済学のためのデータ分析入門 (R編)"
-  author: "Instructor Name"
-  date: "2025-04-01"
+  author: "みやざきけんじ"
+  date: "2025-12-02"
   chapters:
     - index.qmd
     - 01_intro.qmd
@@ -21,13 +21,19 @@ book:
     - 11_regression_1.qmd
     - 12_regression_2.qmd
 
-format:
-  html:
-    theme: cosmo
-    toc: true
-    number-sections: true
-    code-fold: false
-    df-print: paged
+format: 
+    html:
+      theme: cosmo
+      toc: true
+      toc-depth: 2
+      number-sections: true
+      code-fold: false
+      df-print: paged
+    pdf:
+      pdf-engine: lualatex
+      documentclass: ltjsarticle
+      classoption: lualatex,ja=standard
+    docx: default 
 
 execute:
   warning: false
