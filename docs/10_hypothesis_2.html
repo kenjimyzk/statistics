@@ -259,15 +259,16 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul class="collapse">
-  <li><a href="#今回の目標" id="toc-今回の目標" class="nav-link active" data-scroll-target="#今回の目標">今回の目標</a></li>
-  <li><a href="#標本のt検定の種類" id="toc-標本のt検定の種類" class="nav-link" data-scroll-target="#標本のt検定の種類">2標本のt検定の種類</a></li>
-  <li><a href="#標本のt検定対応なし" id="toc-標本のt検定対応なし" class="nav-link" data-scroll-target="#標本のt検定対応なし">2標本のt検定（対応なし）</a></li>
-  <li><a href="#対応のあるt検定-paired-t-test" id="toc-対応のあるt検定-paired-t-test" class="nav-link" data-scroll-target="#対応のあるt検定-paired-t-test">対応のあるt検定 (Paired t-test)</a></li>
-  <li><a href="#等分散の仮定" id="toc-等分散の仮定" class="nav-link" data-scroll-target="#等分散の仮定">等分散の仮定</a></li>
-  <li><a href="#効果量-effect-size" id="toc-効果量-effect-size" class="nav-link" data-scroll-target="#効果量-effect-size">効果量 (Effect Size)</a></li>
+  <li><a href="#a-vs-b決着をつけよう" id="toc-a-vs-b決着をつけよう" class="nav-link active" data-scroll-target="#a-vs-b決着をつけよう">A vs B：決着をつけよう</a></li>
+  <li><a href="#つの島を比べる対応のないt検定" id="toc-つの島を比べる対応のないt検定" class="nav-link" data-scroll-target="#つの島を比べる対応のないt検定">1. 2つの島を比べる：対応のないt検定</a></li>
+  <li><a href="#ビフォーアフター対応のあるt検定" id="toc-ビフォーアフター対応のあるt検定" class="nav-link" data-scroll-target="#ビフォーアフター対応のあるt検定">2. ビフォー・アフター：対応のあるt検定</a></li>
+  <li><a href="#その差はどれくらい凄いのか効果量" id="toc-その差はどれくらい凄いのか効果量" class="nav-link" data-scroll-target="#その差はどれくらい凄いのか効果量">3. その差は、どれくらい凄いのか？：効果量</a></li>
   <li><a href="#課題" id="toc-課題" class="nav-link" data-scroll-target="#課題">課題</a></li>
   <li><a href="#練習問題" id="toc-練習問題" class="nav-link" data-scroll-target="#練習問題">練習問題</a></li>
-  <li><a href="#検定のまとめ" id="toc-検定のまとめ" class="nav-link" data-scroll-target="#検定のまとめ">検定のまとめ</a></li>
+  <li><a href="#まとめ" id="toc-まとめ" class="nav-link" data-scroll-target="#まとめ">まとめ</a></li>
+  <li><a href="#課題-1" id="toc-課題-1" class="nav-link" data-scroll-target="#課題-1">課題</a></li>
+  <li><a href="#練習問題-1" id="toc-練習問題-1" class="nav-link" data-scroll-target="#練習問題-1">練習問題</a></li>
+  <li><a href="#まとめ-1" id="toc-まとめ-1" class="nav-link" data-scroll-target="#まとめ-1">まとめ</a></li>
   </ul>
 </nav>
     </div>
@@ -299,54 +300,30 @@ window.Quarto = {
 <figcaption>仮説検定 (2)</figcaption>
 </figure>
 </div>
-<section id="今回の目標" class="level2">
-<h2 class="anchored" data-anchor-id="今回の目標">今回の目標</h2>
-<ul>
-<li>2つのグループの平均値に差があるかどうかを検定する。</li>
-<li>対応のあるデータと対応のないデータの違いを理解する。</li>
-<li>効果量の概念を理解する。</li>
-</ul>
+<section id="a-vs-b決着をつけよう" class="level2">
+<h2 class="anchored" data-anchor-id="a-vs-b決着をつけよう">A vs B：決着をつけよう</h2>
+<p>「新薬Aは、プラセボBより効くのか？」 「新しい教育プログラムを受けた生徒は、受けていない生徒より成績が良いか？」 「ダイエット前後で、体重は本当に減ったのか？」</p>
+<p>私たちの世界は、比較で溢れている。 しかし、単に平均値を比べるだけでは不十分。偶然のバラつきかもしれないからだ。</p>
+<p>今回は、2つのグループの間に「意味のある差」があるかどうかを判定する、統計学の定番技 <strong>2標本のt検定</strong> をマスターしよう。</p>
 </section>
-<section id="標本のt検定の種類" class="level2">
-<h2 class="anchored" data-anchor-id="標本のt検定の種類">2標本のt検定の種類</h2>
-<table class="table">
-<thead>
-<tr class="header">
-<th>種類</th>
-<th>状況</th>
-<th>例</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>対応なし</td>
-<td>独立した2群を比較</td>
-<td>男性vs女性、薬vsプラセボ</td>
-</tr>
-<tr class="even">
-<td>対応あり</td>
-<td>同じ対象の前後を比較</td>
-<td>ダイエット前後、学習前後</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="標本のt検定対応なし" class="level2">
-<h2 class="anchored" data-anchor-id="標本のt検定対応なし">2標本のt検定（対応なし）</h2>
-<p>異なる2つのグループ（例：男性と女性、投薬群とプラセボ群）の平均値を比較します。</p>
-<p><code>tips</code> データで、ランチ (<code>Lunch</code>) とディナー (<code>Dinner</code>) で支払総額 (<code>total_bill</code>) に差があるか検定してみましょう。</p>
+<section id="つの島を比べる対応のないt検定" class="level2">
+<h2 class="anchored" data-anchor-id="つの島を比べる対応のないt検定">1. 2つの島を比べる：対応のないt検定</h2>
+<p>まずは、全く別々の2つのグループを比較するケース。 例えば、「ランチ島」に住む人々と、「ディナー島」に住む人々。 彼らの支払金額に差はあるのか？</p>
+<p>このように、互いに独立したデータを比較する手法を<strong>対応のないt検定 (Unpaired t-test)</strong> と呼ぶ。</p>
+<section id="地形を選ばない万能車welchのt検定" class="level3">
+<h3 class="anchored" data-anchor-id="地形を選ばない万能車welchのt検定">地形を選ばない万能車：Welchのt検定</h3>
+<p>2つの島（グループ）は、地形（データのばらつき＝分散）が同じとは限らない。 昔の教科書には「まず地形が同じか調べて（F検定）、それから車を選べ」と書いてあった。</p>
+<p>しかし、現代の統計学では<strong>Welchのt検定</strong>という「全地形対応車」を最初から使うのが常識。 これなら、分散が違っていても安全に走行（検定）できる。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>tips <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 箱ひげ図で確認 {.unnumbered}</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> total_bill, <span class="at">fill =</span> time)) <span class="sc">+</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"ランチとディナーの支払総額比較"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 箱ひげ図：2つの島の地形確認</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> total_bill, <span class="at">fill =</span> time)) <span class="sc">+</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span> <span class="co"># [対象注意] Mac用設定</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"ランチとディナーの支払総額比較"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -355,283 +332,193 @@ window.Quarto = {
 </div>
 </div>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 密度図でも確認 {.unnumbered}</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> total_bill, <span class="at">fill =</span> time)) <span class="sc">+</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"支払総額の分布比較 (密度図)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="10_hypothesis_2_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Welchのt検定（デフォルトで適用されます）</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(total_bill <span class="sc">~</span> time, <span class="at">data =</span> tips)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Welch Two Sample t-test</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  total_bill by time</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 3.123, df = 143.29, p-value = 0.002167</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true difference in means between group Dinner and group Lunch is not equal to 0</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1.331877 5.925088</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean in group Dinner  mean in group Lunch </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             20.79716             17.16868</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># t検定 {.unnumbered}</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># total_bill ~ time は「total_bill を time で分ける」という意味 {.unnumbered}</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(total_bill <span class="sc">~</span> time, <span class="at">data =</span> tips)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Welch Two Sample t-test</span></span>
+<p><strong>判定</strong>: p値は約 <code>0.002</code>。これは「差がないとしたら、こんなデータは0.2%の確率でしか起きない」ことを意味する。 偶然とは考えにくい。つまり、<strong>ランチとディナーには有意な差がある</strong>と結論づける。</p>
+</section>
+</section>
+<section id="ビフォーアフター対応のあるt検定" class="level2">
+<h2 class="anchored" data-anchor-id="ビフォーアフター対応のあるt検定">2. ビフォー・アフター：対応のあるt検定</h2>
+<p>次は、同じ人が「変身」するケース。 ダイエット前とダイエット後。テスト勉強前と勉強後。</p>
+<p>ここでは、グループ全体の平均を見るのではなく、<strong>「一人ひとりの変化（差分）」</strong>に注目する。 これを<strong>対応のあるt検定 (Paired t-test)</strong> と呼ぶ。</p>
+<section id="変化を捕まえる" class="level3">
+<h3 class="anchored" data-anchor-id="変化を捕まえる">変化を捕まえる</h3>
+<p>同じ人のデータを追跡することで、個人の「もともとの性質」をキャンセルし、純粋な「変化」だけを取り出すことができる。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 5人のダイエット記録</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>before <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">75</span>, <span class="dv">60</span>, <span class="dv">65</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>after  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">68</span>, <span class="dv">78</span>, <span class="dv">74</span>, <span class="dv">58</span>, <span class="dv">64</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># paired = TRUE で「対応あり」を指定</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(before, after, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  total_bill by time</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 3.123, df = 143.29, p-value = 0.002167</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true difference in means between group Dinner and group Lunch is not equal to 0</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1.331877 5.925088</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean in group Dinner  mean in group Lunch </span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             20.79716             17.16868</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Paired t-test</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  before and after</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 6.532, df = 4, p-value = 0.002838</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true mean difference is not equal to 0</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.9199126 2.2800874</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean difference </span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             1.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>結果の見方:</p>
-<ol type="1">
-<li><strong>p値 (p-value)</strong>: <code>0.002167</code> となりました。
-<ul>
-<li>これは 0.05 よりはるかに小さい値です。したがって、帰無仮説（ランチとディナーで支払総額に差はない）を棄却します。</li>
-<li>結論として、「ランチとディナーの支払総額には統計的に有意な差がある」と言えます。</li>
-</ul></li>
-<li><strong>平均値の比較</strong>:
-<ul>
-<li><code>mean in group Dinner</code>: 約 20.8 ドル</li>
-<li><code>mean in group Lunch</code>: 約 17.2 ドル</li>
-<li>ディナーの方が平均して約 3.6 ドル高いことがわかります。95%信頼区間 (<code>1.33</code> 〜 <code>5.93</code>) も0を含んでおらず、差がプラス（ディナーが高い）であることを示しています。</li>
-</ul></li>
-</ol>
+<p><strong>事実確認</strong>: もしこれを「対応なし（別人のデータ）」として分析してしまうと、p値は <code>0.75</code> になり、「差なし」と判定されてしまう。 対応のある検定を使うことで初めて、微小な変化（-1.6kg）を「有意」として検出できるのだ。</p>
 </section>
-<section id="対応のあるt検定-paired-t-test" class="level2">
-<h2 class="anchored" data-anchor-id="対応のあるt検定-paired-t-test">対応のあるt検定 (Paired t-test)</h2>
-<p>同じ対象に対して2回測定した場合（例：ダイエット前後の体重、テストの事前事後）の比較です。 <code>paired = TRUE</code> オプションを使います。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># サンプルデータ（ダイエット前後の体重） {.unnumbered}</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>before <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">75</span>, <span class="dv">60</span>, <span class="dv">65</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>after  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">68</span>, <span class="dv">78</span>, <span class="dv">74</span>, <span class="dv">58</span>, <span class="dv">64</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(before, after, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Paired t-test</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  before and after</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 6.532, df = 4, p-value = 0.002838</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true mean difference is not equal to 0</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.9199126 2.2800874</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean difference </span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             1.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>結果の見方:</p>
-<ol type="1">
-<li><strong>p値</strong>: <code>0.002838</code> となりました。
-<ul>
-<li>0.05 より小さいため、帰無仮説（ダイエット前後で差はない）を棄却します。</li>
-<li>「ダイエット前後で体重には有意な変化があった」と言えます。</li>
-</ul></li>
-<li><strong>平均差 (mean difference)</strong>:
-<ul>
-<li><code>1.6</code> となっています。これは <code>before - after</code> の平均値です。</li>
-<li>つまり、平均して 1.6kg 体重が減少したことを意味します（プラスの値なので、beforeの方が大きい）。</li>
-</ul></li>
-</ol>
 </section>
-<section id="等分散の仮定" class="level2">
-<h2 class="anchored" data-anchor-id="等分散の仮定">等分散の仮定</h2>
-<p>2標本t検定には、両群の分散が等しいという仮定があります。Rの <code>t.test()</code> はデフォルトでWelchのt検定（等分散を仮定しない）を使用します。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Welchのt検定（デフォルト）</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(total_bill <span class="sc">~</span> time, <span class="at">data =</span> tips)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Welch Two Sample t-test</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  total_bill by time</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 3.123, df = 143.29, p-value = 0.002167</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true difference in means between group Dinner and group Lunch is not equal to 0</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1.331877 5.925088</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean in group Dinner  mean in group Lunch </span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             20.79716             17.16868</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Studentのt検定（等分散を仮定）</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(total_bill <span class="sc">~</span> time, <span class="at">data =</span> tips, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Two Sample t-test</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  total_bill by time</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 2.8976, df = 242, p-value = 0.004105</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true difference in means between group Dinner and group Lunch is not equal to 0</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1.161839 6.095127</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean in group Dinner  mean in group Lunch </span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             20.79716             17.16868</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>結果の比較:</p>
-<ol type="1">
-<li><strong>Welchのt検定</strong> (等分散を仮定しない):
+<section id="その差はどれくらい凄いのか効果量" class="level2">
+<h2 class="anchored" data-anchor-id="その差はどれくらい凄いのか効果量">3. その差は、どれくらい凄いのか？：効果量</h2>
+<p>p値が小さいことは、「偶然ではない」ことを保証するだけ。 「すごい差がある」ことの証明ではない。</p>
+<p>1万人調査すれば、0.1ミリの身長差でも「有意差あり（p &lt; 0.05）」になる。でも、0.1ミリに意味はあるか？</p>
+<p>そこで必要なのが、差の実質的な大きさを表す「スコア」、すなわち<strong>効果量 (Effect Size)</strong> 。 代表的なスコアである <strong>Cohen’s d</strong> を使おう。</p>
+<section id="シグナルの強さを測る" class="level3">
+<h3 class="anchored" data-anchor-id="シグナルの強さを測る">シグナルの強さを測る</h3>
+<p><span class="math display">\[Cohen's \ d = \frac{\text{平均値の差}}{\text{標準偏差（ばらつき）}}\]</span></p>
+<p>これは、「データのばらつき（ノイズ）」に対して、「平均値の差（シグナル）」がどれくらい突き抜けているかを表す。</p>
 <ul>
-<li>t統計量: <code>3.123</code>、自由度: <code>143.29</code>、p値: <code>0.002167</code></li>
-<li>95%信頼区間: <code>1.33</code> 〜 <code>5.93</code></li>
-<li>自由度が小数になっているのは、Welch-Satterthwaiteの近似を使用しているためです。</li>
-</ul></li>
-<li><strong>Studentのt検定</strong> (等分散を仮定する):
-<ul>
-<li>t統計量: <code>2.898</code>、自由度: <code>242</code>、p値: <code>0.004105</code></li>
-<li>95%信頼区間: <code>1.16</code> 〜 <code>6.10</code></li>
-<li>自由度は単純に <code>n1 + n2 - 2</code> = <code>176 + 68 - 2 = 242</code> となります。</li>
-</ul></li>
-<li><strong>両者の違い</strong>:
-<ul>
-<li>Welchのt検定の方がp値が小さく（より有意）、信頼区間も狭くなっています。</li>
-<li>これは、2群のサンプルサイズが異なる場合（ディナー176件 vs ランチ68件）、Welchの方がより正確だからです。</li>
-<li><strong>実務上の推奨</strong>: 等分散性が確実でない限り、<strong>Welchのt検定を使用する方が安全</strong> です。</li>
-</ul></li>
-</ol>
-<p>等分散かどうかは、F検定やLevene検定で確認できます。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># F検定（等分散の検定）</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">var.test</span>(total_bill <span class="sc">~</span> time, <span class="at">data =</span> tips)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  F test to compare two variances</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  total_bill by time</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F = 1.4046, num df = 175, denom df = 67, p-value = 0.1109</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true ratio of variances is not equal to 1</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.9237626 2.0595995</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ratio of variances </span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           1.404557</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>結果の見方:</p>
-<ol type="1">
-<li><strong>p値</strong>: <code>0.1109</code> となりました。
-<ul>
-<li>これは 0.05 より大きいため、帰無仮説（2群の分散が等しい）を棄却できません。</li>
-<li>つまり、ランチとディナーの支払総額の <strong>分散に有意な差があるとは言えない</strong> という結論になります。</li>
-</ul></li>
-<li><strong>分散比 (ratio of variances)</strong>:
-<ul>
-<li><code>1.4046</code> となっています。これはディナーの分散がランチの分散の約1.4倍であることを示します。</li>
-<li>しかし、95%信頼区間 (<code>0.924</code> 〜 <code>2.060</code>) が1を含んでいるため、この差は統計的に有意ではありません。</li>
-</ul></li>
-<li><strong>実務的な意味</strong>:
-<ul>
-<li>等分散性が棄却されなかったため、Studentのt検定を使用することもできますが、一般的には <strong>Welchのt検定（デフォルト）の方が安全</strong> です。</li>
-<li>Welchのt検定は等分散を仮定しないため、分散が異なる場合でも適切に機能します。</li>
-</ul></li>
-</ol>
-</section>
-<section id="効果量-effect-size" class="level2">
-<h2 class="anchored" data-anchor-id="効果量-effect-size">効果量 (Effect Size)</h2>
-<p>p値だけでは効果の大きさがわかりません。<strong>効果量</strong>を計算することで、実質的な差の大きさを評価できます。</p>
-<section id="cohens-d" class="level3">
-<h3 class="anchored" data-anchor-id="cohens-d">Cohen’s d</h3>
-<p>2群の平均値の差を標準偏差で割った指標です。</p>
-<p><span class="math display">\[d = \frac{\bar{x}_1 - \bar{x}_2}{s_{pooled}}\]</span></p>
-<ul>
-<li><span class="math inline">\(|d| &lt; 0.2\)</span>: 小さい効果</li>
-<li><span class="math inline">\(0.2 \le |d| &lt; 0.8\)</span>: 中程度の効果</li>
-<li><span class="math inline">\(|d| \ge 0.8\)</span>: 大きい効果</li>
+<li><strong>0.2</strong>: 小さい（ノイズに埋もれがち）</li>
+<li><strong>0.5</strong>: 中くらい（肉眼でもなんとなく分かる）</li>
+<li><strong>0.8</strong>: 大きい（誰が見ても明らか）</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cohen's d の計算</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>dinner <span class="ot">&lt;-</span> tips<span class="sc">$</span>total_bill[tips<span class="sc">$</span>time <span class="sc">==</span> <span class="st">"Dinner"</span>]</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>lunch <span class="ot">&lt;-</span> tips<span class="sc">$</span>total_bill[tips<span class="sc">$</span>time <span class="sc">==</span> <span class="st">"Lunch"</span>]</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>mean_diff <span class="ot">&lt;-</span> <span class="fu">mean</span>(dinner) <span class="sc">-</span> <span class="fu">mean</span>(lunch)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>pooled_sd <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(((<span class="fu">length</span>(dinner)<span class="sc">-</span><span class="dv">1</span>)<span class="sc">*</span><span class="fu">var</span>(dinner) <span class="sc">+</span> (<span class="fu">length</span>(lunch)<span class="sc">-</span><span class="dv">1</span>)<span class="sc">*</span><span class="fu">var</span>(lunch)) <span class="sc">/</span> </span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                   (<span class="fu">length</span>(dinner) <span class="sc">+</span> <span class="fu">length</span>(lunch) <span class="sc">-</span> <span class="dv">2</span>))</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>cohens_d <span class="ot">&lt;-</span> mean_diff <span class="sc">/</span> pooled_sd</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Cohen's d:"</span>, cohens_d, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Cohen's d: 0.4137406</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ランチとディナーの差のスコア（Cohen's d）</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>d_val <span class="ot">&lt;-</span> (<span class="fu">mean</span>(tips<span class="sc">$</span>total_bill[tips<span class="sc">$</span>time<span class="sc">==</span><span class="st">"Dinner"</span>]) <span class="sc">-</span> <span class="fu">mean</span>(tips<span class="sc">$</span>total_bill[tips<span class="sc">$</span>time<span class="sc">==</span><span class="st">"Lunch"</span>])) <span class="sc">/</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">sd</span>(tips<span class="sc">$</span>total_bill)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>d_val</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.4075842</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>結果の解釈:</p>
-<ol type="1">
-<li><strong>効果量の大きさ</strong>: Cohen’s d は <code>0.414</code> となりました。
-<ul>
-<li>これは <code>0.2 ≤ |d| &lt; 0.8</code> の範囲に入るため、<strong>中程度の効果</strong> と判断されます。</li>
-<li>ランチとディナーの支払総額の差は、実質的にも意味のある大きさであると言えます。</li>
-</ul></li>
-<li><strong>p値との関係</strong>:
-<ul>
-<li>t検定でp値が <code>0.002167</code> と統計的に有意でした（<strong>統計的有意性</strong>）。</li>
-<li>Cohen’s d が <code>0.414</code> で中程度の効果を示しています（<strong>実質的意義</strong>）。</li>
-<li>つまり、この差は統計的に有意であるだけでなく、実務的にも意味のある大きさだと結論できます。</li>
-</ul></li>
-<li><strong>解釈のポイント</strong>:
-<ul>
-<li>サンプルサイズが大きい場合、小さな差でもp値が有意になることがあります。</li>
-<li>効果量を確認することで、その差が実質的に意味があるかどうかを判断できます。</li>
-<li><strong>p値と効果量を併せて報告することが重要</strong> です。</li>
-</ul></li>
-</ol>
+<p>スコアは約 <code>0.41</code>。中程度の効果だ。 「この差は統計的に有意であり、実質的にも中程度の意味がある」と、胸を張って報告しよう。</p>
 </section>
 </section>
 <section id="課題" class="level2">
 <h2 class="anchored" data-anchor-id="課題">課題</h2>
 <ol type="1">
-<li><code>tips</code> データを使って、喫煙者 (<code>Smoker</code>) と非喫煙者 (<code>Non-Smoker</code>) で、チップの額 (<code>tip</code>) に差があるかどうかを検定してください。 （注：データ内の値は “Yes” / “No” です）</li>
+<li><strong>喫煙の有無とチップ</strong>: <code>tips</code> データを使って、喫煙者 (<code>Smoker</code>) と非喫煙者 (<code>Non-Smoker</code>) で、チップの額 (<code>tip</code>) に差があるかを検定してください（Welchのt検定）。 また、その差の効果量 (Cohen’s d) を計算し、統計的有意性と実質的意味について論じてください。</li>
 </ol>
 </section>
 <section id="練習問題" class="level2">
 <h2 class="anchored" data-anchor-id="練習問題">練習問題</h2>
-<section id="練習1-2標本t検定" class="level3">
-<h3 class="anchored" data-anchor-id="練習1-2標本t検定">練習1: 2標本t検定</h3>
-<p><code>tips</code> データを使って以下の検定を行ってください： 1. 男性と女性で支払総額 (<code>total_bill</code>) に差があるか 2. 土曜日と日曜日でチップ (<code>tip</code>) に差があるか</p>
+<section id="練習1-検定の選択" class="level3">
+<h3 class="anchored" data-anchor-id="練習1-検定の選択">練習1: 検定の選択</h3>
+<p>以下のシナリオにおいて、最も適切な検定手法（対応ありt検定 / 対応なし(Welch)t検定）を選んでください。 1. A組30人とB組30人のテストの平均点の比較。 2. 高血圧患者30人の、降圧剤投与前と投与後の血圧の比較。 3. 10組の双子における、兄と弟の身長の比較。</p>
 </section>
-<section id="練習2-対応のあるt検定" class="level3">
-<h3 class="anchored" data-anchor-id="練習2-対応のあるt検定">練習2: 対応のあるt検定</h3>
-<p>以下は10人の学生のテスト前後の点数です：</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pre_test <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">65</span>, <span class="dv">70</span>, <span class="dv">75</span>, <span class="dv">60</span>, <span class="dv">80</span>, <span class="dv">55</span>, <span class="dv">70</span>, <span class="dv">65</span>, <span class="dv">75</span>, <span class="dv">70</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>post_test <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">70</span>, <span class="dv">75</span>, <span class="dv">80</span>, <span class="dv">65</span>, <span class="dv">85</span>, <span class="dv">60</span>, <span class="dv">78</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">75</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol type="1">
-<li>対応のあるt検定で、テストの点数が向上したか検定してください</li>
-<li>効果量（Cohen’s d）を計算してください</li>
-</ol>
+<section id="練習2-サンプルサイズとp値" class="level3">
+<h3 class="anchored" data-anchor-id="練習2-サンプルサイズとp値">練習2: サンプルサイズとp値</h3>
+<p>効果量 <span class="math inline">\(d=0.5\)</span> （中程度）の差がある2つの母集団から、 (a) <span class="math inline">\(n=10\)</span> ずつ (b) <span class="math inline">\(n=100\)</span> ずつ データを抽出し、t検定を行った場合のp値をシミュレーションで比較してください。サンプルサイズがp値に与える影響を確認します。</p>
 </section>
-<section id="練習3-検定の選択" class="level3">
-<h3 class="anchored" data-anchor-id="練習3-検定の選択">練習3: 検定の選択</h3>
-<p>以下の状況では、どの検定を使うべきですか？ 1. 新薬を投与した群とプラセボ群の血圧を比較 2. 同じ患者の治療前と治療後の血圧を比較 3. 3つの異なる運動プログラムの効果を比較</p>
+<section id="練習3-等分散性の確認はいらない" class="level3">
+<h3 class="anchored" data-anchor-id="練習3-等分散性の確認はいらない">練習3: 等分散性の確認はいらない？</h3>
+<p>「まずF検定をしてからt検定の種類を選ぶ」という手順が、現在では推奨されない理由を自分の言葉で説明してください。</p>
 </section>
 </section>
-<section id="検定のまとめ" class="level2">
-<h2 class="anchored" data-anchor-id="検定のまとめ">検定のまとめ</h2>
+<section id="まとめ" class="level2">
+<h2 class="anchored" data-anchor-id="まとめ">まとめ</h2>
 <table class="table">
 <colgroup>
-<col style="width: 31%">
-<col style="width: 31%">
-<col style="width: 36%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>検定</th>
-<th>用途</th>
-<th>R関数</th>
+<th>検定手法</th>
+<th>適用場面</th>
+<th>キャッチコピー</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>1標本t検定</td>
-<td>1群の平均と特定の値の比較</td>
-<td><code>t.test(x, mu = value)</code></td>
+<td><strong>Welchのt検定</strong></td>
+<td>独立した2群</td>
+<td>全地形対応の万能車。デフォルトはこれ。</td>
 </tr>
 <tr class="even">
-<td>2標本t検定（対応なし）</td>
-<td>独立した2群の平均の比較</td>
-<td><code>t.test(y ~ group, data)</code></td>
+<td><strong>対応のあるt検定</strong></td>
+<td>同一ペアの比較</td>
+<td>変化（差分）狙い撃ち。検出力高め。</td>
 </tr>
 <tr class="odd">
-<td>2標本t検定（対応あり）</td>
-<td>対応のある2群の平均の比較</td>
-<td><code>t.test(x, y, paired = TRUE)</code></td>
+<td><strong>効果量 (Cohen’s d)</strong></td>
+<td>関係性の強さ</td>
+<td>p値に頼らない、実力のスコア。</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="課題-1" class="level2">
+<h2 class="anchored" data-anchor-id="課題-1">課題</h2>
+<ol type="1">
+<li><strong>喫煙の有無とチップ</strong>: <code>tips</code> データを使って、喫煙者 (<code>Smoker</code>) と非喫煙者 (<code>Non-Smoker</code>) で、チップの額 (<code>tip</code>) に差があるかを検定してください（Welchのt検定）。 また、その差の効果量 (Cohen’s d) を計算し、統計的有意性と実質的意味について論じてください。</li>
+</ol>
+</section>
+<section id="練習問題-1" class="level2">
+<h2 class="anchored" data-anchor-id="練習問題-1">練習問題</h2>
+<section id="練習1-検定の選択-1" class="level3">
+<h3 class="anchored" data-anchor-id="練習1-検定の選択-1">練習1: 検定の選択</h3>
+<p>以下のシナリオにおいて、最も適切な検定手法（対応ありt検定 / 対応なし(Welch)t検定）を選んでください。</p>
+<ol type="1">
+<li>A組30人とB組30人のテストの平均点の比較。</li>
+<li>高血圧患者30人の、降圧剤投与前と投与後の血圧の比較。</li>
+<li>10組の双子における、兄と弟の身長の比較。</li>
+</ol>
+</section>
+<section id="練習2-サンプルサイズとp値-1" class="level3">
+<h3 class="anchored" data-anchor-id="練習2-サンプルサイズとp値-1">練習2: サンプルサイズとp値</h3>
+<p>効果量 <span class="math inline">\(d=0.5\)</span> （中程度）の差がある2つの母集団から、 (a) <span class="math inline">\(n=10\)</span> ずつ (b) <span class="math inline">\(n=100\)</span> ずつ データを抽出し、t検定を行った場合のp値をシミュレーションで比較してください。サンプルサイズがp値に与える影響を確認します。</p>
+</section>
+<section id="練習3-等分散性の確認はいらない-1" class="level3">
+<h3 class="anchored" data-anchor-id="練習3-等分散性の確認はいらない-1">練習3: 等分散性の確認はいらない？</h3>
+<p>「まずF検定をしてからt検定の種類を選ぶ」という手順が、現在では推奨されない理由を自分の言葉で説明してください。</p>
+</section>
+</section>
+<section id="まとめ-1" class="level2">
+<h2 class="anchored" data-anchor-id="まとめ-1">まとめ</h2>
+<table class="table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>検定手法</th>
+<th>適用場面</th>
+<th>Rコード</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Welchのt検定</strong></td>
+<td>独立した2群の比較</td>
+<td><code>t.test(y ~ x)</code></td>
+<td>デフォルト。等分散を仮定しない。</td>
 </tr>
 <tr class="even">
-<td>F検定</td>
-<td>2群の分散の比較</td>
-<td><code>var.test(y ~ group, data)</code></td>
+<td><strong>対応のあるt検定</strong></td>
+<td>同一対象・ペアの比較</td>
+<td><code>t.test(y1, y2, paired=TRUE)</code></td>
+<td>差分の1標本検定と等価。検出力が高い。</td>
+</tr>
+<tr class="odd">
+<td><strong>効果量 (Cohen’s d)</strong></td>
+<td>差の実質的な大きさ</td>
+<td>(計算式参照)</td>
+<td>サンプルサイズに依存しない指標。</td>
 </tr>
 </tbody>
 </table>

@@ -258,15 +258,14 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul class="collapse">
-  <li><a href="#今回の目標" id="toc-今回の目標" class="nav-link active" data-scroll-target="#今回の目標">今回の目標</a></li>
-  <li><a href="#重回帰分析-multiple-regression" id="toc-重回帰分析-multiple-regression" class="nav-link" data-scroll-target="#重回帰分析-multiple-regression">重回帰分析 (Multiple Regression)</a></li>
-  <li><a href="#ダミー変数を使った回帰分析" id="toc-ダミー変数を使った回帰分析" class="nav-link" data-scroll-target="#ダミー変数を使った回帰分析">ダミー変数を使った回帰分析</a></li>
-  <li><a href="#交互作用項-interaction-term" id="toc-交互作用項-interaction-term" class="nav-link" data-scroll-target="#交互作用項-interaction-term">交互作用項 (Interaction Term)</a></li>
-  <li><a href="#多重共線性-multicollinearity" id="toc-多重共線性-multicollinearity" class="nav-link" data-scroll-target="#多重共線性-multicollinearity">多重共線性 (Multicollinearity)</a></li>
-  <li><a href="#相関と因果" id="toc-相関と因果" class="nav-link" data-scroll-target="#相関と因果">相関と因果</a></li>
-  <li><a href="#モデルの比較と選択" id="toc-モデルの比較と選択" class="nav-link" data-scroll-target="#モデルの比較と選択">モデルの比較と選択</a></li>
-  <li><a href="#講義のまとめ" id="toc-講義のまとめ" class="nav-link" data-scroll-target="#講義のまとめ">講義のまとめ</a></li>
+  <li><a href="#複雑な現実を解き明かす" id="toc-複雑な現実を解き明かす" class="nav-link active" data-scroll-target="#複雑な現実を解き明かす">複雑な現実を解き明かす</a></li>
+  <li><a href="#複数のツマミを操る重回帰分析" id="toc-複数のツマミを操る重回帰分析" class="nav-link" data-scroll-target="#複数のツマミを操る重回帰分析">1. 複数のツマミを操る：重回帰分析</a></li>
+  <li><a href="#実践的モデリング" id="toc-実践的モデリング" class="nav-link" data-scroll-target="#実践的モデリング">2. 実践的モデリング</a></li>
+  <li><a href="#真犯人を探せ因果推論とバイアス" id="toc-真犯人を探せ因果推論とバイアス" class="nav-link" data-scroll-target="#真犯人を探せ因果推論とバイアス">3. 真犯人を探せ：因果推論とバイアス</a></li>
+  <li><a href="#良いモデルの選び方" id="toc-良いモデルの選び方" class="nav-link" data-scroll-target="#良いモデルの選び方">4. 良いモデルの選び方</a></li>
+  <li><a href="#係数の可視化" id="toc-係数の可視化" class="nav-link" data-scroll-target="#係数の可視化">係数の可視化</a></li>
   <li><a href="#最終課題" id="toc-最終課題" class="nav-link" data-scroll-target="#最終課題">最終課題</a></li>
+  <li><a href="#講義のまとめ" id="toc-講義のまとめ" class="nav-link" data-scroll-target="#講義のまとめ">講義のまとめ</a></li>
   <li><a href="#練習問題" id="toc-練習問題" class="nav-link" data-scroll-target="#練習問題">練習問題</a></li>
   </ul>
 </nav>
@@ -299,445 +298,216 @@ window.Quarto = {
 <figcaption>重回帰分析と因果推論</figcaption>
 </figure>
 </div>
-<section id="今回の目標" class="level2">
-<h2 class="anchored" data-anchor-id="今回の目標">今回の目標</h2>
-<ul>
-<li>複数の説明変数を使う重回帰分析を理解する。</li>
-<li>回帰分析の結果を「因果関係」として解釈する際の注意点（交絡因子など）を学ぶ。</li>
-</ul>
+<section id="複雑な現実を解き明かす" class="level2">
+<h2 class="anchored" data-anchor-id="複雑な現実を解き明かす">複雑な現実を解き明かす</h2>
+<p>「勉強すれば成績は上がる」と言うが、成績に影響するのは勉強時間だけだろうか？ 地頭の良さ、塾の有無、親の収入、睡眠時間……現実は無数の要因が絡み合っている。</p>
+<p>たった一つの原因で結果が決まることなど、世の中にはほとんどない。 だからこそ、複数の要因を同時に扱う <strong>重回帰分析</strong> が必要になる。</p>
+<p>今回は、絡み合った糸をほぐし、真の原因（因果関係）を見つけ出すための探偵技術を学ぼう。</p>
 </section>
-<section id="重回帰分析-multiple-regression" class="level2">
-<h2 class="anchored" data-anchor-id="重回帰分析-multiple-regression">重回帰分析 (Multiple Regression)</h2>
-<section id="重回帰分析とは" class="level3">
-<h3 class="anchored" data-anchor-id="重回帰分析とは">重回帰分析とは</h3>
-<p>説明変数が2つ以上ある回帰分析を<strong>重回帰分析</strong>といいます。</p>
-<p><span class="math display">\[ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_k x_k + \epsilon \]</span></p>
-<p>ここで：</p>
-<ul>
-<li><span class="math inline">\(y\)</span>：被説明変数（目的変数）</li>
-<li><span class="math inline">\(x_1, x_2, \dots, x_k\)</span>：説明変数</li>
-<li><span class="math inline">\(\beta_0\)</span>：切片</li>
-<li><span class="math inline">\(\beta_1, \beta_2, \dots, \beta_k\)</span>：偏回帰係数</li>
-<li><span class="math inline">\(\epsilon\)</span>：誤差項</li>
-</ul>
-<p>重回帰分析の最大の強みは、「他の条件を一定としたとき（ceteris paribus）」の影響力を推定できることです。これは経済学において非常に重要な概念です。</p>
+<section id="複数のツマミを操る重回帰分析" class="level2">
+<h2 class="anchored" data-anchor-id="複数のツマミを操る重回帰分析">1. 複数のツマミを操る：重回帰分析</h2>
+<p>データ分析を「ミキシングコンソール」の操作だと想像してほしい。 単回帰分析は「ボリューム」という一つのツマミしか持たなかった。 重回帰分析では、「ボリューム」「低音」「高音」など、複数のツマミ（説明変数）を同時に操作して、最適なサウンド（予測）を作り出す。</p>
+<p><span class="math display">\[ \text{結果} \ (Y) = \text{切片} + (\beta_1 \times \text{要因1}) + (\beta_2 \times \text{要因2}) + \dots + \text{誤差} \]</span></p>
+<section id="他を固定して見る技術-ceteris-paribus" class="level3">
+<h3 class="anchored" data-anchor-id="他を固定して見る技術-ceteris-paribus">「他を固定して」見る技術 (Ceteris Paribus)</h3>
+<p>重回帰分析の凄さは、<strong>「他の条件が同じならば」</strong> という仮定を数式の中で実現できる点にある。</p>
+<p>例えば、チップ額 (<span class="math inline">\(Y\)</span>) を支払額 (<span class="math inline">\(X_1\)</span>) と客数 (<span class="math inline">\(X_2\)</span>) で説明する場合：</p>
+<p>係数 <span class="math inline">\(\beta_1\)</span> は、「<strong>客数が同じグループの中で比べたとき</strong>、支払額が1ドル増えるとチップはどうなるか」を表す。</p>
+<p>あたかも実験室で条件を統制したかのように、純粋な効果を取り出せるのだ。</p>
 </section>
-<section id="基本的な重回帰分析の例" class="level3">
-<h3 class="anchored" data-anchor-id="基本的な重回帰分析の例">基本的な重回帰分析の例</h3>
-<p><code>tips</code> データで、チップの額 (<code>tip</code>) を、支払総額 (<code>total_bill</code>) と人数 (<code>size</code>) の両方で説明してみましょう。</p>
+<section id="実践-支払いと人数の分離" class="level3">
+<h3 class="anchored" data-anchor-id="実践-支払いと人数の分離">実践: 支払いと人数の分離</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>tips <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(tip <span class="sc">~</span> total_bill <span class="sc">+</span> size, <span class="at">data =</span> tips)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model2)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = tip ~ total_bill + size, data = tips)</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -2.9279 -0.5547 -0.0852  0.5095  4.0425 </span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept) 0.668945   0.193609   3.455  0.00065 ***</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total_bill  0.092713   0.009115  10.172  &lt; 2e-16 ***</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; size        0.192598   0.085315   2.258  0.02487 *  </span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 1.014 on 241 degrees of freedom</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.4679, Adjusted R-squared:  0.4635 </span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 105.9 on 2 and 241 DF,  p-value: &lt; 2.2e-16</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>tips <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 重回帰モデル：チップを「支払額」と「人数」で説明する</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>model_multi <span class="ot">&lt;-</span> <span class="fu">lm</span>(tip <span class="sc">~</span> total_bill <span class="sc">+</span> size, <span class="at">data =</span> tips)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_multi)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = tip ~ total_bill + size, data = tips)</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -2.9279 -0.5547 -0.0852  0.5095  4.0425 </span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept) 0.668945   0.193609   3.455  0.00065 ***</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total_bill  0.092713   0.009115  10.172  &lt; 2e-16 ***</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; size        0.192598   0.085315   2.258  0.02487 *  </span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 1.014 on 241 degrees of freedom</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.4679, Adjusted R-squared:  0.4635 </span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 105.9 on 2 and 241 DF,  p-value: &lt; 2.2e-16</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>結果の解釈:</p>
-<ol type="1">
-<li><strong><code>total_bill</code> の係数</strong>: <code>0.093</code>
-<ul>
-<li><strong>「人数 (<code>size</code>) を固定したときに（同じ人数のグループ同士で比べたときに）」</strong>、支払総額が1ドル増えると、チップは約0.093ドル増えることを意味します。</li>
-<li>単回帰のとき（0.105）より少し値が小さくなりました。これは、人数という要因をコントロールしたためです。</li>
-</ul></li>
-<li><strong><code>size</code> の係数</strong>: <code>0.193</code>
-<ul>
-<li><strong>「支払総額 (<code>total_bill</code>) を固定したときに（同じ支払額のグループ同士で比べたときに）」</strong>、人数が1人増えると、チップは約0.193ドル増えることを意味します。</li>
-<li>p値 (<code>0.02487</code>) は 0.05 より小さいので、統計的に有意です。つまり、支払額が同じでも、人数が多いほうがチップが多くなる傾向があると言えます。</li>
-</ul></li>
-</ol>
+<p><strong>解釈</strong>: - <code>total_bill</code>: <strong>0.093</strong> - 「もし人数が同じなら」、支払いが1ドル増えるごとにチップは約9.3セント増える。 - <code>size</code>: <strong>0.193</strong> - 「もし支払額が同じなら」、人数が1人増えるごとにチップは約19.3セント増える。</p>
 </section>
-<section id="単回帰と重回帰の比較" class="level3">
-<h3 class="anchored" data-anchor-id="単回帰と重回帰の比較">単回帰と重回帰の比較</h3>
-<p>同じデータで単回帰と重回帰を比較してみましょう。</p>
+</section>
+<section id="実践的モデリング" class="level2">
+<h2 class="anchored" data-anchor-id="実践的モデリング">2. 実践的モデリング</h2>
+<p>現実は数値データだけではない。「性別」や「曜日」といった文字データ（カテゴリ変数）も分析に使える。</p>
+<section id="ダミー変数スイッチのonoff" class="level3">
+<h3 class="anchored" data-anchor-id="ダミー変数スイッチのonoff">ダミー変数：スイッチのON/OFF</h3>
+<p>「喫煙席か？」のような情報は、計算できるよう <strong>0 (No)</strong> と <strong>1 (Yes)</strong> に変換する。これをダミー変数と呼ぶ。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 単回帰モデル</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>model_simple <span class="ot">&lt;-</span> <span class="fu">lm</span>(tip <span class="sc">~</span> total_bill, <span class="at">data =</span> tips)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 結果の比較</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"【単回帰】tip ~ total_bill</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 【単回帰】tip ~ total_bill</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model_simple)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)  total_bill </span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   0.9202696   0.1050245</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">【重回帰】tip ~ total_bill + size</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 【重回帰】tip ~ total_bill + size</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model2)</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)  total_bill        size </span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.66894474  0.09271334  0.19259779</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><code>total_bill</code> の係数が単回帰では約0.105、重回帰では約0.093となっています。この差は、人数（<code>size</code>）をコントロールすることで生じたものです。</p>
-</section>
-<section id="決定係数の比較" class="level3">
-<h3 class="anchored" data-anchor-id="決定係数の比較">決定係数の比較</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"単回帰のR²:"</span>, <span class="fu">summary</span>(model_simple)<span class="sc">$</span>r.squared, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 単回帰のR²: 0.4566166</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"重回帰のR²:"</span>, <span class="fu">summary</span>(model2)<span class="sc">$</span>r.squared, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 重回帰のR²: 0.4678693</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>説明変数を追加することで、モデルの説明力（<span class="math inline">\(R^2\)</span>）が向上していることがわかります。</p>
-</section>
-<section id="係数の可視化-coefficient-plot" class="level3">
-<h3 class="anchored" data-anchor-id="係数の可視化-coefficient-plot">係数の可視化 (Coefficient Plot)</h3>
-<p>重回帰分析の結果（推定値と信頼区間）をグラフにすると、どの変数の影響が大きいか分かりやすくなります。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># モデルの結果を整理されたデータフレームにする {.unnumbered}</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>tidy_model <span class="ot">&lt;-</span> <span class="fu">tidy</span>(model2, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>))</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 切片(Intercept)を除いてプロット {.unnumbered}</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>tidy_model <span class="sc">%&gt;%</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> term)) <span class="sc">+</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> conf.low, <span class="at">xmax =</span> conf.high), <span class="at">height =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"重回帰分析の係数プロット (95%信頼区間)"</span>, <span class="at">x =</span> <span class="st">"推定値"</span>, <span class="at">y =</span> <span class="st">"説明変数"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="12_regression_2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="ダミー変数を使った回帰分析" class="level2">
-<h2 class="anchored" data-anchor-id="ダミー変数を使った回帰分析">ダミー変数を使った回帰分析</h2>
-<section id="ダミー変数とは" class="level3">
-<h3 class="anchored" data-anchor-id="ダミー変数とは">ダミー変数とは</h3>
-<p>カテゴリ変数（性別、曜日、地域など）を回帰分析に組み込むために使う0/1の変数です。Rでは、カテゴリ変数（factor型）を説明変数にすると、自動的にダミー変数を作成してくれます。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 喫煙者かどうかを追加したモデル</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(tip <span class="sc">~</span> total_bill <span class="sc">+</span> size <span class="sc">+</span> smoker, <span class="at">data =</span> tips)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model3)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = tip ~ total_bill + size + smoker, data = tips)</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -2.8986 -0.5697 -0.0643  0.5115  4.0630 </span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)  0.709016   0.204881   3.461 0.000638 ***</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total_bill   0.093888   0.009331  10.062  &lt; 2e-16 ***</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; size         0.180332   0.087803   2.054 0.041077 *  </span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; smokerYes   -0.083433   0.138000  -0.605 0.546028    </span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 1.015 on 240 degrees of freedom</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.4687, Adjusted R-squared:  0.462 </span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 70.57 on 3 and 240 DF,  p-value: &lt; 2.2e-16</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><code>smokerYes</code> の係数は、非喫煙者（<code>No</code>）を基準としたときの喫煙者（<code>Yes</code>）の効果を表しています。</p>
-</section>
-<section id="複数のカテゴリ変数を使う" class="level3">
-<h3 class="anchored" data-anchor-id="複数のカテゴリ変数を使う">複数のカテゴリ変数を使う</h3>
-<p>曜日と時間帯も追加してみましょう。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(tip <span class="sc">~</span> total_bill <span class="sc">+</span> size <span class="sc">+</span> smoker <span class="sc">+</span> day <span class="sc">+</span> time, <span class="at">data =</span> tips)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model4)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = tip ~ total_bill + size + smoker + day + time, data = tips)</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -2.8551 -0.5733 -0.0863  0.4866  4.1034 </span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)  0.789582   0.346487   2.279   0.0236 *  </span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total_bill   0.094277   0.009538   9.884   &lt;2e-16 ***</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; size         0.176374   0.089332   1.974   0.0495 *  </span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; smokerYes   -0.086470   0.146292  -0.591   0.5550    </span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; daySat      -0.125864   0.308524  -0.408   0.6837    </span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; daySun      -0.032578   0.319158  -0.102   0.9188    </span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dayThur     -0.160946   0.392573  -0.410   0.6822    </span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; timeLunch    0.068146   0.443723   0.154   0.8781    </span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 1.022 on 236 degrees of freedom</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:   0.47,  Adjusted R-squared:  0.4542 </span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 29.89 on 7 and 236 DF,  p-value: &lt; 2.2e-16</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>曜日については、Fri（金曜）が基準カテゴリとなり、他の曜日との差が表示されています。</p>
-</section>
-</section>
-<section id="交互作用項-interaction-term" class="level2">
-<h2 class="anchored" data-anchor-id="交互作用項-interaction-term">交互作用項 (Interaction Term)</h2>
-<section id="交互作用とは" class="level3">
-<h3 class="anchored" data-anchor-id="交互作用とは">交互作用とは</h3>
-<p>ある説明変数の効果が、別の説明変数の値によって変わる場合があります。例えば、「支払総額がチップに与える影響が、喫煙者と非喫煙者で異なる」といった状況です。</p>
-<p>これを分析するために、<strong>交互作用項</strong>を使います。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 交互作用を含むモデル</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>model_interaction <span class="ot">&lt;-</span> <span class="fu">lm</span>(tip <span class="sc">~</span> total_bill <span class="sc">*</span> smoker, <span class="at">data =</span> tips)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_interaction)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = tip ~ total_bill * smoker, data = tips)</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -2.6789 -0.5238 -0.1205  0.4749  4.8999 </span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                       Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)           0.360069   0.202058   1.782 0.076012 .  </span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total_bill            0.137156   0.009678  14.172  &lt; 2e-16 ***</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; smokerYes             1.204203   0.312263   3.856 0.000148 ***</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total_bill:smokerYes -0.067566   0.014189  -4.762 3.32e-06 ***</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 0.9785 on 240 degrees of freedom</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.506,  Adjusted R-squared:  0.4998 </span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 81.95 on 3 and 240 DF,  p-value: &lt; 2.2e-16</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>結果の見方：</p>
-<ul>
-<li><code>total_bill</code>：非喫煙者における支払総額の効果</li>
-<li><code>smokerYes</code>：支払総額が0のときの喫煙者と非喫煙者の差（実質的な意味は薄い）</li>
-<li><code>total_bill:smokerYes</code>：交互作用項。喫煙者における支払総額の効果が、非喫煙者と比べてどれだけ異なるか</li>
-</ul>
-</section>
-<section id="交互作用の可視化" class="level3">
-<h3 class="anchored" data-anchor-id="交互作用の可視化">交互作用の可視化</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> total_bill, <span class="at">y =</span> tip, <span class="at">color =</span> smoker)) <span class="sc">+</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"喫煙者・非喫煙者別の回帰直線"</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"支払総額 (ドル)"</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"チップ (ドル)"</span>,</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"喫煙者"</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="12_regression_2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="多重共線性-multicollinearity" class="level2">
-<h2 class="anchored" data-anchor-id="多重共線性-multicollinearity">多重共線性 (Multicollinearity)</h2>
-<section id="多重共線性とは" class="level3">
-<h3 class="anchored" data-anchor-id="多重共線性とは">多重共線性とは</h3>
-<p>説明変数同士が強く相関している場合、<strong>多重共線性</strong>の問題が生じます。これにより：</p>
-<ul>
-<li>係数の推定が不安定になる</li>
-<li>標準誤差が大きくなる</li>
-<li>係数の解釈が困難になる</li>
-</ul>
-</section>
-<section id="vif分散膨張因子による診断" class="level3">
-<h3 class="anchored" data-anchor-id="vif分散膨張因子による診断">VIF（分散膨張因子）による診断</h3>
-<p>多重共線性の程度は、<strong>VIF (Variance Inflation Factor)</strong> で確認できます。一般的に VIF &gt; 10 の場合、多重共線性が問題となっている可能性があります。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(model2)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total_bill       size </span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   1.557586   1.557586</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>VIF が小さい値であれば、多重共線性の問題は深刻ではありません。</p>
-</section>
-</section>
-<section id="相関と因果" class="level2">
-<h2 class="anchored" data-anchor-id="相関と因果">相関と因果</h2>
-<section id="相関関係と因果関係の違い" class="level3">
-<h3 class="anchored" data-anchor-id="相関関係と因果関係の違い">相関関係と因果関係の違い</h3>
-<p>「相関関係がある」ことと「因果関係がある」ことは別です。 例えば、「アイスクリームの売上」と「水難事故の件数」には正の相関がありますが、アイスクリームが事故を引き起こしているわけではありません。 「気温」という第3の変数（<strong>交絡因子</strong>）が両方に影響しているからです。</p>
-</section>
-<section id="交絡因子-confounding-variable" class="level3">
-<h3 class="anchored" data-anchor-id="交絡因子-confounding-variable">交絡因子 (Confounding Variable)</h3>
-<p>交絡因子とは、原因と結果の両方に影響を与える第3の変数のことです。</p>
-<pre><code>        気温（交絡因子）
-       /    \
-      ↓      ↓
-アイス売上 → 水難事故（見せかけの相関）</code></pre>
-<p>この場合、アイスクリームの売上と水難事故の間に直接の因果関係はありませんが、両方とも気温の影響を受けるため、データ上では相関が観察されます。</p>
-</section>
-<section id="交絡因子をコントロールする" class="level3">
-<h3 class="anchored" data-anchor-id="交絡因子をコントロールする">交絡因子をコントロールする</h3>
-<p>重回帰分析で交絡因子を説明変数として加えることで、その影響を取り除くことができます。</p>
-<p>例えば、「教育年数が賃金に与える影響」を分析する場合：</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># シミュレーションデータの作成</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">200</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 能力（交絡因子）</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>ability <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">15</span>)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 教育年数（能力の影響を受ける）</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>education <span class="ot">&lt;-</span> <span class="dv">12</span> <span class="sc">+</span> <span class="fl">0.05</span> <span class="sc">*</span> ability <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="dv">2</span>)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 賃金（教育と能力の両方の影響を受ける）</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>wage <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> education <span class="sc">+</span> <span class="fl">0.3</span> <span class="sc">*</span> ability <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="dv">5</span>)</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>sim_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(wage, education, ability)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>能力をコントロールしない場合としない場合を比較：</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 能力をコントロールしない単回帰</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>model_biased <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> education, <span class="at">data =</span> sim_data)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 能力をコントロールした重回帰</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>model_unbiased <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> education <span class="sc">+</span> ability, <span class="at">data =</span> sim_data)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"【能力をコントロールしない場合】</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 【能力をコントロールしない場合】</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"教育年数の係数:"</span>, <span class="fu">coef</span>(model_biased)[<span class="st">"education"</span>], <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 教育年数の係数: 2.494524</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"【能力をコントロールした場合】</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 【能力をコントロールした場合】</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"教育年数の係数:"</span>, <span class="fu">coef</span>(model_unbiased)[<span class="st">"education"</span>], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 教育年数の係数: 1.873354</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>真の効果は2ですが、能力をコントロールしないと過大評価されることがわかります。</p>
-</section>
-<section id="因果推論の手法" class="level3">
-<h3 class="anchored" data-anchor-id="因果推論の手法">因果推論の手法</h3>
-<p>経済学の実証分析では、交絡因子の影響を取り除き、真の因果効果を明らかにするために様々な手法が使われます：</p>
-<ol type="1">
-<li><strong>重回帰分析</strong>：観測可能な交絡因子をコントロール</li>
-<li><strong>操作変数法 (IV)</strong>：交絡因子が観測できない場合に使用</li>
-<li><strong>差の差法 (DID)</strong>：政策介入の効果を推定</li>
-<li><strong>回帰不連続デザイン (RDD)</strong>：閾値を利用した因果推論</li>
-<li><strong>傾向スコアマッチング</strong>：処置群と対照群を比較可能にする</li>
-</ol>
-<p>これらの手法は、計量経済学の上級コースで詳しく学ぶことになります。</p>
-</section>
-</section>
-<section id="モデルの比較と選択" class="level2">
-<h2 class="anchored" data-anchor-id="モデルの比較と選択">モデルの比較と選択</h2>
-<section id="調整済み決定係数" class="level3">
-<h3 class="anchored" data-anchor-id="調整済み決定係数">調整済み決定係数</h3>
-<p>複数のモデルを比較する際、単純な <span class="math inline">\(R^2\)</span> は説明変数を増やすほど大きくなるため、<strong>調整済み決定係数</strong> (<span class="math inline">\(\bar{R}^2\)</span>) を使います。</p>
-<p><span class="math display">\[ \bar{R}^2 = 1 - \frac{(1 - R^2)(n - 1)}{n - k - 1} \]</span></p>
-<p>ここで <span class="math inline">\(n\)</span> は標本サイズ、<span class="math inline">\(k\)</span> は説明変数の数です。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 異なるモデルの調整済みR²を比較</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"model1: tip ~ total_bill"</span> <span class="ot">=</span> model_simple,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"model2: tip ~ total_bill + size"</span> <span class="ot">=</span> model2,</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"model3: tip ~ total_bill + size + smoker"</span> <span class="ot">=</span> model3,</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"model4: tip ~ total_bill + size + smoker + day + time"</span> <span class="ot">=</span> model4</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(models, <span class="cf">function</span>(m) <span class="fu">summary</span>(m)<span class="sc">$</span>adj.r.squared)</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                              model1: tip ~ total_bill </span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                             0.4543712 </span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                       model2: tip ~ total_bill + size </span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                             0.4634533 </span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              model3: tip ~ total_bill + size + smoker </span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                             0.4620370 </span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; model4: tip ~ total_bill + size + smoker + day + time </span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                             0.4542383</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="aic-と-bic" class="level3">
-<h3 class="anchored" data-anchor-id="aic-と-bic">AIC と BIC</h3>
-<p><strong>AIC (赤池情報量規準)</strong> と <strong>BIC (ベイズ情報量規準)</strong> は、モデルの適合度と複雑さのバランスを評価する指標です。値が小さいほど良いモデルとされます。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># AIC と BIC の比較</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> <span class="fu">names</span>(models),</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">AIC =</span> <span class="fu">sapply</span>(models, AIC),</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">BIC =</span> <span class="fu">sapply</span>(models, BIC)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 喫煙者ダミー（Yes/No）を追加</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>model_dummy <span class="ot">&lt;-</span> <span class="fu">lm</span>(tip <span class="sc">~</span> total_bill <span class="sc">+</span> size <span class="sc">+</span> smoker, <span class="at">data =</span> tips)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model_dummy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["model"],"name":[1],"type":["chr"],"align":["left"]},{"label":["AIC"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"model1: tip ~ total_bill","2":"707.0762","3":"717.5677"},{"1":"model2: tip ~ total_bill + size","2":"703.9702","3":"717.9589"},{"1":"model3: tip ~ total_bill + size + smoker","2":"705.5989","3":"723.0847"},{"1":"model4: tip ~ total_bill + size + smoker + day + time","2":"713.0098","3":"744.4843"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"0.70901552","3":"0.204881334","4":"3.4606155","5":"6.377517e-04"},{"1":"total_bill","2":"0.09388839","3":"0.009331358","4":"10.0616002","5":"4.264666e-20"},{"1":"size","2":"0.18033156","3":"0.087803311","4":"2.0538128","5":"4.107743e-02"},{"1":"smokerYes","2":"-0.08343255","3":"0.138000465","4":"-0.6045817","5":"5.460281e-01"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
+<p><code>smokerYes</code> の係数は、喫煙席に座ることで生じる「上乗せ分」を表す。</p>
+</section>
+<section id="交互作用相乗効果に気づく" class="level3">
+<h3 class="anchored" data-anchor-id="交互作用相乗効果に気づく">交互作用：「相乗効果」に気づく</h3>
+<p>「ビールと枝豆」のように、組み合わせることで効果が変わることもある。 例えば、「喫煙者の方が、支払額に対するチップの払いっぷりが良い（傾きが急）」かもしれない。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># : は交互作用のみ、* は主効果＋交互作用</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>model_inter <span class="ot">&lt;-</span> <span class="fu">lm</span>(tip <span class="sc">~</span> total_bill <span class="sc">*</span> smoker, <span class="at">data =</span> tips)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_inter)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = tip ~ total_bill * smoker, data = tips)</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -2.6789 -0.5238 -0.1205  0.4749  4.8999 </span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                       Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)           0.360069   0.202058   1.782 0.076012 .  </span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total_bill            0.137156   0.009678  14.172  &lt; 2e-16 ***</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; smokerYes             1.204203   0.312263   3.856 0.000148 ***</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total_bill:smokerYes -0.067566   0.014189  -4.762 3.32e-06 ***</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 0.9785 on 240 degrees of freedom</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.506,  Adjusted R-squared:  0.4998 </span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 81.95 on 3 and 240 DF,  p-value: &lt; 2.2e-16</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>total_bill:smokerYes</code> が有意なら、2つの要因には相乗効果（あるいは相殺効果）があると言える。</p>
 </section>
 </section>
-<section id="講義のまとめ" class="level2">
-<h2 class="anchored" data-anchor-id="講義のまとめ">講義のまとめ</h2>
-<p>この半期の講義では、以下のことを学びました。</p>
-<ol type="1">
-<li>RとRStudioの基本操作</li>
-<li>データの可視化と要約</li>
-<li>確率と分布の基礎</li>
-<li>統計的推測（推定と検定）</li>
-<li>回帰分析による関係性の分析</li>
-</ol>
-<p>これらはデータ分析の入り口に過ぎませんが、経済学の学習や卒業論文、そして社会に出てからのデータ活用において強力な武器となるはずです。</p>
+<section id="真犯人を探せ因果推論とバイアス" class="level2">
+<h2 class="anchored" data-anchor-id="真犯人を探せ因果推論とバイアス">3. 真犯人を探せ：因果推論とバイアス</h2>
+<p>「相関関係があっても因果関係とは限らない」。耳にタコができるほど聞いた言葉だが、その正体は何だろうか？ 最大の原因は、<strong>交絡因子（こうらくいんし）</strong> という「裏で糸を引く黒幕」の存在だ。</p>
+<section id="典型例教育と賃金のミステリー" class="level3">
+<h3 class="anchored" data-anchor-id="典型例教育と賃金のミステリー">典型例：教育と賃金のミステリー</h3>
+<p>「高学歴な人は給料が高い」というデータがある。 しかし、これは純粋に教育のおかげだろうか？ もしかすると、「元々の能力が高い人」が「高学歴になりやすく」、かつ「給料も高い」だけかもしれない。</p>
+<p>この「能力」こそが交絡因子だ。これを無視して分析すると、教育の効果を過大評価してしまう（<strong>除外変数バイアス</strong>）。</p>
+</section>
+<section id="シミュレーションバイアスの除去" class="level3">
+<h3 class="anchored" data-anchor-id="シミュレーションバイアスの除去">シミュレーション：バイアスの除去</h3>
+<p>重回帰分析を使えば、この黒幕（交絡因子）を表舞台に引きずり出し、無力化できる。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 真実はこうだ：</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>ability <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">100</span>, <span class="dv">15</span>) <span class="co"># 能力（黒幕）</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>education <span class="ot">&lt;-</span> <span class="dv">12</span> <span class="sc">+</span> <span class="fl">0.05</span> <span class="sc">*</span> ability <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">2</span>) <span class="co"># 能力が高いと教育も長い</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>wage <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> education <span class="sc">+</span> <span class="fl">0.3</span> <span class="sc">*</span> ability <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">5</span>) <span class="co"># 賃金は両方で決まる</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>sim_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(wage, education, ability)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 失敗：黒幕（能力）を無視</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(wage <span class="sc">~</span> education, <span class="at">data =</span> sim_data) <span class="sc">%&gt;%</span> <span class="fu">coef</span>()</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)   education </span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   41.674916    2.494524</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 成功：黒幕をモデルに入れてコントロール</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(wage <span class="sc">~</span> education <span class="sc">+</span> ability, <span class="at">data =</span> sim_data) <span class="sc">%&gt;%</span> <span class="fu">coef</span>()</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)   education     ability </span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  22.7681915   1.8733537   0.2955295</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>能力をモデルに加えることで、教育の係数は真の値（2.0）に近づく。 重回帰分析は、予測だけでなく、偏りのない<strong>因果推論</strong>を行うための強力なツールなのだ。</p>
+</section>
+</section>
+<section id="良いモデルの選び方" class="level2">
+<h2 class="anchored" data-anchor-id="良いモデルの選び方">4. 良いモデルの選び方</h2>
+<p>変数を増やせば増やすほどモデルは現実に合致していくが、やりすぎは禁物。</p>
+<section id="多重共線性マルチコ似た者同士の喧嘩" class="level3">
+<h3 class="anchored" data-anchor-id="多重共線性マルチコ似た者同士の喧嘩">多重共線性（マルチコ）：似た者同士の喧嘩</h3>
+<p>似たような変数（例：身長と座高）を両方入れると、お互いが邪魔をし合って、係数の推定がおかしくなる。 <strong>VIF</strong> という指標チェックし、10を超えていたら要注意。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(model_multi)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total_bill       size </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   1.557586   1.557586</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="調整済み決定係数シンプルさへのボーナス" class="level3">
+<h3 class="anchored" data-anchor-id="調整済み決定係数シンプルさへのボーナス">調整済み決定係数：シンプルさへのボーナス</h3>
+<p>通常の決定係数 <span class="math inline">\(R^2\)</span> は、無駄な変数を足しても増えてしまう。 「変数の数」のペナルティを加味した <strong>調整済み決定係数 (Adjusted <span class="math inline">\(R^2\)</span>)</strong> を使おう。 情報量規準 <strong>AIC</strong> や <strong>BIC</strong> も、シンプルで高性能なモデルを選ぶための指標だ。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 調整済みR²の比較</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>model_simple <span class="ot">&lt;-</span> <span class="fu">lm</span>(tip <span class="sc">~</span> total_bill, <span class="at">data =</span> tips) <span class="co"># 単回帰モデルの再定義</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Simple"</span> <span class="ot">=</span> model_simple,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Multi"</span> <span class="ot">=</span> model_multi,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Dummy"</span> <span class="ot">=</span> model_dummy</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(models, <span class="cf">function</span>(m) <span class="fu">summary</span>(m)<span class="sc">$</span>adj.r.squared)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Simple     Multi     Dummy </span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.4543712 0.4634533 0.4620370</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="係数の可視化" class="level2">
+<h2 class="anchored" data-anchor-id="係数の可視化">係数の可視化</h2>
+<p>数字の羅列を見るよりも、グラフで可視化したほうが直感的に理解できる。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>)) <span class="co"># [対象注意] Mac用設定</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model_dummy, <span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> term)) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span> <span class="co"># [対象注意] Mac用設定</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> conf.low, <span class="at">xmax =</span> conf.high), <span class="at">height =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"重回帰分析の係数プロット"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="12_regression_2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="最終課題" class="level2">
 <h2 class="anchored" data-anchor-id="最終課題">最終課題</h2>
-<p>自分の興味のあるデータセットを見つけて（Rに組み込まれているものでも、Web上のオープンデータでも可）、以下の分析を行ってください。</p>
+<p>自分の興味のあるデータセット（Rの組み込みデータやWeb上のオープンデータ）を見つけ、以下の分析レポートを作成してください。</p>
 <ol type="1">
-<li>データの概要を説明する。</li>
-<li>ヒストグラムや散布図で可視化する。</li>
-<li>関心のある2変数について回帰分析を行い、結果を解釈する。</li>
+<li><strong>問いの設定</strong>: 何を明らかにしたいか（例：燃費に影響するのは重量か馬力か？）</li>
+<li><strong>データの可視化</strong>: ヒストグラムや散布図による概観。</li>
+<li><strong>モデリング</strong>: 適切な回帰モデルの構築。</li>
+<li><strong>結果の解釈</strong>: 推定された係数の意味と、統計的な妥当性。</li>
 </ol>
-<section id="参考利用可能なデータセット" class="level3">
-<h3 class="anchored" data-anchor-id="参考利用可能なデータセット">参考：利用可能なデータセット</h3>
-<p>Rには多くのデータセットが組み込まれています：</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 利用可能なデータセットの一覧</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>()</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 例：mtcars（自動車データ）</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 例：iris（アヤメのデータ）</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Web上のオープンデータの例：</p>
-<ul>
-<li><strong>e-Stat</strong>（日本の政府統計）: https://www.e-stat.go.jp/</li>
-<li><strong>World Bank Open Data</strong>: https://data.worldbank.org/</li>
-<li><strong>Kaggle Datasets</strong>: https://www.kaggle.com/datasets</li>
-</ul>
 </section>
+<section id="講義のまとめ" class="level2">
+<h2 class="anchored" data-anchor-id="講義のまとめ">講義のまとめ</h2>
+<p>本講義では、データの読み込みから可視化、基本的な統計的推測、そして回帰分析による因果へのアプローチまでを学びました。 これらはデータサイエンスの基礎体力となるスキルです。 さらに深く学びたい方は、計量経済学や機械学習のコースへ進むことを推奨します。</p>
 </section>
 <section id="練習問題" class="level2">
 <h2 class="anchored" data-anchor-id="練習問題">練習問題</h2>
 <ol type="1">
-<li><p><code>tips</code> データを使って、チップ率（<code>tip / total_bill</code>）を被説明変数とした重回帰分析を行い、どの要因がチップ率に影響を与えるか調べてください。</p></li>
-<li><p><code>mtcars</code> データを使って、燃費（<code>mpg</code>）を被説明変数とした重回帰分析を行い、結果を解釈してください。</p></li>
-<li><p>交互作用項を含むモデルを作成し、通常のモデルと比較してください。</p></li>
+<li><strong>モデル選択の実践</strong>: <code>mtcars</code> データセットにおいて、燃費 (<code>mpg</code>) を説明する最適な変数の組み合わせを、調整済み <span class="math inline">\(R^2\)</span> や AIC を用いて探してください。</li>
+<li><strong>交互作用の解釈</strong>: 先ほどの喫煙者と支払額の交互作用モデルについて、具体的な数値を用いて、「喫煙者なら10ドル増えるごとにチップはどう変わるか」を説明してください。</li>
+<li><strong>交絡の発見</strong>: あなたの身の回りで「相関はあるが因果ではない（共通の原因がある）」と思われる例を挙げ、因果図を描いて説明してください。</li>
 </ol>
 
 

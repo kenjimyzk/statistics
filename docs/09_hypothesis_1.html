@@ -259,15 +259,15 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul class="collapse">
-  <li><a href="#今回の目標" id="toc-今回の目標" class="nav-link active" data-scroll-target="#今回の目標">今回の目標</a></li>
-  <li><a href="#仮説検定とは" id="toc-仮説検定とは" class="nav-link" data-scroll-target="#仮説検定とは">仮説検定とは</a></li>
-  <li><a href="#仮説検定の考え方" id="toc-仮説検定の考え方" class="nav-link" data-scroll-target="#仮説検定の考え方">仮説検定の考え方</a></li>
-  <li><a href="#標本のt検定" id="toc-標本のt検定" class="nav-link" data-scroll-target="#標本のt検定">1標本のt検定</a></li>
-  <li><a href="#両側検定と片側検定" id="toc-両側検定と片側検定" class="nav-link" data-scroll-target="#両側検定と片側検定">両側検定と片側検定</a></li>
-  <li><a href="#検定の誤り" id="toc-検定の誤り" class="nav-link" data-scroll-target="#検定の誤り">検定の誤り</a></li>
+  <li><a href="#裁判官になるための統計学" id="toc-裁判官になるための統計学" class="nav-link active" data-scroll-target="#裁判官になるための統計学">裁判官になるための統計学</a></li>
+  <li><a href="#裁判の基本ルール疑わしきは罰せず" id="toc-裁判の基本ルール疑わしきは罰せず" class="nav-link" data-scroll-target="#裁判の基本ルール疑わしきは罰せず">1. 裁判の基本ルール：疑わしきは罰せず</a></li>
+  <li><a href="#証拠の評価p値という驚き" id="toc-証拠の評価p値という驚き" class="nav-link" data-scroll-target="#証拠の評価p値という驚き">2. 証拠の評価：p値という驚き</a></li>
+  <li><a href="#シミュレーション無罪の証明" id="toc-シミュレーション無罪の証明" class="nav-link" data-scroll-target="#シミュレーション無罪の証明">3. シミュレーション：無罪の証明</a></li>
+  <li><a href="#実践1標本のt検定" id="toc-実践1標本のt検定" class="nav-link" data-scroll-target="#実践1標本のt検定">4. 実践：1標本のt検定</a></li>
+  <li><a href="#冤罪のリスク2つの過誤" id="toc-冤罪のリスク2つの過誤" class="nav-link" data-scroll-target="#冤罪のリスク2つの過誤">5. 冤罪のリスク：2つの過誤</a></li>
   <li><a href="#課題" id="toc-課題" class="nav-link" data-scroll-target="#課題">課題</a></li>
   <li><a href="#練習問題" id="toc-練習問題" class="nav-link" data-scroll-target="#練習問題">練習問題</a></li>
-  <li><a href="#仮説検定の注意点" id="toc-仮説検定の注意点" class="nav-link" data-scroll-target="#仮説検定の注意点">仮説検定の注意点</a></li>
+  <li><a href="#まとめ" id="toc-まとめ" class="nav-link" data-scroll-target="#まとめ">まとめ</a></li>
   </ul>
 </nav>
     </div>
@@ -299,60 +299,77 @@ window.Quarto = {
 <figcaption>仮説検定 (1)</figcaption>
 </figure>
 </div>
-<section id="今回の目標" class="level2">
-<h2 class="anchored" data-anchor-id="今回の目標">今回の目標</h2>
-<ul>
-<li>仮説検定の論理（帰無仮説、対立仮説、p値）を理解する。</li>
-<li>Rを使って1標本のt検定を行う。</li>
-<li>検定の結果を正しく解釈する。</li>
-</ul>
+<section id="裁判官になるための統計学" class="level2">
+<h2 class="anchored" data-anchor-id="裁判官になるための統計学">裁判官になるための統計学</h2>
+<p>「この新薬は効く！」 「私の予知能力は本物だ！」</p>
+<p>世の中には、様々な主張が溢れている。しかし、科学の世界では「言った者勝ち」は通用しない。 その主張が、たまたまの偶然なのか、それとも確かな証拠に基づいているのか。 それを厳格にジャッジする手続きが<strong>仮説検定 (Hypothesis Testing)</strong> 。</p>
+<p>仮説検定の仕組みは、<strong>刑事裁判</strong>にそっくりです。 今回は、あなたが裁判官となって、「偶然かどうか」という難事件に判決を下す方法を学ぼう。</p>
 </section>
-<section id="仮説検定とは" class="level2">
-<h2 class="anchored" data-anchor-id="仮説検定とは">仮説検定とは</h2>
-<p>仮説検定は、データに基づいて仮説の真偽を判断する統計的手法です。</p>
-<p>例えば「新しい薬には効果がある」という主張を検証したいとき： 1. まず「効果がない」という仮説を立てる 2. データを集める 3. 「効果がない」という仮説のもとで、このデータが得られる確率を計算 4. その確率が十分に小さければ、「効果がない」は間違いと判断</p>
-</section>
-<section id="仮説検定の考え方" class="level2">
-<h2 class="anchored" data-anchor-id="仮説検定の考え方">仮説検定の考え方</h2>
-<p>「コインが歪んでいないか？」を確かめたいとします。 「歪んでいない（表が出る確率は0.5）」と仮定したときに、実際に起きたこと（例：10回中9回表）が「めったに起きないこと」かどうかを確率で評価します。</p>
-<ul>
-<li><strong>帰無仮説 (<span class="math inline">\(H_0\)</span>)</strong>: 否定したい仮説（例：差はない、効果はない）。</li>
-<li><strong>対立仮説 (<span class="math inline">\(H_1\)</span>)</strong>: 主張したい仮説（例：差がある、効果がある）。</li>
-<li><strong>p値 (p-value)</strong>: 帰無仮説が正しいとしたときに、今のデータ（またはそれ以上に極端なデータ）が得られる確率。</li>
-<li><strong>有意水準 (<span class="math inline">\(\alpha\)</span>)</strong>: 帰無仮説を棄却する基準。通常 0.05 (5%) を使います。</li>
-</ul>
-<p><strong>判定ルール</strong>: - p値 &lt; 有意水準 <span class="math inline">\(\Rightarrow\)</span> 帰無仮説を棄却する（統計的に有意である）。 - p値 <span class="math inline">\(\ge\)</span> 有意水準 <span class="math inline">\(\Rightarrow\)</span> 帰無仮説を棄却できない（差があるとは言えない）。</p>
-<section id="検定の手順" class="level3">
-<h3 class="anchored" data-anchor-id="検定の手順">検定の手順</h3>
+<section id="裁判の基本ルール疑わしきは罰せず" class="level2">
+<h2 class="anchored" data-anchor-id="裁判の基本ルール疑わしきは罰せず">1. 裁判の基本ルール：疑わしきは罰せず</h2>
+<p>統計的検定の世界では、まず最初に「何の効果もない（無罪）」と仮定することから始めます。これを覆すだけの強力な証拠が出て初めて、「効果がある（有罪）」と認めることになる。</p>
+<section id="登場人物仮説" class="level3">
+<h3 class="anchored" data-anchor-id="登場人物仮説">登場人物（仮説）</h3>
 <ol type="1">
-<li>帰無仮説と対立仮説を設定</li>
-<li>有意水準を決める（通常5%）</li>
-<li>検定統計量を計算</li>
-<li>p値を求める</li>
-<li>結論を出す</li>
+<li><strong>被告人：帰無仮説 (<span class="math inline">\(H_0\)</span>)</strong>
+<ul>
+<li>「差はない」「効果はない」という、否定したい仮説。</li>
+<li>裁判で言えば<strong>「被告人は無罪である」</strong>という前提。</li>
+</ul></li>
+<li><strong>検察官：対立仮説 (<span class="math inline">\(H_1\)</span>)</strong>
+<ul>
+<li>「差がある」「効果がある」という、証明したい仮説。</li>
+<li>裁判で言えば<strong>「被告人は有罪である」</strong>という主張。</li>
+</ul></li>
 </ol>
+<p>検定のゴールは、<strong>「無罪（<span class="math inline">\(H_0\)</span>）と仮定するには、証拠（データ）が不自然すぎる」</strong>ことを示し、無罪の前提を棄却すること。</p>
 </section>
-<section id="棄却域のイメージ" class="level3">
-<h3 class="anchored" data-anchor-id="棄却域のイメージ">棄却域のイメージ</h3>
-<p>t分布において、どの範囲に入ったら「極端」とみなされるか（棄却域）を可視化します。</p>
+</section>
+<section id="証拠の評価p値という驚き" class="level2">
+<h2 class="anchored" data-anchor-id="証拠の評価p値という驚き">2. 証拠の評価：p値という驚き</h2>
+<p>裁判官であるあなたは、提出された証拠（データ）を見て判断する。 ここで重要なのが <strong>p値 (p-value)</strong> 。</p>
+<p>p値とは、<strong>「もし被告人が無罪だとしたら、こんな証拠が出てくる確率はどれくらいか？」</strong>という値。</p>
+<ul>
+<li><strong>p値が大きい（0.5とか）</strong>: 「無罪の人からも、よく出る証拠だ」。
+<ul>
+<li>判決：無罪を棄却できない（証拠不十分）。</li>
+</ul></li>
+<li><strong>p値が極めて小さい（0.001とか）</strong>: 「無罪だとしたら、こんな証拠が出るのはありえない（奇跡に近い）」。
+<ul>
+<li>判決：無罪ではないだろう。<strong>有罪（有意）</strong>！</li>
+</ul></li>
+</ul>
+<section id="判決の基準有意水準-alpha" class="level3">
+<h3 class="anchored" data-anchor-id="判決の基準有意水準-alpha">判決の基準：有意水準 (<span class="math inline">\(\alpha\)</span>)</h3>
+<p>どこまで確率が低ければ「ありえない」と判断するのか？ その基準を<strong>有意水準</strong>と呼び、通常 <strong>5% (0.05)</strong> に設定します。</p>
+<ul>
+<li>「無罪なのにこんな証拠が出る確率は5%未満」なら、それはもう偶然とは考えない。</li>
+<li>この基準を超えたとき、<strong>「統計的に有意である (Statistically Significant)」</strong> と宣言します。</li>
+</ul>
+</section>
+</section>
+<section id="シミュレーション無罪の証明" class="level2">
+<h2 class="anchored" data-anchor-id="シミュレーション無罪の証明">3. シミュレーション：無罪の証明</h2>
+<p>t分布を使って、「無罪（偶然）」の範囲を可視化してみましょう。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># theme_set(theme_gray(base_family = "HiraKakuProN-W3")) # [対象注意] Mac用設定</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># t分布 (自由度9) {.unnumbered}</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># t分布 (自由度9)</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">dt</span>(x, <span class="at">df =</span> <span class="dv">9</span>)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>df_t <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x, y)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 棄却域 (両側5%) {.unnumbered}</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 判決のライン（有意水準5%の両側）</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>critical_val <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="dv">9</span>)</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_t, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">data =</span> <span class="fu">filter</span>(df_t, x <span class="sc">&gt;</span> critical_val), <span class="at">fill =</span> <span class="st">"red"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">data =</span> <span class="fu">filter</span>(df_t, x <span class="sc">&lt;</span> <span class="sc">-</span>critical_val), <span class="at">fill =</span> <span class="st">"red"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">c</span>(critical_val, <span class="sc">-</span>critical_val), <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"t分布と棄却域 (両側5%)"</span>, <span class="at">x =</span> <span class="st">"t値"</span>, <span class="at">y =</span> <span class="st">"確率密度"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span> <span class="co"># [対象注意] Mac用設定</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">data =</span> <span class="fu">filter</span>(df_t, x <span class="sc">&gt;</span> critical_val), <span class="at">fill =</span> <span class="st">"red"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">data =</span> <span class="fu">filter</span>(df_t, x <span class="sc">&lt;</span> <span class="sc">-</span>critical_val), <span class="at">fill =</span> <span class="st">"red"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">c</span>(critical_val, <span class="sc">-</span>critical_val), <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"有罪判決のライン (棄却域)"</span>, <span class="at">x =</span> <span class="st">"検定統計量 (t値)"</span>, <span class="at">y =</span> <span class="st">"確率密度"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -361,142 +378,129 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<p>赤いエリアが「有罪（棄却域）」。データから計算したt値がここに入れば、「無罪」の前提は棄却されます。</p>
 </section>
-</section>
-<section id="標本のt検定" class="level2">
-<h2 class="anchored" data-anchor-id="標本のt検定">1標本のt検定</h2>
-<p>あるデータの平均値が、特定の値 <span class="math inline">\(\mu_0\)</span> と異なるかどうかを検定します。</p>
-<p>例：あるクラスのテストの平均点が、全国平均の50点と異なるか？</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># サンプルデータ作成 {.unnumbered}</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>scores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">60</span>, <span class="dv">45</span>, <span class="dv">70</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">48</span>, <span class="dv">52</span>, <span class="dv">65</span>, <span class="dv">50</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># t検定 (mu = 50 と比較) {.unnumbered}</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(scores, <span class="at">mu =</span> <span class="dv">50</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  One Sample t-test</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  scores</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 2.5862, df = 9, p-value = 0.02939</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true mean is not equal to 50</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  50.81453 62.18547</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean of x </span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      56.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>結果の見方:</p>
+<section id="実践1標本のt検定" class="level2">
+<h2 class="anchored" data-anchor-id="実践1標本のt検定">4. 実践：1標本のt検定</h2>
+<p>実際の事件（データ）を裁いてみましょう。</p>
+<p><strong>事件</strong>: あるクラス10人のテスト平均点は、全国平均の「50点」と違うのか？ <code>scores &lt;- c(55, 60, 45, 70, 58, 62, 48, 52, 65, 50)</code></p>
 <ol type="1">
-<li><strong>p値 (p-value)</strong>: <code>0.02939</code> となりました。
-<ul>
-<li>これは、「もし本当にクラスの平均点が50点だとしたら、今回のような（あるいはもっと極端な）データが得られる確率は約2.9%しかない」という意味です。</li>
-<li>この確率は、一般的な基準である有意水準 5% (0.05) よりも小さいです。</li>
-</ul></li>
-<li><strong>結論</strong>: 帰無仮説（平均点は50点である）を棄却します。
-<ul>
-<li>つまり、「偶然で片付けるには確率が低すぎる」と判断し、「このクラスの平均点は50点とは統計的に有意に異なる」と結論づけます。</li>
-<li>95%信頼区間 (<code>50.8</code> 〜 <code>62.2</code>) を見ても、50点が含まれていないことがわかります。</li>
-</ul></li>
+<li><strong>帰無仮説 (<span class="math inline">\(H_0\)</span>)</strong>: 平均点に違いはない（<span class="math inline">\(\mu = 50\)</span>）。</li>
+<li><strong>対立仮説 (<span class="math inline">\(H_1\)</span>)</strong>: 平均点に違いがある（<span class="math inline">\(\mu \neq 50\)</span>）。</li>
 </ol>
-</section>
-<section id="両側検定と片側検定" class="level2">
-<h2 class="anchored" data-anchor-id="両側検定と片側検定">両側検定と片側検定</h2>
-<section id="両側検定デフォルト" class="level3">
-<h3 class="anchored" data-anchor-id="両側検定デフォルト">両側検定（デフォルト）</h3>
-<p>「等しくない」ことを検定します。</p>
-<p><span class="math inline">\(H_0: \mu = \mu_0\)</span> vs <span class="math inline">\(H_1: \mu \neq \mu_0\)</span></p>
-</section>
-<section id="片側検定" class="level3">
-<h3 class="anchored" data-anchor-id="片側検定">片側検定</h3>
-<p>「大きい」または「小さい」ことを検定します。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 「50点より大きい」ことを検定（片側検定）</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(scores, <span class="at">mu =</span> <span class="dv">50</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  One Sample t-test</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  scores</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 2.5862, df = 9, p-value = 0.0147</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true mean is greater than 50</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  51.89284      Inf</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean of x </span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      56.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>scores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">60</span>, <span class="dv">45</span>, <span class="dv">70</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">48</span>, <span class="dv">52</span>, <span class="dv">65</span>, <span class="dv">50</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(scores, <span class="at">mu =</span> <span class="dv">50</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  One Sample t-test</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  scores</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 2.5862, df = 9, p-value = 0.02939</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true mean is not equal to 50</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  50.81453 62.18547</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean of x </span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      56.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><strong>判決</strong>: p値は <code>0.02939</code> 。これは 0.05（5%）より小さい。 つまり、「平均50点の集団から、偶然この点数が取れる確率は約2.9%しかない」。 裁判官（あなた）は、「偶然にしては出来すぎている」と判断し、<strong>帰無仮説を棄却</strong>します。</p>
+<p>結論：<strong>このクラスの平均点は、全国平均と有意に異なる。</strong></p>
 </section>
-</section>
-<section id="検定の誤り" class="level2">
-<h2 class="anchored" data-anchor-id="検定の誤り">検定の誤り</h2>
-<p>仮説検定では2種類の誤りがありえます。</p>
+<section id="冤罪のリスク2つの過誤" class="level2">
+<h2 class="anchored" data-anchor-id="冤罪のリスク2つの過誤">5. 冤罪のリスク：2つの過誤</h2>
+<p>裁判に誤審があるように、統計的検定にも誤りのリスクがあります。</p>
 <table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
 <th></th>
-<th>帰無仮説が真</th>
-<th>帰無仮説が偽</th>
+<th>被告人は無実 (<span class="math inline">\(H_0\)</span> 真)</th>
+<th>被告人はクロ (<span class="math inline">\(H_1\)</span> 真)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>帰無仮説を棄却</td>
-<td><strong>第1種の誤り（α）</strong></td>
-<td>正しい判断</td>
+<td><strong>有罪判決 (<span class="math inline">\(H_0\)</span> 棄却)</strong></td>
+<td><strong>冤罪 (第1種の過誤)</strong><br>何も無いのに「ある」と言う<br>確率 <span class="math inline">\(\alpha\)</span> (5%)</td>
+<td>正しい判決</td>
 </tr>
 <tr class="even">
-<td>帰無仮説を棄却しない</td>
-<td>正しい判断</td>
-<td><strong>第2種の誤り（β）</strong></td>
+<td><strong>無罪判決 (<span class="math inline">\(H_0\)</span> 棄却せず)</strong></td>
+<td>正しい判決</td>
+<td><strong>取り逃がし (第2種の過誤)</strong><br>あるのに「ない」と言う<br>確率 <span class="math inline">\(\beta\)</span></td>
 </tr>
 </tbody>
 </table>
-<ul>
-<li><strong>第1種の誤り（偽陽性）</strong>: 実際には差がないのに「差がある」と判断してしまう</li>
-<li><strong>第2種の誤り（偽陰性）</strong>: 実際には差があるのに「差がない」と判断してしまう</li>
-<li><strong>検出力 (Power)</strong>: <span class="math inline">\(1 - \beta\)</span>。真の差を検出できる確率</li>
-</ul>
-<section id="有意水準と検出力のトレードオフ" class="level3">
-<h3 class="anchored" data-anchor-id="有意水準と検出力のトレードオフ">有意水準と検出力のトレードオフ</h3>
-<p>有意水準を厳しくすると（5%→1%）： - 第1種の誤りは減る - 第2種の誤りは増える（検出力が下がる）</p>
-</section>
+<p>我々が設定した「有意水準5%」とは、「5%の確率で冤罪（第1種の過誤）を起こすことを許容する」という宣言でもある。 だからこそ、p値が小さいことは「絶対の真実」ではなく、「かなり確からしい」という程度の意味なのだ。</p>
 </section>
 <section id="課題" class="level2">
 <h2 class="anchored" data-anchor-id="課題">課題</h2>
 <ol type="1">
-<li><code>tips</code> データの <code>total_bill</code> の平均値が 20ドル と異なるかどうかを検定してください。 帰無仮説、対立仮説、p値、そして結論（棄却するかどうか）を答えてください。</li>
+<li><strong>Tipsデータの分析</strong>: <code>tips</code> データの <code>total_bill</code> の平均値が 20ドル と異なるかどうかを検定してください。 帰無仮説 <span class="math inline">\(H_0\)</span> と対立仮説 <span class="math inline">\(H_1\)</span> を数式で記述し、結果のp値に基づいて結論（棄却するか否か）を述べてください。</li>
 </ol>
 </section>
 <section id="練習問題" class="level2">
 <h2 class="anchored" data-anchor-id="練習問題">練習問題</h2>
-<section id="練習1-1標本t検定" class="level3">
-<h3 class="anchored" data-anchor-id="練習1-1標本t検定">練習1: 1標本t検定</h3>
-<p>ある会社の従業員10人の残業時間（月間）が以下のデータだとします：</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>overtime <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">50</span>, <span class="dv">38</span>, <span class="dv">55</span>, <span class="dv">42</span>, <span class="dv">48</span>, <span class="dv">52</span>, <span class="dv">40</span>, <span class="dv">35</span>, <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>法定の残業上限である月45時間と比較して、この会社の残業時間は有意に多いですか？</p>
+<section id="練習1-結論の解釈" class="level3">
+<h3 class="anchored" data-anchor-id="練習1-結論の解釈">練習1: 結論の解釈</h3>
+<p>ある検定の結果、p値が <code>0.08</code> でした。有意水準5%の場合、以下の主張は正しいですか？ 「p値 &gt; 0.05 なので、帰無仮説は正しいと証明された。」</p>
 </section>
-<section id="練習2-片側検定と両側検定" class="level3">
-<h3 class="anchored" data-anchor-id="練習2-片側検定と両側検定">練習2: 片側検定と両側検定</h3>
-<ol type="1">
-<li>上の練習問題を両側検定で行ってください</li>
-<li>「45時間より多い」かどうかを片側検定で行ってください</li>
-<li>結果の違いを確認してください</li>
-</ol>
+<section id="練習2-サンプルサイズと有意差" class="level3">
+<h3 class="anchored" data-anchor-id="練習2-サンプルサイズと有意差">練習2: サンプルサイズと有意差</h3>
+<p>前回使用したシミュレーションコードを使い、<span class="math inline">\(H_0: \mu=50\)</span> が誤り（真の <span class="math inline">\(\mu=52\)</span>）であるデータを生成してください。サンプルサイズ <span class="math inline">\(n\)</span> を変えたとき、p値がどう変化するか確認してください。</p>
 </section>
-<section id="練習3-p値の解釈" class="level3">
-<h3 class="anchored" data-anchor-id="練習3-p値の解釈">練習3: p値の解釈</h3>
-<p>以下の場合、帰無仮説を棄却しますか？理由も答えてください。 1. p値 = 0.03, 有意水準 = 0.05 2. p値 = 0.08, 有意水準 = 0.05 3. p値 = 0.001, 有意水準 = 0.01</p>
+<section id="練習3-誤りの種類" class="level3">
+<h3 class="anchored" data-anchor-id="練習3-誤りの種類">練習3: 誤りの種類</h3>
+<p>「ガンではない患者を、誤ってガンであると診断してしまう」のは、第1種の過誤ですか、第2種の過誤ですか？（帰無仮説：「ガンではない」とした場合）</p>
 </section>
 </section>
-<section id="仮説検定の注意点" class="level2">
-<h2 class="anchored" data-anchor-id="仮説検定の注意点">仮説検定の注意点</h2>
-<ol type="1">
-<li><strong>統計的有意 ≠ 実質的に重要</strong>: p値が小さくても、効果の大きさが小さい場合がある</li>
-<li><strong>「棄却しない」≠「帰無仮説が正しい」</strong>: 差がないと証明したわけではない</li>
-<li><strong>p値は確率ではない</strong>: 「帰無仮説が正しい確率」ではない</li>
-<li><strong>多重検定の問題</strong>: 何度も検定を繰り返すと、偶然有意になりやすい</li>
-</ol>
+<section id="まとめ" class="level2">
+<h2 class="anchored" data-anchor-id="まとめ">まとめ</h2>
+<table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>裁判用語</th>
+<th>統計用語</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>被告人は無罪</strong></td>
+<td><strong>帰無仮説 (<span class="math inline">\(H_0\)</span>)</strong></td>
+<td>「差はない」という前提</td>
+</tr>
+<tr class="even">
+<td><strong>被告人は有罪</strong></td>
+<td><strong>対立仮説 (<span class="math inline">\(H_1\)</span>)</strong></td>
+<td>「差がある」という主張</td>
+</tr>
+<tr class="odd">
+<td><strong>証拠の不自然さ</strong></td>
+<td><strong>p値</strong></td>
+<td>無罪前提でそのデータが出る確率</td>
+</tr>
+<tr class="even">
+<td><strong>判決の基準</strong></td>
+<td><strong>有意水準 (<span class="math inline">\(\alpha\)</span>)</strong></td>
+<td>p値がこれ未満なら有罪（棄却）</td>
+</tr>
+<tr class="odd">
+<td><strong>冤罪</strong></td>
+<td><strong>第1種の過誤</strong></td>
+<td>無罪なのに有罪にしてしまうミス</td>
+</tr>
+</tbody>
+</table>
 
 
 </section>

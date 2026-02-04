@@ -259,14 +259,13 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul class="collapse">
-  <li><a href="#今回の目標" id="toc-今回の目標" class="nav-link active" data-scroll-target="#今回の目標">今回の目標</a></li>
-  <li><a href="#相関-correlation" id="toc-相関-correlation" class="nav-link" data-scroll-target="#相関-correlation">相関 (Correlation)</a></li>
-  <li><a href="#単回帰分析-simple-linear-regression" id="toc-単回帰分析-simple-linear-regression" class="nav-link" data-scroll-target="#単回帰分析-simple-linear-regression">単回帰分析 (Simple Linear Regression)</a></li>
-  <li><a href="#決定係数-r-squared" id="toc-決定係数-r-squared" class="nav-link" data-scroll-target="#決定係数-r-squared">決定係数 (R-squared)</a></li>
-  <li><a href="#回帰分析の仮定" id="toc-回帰分析の仮定" class="nav-link" data-scroll-target="#回帰分析の仮定">回帰分析の仮定</a></li>
+  <li><a href="#未来を予測する魔法" id="toc-未来を予測する魔法" class="nav-link active" data-scroll-target="#未来を予測する魔法">未来を予測する魔法</a></li>
+  <li><a href="#人のダンス相関-correlation" id="toc-人のダンス相関-correlation" class="nav-link" data-scroll-target="#人のダンス相関-correlation">1. 2人のダンス：相関 (Correlation)</a></li>
+  <li><a href="#予測マシンを作る単回帰分析" id="toc-予測マシンを作る単回帰分析" class="nav-link" data-scroll-target="#予測マシンを作る単回帰分析">2. 予測マシンを作る：単回帰分析</a></li>
+  <li><a href="#モデルの品質チェック残差診断" id="toc-モデルの品質チェック残差診断" class="nav-link" data-scroll-target="#モデルの品質チェック残差診断">3. モデルの品質チェック：残差診断</a></li>
   <li><a href="#課題" id="toc-課題" class="nav-link" data-scroll-target="#課題">課題</a></li>
   <li><a href="#練習問題" id="toc-練習問題" class="nav-link" data-scroll-target="#練習問題">練習問題</a></li>
-  <li><a href="#回帰分析のまとめ" id="toc-回帰分析のまとめ" class="nav-link" data-scroll-target="#回帰分析のまとめ">回帰分析のまとめ</a></li>
+  <li><a href="#まとめ" id="toc-まとめ" class="nav-link" data-scroll-target="#まとめ">まとめ</a></li>
   </ul>
 </nav>
     </div>
@@ -298,286 +297,226 @@ window.Quarto = {
 <figcaption>相関と単回帰分析</figcaption>
 </figure>
 </div>
-<section id="今回の目標" class="level2">
-<h2 class="anchored" data-anchor-id="今回の目標">今回の目標</h2>
-<ul>
-<li>相関係数を計算し、2変数の関係の強さを理解する。</li>
-<li>単回帰分析を行い、結果（切片、傾き）を解釈する。</li>
-<li>回帰分析の仮定と診断を学ぶ。</li>
-</ul>
+<section id="未来を予測する魔法" class="level2">
+<h2 class="anchored" data-anchor-id="未来を予測する魔法">未来を予測する魔法</h2>
+<p>「もっと勉強したら、成績はどれくらい上がる？」 「気温が1度上がったら、ビールは何本多く売れる？」</p>
+<p>もし、あるデータ (<span class="math inline">\(X\)</span>) を知ることで、未知のデータ (<span class="math inline">\(Y\)</span>) を<strong>予測</strong>できるとしたら？ それはビジネスでも科学でも、最強の武器になる。</p>
+<p>今回は、2つのデータの関係性を読み解き、未来を予測するための数理モデル <strong>単回帰分析</strong> を習得しよう。</p>
 </section>
-<section id="相関-correlation" class="level2">
-<h2 class="anchored" data-anchor-id="相関-correlation">相関 (Correlation)</h2>
-<p>2つの変数の間に、直線的な関係があるかどうかを表す指標です。 相関係数 <span class="math inline">\(r\)</span> は <span class="math inline">\(-1 \le r \le 1\)</span> の値をとり、1に近いほど正の相関、-1に近いほど負の相関、0に近いほど無相関を表します。</p>
-<section id="相関係数の計算" class="level3">
-<h3 class="anchored" data-anchor-id="相関係数の計算">相関係数の計算</h3>
-<p><span class="math display">\[r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i - \bar{x})^2 \sum_{i=1}^{n}(y_i - \bar{y})^2}}\]</span></p>
-<p><code>tips</code> データの <code>total_bill</code> と <code>tip</code> の相関係数を計算してみましょう。</p>
+<section id="人のダンス相関-correlation" class="level2">
+<h2 class="anchored" data-anchor-id="人のダンス相関-correlation">1. 2人のダンス：相関 (Correlation)</h2>
+<p>予測の第一歩は、「2つのデータに関係があるか？」を知ること。 これを<strong>相関</strong>と呼ぶ。</p>
+<p>イメージしてほしい。2人のダンサーが踊っている。 片方が右に動いたとき、もう片方も必ず右に動くなら、2人の息はピッタリだ（強い正の相関）。 バラバラに動いているなら、関係はない（無相関）。</p>
+<p>この「息の合い具合」を数値化したのが <strong>相関係数 <span class="math inline">\(r\)</span></strong> 。</p>
+<ul>
+<li><strong><span class="math inline">\(r = 1\)</span></strong>: 完全なシンクロ（正）。</li>
+<li><strong><span class="math inline">\(r = -1\)</span></strong>: 正反対の動き（負）。</li>
+<li><strong><span class="math inline">\(r = 0\)</span></strong>: 全くの無関係。</li>
+</ul>
+<section id="実践-支払額とチップの関係" class="level3">
+<h3 class="anchored" data-anchor-id="実践-支払額とチップの関係">実践: 支払額とチップの関係</h3>
+<p>「支払額 (<span class="math inline">\(X\)</span>) が多い客ほど、チップ (<span class="math inline">\(Y\)</span>) も多く払うのか？」を確認してみよう。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>tips <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(tips<span class="sc">$</span>total_bill, tips<span class="sc">$</span>tip)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.6757341</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 相関係数の算出</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(tips<span class="sc">$</span>total_bill, tips<span class="sc">$</span>tip)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.6757341</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 検定: その相関は偶然ではないか？</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(tips<span class="sc">$</span>total_bill, tips<span class="sc">$</span>tip)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Pearson's product-moment correlation</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  tips$total_bill and tips$tip</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 14.26, df = 242, p-value &lt; 2.2e-16</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true correlation is not equal to 0</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.6011647 0.7386372</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       cor </span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.6757341</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>結果は <span class="math inline">\(r \approx 0.68\)</span>。 「かなり息が合っている（強い正の相関）」と言える。支払額が増えれば、チップも増える傾向がはっきりとある。</p>
 </section>
-<section id="相関係数の解釈" class="level3">
-<h3 class="anchored" data-anchor-id="相関係数の解釈">相関係数の解釈</h3>
-<table class="table">
-<thead>
-<tr class="header">
-<th>相関係数の絶対値</th>
-<th>解釈</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>0.0 - 0.2</td>
-<td>ほぼ相関なし</td>
-</tr>
-<tr class="even">
-<td>0.2 - 0.4</td>
-<td>弱い相関</td>
-</tr>
-<tr class="odd">
-<td>0.4 - 0.7</td>
-<td>中程度の相関</td>
-</tr>
-<tr class="even">
-<td>0.7 - 1.0</td>
-<td>強い相関</td>
-</tr>
-</tbody>
-</table>
 </section>
-<section id="相関行列" class="level3">
-<h3 class="anchored" data-anchor-id="相関行列">相関行列</h3>
-<p>複数の変数間の相関を一度に確認できます。</p>
+<section id="予測マシンを作る単回帰分析" class="level2">
+<h2 class="anchored" data-anchor-id="予測マシンを作る単回帰分析">2. 予測マシンを作る：単回帰分析</h2>
+<p>相関があることが分かったら、次は具体的に予測をする。 「支払いが10ドル増えたら、チップは<strong>いくら</strong>増えるの？」</p>
+<p>この問いに答えるために、データの真ん中を貫く「運命の赤い糸（回帰直線）」を引く。 この直線の式が、私たちの<strong>予測マシン</strong>になる。</p>
+<p><span class="math display">\[ \text{予測値} = \text{切片} + \text{傾き} \times \text{支払額} \]</span></p>
+<section id="交換レートとしての傾き" class="level3">
+<h3 class="anchored" data-anchor-id="交換レートとしての傾き">交換レートとしての「傾き」</h3>
+<p>ここで最も重要なのが <strong>傾き (<span class="math inline">\(\beta_1\)</span>)</strong> 。 これは、<span class="math inline">\(X\)</span> と <span class="math inline">\(Y\)</span> の<strong>交換レート</strong>のようなもの。 「支払額を1ドル投入すると、チップが何ドル返ってくるか？」を表す。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 数値変数だけを選んで相関行列を作成</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(total_bill, tip, size) <span class="sc">%&gt;%</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>()</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;            total_bill       tip      size</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total_bill  1.0000000 0.6757341 0.5983151</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; tip         0.6757341 1.0000000 0.4892988</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; size        0.5983151 0.4892988 1.0000000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 予測モデルの作成</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(tip <span class="sc">~</span> total_bill, <span class="at">data =</span> tips)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = tip ~ total_bill, data = tips)</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -3.1982 -0.5652 -0.0974  0.4863  3.7434 </span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept) 0.920270   0.159735   5.761 2.53e-08 ***</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total_bill  0.105025   0.007365  14.260  &lt; 2e-16 ***</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 1.022 on 242 degrees of freedom</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.4566, Adjusted R-squared:  0.4544 </span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 203.4 on 1 and 242 DF,  p-value: &lt; 2.2e-16</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><strong>解析結果</strong>: - <strong>傾き (Estimate of total_bill)</strong>: <code>0.105</code></p>
+<p>これは、<strong>「支払額が1ドル増えるごとに、チップは約10.5セント増える」</strong> という法則を表している。 これさえ分かれば、まだ見ぬ客のチップ額も予測できる。</p>
 </section>
-<section id="相関係数の検定" class="level3">
-<h3 class="anchored" data-anchor-id="相関係数の検定">相関係数の検定</h3>
-<p>相関係数が0と有意に異なるかを検定できます。</p>
+<section id="直線の可視化" class="level3">
+<h3 class="anchored" data-anchor-id="直線の可視化">直線の可視化</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(tips<span class="sc">$</span>total_bill, tips<span class="sc">$</span>tip)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Pearson's product-moment correlation</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  tips$total_bill and tips$tip</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 14.26, df = 242, p-value &lt; 2.2e-16</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true correlation is not equal to 0</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.6011647 0.7386372</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       cor </span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.6757341</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section id="単回帰分析-simple-linear-regression" class="level2">
-<h2 class="anchored" data-anchor-id="単回帰分析-simple-linear-regression">単回帰分析 (Simple Linear Regression)</h2>
-<p>ある変数 <span class="math inline">\(x\)</span>（説明変数）を使って、別の変数 <span class="math inline">\(y\)</span>（被説明変数）を予測・説明するモデルを作ります。</p>
-<p><span class="math display">\[ y = \beta_0 + \beta_1 x + \epsilon \]</span></p>
-<ul>
-<li><span class="math inline">\(\beta_0\)</span>: 切片 (Intercept)</li>
-<li><span class="math inline">\(\beta_1\)</span>: 傾き (Slope)</li>
-<li><span class="math inline">\(\epsilon\)</span>: 誤差項</li>
-</ul>
-<p>Rでは <code>lm()</code> 関数（Linear Model）を使います。 「支払総額 (<span class="math inline">\(x\)</span>) が増えると、チップ (<span class="math inline">\(y\)</span>) はどれくらい増えるか？」を分析します。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(tip <span class="sc">~</span> total_bill, <span class="at">data =</span> tips)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = tip ~ total_bill, data = tips)</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -3.1982 -0.5652 -0.0974  0.4863  3.7434 </span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept) 0.920270   0.159735   5.761 2.53e-08 ***</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total_bill  0.105025   0.007365  14.260  &lt; 2e-16 ***</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 1.022 on 242 degrees of freedom</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.4566, Adjusted R-squared:  0.4544 </span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 203.4 on 1 and 242 DF,  p-value: &lt; 2.2e-16</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="結果の解釈" class="level3">
-<h3 class="anchored" data-anchor-id="結果の解釈">結果の解釈</h3>
-<p><code>Coefficients:</code> の部分を見ます。</p>
-<pre><code>            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) 0.920270   0.159735   5.761 2.53e-08 ***
-total_bill  0.105025   0.007365  14.260  &lt; 2e-16 ***</code></pre>
-<ul>
-<li><code>(Intercept)</code> の Estimate: <code>0.92</code>
-<ul>
-<li>切片です。<span class="math inline">\(x\)</span>（支払総額）が0のときの <span class="math inline">\(y\)</span>（チップ）の予測値です。</li>
-<li>ただし、支払総額が0ドルということは現実にはあり得ないので、この値自体に深い意味はないことが多いです。</li>
-</ul></li>
-<li><code>total_bill</code> の Estimate: <code>0.105</code>
-<ul>
-<li>傾きです。これが最も重要な数値です。</li>
-<li><strong>「支払総額が1ドル増えると、チップは約0.105ドル（約10.5セント）増える傾向がある」</strong> と解釈します。</li>
-</ul></li>
-<li><code>Pr(&gt;|t|)</code>:
-<ul>
-<li><code>total_bill</code> の行を見ると <code>&lt; 2e-16</code> となっています。これは <span class="math inline">\(2 \times 10^{-16}\)</span> 未満という非常に小さな値です。</li>
-<li>0.05よりはるかに小さいため、「傾きは0ではない（支払総額とチップには統計的に有意な関係がある）」と結論づけられます。</li>
-</ul></li>
-</ul>
-</section>
-<section id="散布図に回帰直線を引く" class="level3">
-<h3 class="anchored" data-anchor-id="散布図に回帰直線を引く">散布図に回帰直線を引く</h3>
-<p><code>ggplot2</code> で <code>geom_smooth(method = "lm")</code> を使うと、簡単に回帰直線を追加できます。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> total_bill, <span class="at">y =</span> tip)) <span class="sc">+</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> total_bill, <span class="at">y =</span> tip)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span> <span class="co"># [対象注意] Mac用設定</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"予測マシン（回帰直線）の可視化"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="11_regression_1_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="11_regression_1_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="残差プロット" class="level3">
-<h3 class="anchored" data-anchor-id="残差プロット">残差プロット</h3>
-<p>回帰分析がうまくいっているか確認するために、予測値と残差（予測とのズレ）の関係を見ることがあります。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># データフレームに予測値と残差を追加 {.unnumbered}</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>tips_aug <span class="ot">&lt;-</span> tips <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred =</span> <span class="fu">predict</span>(model), <span class="at">resid =</span> <span class="fu">residuals</span>(model))</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips_aug, <span class="fu">aes</span>(<span class="at">x =</span> pred, <span class="at">y =</span> resid)) <span class="sc">+</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"残差プロット"</span>, <span class="at">x =</span> <span class="st">"予測値"</span>, <span class="at">y =</span> <span class="st">"残差"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="11_regression_1_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>良い回帰モデルでは： - 残差が0の周りにランダムに散らばっている - 残差にパターンがない（扇形になっていない等）</p>
+<p>赤い線が、推定された予測モデルだ。</p>
 </section>
 </section>
-<section id="決定係数-r-squared" class="level2">
-<h2 class="anchored" data-anchor-id="決定係数-r-squared">決定係数 (R-squared)</h2>
-<p>回帰モデルがデータをどれくらい説明できているかを表す指標です。</p>
-<p><span class="math display">\[R^2 = 1 - \frac{\sum(y_i - \hat{y}_i)^2}{\sum(y_i - \bar{y})^2}\]</span></p>
+<section id="モデルの品質チェック残差診断" class="level2">
+<h2 class="anchored" data-anchor-id="モデルの品質チェック残差診断">3. モデルの品質チェック：残差診断</h2>
+<p>モデルを作って終わりではない。 「この予測マシンは本当に優秀か？」をチェックする必要がある。</p>
+<p>注目するのは、予測と実測のズレ、すなわち <strong>残差 (Residuals)</strong> 。 完璧なモデルなら、残差は単なる「ランダムなノイズ」になる。もし残差に何らかのパターン（癖）が残っていたら、モデルはまだ何か重要な情報を見落としていることになる。</p>
+<section id="決定係数-r2-説明力" class="level3">
+<h3 class="anchored" data-anchor-id="決定係数-r2-説明力">決定係数 (<span class="math inline">\(R^2\)</span>): 説明力</h3>
+<p>まず、このモデルがデータのバラつきの何％を説明できたかを確認する。</p>
 <ul>
-<li><span class="math inline">\(R^2 = 0\)</span>: モデルは全く説明力がない</li>
-<li><span class="math inline">\(R^2 = 1\)</span>: モデルはデータを完全に説明できる</li>
+<li><strong>Multiple R-squared</strong>: <code>0.4566</code>
+<ul>
+<li>「チップの変動の約46%は、支払額の違いで説明できる」</li>
+<li>残りの54%は、支払額以外の要因（客の気前の良さや接客態度など）。</li>
+</ul></li>
 </ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summaryから決定係数を確認</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)<span class="sc">$</span>r.squared</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.4566166</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>今回のモデルでは約0.46、つまりチップの変動の約46%を支払総額で説明できています。</p>
 </section>
-<section id="回帰分析の仮定" class="level2">
-<h2 class="anchored" data-anchor-id="回帰分析の仮定">回帰分析の仮定</h2>
-<p>回帰分析が正しく機能するためには、いくつかの仮定が必要です：</p>
-<ol type="1">
-<li><strong>線形性</strong>: <span class="math inline">\(x\)</span> と <span class="math inline">\(y\)</span> の関係が線形である</li>
-<li><strong>独立性</strong>: 観測値が互いに独立</li>
-<li><strong>等分散性</strong>: 残差の分散が一定</li>
-<li><strong>正規性</strong>: 残差が正規分布に従う</li>
-</ol>
-<section id="仮定の診断" class="level3">
-<h3 class="anchored" data-anchor-id="仮定の診断">仮定の診断</h3>
+<section id="残差の健康診断" class="level3">
+<h3 class="anchored" data-anchor-id="残差の健康診断">残差の健康診断</h3>
+<p>モデル変な癖がないか、レントゲン（残差プロット）を撮って確認する。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 残差の正規性を確認（Q-Qプロット）</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips_aug, <span class="fu">aes</span>(<span class="at">sample =</span> resid)) <span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"残差のQ-Qプロット"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 予測値と残差の準備</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>tips_aug <span class="ot">&lt;-</span> tips <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred =</span> <span class="fu">predict</span>(model), <span class="at">resid =</span> <span class="fu">residuals</span>(model))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 残差プロット（クセがないか？）</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(tips_aug, <span class="fu">aes</span>(<span class="at">x =</span> pred, <span class="at">y =</span> resid)) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span> <span class="co"># [対象注意] Mac用設定</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"残差の散らばり"</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Q-Qプロット（正規分布しているか？）</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(tips_aug, <span class="fu">aes</span>(<span class="at">sample =</span> resid)) <span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span> <span class="co"># [対象注意] Mac用設定</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"残差の正規性"</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 並べて表示</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>p1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="11_regression_1_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="11_regression_1_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>p2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="11_regression_1_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
+<ul>
+<li><strong>残差プロット</strong>: 0の周りにバランスよく散らばっていれば合格。</li>
+<li><strong>Q-Qプロット</strong>: 赤い線の上に並んでいれば合格。</li>
+</ul>
 </section>
 </section>
 <section id="課題" class="level2">
 <h2 class="anchored" data-anchor-id="課題">課題</h2>
 <ol type="1">
-<li><code>tips</code> データを使って、<code>size</code>（人数）を説明変数、<code>total_bill</code>（支払総額）を被説明変数とする単回帰分析を行ってください。 人数が1人増えると、支払総額は何ドル増えると推定されますか？</li>
+<li><strong>単回帰分析の実践</strong>: <code>tips</code> データを用いて、<code>size</code>（客数）を説明変数、<span class="math inline">\(Y=\)</span> <code>total_bill</code>（支払総額）を被説明変数とする単回帰分析を行ってください。 得られた傾き <span class="math inline">\(\hat{\beta}_1\)</span> の値を解釈し、その統計的有意性について述べてください。</li>
 </ol>
 </section>
 <section id="練習問題" class="level2">
 <h2 class="anchored" data-anchor-id="練習問題">練習問題</h2>
-<section id="練習1-相関分析" class="level3">
-<h3 class="anchored" data-anchor-id="練習1-相関分析">練習1: 相関分析</h3>
-<p><code>mtcars</code> データ（Rに組み込み済み）を使って： 1. <code>mpg</code>（燃費）と <code>wt</code>（重量）の相関係数を計算 2. 相関係数の検定を行い、有意かどうか判断 3. 散布図を作成</p>
+<section id="練習1-相関の罠" class="level3">
+<h3 class="anchored" data-anchor-id="練習1-相関の罠">練習1: 相関の罠</h3>
+<p>架空のデータにおいて、「アイスクリームの売上」と「水難事故の件数」に強い正の相関が見られました。 これは「アイスクリームを食べることが水難事故の原因である」ことを意味しますか？第三の要因（交絡因子）を挙げて説明してください。</p>
 </section>
-<section id="練習2-単回帰分析" class="level3">
-<h3 class="anchored" data-anchor-id="練習2-単回帰分析">練習2: 単回帰分析</h3>
-<p><code>mtcars</code> データを使って、<code>wt</code> を説明変数、<code>mpg</code> を被説明変数とする単回帰分析を行ってください： 1. モデルを作成し、係数を解釈 2. 決定係数を確認 3. 回帰直線付きの散布図を作成</p>
+<section id="練習2-決定係数の解釈" class="level3">
+<h3 class="anchored" data-anchor-id="練習2-決定係数の解釈">練習2: 決定係数の解釈</h3>
+<p>ある回帰モデルの決定係数が <span class="math inline">\(R^2 = 0.05\)</span> でしたが、傾きの検定は <span class="math inline">\(p &lt; 0.001\)</span> で有意でした。 この結果はどう解釈すべきですか？「モデルは無意味」ですか、それとも「関係はあるが予測精度は低い」ですか？</p>
 </section>
-<section id="練習3-残差診断" class="level3">
-<h3 class="anchored" data-anchor-id="練習3-残差診断">練習3: 残差診断</h3>
-<p>練習2のモデルについて： 1. 残差プロットを作成 2. Q-Qプロットを作成 3. モデルの仮定が満たされているか評価</p>
+<section id="練習3-残差のパターン" class="level3">
+<h3 class="anchored" data-anchor-id="練習3-残差のパターン">練習3: 残差のパターン</h3>
+<p>残差プロットにおいて、残差がU字型のパターンを描いていました。これはモデルの何の仮定に違反している可能性が高いですか？（ヒント：線形性）</p>
 </section>
 </section>
-<section id="回帰分析のまとめ" class="level2">
-<h2 class="anchored" data-anchor-id="回帰分析のまとめ">回帰分析のまとめ</h2>
+<section id="まとめ" class="level2">
+<h2 class="anchored" data-anchor-id="まとめ">まとめ</h2>
 <table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>用語</th>
-<th>説明</th>
+<th>概念</th>
+<th>アナロジー</th>
+<th>意味</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>被説明変数（目的変数）</td>
-<td>予測したい変数 <span class="math inline">\(y\)</span></td>
+<td><strong>相関</strong></td>
+<td>ダンスのシンクロ率</td>
+<td>2つの変数の動きの連動性。</td>
 </tr>
 <tr class="even">
-<td>説明変数（予測変数）</td>
-<td>予測に使う変数 <span class="math inline">\(x\)</span></td>
+<td><strong>回帰直線</strong></td>
+<td>予測マシン</td>
+<td><span class="math inline">\(X\)</span> から <span class="math inline">\(Y\)</span> を弾き出す数式。</td>
 </tr>
 <tr class="odd">
-<td>切片</td>
-<td><span class="math inline">\(x = 0\)</span> のときの <span class="math inline">\(y\)</span> の値</td>
+<td><strong>傾き (<span class="math inline">\(\beta_1\)</span>)</strong></td>
+<td>交換レート</td>
+<td><span class="math inline">\(X\)</span> が1増えると <span class="math inline">\(Y\)</span> がどれだけ増えるか。</td>
 </tr>
 <tr class="even">
-<td>傾き</td>
-<td><span class="math inline">\(x\)</span> が1単位増えたときの <span class="math inline">\(y\)</span> の変化量</td>
+<td><strong>残差</strong></td>
+<td>削りカス</td>
+<td>モデルが説明しきれなかったノイズ。</td>
 </tr>
 <tr class="odd">
-<td>残差</td>
-<td>実測値と予測値の差</td>
-</tr>
-<tr class="even">
-<td>決定係数</td>
-<td>モデルの説明力（0〜1）</td>
+<td><strong>決定係数 (<span class="math inline">\(R^2\)</span>)</strong></td>
+<td>テストの点数</td>
+<td>モデルがどれくらい優秀かのスコア (0-1)。</td>
 </tr>
 </tbody>
 </table>
