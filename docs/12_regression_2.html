@@ -257,48 +257,16 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
-  <ul>
+  <ul class="collapse">
   <li><a href="#今回の目標" id="toc-今回の目標" class="nav-link active" data-scroll-target="#今回の目標">今回の目標</a></li>
-  <li><a href="#重回帰分析-multiple-regression" id="toc-重回帰分析-multiple-regression" class="nav-link" data-scroll-target="#重回帰分析-multiple-regression">重回帰分析 (Multiple Regression)</a>
-  <ul class="collapse">
-  <li><a href="#重回帰分析とは" id="toc-重回帰分析とは" class="nav-link" data-scroll-target="#重回帰分析とは">重回帰分析とは</a></li>
-  <li><a href="#基本的な重回帰分析の例" id="toc-基本的な重回帰分析の例" class="nav-link" data-scroll-target="#基本的な重回帰分析の例">基本的な重回帰分析の例</a></li>
-  <li><a href="#単回帰と重回帰の比較" id="toc-単回帰と重回帰の比較" class="nav-link" data-scroll-target="#単回帰と重回帰の比較">単回帰と重回帰の比較</a></li>
-  <li><a href="#決定係数の比較" id="toc-決定係数の比較" class="nav-link" data-scroll-target="#決定係数の比較">決定係数の比較</a></li>
-  <li><a href="#係数の可視化-coefficient-plot" id="toc-係数の可視化-coefficient-plot" class="nav-link" data-scroll-target="#係数の可視化-coefficient-plot">係数の可視化 (Coefficient Plot)</a></li>
-  </ul></li>
-  <li><a href="#ダミー変数を使った回帰分析" id="toc-ダミー変数を使った回帰分析" class="nav-link" data-scroll-target="#ダミー変数を使った回帰分析">ダミー変数を使った回帰分析</a>
-  <ul class="collapse">
-  <li><a href="#ダミー変数とは" id="toc-ダミー変数とは" class="nav-link" data-scroll-target="#ダミー変数とは">ダミー変数とは</a></li>
-  <li><a href="#複数のカテゴリ変数を使う" id="toc-複数のカテゴリ変数を使う" class="nav-link" data-scroll-target="#複数のカテゴリ変数を使う">複数のカテゴリ変数を使う</a></li>
-  </ul></li>
-  <li><a href="#交互作用項-interaction-term" id="toc-交互作用項-interaction-term" class="nav-link" data-scroll-target="#交互作用項-interaction-term">交互作用項 (Interaction Term)</a>
-  <ul class="collapse">
-  <li><a href="#交互作用とは" id="toc-交互作用とは" class="nav-link" data-scroll-target="#交互作用とは">交互作用とは</a></li>
-  <li><a href="#交互作用の可視化" id="toc-交互作用の可視化" class="nav-link" data-scroll-target="#交互作用の可視化">交互作用の可視化</a></li>
-  </ul></li>
-  <li><a href="#多重共線性-multicollinearity" id="toc-多重共線性-multicollinearity" class="nav-link" data-scroll-target="#多重共線性-multicollinearity">多重共線性 (Multicollinearity)</a>
-  <ul class="collapse">
-  <li><a href="#多重共線性とは" id="toc-多重共線性とは" class="nav-link" data-scroll-target="#多重共線性とは">多重共線性とは</a></li>
-  <li><a href="#vif分散膨張因子による診断" id="toc-vif分散膨張因子による診断" class="nav-link" data-scroll-target="#vif分散膨張因子による診断">VIF（分散膨張因子）による診断</a></li>
-  </ul></li>
-  <li><a href="#相関と因果" id="toc-相関と因果" class="nav-link" data-scroll-target="#相関と因果">相関と因果</a>
-  <ul class="collapse">
-  <li><a href="#相関関係と因果関係の違い" id="toc-相関関係と因果関係の違い" class="nav-link" data-scroll-target="#相関関係と因果関係の違い">相関関係と因果関係の違い</a></li>
-  <li><a href="#交絡因子-confounding-variable" id="toc-交絡因子-confounding-variable" class="nav-link" data-scroll-target="#交絡因子-confounding-variable">交絡因子 (Confounding Variable)</a></li>
-  <li><a href="#交絡因子をコントロールする" id="toc-交絡因子をコントロールする" class="nav-link" data-scroll-target="#交絡因子をコントロールする">交絡因子をコントロールする</a></li>
-  <li><a href="#因果推論の手法" id="toc-因果推論の手法" class="nav-link" data-scroll-target="#因果推論の手法">因果推論の手法</a></li>
-  </ul></li>
-  <li><a href="#モデルの比較と選択" id="toc-モデルの比較と選択" class="nav-link" data-scroll-target="#モデルの比較と選択">モデルの比較と選択</a>
-  <ul class="collapse">
-  <li><a href="#調整済み決定係数" id="toc-調整済み決定係数" class="nav-link" data-scroll-target="#調整済み決定係数">調整済み決定係数</a></li>
-  <li><a href="#aic-と-bic" id="toc-aic-と-bic" class="nav-link" data-scroll-target="#aic-と-bic">AIC と BIC</a></li>
-  </ul></li>
+  <li><a href="#重回帰分析-multiple-regression" id="toc-重回帰分析-multiple-regression" class="nav-link" data-scroll-target="#重回帰分析-multiple-regression">重回帰分析 (Multiple Regression)</a></li>
+  <li><a href="#ダミー変数を使った回帰分析" id="toc-ダミー変数を使った回帰分析" class="nav-link" data-scroll-target="#ダミー変数を使った回帰分析">ダミー変数を使った回帰分析</a></li>
+  <li><a href="#交互作用項-interaction-term" id="toc-交互作用項-interaction-term" class="nav-link" data-scroll-target="#交互作用項-interaction-term">交互作用項 (Interaction Term)</a></li>
+  <li><a href="#多重共線性-multicollinearity" id="toc-多重共線性-multicollinearity" class="nav-link" data-scroll-target="#多重共線性-multicollinearity">多重共線性 (Multicollinearity)</a></li>
+  <li><a href="#相関と因果" id="toc-相関と因果" class="nav-link" data-scroll-target="#相関と因果">相関と因果</a></li>
+  <li><a href="#モデルの比較と選択" id="toc-モデルの比較と選択" class="nav-link" data-scroll-target="#モデルの比較と選択">モデルの比較と選択</a></li>
   <li><a href="#講義のまとめ" id="toc-講義のまとめ" class="nav-link" data-scroll-target="#講義のまとめ">講義のまとめ</a></li>
-  <li><a href="#最終課題" id="toc-最終課題" class="nav-link" data-scroll-target="#最終課題">最終課題</a>
-  <ul class="collapse">
-  <li><a href="#参考利用可能なデータセット" id="toc-参考利用可能なデータセット" class="nav-link" data-scroll-target="#参考利用可能なデータセット">参考：利用可能なデータセット</a></li>
-  </ul></li>
+  <li><a href="#最終課題" id="toc-最終課題" class="nav-link" data-scroll-target="#最終課題">最終課題</a></li>
   <li><a href="#練習問題" id="toc-練習問題" class="nav-link" data-scroll-target="#練習問題">練習問題</a></li>
   </ul>
 </nav>

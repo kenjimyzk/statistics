@@ -258,51 +258,17 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
-  <ul>
+  <ul class="collapse">
   <li><a href="#今回の目標" id="toc-今回の目標" class="nav-link active" data-scroll-target="#今回の目標">今回の目標</a></li>
   <li><a href="#rにおける確率分布関数" id="toc-rにおける確率分布関数" class="nav-link" data-scroll-target="#rにおける確率分布関数">Rにおける確率分布関数</a></li>
-  <li><a href="#正規分布-normal-distribution" id="toc-正規分布-normal-distribution" class="nav-link" data-scroll-target="#正規分布-normal-distribution">正規分布 (Normal Distribution)</a>
-  <ul class="collapse">
-  <li><a href="#正規分布のグラフを描く" id="toc-正規分布のグラフを描く" class="nav-link" data-scroll-target="#正規分布のグラフを描く">正規分布のグラフを描く</a></li>
-  <li><a href="#平均と標準偏差の影響" id="toc-平均と標準偏差の影響" class="nav-link" data-scroll-target="#平均と標準偏差の影響">平均と標準偏差の影響</a></li>
-  </ul></li>
+  <li><a href="#正規分布-normal-distribution" id="toc-正規分布-normal-distribution" class="nav-link" data-scroll-target="#正規分布-normal-distribution">正規分布 (Normal Distribution)</a></li>
   <li><a href="#確率の計算" id="toc-確率の計算" class="nav-link" data-scroll-target="#確率の計算">確率の計算</a></li>
-  <li><a href="#正規分布の重要性" id="toc-正規分布の重要性" class="nav-link" data-scroll-target="#正規分布の重要性">正規分布の重要性</a>
-  <ul class="collapse">
-  <li><a href="#正規分布の68-95-99.7ルール" id="toc-正規分布の68-95-99.7ルール" class="nav-link" data-scroll-target="#正規分布の68-95-99.7ルール">正規分布の68-95-99.7ルール</a></li>
-  </ul></li>
-  <li><a href="#ベルヌーイ分布-bernoulli-distribution" id="toc-ベルヌーイ分布-bernoulli-distribution" class="nav-link" data-scroll-target="#ベルヌーイ分布-bernoulli-distribution">ベルヌーイ分布 (Bernoulli Distribution)</a>
-  <ul class="collapse">
-  <li><a href="#定義" id="toc-定義" class="nav-link" data-scroll-target="#定義">定義</a></li>
-  <li><a href="#期待値と分散" id="toc-期待値と分散" class="nav-link" data-scroll-target="#期待値と分散">期待値と分散</a></li>
-  <li><a href="#rでの実装例" id="toc-rでの実装例" class="nav-link" data-scroll-target="#rでの実装例">Rでの実装例</a></li>
-  <li><a href="#ベルヌーイ分布の確率分布" id="toc-ベルヌーイ分布の確率分布" class="nav-link" data-scroll-target="#ベルヌーイ分布の確率分布">ベルヌーイ分布の確率分布</a></li>
-  </ul></li>
-  <li><a href="#二項分布-binomial-distribution" id="toc-二項分布-binomial-distribution" class="nav-link" data-scroll-target="#二項分布-binomial-distribution">二項分布 (Binomial Distribution)</a>
-  <ul class="collapse">
-  <li><a href="#ベルヌーイ試行から二項分布へ" id="toc-ベルヌーイ試行から二項分布へ" class="nav-link" data-scroll-target="#ベルヌーイ試行から二項分布へ">ベルヌーイ試行から二項分布へ</a></li>
-  <li><a href="#確率質量関数" id="toc-確率質量関数" class="nav-link" data-scroll-target="#確率質量関数">確率質量関数</a></li>
-  <li><a href="#期待値と分散-1" id="toc-期待値と分散-1" class="nav-link" data-scroll-target="#期待値と分散-1">期待値と分散</a></li>
-  <li><a href="#rでの計算例" id="toc-rでの計算例" class="nav-link" data-scroll-target="#rでの計算例">Rでの計算例</a></li>
-  <li><a href="#成功確率の影響" id="toc-成功確率の影響" class="nav-link" data-scroll-target="#成功確率の影響">成功確率の影響</a></li>
-  <li><a href="#二項分布の期待値と分散" id="toc-二項分布の期待値と分散" class="nav-link" data-scroll-target="#二項分布の期待値と分散">二項分布の期待値と分散</a></li>
-  <li><a href="#二項分布の正規近似" id="toc-二項分布の正規近似" class="nav-link" data-scroll-target="#二項分布の正規近似">二項分布の正規近似</a></li>
-  <li><a href="#次回予告中心極限定理" id="toc-次回予告中心極限定理" class="nav-link" data-scroll-target="#次回予告中心極限定理">次回予告：中心極限定理</a></li>
-  </ul></li>
-  <li><a href="#カイ二乗分布t分布f分布" id="toc-カイ二乗分布t分布f分布" class="nav-link" data-scroll-target="#カイ二乗分布t分布f分布">カイ二乗分布・t分布・F分布</a>
-  <ul class="collapse">
-  <li><a href="#カイ二乗分布-chi-square-distribution" id="toc-カイ二乗分布-chi-square-distribution" class="nav-link" data-scroll-target="#カイ二乗分布-chi-square-distribution">カイ二乗分布 (Chi-square Distribution)</a></li>
-  <li><a href="#t分布-students-t-distribution" id="toc-t分布-students-t-distribution" class="nav-link" data-scroll-target="#t分布-students-t-distribution">t分布 (Student’s t-distribution)</a></li>
-  <li><a href="#f分布-f-distribution" id="toc-f分布-f-distribution" class="nav-link" data-scroll-target="#f分布-f-distribution">F分布 (F-distribution)</a></li>
-  <li><a href="#つの分布の関係" id="toc-つの分布の関係" class="nav-link" data-scroll-target="#つの分布の関係">3つの分布の関係</a></li>
-  </ul></li>
+  <li><a href="#正規分布の重要性" id="toc-正規分布の重要性" class="nav-link" data-scroll-target="#正規分布の重要性">正規分布の重要性</a></li>
+  <li><a href="#ベルヌーイ分布-bernoulli-distribution" id="toc-ベルヌーイ分布-bernoulli-distribution" class="nav-link" data-scroll-target="#ベルヌーイ分布-bernoulli-distribution">ベルヌーイ分布 (Bernoulli Distribution)</a></li>
+  <li><a href="#二項分布-binomial-distribution" id="toc-二項分布-binomial-distribution" class="nav-link" data-scroll-target="#二項分布-binomial-distribution">二項分布 (Binomial Distribution)</a></li>
+  <li><a href="#カイ二乗分布t分布f分布" id="toc-カイ二乗分布t分布f分布" class="nav-link" data-scroll-target="#カイ二乗分布t分布f分布">カイ二乗分布・t分布・F分布</a></li>
   <li><a href="#課題" id="toc-課題" class="nav-link" data-scroll-target="#課題">課題</a></li>
-  <li><a href="#練習問題" id="toc-練習問題" class="nav-link" data-scroll-target="#練習問題">練習問題</a>
-  <ul class="collapse">
-  <li><a href="#練習1-正規分布の確率計算" id="toc-練習1-正規分布の確率計算" class="nav-link" data-scroll-target="#練習1-正規分布の確率計算">練習1: 正規分布の確率計算</a></li>
-  <li><a href="#練習2-二項分布" id="toc-練習2-二項分布" class="nav-link" data-scroll-target="#練習2-二項分布">練習2: 二項分布</a></li>
-  <li><a href="#練習3-分布の比較" id="toc-練習3-分布の比較" class="nav-link" data-scroll-target="#練習3-分布の比較">練習3: 分布の比較</a></li>
-  </ul></li>
+  <li><a href="#練習問題" id="toc-練習問題" class="nav-link" data-scroll-target="#練習問題">練習問題</a></li>
   <li><a href="#主要な確率分布のまとめ" id="toc-主要な確率分布のまとめ" class="nav-link" data-scroll-target="#主要な確率分布のまとめ">主要な確率分布のまとめ</a></li>
   </ul>
 </nav>

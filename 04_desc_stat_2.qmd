@@ -2,229 +2,192 @@
 
 ![データの可視化](figure/04_desc_stat_2/infographic.png)
 
-## 今回の目標
+## 要約の限界と「アンスコムの警鐘」
 
--   データの分布をグラフで確認する重要性を理解する。
--   `ggplot2` を使って基本的なグラフ（ヒストグラム、箱ひげ図、散布図）を作成する。
--   グラフの種類と使い分けを学ぶ。
+前節では、膨大なデータを「平均値」や「分散」などの数値に縮約し、全体の特徴を掴みました。
+しかし、縮約には副作用があります。「形の消失」です。
 
-## なぜ可視化が重要か
-
-数値だけではデータの特徴を見落とすことがあります。有名な「アンスコムのカルテット」という例があります。
+Anscombe (1973) の有名な例、アンスコムのカルテットを見てみましょう。
+一見、平均値も分散も相関係数もしっかり一致している4つのデータセットです。
 
 ```{r}
 library(tidyverse)
-
-# アンスコムのカルテット（Rに組み込み済み）
+# Rに標準で入っている anscombe データを整形
 anscombe_long <- anscombe %>%
   pivot_longer(everything(),
                names_to = c(".value", "set"),
                names_pattern = "(.)(.)")
 
-# 各セットの統計量
+# 統計量を確認：どれもほぼ同じ
 anscombe_long %>%
   group_by(set) %>%
   summarize(
-    mean_x = mean(x),
-    mean_y = mean(y),
-    sd_x = sd(x),
-    sd_y = sd(y),
+    mean_x = mean(x), mean_y = mean(y),
+    sd_x = sd(x), sd_y = sd(y),
     cor = cor(x, y)
   )
 ```
 
-統計量はほぼ同じですが、グラフにすると全く異なるパターンが見えます。
+数値だけなら「これらは同じ性質のデータだ」と結論づけてしまうでしょう。でも、グラフにして可視化した瞬間、景色は一変します。
+[対象注意: 日本語フォント設定は環境依存あり]
 
 ```{r}
 ggplot(anscombe_long, aes(x = x, y = y)) +
-  theme_gray(base_family = "HiraKakuProN-W3") +
+  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
   facet_wrap(~set) +
-  labs(title = "アンスコムのカルテット: 統計量は同じでもパターンは異なる")
+  labs(title = "数値は嘘をつかないが、真実を語るとは限らない")
 ```
 
+きれいな直線、曲線、外れ値の影響...。数値要約で捨て去られた情報が、可視化ではっきりと浮かび上がりました。
+データ分析において、可視化は分析の「後」の飾りではありません。分析の「最初」に行うべき、欠かせない診断です。
+
 ## 準備
+
+本節でも `tips` データセット（Bryant & Smith, 1995）を使います。
 
 ```{r}
 url <- "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
 tips <- read_csv(url)
 ```
 
-## ggplot2の基本
+## キャンバスに層を重ねる：ggplot2の思想
 
-`ggplot2` は、「キャンバスを用意」→「グラフの種類を指定」→「装飾を追加」という層（レイヤー）を重ねる考え方でグラフを作ります。
+Rの可視化パッケージ **ggplot2** の設計思想は、Wickham (2010) の "Layered Grammar of Graphics"（グラフィックスの層状文法）に基づいています。
+Excelみたいに「棒グラフを作るボタン」があるわけではありません。
 
-基本形:
+> 「データ」という土台に、「座標」を定義し、「点や棒（Geom）」を乗せ、「説明（Labels）」を加える。
+
+この工程をコードで書きます。
+
 ```{r}
 #| eval: false
-ggplot(data = データフレーム, mapping = aes(x = x軸の変数, y = y軸の変数)) +
-  グラフの種類()
+ggplot(data = tips, mapping = aes(x = total_bill, y = tip)) + # キャンバスと座標
+  geom_point()                                                # 何を描くか（点）
 ```
 
-## 1変数の可視化
+## 1. 分布の形状を見る
 
-### ヒストグラム (Histogram)
+まずは、データが「どんな形」をしているか確認します。
 
-連続変数の分布を見るのによく使います。`geom_histogram()` を使います。
+### 山の形を知る：ヒストグラム
+
+連続した数値データ（金額など）が、どこに集まっているかを見に行きます。
+山は一つか、二つか？ 左右対称か、歪んでいるか？
 
 ```{r}
 ggplot(tips, aes(x = total_bill)) +
-  theme_gray(base_family = "HiraKakuProN-W3") +
+  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
   geom_histogram(bins = 30, fill = "skyblue", color = "white") +
-  labs(title = "支払総額のヒストグラム", x = "支払総額 ($)", y = "度数")
+  labs(title = "支払総額の分布", x = "支払総額 ($)", y = "度数")
 ```
 
-### 箱ひげ図 (Boxplot)
+### 構造を要約する：箱ひげ図
 
-データのばらつきや外れ値を確認するのに便利です。`geom_boxplot()` を使います。
-1変数だけでなく、カテゴリごとの分布比較にもよく使われます。
+ヒストグラムは詳細ですが、複数のグループ比較には不向きです。重なって見づらいから。
+そこで**箱ひげ図**の出番です。分布の情報を「箱」と「ひげ」に要約します。
 
 ```{r}
 ggplot(tips, aes(x = day, y = total_bill, fill = day)) +
-  theme_gray(base_family = "HiraKakuProN-W3") +
+  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
   geom_boxplot() +
-  labs(title = "曜日別の支払総額", x = "曜日", y = "支払総額")
+  labs(title = "曜日ごとの支払額の違い", x = "曜日", y = "支払総額")
 ```
 
-### 箱ひげ図の読み方
+**Tukeyの箱ひげ図の定義**:
 
-箱ひげ図の各部分は以下を表しています：
+-   **箱**: データの中央50%（第1四分位数〜第3四分位数）。この中に「普通」のデータが入ります。
+-   **太線**: 中央値（Median）。
+-   **点**: 箱から `1.5倍の四分位範囲` 以上離れた値。統計的な「外れ値候補」として扱います。
 
-- **箱の下端**: 第1四分位数（Q1、下位25%）
-- **箱の中の線**: 中央値（Q2、下位50%）
-- **箱の上端**: 第3四分位数（Q3、下位75%）
-- **ひげ**: Q1 - 1.5×IQR から Q3 + 1.5×IQR の範囲
-- **点**: 外れ値
+### 分布の機微を見る：バイオリンプロット
 
-### バイオリンプロット
-
-箱ひげ図の代替として、分布の形状をより詳しく見られるバイオリンプロットがあります。
+箱ひげ図だと「山が2つある」などの情報は消えてしまいます。分布の形状（密度）そのものを表示したい場合は、バイオリン図を使います。
 
 ```{r}
 ggplot(tips, aes(x = day, y = total_bill, fill = day)) +
-  theme_gray(base_family = "HiraKakuProN-W3") +
+  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
   geom_violin() +
-  geom_boxplot(width = 0.1, fill = "white") +
-  labs(title = "曜日別の支払総額（バイオリンプロット）", x = "曜日", y = "支払総額")
+  geom_boxplot(width = 0.1, fill = "white") + # 箱ひげ図も重ねると最強
+  labs(title = "分布の形状比較（バイオリン+箱ひげ）", x = "曜日", y = "支払総額")
 ```
 
-### 棒グラフ (Bar Plot)
+## 2. 関係性を探る
 
-カテゴリ変数（離散変数）の度数（カウント）を見るのに使います。`geom_bar()` を使います。
-曜日ごとのデータ数を見てみましょう。
+次は、2つの変数がどう関わっているかを探ります。
 
-```{r}
-ggplot(tips, aes(x = day)) +
-  theme_gray(base_family = "HiraKakuProN-W3") +
-  geom_bar(fill = "steelblue") +
-  labs(title = "曜日ごとのデータ数", x = "曜日", y = "件数")
-```
+### 2つの量の相関：散布図
 
-## 2変数の可視化
-
-### 散布図 (Scatter Plot)
-
-2つの連続変数の関係を見るのに使います。`geom_point()` を使います。
-支払総額とチップの関係を見てみましょう。
+「たくさん食べた人は、たくさんチップを払うのか？」
+2つの連続変数（横軸と縦軸）の関係をプロットします。
 
 ```{r}
 ggplot(tips, aes(x = total_bill, y = tip)) +
-  theme_gray(base_family = "HiraKakuProN-W3") +
+  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
   geom_point(color = "blue", alpha = 0.5) +
-  labs(title = "支払総額とチップの関係", x = "支払総額", y = "チップ")
+  labs(title = "支払総額とチップの正の相関", x = "支払総額", y = "チップ")
 ```
 
-さらに、性別で色分けしてみましょう。`aes()` の中に `color = sex` を追加します。
+ここに第3の次元（情報）を加えるのも簡単です。例えば、性別によって色を変えます（`color = sex`）。
 
 ```{r}
 ggplot(tips, aes(x = total_bill, y = tip, color = sex)) +
-  theme_gray(base_family = "HiraKakuProN-W3") +
+  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
   geom_point()
 ```
 
-## グラフのカスタマイズ
+### 状況ごとの違い：ファセット分割
 
-### 色とテーマの変更
-
-```{r}
-# 色を変更する
-ggplot(tips, aes(x = total_bill, y = tip)) +
-  theme_gray(base_family = "HiraKakuProN-W3") +
-  geom_point(color = "darkblue", alpha = 0.6, size = 2) +
-  labs(title = "支払総額とチップの関係", x = "支払総額", y = "チップ")
-```
-
-### ファセット（グラフを分割）
-
-`facet_wrap()` や `facet_grid()` を使うと、カテゴリごとにグラフを分けて表示できます。
+色分け（color）は便利ですが、情報が増えすぎると「スパゲッティ」のように絡まって読めなくなる。
+そんなときは `facet_wrap()` でグラフ自体を分割してしまいましょう。
 
 ```{r}
-# 時間帯ごとにグラフを分ける
+# 喫煙の有無 × 時間帯 で状況を分解する
 ggplot(tips, aes(x = total_bill, y = tip)) +
-  theme_gray(base_family = "HiraKakuProN-W3")+
+  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
   geom_point(aes(color = smoker)) +
   facet_wrap(~ time) +
-  labs(title = "時間帯別の支払総額とチップ", x = "支払総額", y = "チップ")
+  labs(title = "条件による関係性の違い", x = "支払総額", y = "チップ")
 ```
 
-## 統計量を重ねる
+## グラフを「語らせる」ための調整
 
-グラフに平均線や回帰直線を追加すると、データの傾向がより分かりやすくなります。
+デフォルトのままでは、グラフは「下書き」です。誰かに伝えるためには、意図が伝わるよう調整します。
+
+### 統計情報の重ね書き
+「傾向」を見せたいなら、生のデータ点だけでなく、平均値や回帰直線を重ねるのが効果的です。
 
 ```{r}
-# 平均線を追加
 ggplot(tips, aes(x = day, y = total_bill)) +
-  theme_gray(base_family = "HiraKakuProN-W3") +
+  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
   geom_boxplot(fill = "lightblue") +
-  stat_summary(fun = mean, geom = "point", color = "red", size = 3) +
+  stat_summary(fun = mean, geom = "point", color = "red", size = 3) + # 平均値を赤点で追加
   stat_summary(fun = mean, geom = "line", aes(group = 1), color = "red", linetype = "dashed") +
-  labs(title = "曜日別の支払総額（赤点は平均値）", x = "曜日", y = "支払総額")
+  labs(title = "曜日ごとの傾向（赤点は平均値）", x = "曜日", y = "支払総額")
 ```
 
-## データ可視化のベストプラクティス
-
-### 1. グラフの目的を明確に
-- 分布を見たい → ヒストグラム、箱ひげ図
-- 関係を見たい → 散布図
-- カテゴリ別の比較 → 棒グラフ、箱ひげ図
-
-### 2. 軸ラベルとタイトルを必ず付ける
-他人に見せる資料では、何のデータか一目で分かるように`labs()`で設定しましょう。
-
-### 3. 色の使い方に注意
-
-- 色覚多様性（色覚異常）に配慮した配色を使いましょう
-- 明度の違いも利用すると見やすくなります
+### ユニバーサルデザインへの配慮
+あなたのグラフを見る人の中には、特定の色が見えにくい人（色覚多様性）がいるかもしれません。
+「赤と緑」の色分けだけで情報を伝えてはダメです。形状（`shape`）や線種（`linetype`）の違いを併用するか、誰もが識別しやすいカラーパレット（Viridisなど）の使用をおすすめします。
 
 ## 課題
-1.  `tip`（チップ）のヒストグラムを作成してください。
-2.  `total_bill` と `tip` の散布図を作成し、`time`（ランチ/ディナー）で色分けしてください。
+自分の手で可視化を行い、データからの発見を言語化してください。
+
+1.  `tip`（チップ）の分布をヒストグラムで確認してください。何か気づく特徴はありますか？（キリの良い数字が多い、など）
+2.  `total_bill` と `tip` の散布図を描き、`time`（ランチ/ディナー）で色分けして、時間帯による傾向の違いを議論してください。
 
 ## 練習問題
 
-### 練習1: ヒストグラムのカスタマイズ
-1. `tip` のヒストグラムを作成し、ビンの数を10に変更してください
-2. 色を自分の好きな色に変更してください
-3. 適切なタイトルと軸ラベルを追加してください
+### 練習1: ヒストグラムの最適化
+1. `tip` のヒストグラムを作成してください。
+2. ビンの数（`bins`）を10, 30, 50と変えてみてください。分布の印象がどう変わるか観察してください。
 
-### 練習2: 複数のグラフの作成
-1. 性別 (`sex`) ごとの `tip` の箱ひげ図を作成してください
-2. 喫煙者 (`smoker`) ごとの `total_bill` のヒストグラムを、`facet_wrap()` を使って並べて表示してください
+### 練習2: 多変量の可視化
+1. 性別 (`sex`) ごとの `tip` の分布を箱ひげ図で比較してください。女性の方がばらつきが大きいですか？
+2. 喫煙者 (`smoker`) ごとの `total_bill` の分布を、`facet_wrap()` を使って左右に並べて比較してください。
 
-### 練習3: 散布図の応用
-1. `total_bill` と `tip` の散布図を作成してください
-2. 点の大きさを `size`（人数）に対応させてください（ヒント: `aes(size = size)`）
-3. 回帰直線を追加してください
-
-## グラフ選択のガイド
-
-| 目的 | グラフの種類 | ggplot2の関数 |
-|------|-------------|---------------|
-| 1変数の分布（連続） | ヒストグラム | `geom_histogram()` |
-| 1変数の分布（連続） | 密度プロット | `geom_density()` |
-| 1変数の分布（カテゴリ） | 棒グラフ | `geom_bar()` |
-| 2変数の関係（連続×連続） | 散布図 | `geom_point()` |
-| グループ比較（連続×カテゴリ） | 箱ひげ図 | `geom_boxplot()` |
-| グループ比較（連続×カテゴリ） | バイオリンプロット | `geom_violin()` |
-| 時系列データ | 折れ線グラフ | `geom_line()` |
+### 練習3: 散布図への情報付加
+1. `total_bill` と `tip` の散布図を作成してください。
+2. 点の大きさを `size`（人数）にマッピングしてください（`aes(size = size)`）。大人数のグループは右上に集まっていますか？
+3. 全体の傾向を示す回帰直線を `geom_smooth()` で追加してください。

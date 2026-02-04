@@ -258,23 +258,15 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
-  <ul>
+  <ul class="collapse">
   <li><a href="#今回の目標" id="toc-今回の目標" class="nav-link active" data-scroll-target="#今回の目標">今回の目標</a></li>
   <li><a href="#標本のt検定の種類" id="toc-標本のt検定の種類" class="nav-link" data-scroll-target="#標本のt検定の種類">2標本のt検定の種類</a></li>
   <li><a href="#標本のt検定対応なし" id="toc-標本のt検定対応なし" class="nav-link" data-scroll-target="#標本のt検定対応なし">2標本のt検定（対応なし）</a></li>
   <li><a href="#対応のあるt検定-paired-t-test" id="toc-対応のあるt検定-paired-t-test" class="nav-link" data-scroll-target="#対応のあるt検定-paired-t-test">対応のあるt検定 (Paired t-test)</a></li>
   <li><a href="#等分散の仮定" id="toc-等分散の仮定" class="nav-link" data-scroll-target="#等分散の仮定">等分散の仮定</a></li>
-  <li><a href="#効果量-effect-size" id="toc-効果量-effect-size" class="nav-link" data-scroll-target="#効果量-effect-size">効果量 (Effect Size)</a>
-  <ul class="collapse">
-  <li><a href="#cohens-d" id="toc-cohens-d" class="nav-link" data-scroll-target="#cohens-d">Cohen’s d</a></li>
-  </ul></li>
+  <li><a href="#効果量-effect-size" id="toc-効果量-effect-size" class="nav-link" data-scroll-target="#効果量-effect-size">効果量 (Effect Size)</a></li>
   <li><a href="#課題" id="toc-課題" class="nav-link" data-scroll-target="#課題">課題</a></li>
-  <li><a href="#練習問題" id="toc-練習問題" class="nav-link" data-scroll-target="#練習問題">練習問題</a>
-  <ul class="collapse">
-  <li><a href="#練習1-2標本t検定" id="toc-練習1-2標本t検定" class="nav-link" data-scroll-target="#練習1-2標本t検定">練習1: 2標本t検定</a></li>
-  <li><a href="#練習2-対応のあるt検定" id="toc-練習2-対応のあるt検定" class="nav-link" data-scroll-target="#練習2-対応のあるt検定">練習2: 対応のあるt検定</a></li>
-  <li><a href="#練習3-検定の選択" id="toc-練習3-検定の選択" class="nav-link" data-scroll-target="#練習3-検定の選択">練習3: 検定の選択</a></li>
-  </ul></li>
+  <li><a href="#練習問題" id="toc-練習問題" class="nav-link" data-scroll-target="#練習問題">練習問題</a></li>
   <li><a href="#検定のまとめ" id="toc-検定のまとめ" class="nav-link" data-scroll-target="#検定のまとめ">検定のまとめ</a></li>
   </ul>
 </nav>
@@ -473,6 +465,27 @@ window.Quarto = {
 <span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean in group Dinner  mean in group Lunch </span></span>
 <span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             20.79716             17.16868</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>結果の比較:</p>
+<ol type="1">
+<li><strong>Welchのt検定</strong> (等分散を仮定しない):
+<ul>
+<li>t統計量: <code>3.123</code>、自由度: <code>143.29</code>、p値: <code>0.002167</code></li>
+<li>95%信頼区間: <code>1.33</code> 〜 <code>5.93</code></li>
+<li>自由度が小数になっているのは、Welch-Satterthwaiteの近似を使用しているためです。</li>
+</ul></li>
+<li><strong>Studentのt検定</strong> (等分散を仮定する):
+<ul>
+<li>t統計量: <code>2.898</code>、自由度: <code>242</code>、p値: <code>0.004105</code></li>
+<li>95%信頼区間: <code>1.16</code> 〜 <code>6.10</code></li>
+<li>自由度は単純に <code>n1 + n2 - 2</code> = <code>176 + 68 - 2 = 242</code> となります。</li>
+</ul></li>
+<li><strong>両者の違い</strong>:
+<ul>
+<li>Welchのt検定の方がp値が小さく（より有意）、信頼区間も狭くなっています。</li>
+<li>これは、2群のサンプルサイズが異なる場合（ディナー176件 vs ランチ68件）、Welchの方がより正確だからです。</li>
+<li><strong>実務上の推奨</strong>: 等分散性が確実でない限り、<strong>Welchのt検定を使用する方が安全</strong> です。</li>
+</ul></li>
+</ol>
 <p>等分散かどうかは、F検定やLevene検定で確認できます。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># F検定（等分散の検定）</span></span>
@@ -489,6 +502,24 @@ window.Quarto = {
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ratio of variances </span></span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           1.404557</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>結果の見方:</p>
+<ol type="1">
+<li><strong>p値</strong>: <code>0.1109</code> となりました。
+<ul>
+<li>これは 0.05 より大きいため、帰無仮説（2群の分散が等しい）を棄却できません。</li>
+<li>つまり、ランチとディナーの支払総額の <strong>分散に有意な差があるとは言えない</strong> という結論になります。</li>
+</ul></li>
+<li><strong>分散比 (ratio of variances)</strong>:
+<ul>
+<li><code>1.4046</code> となっています。これはディナーの分散がランチの分散の約1.4倍であることを示します。</li>
+<li>しかし、95%信頼区間 (<code>0.924</code> 〜 <code>2.060</code>) が1を含んでいるため、この差は統計的に有意ではありません。</li>
+</ul></li>
+<li><strong>実務的な意味</strong>:
+<ul>
+<li>等分散性が棄却されなかったため、Studentのt検定を使用することもできますが、一般的には <strong>Welchのt検定（デフォルト）の方が安全</strong> です。</li>
+<li>Welchのt検定は等分散を仮定しないため、分散が異なる場合でも適切に機能します。</li>
+</ul></li>
+</ol>
 </section>
 <section id="効果量-effect-size" class="level2">
 <h2 class="anchored" data-anchor-id="効果量-effect-size">効果量 (Effect Size)</h2>
@@ -515,6 +546,26 @@ window.Quarto = {
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Cohen's d:"</span>, cohens_d, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Cohen's d: 0.4137406</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>結果の解釈:</p>
+<ol type="1">
+<li><strong>効果量の大きさ</strong>: Cohen’s d は <code>0.414</code> となりました。
+<ul>
+<li>これは <code>0.2 ≤ |d| &lt; 0.8</code> の範囲に入るため、<strong>中程度の効果</strong> と判断されます。</li>
+<li>ランチとディナーの支払総額の差は、実質的にも意味のある大きさであると言えます。</li>
+</ul></li>
+<li><strong>p値との関係</strong>:
+<ul>
+<li>t検定でp値が <code>0.002167</code> と統計的に有意でした（<strong>統計的有意性</strong>）。</li>
+<li>Cohen’s d が <code>0.414</code> で中程度の効果を示しています（<strong>実質的意義</strong>）。</li>
+<li>つまり、この差は統計的に有意であるだけでなく、実務的にも意味のある大きさだと結論できます。</li>
+</ul></li>
+<li><strong>解釈のポイント</strong>:
+<ul>
+<li>サンプルサイズが大きい場合、小さな差でもp値が有意になることがあります。</li>
+<li>効果量を確認することで、その差が実質的に意味があるかどうかを判断できます。</li>
+<li><strong>p値と効果量を併せて報告することが重要</strong> です。</li>
+</ul></li>
+</ol>
 </section>
 </section>
 <section id="課題" class="level2">

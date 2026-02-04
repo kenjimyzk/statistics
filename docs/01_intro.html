@@ -105,35 +105,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -258,47 +229,13 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
-  <ul>
-  <li><a href="#はじめに" id="toc-はじめに" class="nav-link active" data-scroll-target="#はじめに">はじめに</a></li>
-  <li><a href="#rとrstudioとは" id="toc-rとrstudioとは" class="nav-link" data-scroll-target="#rとrstudioとは">RとRStudioとは</a>
   <ul class="collapse">
-  <li><a href="#なぜrを学ぶのか" id="toc-なぜrを学ぶのか" class="nav-link" data-scroll-target="#なぜrを学ぶのか">なぜRを学ぶのか</a></li>
-  <li><a href="#rとexcelの違い" id="toc-rとexcelの違い" class="nav-link" data-scroll-target="#rとexcelの違い">RとExcelの違い</a></li>
-  </ul></li>
-  <li><a href="#rstudioの画面構成" id="toc-rstudioの画面構成" class="nav-link" data-scroll-target="#rstudioの画面構成">RStudioの画面構成</a>
-  <ul class="collapse">
-  <li><a href="#source-editor-左上" id="toc-source-editor-左上" class="nav-link" data-scroll-target="#source-editor-左上">1. Source Editor (左上)</a></li>
-  <li><a href="#console-左下" id="toc-console-左下" class="nav-link" data-scroll-target="#console-左下">2. Console (左下)</a></li>
-  <li><a href="#environment-history-右上" id="toc-environment-history-右上" class="nav-link" data-scroll-target="#environment-history-右上">3. Environment / History (右上)</a></li>
-  <li><a href="#files-plots-packages-help-右下" id="toc-files-plots-packages-help-右下" class="nav-link" data-scroll-target="#files-plots-packages-help-右下">4. Files / Plots / Packages / Help (右下)</a></li>
-  </ul></li>
-  <li><a href="#計算してみよう" id="toc-計算してみよう" class="nav-link" data-scroll-target="#計算してみよう">計算してみよう</a></li>
-  <li><a href="#グラフを描いてみよう" id="toc-グラフを描いてみよう" class="nav-link" data-scroll-target="#グラフを描いてみよう">グラフを描いてみよう</a></li>
-  <li><a href="#変数オブジェクト" id="toc-変数オブジェクト" class="nav-link" data-scroll-target="#変数オブジェクト">変数（オブジェクト）</a></li>
-  <li><a href="#関数" id="toc-関数" class="nav-link" data-scroll-target="#関数">関数</a>
-  <ul class="collapse">
-  <li><a href="#関数の構造" id="toc-関数の構造" class="nav-link" data-scroll-target="#関数の構造">関数の構造</a></li>
-  <li><a href="#よく使う関数一覧" id="toc-よく使う関数一覧" class="nav-link" data-scroll-target="#よく使う関数一覧">よく使う関数一覧</a></li>
-  </ul></li>
-  <li><a href="#よく使う演算子と関数" id="toc-よく使う演算子と関数" class="nav-link" data-scroll-target="#よく使う演算子と関数">よく使う演算子と関数</a>
-  <ul class="collapse">
-  <li><a href="#算術演算子" id="toc-算術演算子" class="nav-link" data-scroll-target="#算術演算子">算術演算子</a></li>
-  <li><a href="#ベクトルの操作" id="toc-ベクトルの操作" class="nav-link" data-scroll-target="#ベクトルの操作">ベクトルの操作</a></li>
-  </ul></li>
-  <li><a href="#実践のヒント" id="toc-実践のヒント" class="nav-link" data-scroll-target="#実践のヒント">実践のヒント</a>
-  <ul class="collapse">
-  <li><a href="#ヒント1-コメントを活用しよう" id="toc-ヒント1-コメントを活用しよう" class="nav-link" data-scroll-target="#ヒント1-コメントを活用しよう">ヒント1: コメントを活用しよう</a></li>
-  <li><a href="#ヒント2-エラーを恐れない" id="toc-ヒント2-エラーを恐れない" class="nav-link" data-scroll-target="#ヒント2-エラーを恐れない">ヒント2: エラーを恐れない</a></li>
-  <li><a href="#ヒント3-ヘルプの使い方" id="toc-ヒント3-ヘルプの使い方" class="nav-link" data-scroll-target="#ヒント3-ヘルプの使い方">ヒント3: ヘルプの使い方</a></li>
-  </ul></li>
-  <li><a href="#スクリプトの保存" id="toc-スクリプトの保存" class="nav-link" data-scroll-target="#スクリプトの保存">スクリプトの保存</a></li>
+  <li><a href="#なぜ今rを学ぶのか" id="toc-なぜ今rを学ぶのか" class="nav-link active" data-scroll-target="#なぜ今rを学ぶのか">なぜ今、Rを学ぶのか</a></li>
+  <li><a href="#rstudioというコックピット" id="toc-rstudioというコックピット" class="nav-link" data-scroll-target="#rstudioというコックピット">RStudioという「コックピット」</a></li>
+  <li><a href="#rと対話する計算と変数" id="toc-rと対話する計算と変数" class="nav-link" data-scroll-target="#rと対話する計算と変数">Rと対話する（計算と変数）</a></li>
+  <li><a href="#エラーはrからの返信" id="toc-エラーはrからの返信" class="nav-link" data-scroll-target="#エラーはrからの返信">「エラー」はRからの返信</a></li>
+  <li><a href="#グラフを描いてみる" id="toc-グラフを描いてみる" class="nav-link" data-scroll-target="#グラフを描いてみる">グラフを描いてみる</a></li>
   <li><a href="#課題" id="toc-課題" class="nav-link" data-scroll-target="#課題">課題</a></li>
-  <li><a href="#練習問題" id="toc-練習問題" class="nav-link" data-scroll-target="#練習問題">練習問題</a>
-  <ul class="collapse">
-  <li><a href="#練習1-基本計算" id="toc-練習1-基本計算" class="nav-link" data-scroll-target="#練習1-基本計算">練習1: 基本計算</a></li>
-  <li><a href="#練習2-変数の操作" id="toc-練習2-変数の操作" class="nav-link" data-scroll-target="#練習2-変数の操作">練習2: 変数の操作</a></li>
-  <li><a href="#練習3-ベクトルの操作" id="toc-練習3-ベクトルの操作" class="nav-link" data-scroll-target="#練習3-ベクトルの操作">練習3: ベクトルの操作</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -330,129 +267,132 @@ window.Quarto = {
 <figcaption>RとRStudioの基礎</figcaption>
 </figure>
 </div>
-<section id="はじめに" class="level2">
-<h2 class="anchored" data-anchor-id="はじめに">はじめに</h2>
-<p>この講義では、統計解析ソフト <strong>R</strong> と、Rを使いやすくする統合開発環境 <strong>RStudio</strong> の基本的な使い方を学びます。</p>
-</section>
-<section id="rとrstudioとは" class="level2">
-<h2 class="anchored" data-anchor-id="rとrstudioとは">RとRStudioとは</h2>
+<section id="なぜ今rを学ぶのか" class="level2">
+<h2 class="anchored" data-anchor-id="なぜ今rを学ぶのか">なぜ今、Rを学ぶのか</h2>
+<p>統計解析ソフトは山ほどあります。Excelで事足りることもあれば、Pythonがハマる場面もあるでしょう。それでも、多くの研究者が <strong>R</strong> を選び続けるのには理由があります。</p>
+<p>「科学的な正しさ」への執着。これに尽きます。</p>
+<p>本講義の狙いは、単なるツールの操作説明ではありません。<strong>R</strong> という言語の根底にある「再現性（Reproducibility）」の思想を理解し、<strong>RStudio</strong> を通じてそれを実践する力を養うことです。</p>
+<section id="科学的検証のためのツール" class="level3">
+<h3 class="anchored" data-anchor-id="科学的検証のためのツール">科学的検証のためのツール</h3>
+<p>なぜこれほどRを推すのか。最大の理由は <strong>再現性が確保できるから</strong> です。 Excelでの分析は、どうしても「手作業」の連続になります。どのセルをコピーし、どこでフィルタをかけ、どのグラフを選んだか。その履歴を完全に追跡するのは困難です。 一方、Rはすべての操作をコードとして残します。コードは「手順書」そのもの。第三者が同じコードを実行すれば、間違いなく同じ結果が出ます。科学的な検証において、この特性は欠かせません。</p>
+<p>もちろん、実利的なメリットも大きいです。</p>
 <ul>
-<li><strong>R</strong>: 統計解析やデータ分析に特化したプログラミング言語です。無料で使えて、世界中の研究者やデータサイエンティストが利用しています。</li>
-<li><strong>RStudio</strong>: Rを便利に使うためのソフトウェア（IDE）です。コードを書く、実行する、グラフを見る、といった作業を一つの画面で行えます。</li>
+<li><strong>OSSとコスト</strong>: 個人・組織を問わず無料（GPLライセンス）。</li>
+<li><strong>統計機能</strong>: 世界中の統計家が開発に参加しており、最新の手法が22,000以上のパッケージ（CRAN）ですぐに使えます。</li>
+<li><strong>キャリア</strong>: 定量的研究やデータサイエンスの職務記述書（JD）において、Rスキルは依然として強い武器になります。</li>
 </ul>
-<section id="なぜrを学ぶのか" class="level3">
-<h3 class="anchored" data-anchor-id="なぜrを学ぶのか">なぜRを学ぶのか</h3>
-<ol type="1">
-<li><strong>無料でオープンソース</strong>: 誰でも無料で使えます</li>
-<li><strong>強力な統計機能</strong>: 統計学者が開発したため、統計分析に最適です</li>
-<li><strong>豊富なパッケージ</strong>: 世界中のユーザーが作った便利な追加機能が20,000以上あります</li>
-<li><strong>再現性</strong>: コードで分析を記録するため、後から同じ分析を再現できます</li>
-<li><strong>就職に有利</strong>: データサイエンティストや研究者に必須のスキルです</li>
-</ol>
+<p>（Webアプリ開発やシステムへの組み込みならPythonやC++が適しています。適材適所です）</p>
 </section>
-<section id="rとexcelの違い" class="level3">
-<h3 class="anchored" data-anchor-id="rとexcelの違い">RとExcelの違い</h3>
+<section id="rとexcel対立ではなく使い分け" class="level3">
+<h3 class="anchored" data-anchor-id="rとexcel対立ではなく使い分け">RとExcel：対立ではなく使い分け</h3>
+<p>よく「RかExcelか」と二項対立で語られますが、実際は「併用」が正解です。</p>
 <table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>項目</th>
-<th>R</th>
-<th>Excel</th>
+<th>ツール</th>
+<th>得意な領域</th>
+<th>苦手な領域</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>価格</td>
-<td>無料</td>
-<td>有料</td>
+<td><strong>Excel</strong></td>
+<td>直感的な操作、データの閲覧、小規模な集計</td>
+<td>大規模データ（100万行〜）、手順の記録、複雑な統計モデル</td>
 </tr>
 <tr class="even">
-<td>再現性</td>
-<td>◎（コードで記録）</td>
-<td>△（手作業が多い）</td>
-</tr>
-<tr class="odd">
-<td>大規模データ</td>
-<td>◎（数百万行も可）</td>
-<td>×（約100万行が限界）</td>
-</tr>
-<tr class="even">
-<td>学習コスト</td>
-<td>やや高い</td>
-<td>低い</td>
-</tr>
-<tr class="odd">
-<td>統計分析</td>
-<td>◎（専門的な分析可能）</td>
-<td>△（基本的な分析のみ）</td>
+<td><strong>R</strong></td>
+<td>大規模データの処理、高度な統計解析、再現性のある描画</td>
+<td>データの直接入力、閲覧（スプレッドシート的な操作）</td>
 </tr>
 </tbody>
 </table>
+<p>私だって、データの概観やちょっとした検算にはExcelを使います。でも、論文に載せる分析や、来月も同じ処理をする業務なら、迷わずRを選びます。</p>
 </section>
 </section>
-<section id="rstudioの画面構成" class="level2">
-<h2 class="anchored" data-anchor-id="rstudioの画面構成">RStudioの画面構成</h2>
-<p>RStudioを開くと、大きく4つのエリア（ペイン）に分かれています。 それぞれの役割を理解することが、効率的な作業の第一歩です。</p>
-<section id="source-editor-左上" class="level3">
-<h3 class="anchored" data-anchor-id="source-editor-左上">1. Source Editor (左上)</h3>
-<p>プログラム（スクリプト）を書く場所です。</p>
+<section id="rstudioというコックピット" class="level2">
+<h2 class="anchored" data-anchor-id="rstudioというコックピット">RStudioという「コックピット」</h2>
+<p>R本体はただの「計算エンジン」です。人間が楽に扱うために、統合開発環境（IDE）である <strong>RStudio</strong> を使います。 画面は4分割されていますが、データの流れで考えると分かりやすいでしょう。</p>
+<ol type="1">
+<li><strong>Source Editor (左上)</strong>：ここで「指示書（スクリプト）」を書く。
 <ul>
-<li>ここに書いたコードは保存できるので、後から再利用できます。</li>
-<li>複数行のコードを一度に実行したいときにも便利です。</li>
-<li><code>Ctrl + Enter</code> (Macは <code>Cmd + Enter</code>) で、カーソルのある行を実行できます。</li>
-</ul>
-</section>
-<section id="console-左下" class="level3">
-<h3 class="anchored" data-anchor-id="console-左下">2. Console (左下)</h3>
-<p>プログラムを実行し、結果が表示される場所です。</p>
+<li>料理ならレシピを書く場所。ここに書いたものだけが「再現可能な記録」として残ります。</li>
+</ul></li>
+<li><strong>Console (左下)</strong>：指示を実行し、結果を受け取る。
 <ul>
-<li>コードを1行ずつ試したいときは、直接Consoleに入力してもOKです。</li>
-<li>ただし、Consoleに書いたコードは保存されないので注意してください。</li>
-<li><code>&gt;</code> この記号が出ていれば、コマンドの入力待ち状態です。</li>
-</ul>
-</section>
-<section id="environment-history-右上" class="level3">
-<h3 class="anchored" data-anchor-id="environment-history-右上">3. Environment / History (右上)</h3>
+<li>実際にRが計算する場所。ちょっとした計算や、中身の確認用です。</li>
+</ul></li>
+<li><strong>Environment (右上)</strong>：材料（データ・変数）を確認する。
 <ul>
-<li><strong>Environment (環境)</strong>: 読み込んだデータや作成した変数が表示されます。データの中身をクリックして確認することもできます。</li>
-<li><strong>History (履歴)</strong>: これまでに実行したコマンドの履歴が表示されます。</li>
-</ul>
-</section>
-<section id="files-plots-packages-help-右下" class="level3">
-<h3 class="anchored" data-anchor-id="files-plots-packages-help-右下">4. Files / Plots / Packages / Help (右下)</h3>
+<li>いまメモリ上に何があるかが見えています。</li>
+</ul></li>
+<li><strong>Files / Plots (右下)</strong>：成果物を確認する。
 <ul>
-<li><strong>Files</strong>: ファイル一覧が表示されます。</li>
-<li><strong>Plots</strong>: 作成したグラフが表示されます。</li>
-<li><strong>Packages</strong>: インストール済みのパッケージの管理ができます。</li>
-<li><strong>Help</strong>: 関数のヘルプを表示できます。<code>?mean</code> のように <code>?</code> をつけて実行すると、その関数の説明が表示されます。</li>
-</ul>
+<li>描かれたグラフや、保存されたファイルはここに出ます。</li>
+</ul></li>
+</ol>
+<p>基本は、「左上で書いて、左下で実行させて、右と右下で結果を確認する」。この繰り返しです。</p>
 </section>
-</section>
-<section id="計算してみよう" class="level2">
-<h2 class="anchored" data-anchor-id="計算してみよう">計算してみよう</h2>
-<p>Console（左下の画面）に数式を入力して <code>Enter</code> キーを押すと、計算結果が表示されます。</p>
+<section id="rと対話する計算と変数" class="level2">
+<h2 class="anchored" data-anchor-id="rと対話する計算と変数">Rと対話する（計算と変数）</h2>
+<p>まずは難しく考えず、Rを「やたら高機能な電卓」として使ってみましょう。 Consoleに直接入力してみてください。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>(<span class="dv">100</span> <span class="sc">-</span> <span class="dv">20</span>) <span class="sc">/</span> <span class="dv">4</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<section id="情報を箱に入れる変数" class="level3">
+<h3 class="anchored" data-anchor-id="情報を箱に入れる変数">情報を箱に入れる：変数</h3>
+<p>計算結果を使い捨てにせず、取っておくための箱が <strong>変数（オブジェクト）</strong> です。 R独特の記号 <code>&lt;-</code>（代入演算子）を使います。「右の値を左の箱に入れる」イメージの矢印です。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="sc">*</span> <span class="dv">5</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 50</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>price <span class="ot">&lt;-</span> <span class="dv">1500</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>amount <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> price <span class="sc">*</span> amount</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>total</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4500</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">100</span> <span class="sc">-</span> <span class="dv">20</span>) <span class="sc">/</span> <span class="dv">4</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>大事なのは、<code>price</code> や <code>amount</code> という「名前」でデータを管理できること。「1500」という数値の意味を、人間が覚えておく必要はありません。</p>
 </section>
-<section id="グラフを描いてみよう" class="level2">
-<h2 class="anchored" data-anchor-id="グラフを描いてみよう">グラフを描いてみよう</h2>
-<p>Rはグラフを描く機能も強力です。 試しに、Rに最初から入っている <code>cars</code> というデータの散布図を描いてみましょう。</p>
+<section id="便利な道具関数" class="level3">
+<h3 class="anchored" data-anchor-id="便利な道具関数">便利な道具：関数</h3>
+<p>よく使う処理は <strong>関数</strong> として用意されています。「機能名(データ)」の形で呼び出します。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 数値のベクトル（列）を作る c() 関数</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>scores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">90</span>, <span class="dv">75</span>, <span class="dv">60</span>, <span class="dv">95</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 平均値を計算する mean() 関数</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(scores)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 80</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>関数は無数にありますが、最初は「やりたいこと（機能）」と「入れるもの（引数）」の対応さえ意識できれば十分です。</p>
+</section>
+</section>
+<section id="エラーはrからの返信" class="level2">
+<h2 class="anchored" data-anchor-id="エラーはrからの返信">「エラー」はRからの返信</h2>
+<p>プログラミング初心者にとって、赤い文字のエラーメッセージは怖いかもしれません。「お前は間違ってる」と怒られた気分になるからでしょう。 でも、誤解です。エラーはRからの「この指示だと、ここが分からなくて実行できません」という、ただの返信です。</p>
+<ul>
+<li><strong><code>could not find function</code></strong>：「その関数を知りません」（綴りが違うか、パッケージを読み忘れていませんか？）</li>
+<li><strong><code>object not found</code></strong>：「その変数が見当たりません」（作る前に使おうとしていませんか？）</li>
+</ul>
+<p>エラーが出たら、まずはメッセージを読んでみてください。解決のヒントは必ずそこにあります。</p>
+</section>
+<section id="グラフを描いてみる" class="level2">
+<h2 class="anchored" data-anchor-id="グラフを描いてみる">グラフを描いてみる</h2>
+<p>最後に、Rの「華」、可視化を試してみます。 解説は省きますが、数行書くだけで美しい散布図が描けることを確認してください。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>))</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cars, <span class="fu">aes</span>(<span class="at">x =</span> speed, <span class="at">y =</span> dist)) <span class="sc">+</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"車の速度と停止距離"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># [対象注意] 日本語フォント設定は環境により異なります</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cars, <span class="fu">aes</span>(<span class="at">x =</span> speed, <span class="at">y =</span> dist)) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"車の速度と停止距離"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -460,246 +400,18 @@ window.Quarto = {
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"figure/01_intro/cars.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="変数オブジェクト" class="level2">
-<h2 class="anchored" data-anchor-id="変数オブジェクト">変数（オブジェクト）</h2>
-<p>計算結果を保存しておく箱のようなものを <strong>変数</strong>（またはオブジェクト）と呼びます。 Rでは <code>&lt;-</code> という記号（代入演算子）を使って変数に値を入れます。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>変数の中身を見るには、変数名を入力して実行します。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>変数同士の計算もできます。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">+</span> y</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 15</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="関数" class="level2">
-<h2 class="anchored" data-anchor-id="関数">関数</h2>
-<p>Rには便利な機能が <strong>関数</strong> としてたくさん用意されています。 例えば、平方根（ルート）を計算する <code>sqrt()</code> 関数を使ってみましょう。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">16</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>数字の列（ベクトル）を作るには <code>c()</code> 関数を使います。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>scores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">90</span>, <span class="dv">75</span>, <span class="dv">60</span>, <span class="dv">95</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>scores</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 80 90 75 60 95</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>平均値を計算する <code>mean()</code> 関数を使ってみましょう。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(scores)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 80</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="関数の構造" class="level3">
-<h3 class="anchored" data-anchor-id="関数の構造">関数の構造</h3>
-<p>関数は「関数名(引数)」という形で使います。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 複数の引数を持つ関数の例</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">3.14159</span>, <span class="at">digits =</span> <span class="dv">2</span>)  <span class="co"># 小数点以下2桁に丸める</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3.14</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="よく使う関数一覧" class="level3">
-<h3 class="anchored" data-anchor-id="よく使う関数一覧">よく使う関数一覧</h3>
-<table class="table">
-<thead>
-<tr class="header">
-<th>関数</th>
-<th>説明</th>
-<th>例</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>mean()</code></td>
-<td>平均値</td>
-<td><code>mean(c(1,2,3))</code> → 2</td>
-</tr>
-<tr class="even">
-<td><code>median()</code></td>
-<td>中央値</td>
-<td><code>median(c(1,2,10))</code> → 2</td>
-</tr>
-<tr class="odd">
-<td><code>sum()</code></td>
-<td>合計</td>
-<td><code>sum(c(1,2,3))</code> → 6</td>
-</tr>
-<tr class="even">
-<td><code>max()</code></td>
-<td>最大値</td>
-<td><code>max(c(1,2,3))</code> → 3</td>
-</tr>
-<tr class="odd">
-<td><code>min()</code></td>
-<td>最小値</td>
-<td><code>min(c(1,2,3))</code> → 1</td>
-</tr>
-<tr class="even">
-<td><code>sqrt()</code></td>
-<td>平方根</td>
-<td><code>sqrt(16)</code> → 4</td>
-</tr>
-<tr class="odd">
-<td><code>abs()</code></td>
-<td>絶対値</td>
-<td><code>abs(-5)</code> → 5</td>
-</tr>
-<tr class="even">
-<td><code>round()</code></td>
-<td>四捨五入</td>
-<td><code>round(3.7)</code> → 4</td>
-</tr>
-<tr class="odd">
-<td><code>length()</code></td>
-<td>要素数</td>
-<td><code>length(c(1,2,3))</code> → 3</td>
-</tr>
-</tbody>
-</table>
-</section>
-</section>
-<section id="よく使う演算子と関数" class="level2">
-<h2 class="anchored" data-anchor-id="よく使う演算子と関数">よく使う演算子と関数</h2>
-<p>Rでのデータ分析では、以下の演算子と関数をよく使います。</p>
-<section id="算術演算子" class="level3">
-<h3 class="anchored" data-anchor-id="算術演算子">算術演算子</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 足し算</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 5</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 引き算</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="sc">-</span> <span class="dv">4</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 6</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 掛け算</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="sc">*</span> <span class="dv">6</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 30</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 割り算</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="dv">20</span> <span class="sc">/</span> <span class="dv">4</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 5</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co"># べき乗</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">^</span><span class="dv">3</span>  <span class="co"># 2の3乗</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 8</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 割り算の余り</span></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="sc">%%</span> <span class="dv">3</span></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="ベクトルの操作" class="level3">
-<h3 class="anchored" data-anchor-id="ベクトルの操作">ベクトルの操作</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ベクトルの作成</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ベクトル全体に同じ操作を適用</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>x <span class="sc">*</span> <span class="dv">2</span>  <span class="co"># すべての要素を2倍</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  2  4  6  8 10</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ベクトルの要素数</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(x)</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 5</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># ベクトルの合計</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x)</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 15</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co"># ベクトルの最大値・最小値</span></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(x)</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 5</span></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(x)</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section id="実践のヒント" class="level2">
-<h2 class="anchored" data-anchor-id="実践のヒント">実践のヒント</h2>
-<section id="ヒント1-コメントを活用しよう" class="level3">
-<h3 class="anchored" data-anchor-id="ヒント1-コメントを活用しよう">ヒント1: コメントを活用しよう</h3>
-<p>コードの前に <code>#</code> をつけると、その行はコメント（メモ）になります。 後で見返したときに、何をしているコードなのか分かりやすくなります。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># これはコメントです。実行されません。</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">10</span>  <span class="co"># 変数xに10を代入</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="ヒント2-エラーを恐れない" class="level3">
-<h3 class="anchored" data-anchor-id="ヒント2-エラーを恐れない">ヒント2: エラーを恐れない</h3>
-<p>プログラミングではエラーが出るのは当たり前です。 エラーメッセージをよく読んで、何が問題なのか考えてみましょう。 よくあるエラー:</p>
-<ul>
-<li><strong><code>could not find function</code></strong>: 関数名が間違っているか、パッケージを読み込んでいない。</li>
-<li><strong><code>object not found</code></strong>: 変数名が間違っているか、まだ定義していない。</li>
-<li><strong>カッコの閉じ忘れ</strong>: <code>(</code> や <code>{</code> を開いたら、必ず <code>)</code> や <code>}</code> で閉じる。</li>
-</ul>
-</section>
-<section id="ヒント3-ヘルプの使い方" class="level3">
-<h3 class="anchored" data-anchor-id="ヒント3-ヘルプの使い方">ヒント3: ヘルプの使い方</h3>
-<p>関数の使い方が分からないときは、<code>?</code> をつけて実行してみましょう。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>?mean  <span class="co"># mean関数のヘルプを表示</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section id="スクリプトの保存" class="level2">
-<h2 class="anchored" data-anchor-id="スクリプトの保存">スクリプトの保存</h2>
-<p>Consoleに書いたコードはRStudioを閉じると消えてしまいます。 後で再利用するために、左上の <strong>Source Editor</strong> にコードを書いて、ファイルとして保存しましょう。</p>
-<ol type="1">
-<li>メニューから <code>File</code> -&gt; <code>New File</code> -&gt; <code>R Script</code> を選択。</li>
-<li>コードを書く。</li>
-<li><code>Ctrl + S</code> (Macは <code>Cmd + S</code>) で保存。拡張子は <code>.R</code> です。</li>
-</ol>
+<p>このグラフも、コードの数値を少し変えるだけで、明日になっても（あるいは10年後でも）全く同じものを再現できます。</p>
 </section>
 <section id="課題" class="level2">
 <h2 class="anchored" data-anchor-id="課題">課題</h2>
 <ol type="1">
-<li>自分の年齢を変数 <code>age</code> に代入してください。</li>
-<li><code>age</code> に 10 を足して、10年後の年齢を計算してください。</li>
-<li><code>c()</code> 関数を使って、好きな数字を3つ入れたベクトル <code>my_numbers</code> を作ってください。</li>
-<li><code>my_numbers</code> の平均値を求めてください。</li>
-</ol>
-</section>
-<section id="練習問題" class="level2">
-<h2 class="anchored" data-anchor-id="練習問題">練習問題</h2>
-<section id="練習1-基本計算" class="level3">
-<h3 class="anchored" data-anchor-id="練習1-基本計算">練習1: 基本計算</h3>
-<p>次の計算をRで行ってください。</p>
-<ol type="1">
-<li><span class="math inline">\(25 \times 4 + 100\)</span></li>
-<li><span class="math inline">\(\sqrt{144}\)</span></li>
-<li><span class="math inline">\(2^{10}\)</span>（2の10乗）</li>
-</ol>
-</section>
-<section id="練習2-変数の操作" class="level3">
-<h3 class="anchored" data-anchor-id="練習2-変数の操作">練習2: 変数の操作</h3>
-<ol type="1">
-<li>変数 <code>price</code> に 1500 を代入してください</li>
-<li>変数 <code>quantity</code> に 3 を代入してください</li>
-<li><code>price * quantity</code> で合計金額を計算してください</li>
-</ol>
-</section>
-<section id="練習3-ベクトルの操作" class="level3">
-<h3 class="anchored" data-anchor-id="練習3-ベクトルの操作">練習3: ベクトルの操作</h3>
-<ol type="1">
-<li>1から10までの数字を含むベクトルを作ってください（ヒント: <code>1:10</code> が使えます）</li>
-<li>そのベクトルの合計を <code>sum()</code> で計算してください</li>
-<li>そのベクトルの平均を <code>mean()</code> で計算してください</li>
+<li>自身の年齢を変数 <code>age</code> に代入してください。</li>
+<li>変数 <code>age</code> を使って、10年後の年齢を計算してください。</li>
+<li>任意の数値を3つ格納したベクトルを作成し、その平均値を求めてください。</li>
 </ol>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

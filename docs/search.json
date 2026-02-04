@@ -34,7 +34,7 @@
     "href": "01_intro.html",
     "title": "第1回 RとRStudioの基礎",
     "section": "",
-    "text": "はじめに\nこの講義では、統計解析ソフト R と、Rを使いやすくする統合開発環境 RStudio の基本的な使い方を学びます。",
+    "text": "なぜ今、Rを学ぶのか\n統計解析ソフトは山ほどあります。Excelで事足りることもあれば、Pythonがハマる場面もあるでしょう。それでも、多くの研究者が R を選び続けるのには理由があります。\n「科学的な正しさ」への執着。これに尽きます。\n本講義の狙いは、単なるツールの操作説明ではありません。R という言語の根底にある「再現性（Reproducibility）」の思想を理解し、RStudio を通じてそれを実践する力を養うことです。",
     "crumbs": [
       "第1回 RとRStudioの基礎"
     ]
@@ -44,7 +44,7 @@
     "href": "01_intro.html#rとrstudioとは",
     "title": "第1回 RとRStudioの基礎",
     "section": "RとRStudioとは",
-    "text": "RとRStudioとは\n\nR: 統計解析やデータ分析に特化したプログラミング言語です。無料で使えて、世界中の研究者やデータサイエンティストが利用しています。\nRStudio: Rを便利に使うためのソフトウェア（IDE）です。コードを書く、実行する、グラフを見る、といった作業を一つの画面で行えます。\n\n\nなぜRを学ぶのか\n\n無料でオープンソース: 誰でも無料で使えます\n強力な統計機能: 統計学者が開発したため、統計分析に最適です\n豊富なパッケージ: 世界中のユーザーが作った便利な追加機能が20,000以上あります\n再現性: コードで分析を記録するため、後から同じ分析を再現できます\n就職に有利: データサイエンティストや研究者に必須のスキルです\n\n\n\nRとExcelの違い\n\n\n\n項目\nR\nExcel\n\n\n\n\n価格\n無料\n有料\n\n\n再現性\n◎（コードで記録）\n△（手作業が多い）\n\n\n大規模データ\n◎（数百万行も可）\n×（約100万行が限界）\n\n\n学習コスト\nやや高い\n低い\n\n\n統計分析\n◎（専門的な分析可能）\n△（基本的な分析のみ）",
+    "text": "RとRStudioとは\n\nR: 統計解析やデータ分析に特化したプログラミング言語である。オープンソース（GPLライセンス）で提供されており、学術機関や企業のデータ分析部門で広く利用されている。\nRStudio: Rを操作するための統合開発環境（IDE）である。コードの記述、実行、グラフの確認、変数の管理を一つのウィンドウ内で完結できる仕組みを持つ。\n\n\nなぜRを学ぶのか（筆者が推奨する理由）\n\nOSSとコスト: オープンソースであるため、個人・組織を問わず無料で導入可能である。\n統計機能の充実: 統計学者のコミュニティによって開発されているため、検定、確率分布、回帰分析などの機能が標準ライブラリとして組み込まれている（Python等は追加ライブラリが必要な場合が多い）。\n拡張性: CRAN（The Comprehensive R Archive Network）には22,000以上（2025年時点）のパッケージが公開されており、最新の統計手法も即座に利用可能となる。\n再現性の確保: すべての操作をコードとして保存するため、第三者が同じ手順で同じ結果を再現できる。これは科学的検証において必須の条件である。\nキャリアへの影響: データサイエンティストや定量的研究者の職務記述書（Job Description）において、Rスキルは統計分析能力を示す指標として重要視されている。\n\n一方で、Webアプリ開発やシステムへの組み込み用途ではPythonやC++に分があることは留意されたい（適材適所）。\n\n\nRとExcelの比較\n筆者は以下の観点から、用途に応じて使い分けることを推奨する。\n\n\n\n\n\n\n\n\n項目\nR\nExcel\n\n\n\n\nコスト\n無料\n有料（Microsoft 365等）\n\n\n再現性\n◎（コードが手順書となる）\n△（手作業の履歴が残りにくい）\n\n\nデータ規模\n◎（メモリに依存するが、数百万〜数億行も処理可能）\n×（仕様上、約100万行が上限）\n\n\n学習コスト\n高い（コマンドの習得が必要）\n低い（GUIで直感的に操作可能）\n\n\n統計機能\n◎（最新かつ高度な分析が可能）\n△（基本統計量は算出可能だが専門手法は限定的）",
     "crumbs": [
       "第1回 RとRStudioの基礎"
     ]
@@ -54,7 +54,7 @@
     "href": "01_intro.html#rstudioの画面構成",
     "title": "第1回 RとRStudioの基礎",
     "section": "RStudioの画面構成",
-    "text": "RStudioの画面構成\nRStudioを開くと、大きく4つのエリア（ペイン）に分かれています。 それぞれの役割を理解することが、効率的な作業の第一歩です。\n\n1. Source Editor (左上)\nプログラム（スクリプト）を書く場所です。\n\nここに書いたコードは保存できるので、後から再利用できます。\n複数行のコードを一度に実行したいときにも便利です。\nCtrl + Enter (Macは Cmd + Enter) で、カーソルのある行を実行できます。\n\n\n\n2. Console (左下)\nプログラムを実行し、結果が表示される場所です。\n\nコードを1行ずつ試したいときは、直接Consoleに入力してもOKです。\nただし、Consoleに書いたコードは保存されないので注意してください。\n&gt; この記号が出ていれば、コマンドの入力待ち状態です。\n\n\n\n3. Environment / History (右上)\n\nEnvironment (環境): 読み込んだデータや作成した変数が表示されます。データの中身をクリックして確認することもできます。\nHistory (履歴): これまでに実行したコマンドの履歴が表示されます。\n\n\n\n4. Files / Plots / Packages / Help (右下)\n\nFiles: ファイル一覧が表示されます。\nPlots: 作成したグラフが表示されます。\nPackages: インストール済みのパッケージの管理ができます。\nHelp: 関数のヘルプを表示できます。?mean のように ? をつけて実行すると、その関数の説明が表示されます。",
+    "text": "RStudioの画面構成\nRStudioを起動すると、画面は4つの領域（ペイン）に分割されている。各ペインの役割は以下の通りである。\n\n1. Source Editor (左上)\n分析手順書となる「スクリプト」を記述・編集する場所である。\n\nここに記述したコードはファイルとして保存可能であり、再現性の担保となる。\nCtrl + Enter (Macは Cmd + Enter) を押下することで、カーソル行のコードを実行できる。\n\n\n\n2. Console (左下)\nRに対して直接命令を送り、計算結果が出力される場所である。\n\n単発の計算や、変数の値を確認する際に使用する。\n注意: ここに入力したコードは実行履歴（History）には残るが、スクリプトファイルとしては保存されない。重要な処理は必ずSource Editorに記述すること。\nプロンプト &gt; が表示されている時は、Rが命令を受け付け可能な状態であることを示す。\n\n\n\n3. Environment / History (右上)\n\nEnvironment (環境): 現在のセッションで定義されている変数や読み込んだデータセットの一覧である。\nHistory (履歴): 過去にConsoleで実行したコマンドのリストである。\n\n\n\n4. Files / Plots / Packages / Help (右下)\n\nFiles: 作業ディレクトリ内のファイル操作を行う。\nPlots: 描画命令によって生成されたグラフが表示される。\nPackages: 機能拡張用パッケージのインストールや管理を行う。\nHelp: 関数の仕様書（ドキュメント）を閲覧する。",
     "crumbs": [
       "第1回 RとRStudioの基礎"
     ]
@@ -64,7 +64,7 @@
     "href": "01_intro.html#計算してみよう",
     "title": "第1回 RとRStudioの基礎",
     "section": "計算してみよう",
-    "text": "計算してみよう\nConsole（左下の画面）に数式を入力して Enter キーを押すと、計算結果が表示されます。\n\n1 + 1\n#&gt; [1] 2\n\n\n10 * 5\n#&gt; [1] 50\n\n\n(100 - 20) / 4\n#&gt; [1] 20",
+    "text": "計算してみよう\nConsoleを用いた基本的な演算を行う。\n\n1 + 1\n#&gt; [1] 2\n\n\n10 * 5\n#&gt; [1] 50\n\n演算の優先順位は数学の定義に従う。\n\n(100 - 20) / 4\n#&gt; [1] 20",
     "crumbs": [
       "第1回 RとRStudioの基礎"
     ]
@@ -84,7 +84,7 @@
     "href": "01_intro.html#変数オブジェクト",
     "title": "第1回 RとRStudioの基礎",
     "section": "変数（オブジェクト）",
-    "text": "変数（オブジェクト）\n計算結果を保存しておく箱のようなものを 変数（またはオブジェクト）と呼びます。 Rでは &lt;- という記号（代入演算子）を使って変数に値を入れます。\n\nx &lt;- 10\ny &lt;- 5\n\n変数の中身を見るには、変数名を入力して実行します。\n\nx\n#&gt; [1] 10\n\n変数同士の計算もできます。\n\nx + y\n#&gt; [1] 15",
+    "text": "変数（オブジェクト）\n計算結果やデータを一時的に保持するための「箱」を 変数（またはオブジェクト）と呼ぶ。 Rでは代入演算子 &lt;- を用いて定義する。\n\nx &lt;- 10\ny &lt;- 5\n\n定義した変数は、その名前を評価（実行）することで内容を確認できる。\n\nx\n#&gt; [1] 10\n\n変数を用いた演算も可能である。\n\nx + y\n#&gt; [1] 15",
     "crumbs": [
       "第1回 RとRStudioの基礎"
     ]
@@ -94,7 +94,7 @@
     "href": "01_intro.html#関数",
     "title": "第1回 RとRStudioの基礎",
     "section": "関数",
-    "text": "関数\nRには便利な機能が 関数 としてたくさん用意されています。 例えば、平方根（ルート）を計算する sqrt() 関数を使ってみましょう。\n\nsqrt(16)\n#&gt; [1] 4\n\n数字の列（ベクトル）を作るには c() 関数を使います。\n\nscores &lt;- c(80, 90, 75, 60, 95)\nscores\n#&gt; [1] 80 90 75 60 95\n\n平均値を計算する mean() 関数を使ってみましょう。\n\nmean(scores)\n#&gt; [1] 80\n\n\n関数の構造\n関数は「関数名(引数)」という形で使います。\n\n# 複数の引数を持つ関数の例\nround(3.14159, digits = 2)  # 小数点以下2桁に丸める\n#&gt; [1] 3.14\n\n\n\nよく使う関数一覧\n\n\n\n関数\n説明\n例\n\n\n\n\nmean()\n平均値\nmean(c(1,2,3)) → 2\n\n\nmedian()\n中央値\nmedian(c(1,2,10)) → 2\n\n\nsum()\n合計\nsum(c(1,2,3)) → 6\n\n\nmax()\n最大値\nmax(c(1,2,3)) → 3\n\n\nmin()\n最小値\nmin(c(1,2,3)) → 1\n\n\nsqrt()\n平方根\nsqrt(16) → 4\n\n\nabs()\n絶対値\nabs(-5) → 5\n\n\nround()\n四捨五入\nround(3.7) → 4\n\n\nlength()\n要素数\nlength(c(1,2,3)) → 3",
+    "text": "関数\n特定の処理をひとまとめにした機能を 関数 と呼ぶ。\n例：平方根の計算 sqrt()\n\nsqrt(16)\n#&gt; [1] 4\n\n例：ベクトル（数値の列）の作成 c()\n\nscores &lt;- c(80, 90, 75, 60, 95)\nscores\n#&gt; [1] 80 90 75 60 95\n\n例：平均値の算出 mean()\n\nmean(scores)\n#&gt; [1] 80\n\n\n関数の構造\n関数は原則として 関数名(引数) の形式をとる。引数（ひきすう）とは、関数に渡す具体的なデータや設定値のことである。\n\n# 複数の引数を持つ関数の例\n# digits引数で丸める桁数を指定\nround(3.14159, digits = 2)\n#&gt; [1] 3.14\n\n\n\n主要な関数一覧\n\n\n\n関数\n機能概要\n使用例\n\n\n\n\nmean()\n算術平均の算出\nmean(c(1,2,3)) → 2\n\n\nmedian()\n中央値の算出\nmedian(c(1,2,10)) → 2\n\n\nsum()\n総和の算出\nsum(c(1,2,3)) → 6\n\n\nmax()\n最大値の取得\nmax(c(1,2,3)) → 3\n\n\nmin()\n最小値の取得\nmin(c(1,2,3)) → 1\n\n\nsqrt()\n平方根の算出\nsqrt(16) → 4\n\n\nabs()\n絶対値の算出\nabs(-5) → 5\n\n\nround()\n四捨五入（丸め）\nround(3.7) → 4\n\n\nlength()\n要素数（長さ）の取得\nlength(c(1,2,3)) → 3",
     "crumbs": [
       "第1回 RとRStudioの基礎"
     ]
@@ -124,7 +124,7 @@
     "href": "01_intro.html#スクリプトの保存",
     "title": "第1回 RとRStudioの基礎",
     "section": "スクリプトの保存",
-    "text": "スクリプトの保存\nConsoleに書いたコードはRStudioを閉じると消えてしまいます。 後で再利用するために、左上の Source Editor にコードを書いて、ファイルとして保存しましょう。\n\nメニューから File -&gt; New File -&gt; R Script を選択。\nコードを書く。\nCtrl + S (Macは Cmd + S) で保存。拡張子は .R です。",
+    "text": "スクリプトの保存\nConsoleでの作業は一時的なものである。再現性を担保するため、全ての工程をスクリプトファイルとして保存する。\n\nメニューバーより File -&gt; New File -&gt; R Script を選択する。\nSource Editorにコードを記述する。\nCtrl + S (Macは Cmd + S) で保存する。拡張子は .R となる。",
     "crumbs": [
       "第1回 RとRStudioの基礎"
     ]
@@ -134,7 +134,7 @@
     "href": "01_intro.html#課題",
     "title": "第1回 RとRStudioの基礎",
     "section": "課題",
-    "text": "課題\n\n自分の年齢を変数 age に代入してください。\nage に 10 を足して、10年後の年齢を計算してください。\nc() 関数を使って、好きな数字を3つ入れたベクトル my_numbers を作ってください。\nmy_numbers の平均値を求めてください。",
+    "text": "課題\n\n自身の年齢を変数 age に代入してください。\n変数 age を使って、10年後の年齢を計算してください。\n任意の数値を3つ格納したベクトルを作成し、その平均値を求めてください。",
     "crumbs": [
       "第1回 RとRStudioの基礎"
     ]
@@ -144,7 +144,7 @@
     "href": "01_intro.html#練習問題",
     "title": "第1回 RとRStudioの基礎",
     "section": "練習問題",
-    "text": "練習問題\n\n練習1: 基本計算\n次の計算をRで行ってください。\n\n\\(25 \\times 4 + 100\\)\n\\(\\sqrt{144}\\)\n\\(2^{10}\\)（2の10乗）\n\n\n\n練習2: 変数の操作\n\n変数 price に 1500 を代入してください\n変数 quantity に 3 を代入してください\nprice * quantity で合計金額を計算してください\n\n\n\n練習3: ベクトルの操作\n\n1から10までの数字を含むベクトルを作ってください（ヒント: 1:10 が使えます）\nそのベクトルの合計を sum() で計算してください\nそのベクトルの平均を mean() で計算してください",
+    "text": "練習問題\n\n練習1: 基本計算\n以下の数式をRのコードで表現し、計算せよ。\n\n\\(25 \\times 4 + 100\\)\n\\(\\sqrt{144}\\)\n\\(2^{10}\\)\n\n\n\n練習2: 変数の操作\n\n変数 price に数値 1500 を定義する。\n変数 quantity に数値 3 を定義する。\nprice * quantity を実行し、総額を算出する。\n\n\n\n練習3: ベクトルの操作\n\n1から10までの整数を含むベクトルを作成する（ヒント: 1:10 という記法が利用可能）。\n当該ベクトルの総和を sum() 関数で算出する。\n当該ベクトルの平均値を mean() 関数で算出する。",
     "crumbs": [
       "第1回 RとRStudioの基礎"
     ]
@@ -154,7 +154,7 @@
     "href": "02_data.html",
     "title": "第2回 データの構造と扱い",
     "section": "",
-    "text": "今回の目標",
+    "text": "データを「整える」思想\nデータ分析において、一番時間を食う作業は何でしょうか。複雑な統計モデルの構築ではありません。「データの掃除（Data Wrangling）」です。 形式の揃っていないデータ、謎の空白、表記の揺れ。これらを人間が扱える形に整えるだけで、プロジェクトの時間の8割が消えることすらあります。\n本節では、この泥臭い作業をエレガントに片付ける武器、Tidyverse を導入します。",
     "crumbs": [
       "第2回 データの構造と扱い"
     ]
@@ -234,7 +234,7 @@
     "href": "02_data.html#課題",
     "title": "第2回 データの構造と扱い",
     "section": "課題",
-    "text": "課題\n読み込んだ tips データを使って、以下の操作を行ってください。\n\nday が “Sun”（日曜日）のデータだけを filter() で抽出してください。\n抽出したデータから、total_bill と size の列だけを select() で選んで表示してください。",
+    "text": "課題\n自分でストーリーを作ってみましょう。\n\nday が “Sun”（日曜日）である行のみを抽出する（filter）。\n抽出したデータから、total_bill と size の2列のみを選択して表示する（select）。",
     "crumbs": [
       "第2回 データの構造と扱い"
     ]
@@ -244,7 +244,7 @@
     "href": "02_data.html#練習問題",
     "title": "第2回 データの構造と扱い",
     "section": "練習問題",
-    "text": "練習問題\n\n練習1: データの確認\n\ntips データの行数と列数を確認してください\ntips データの最後の6行を表示してください（ヒント: tail() 関数）\n\n\n\n練習2: フィルタリング\n\nチップ (tip) が3ドル以上のデータだけを抽出してください\n女性 (sex == \"Female\") かつディナー (time == \"Dinner\") のデータを抽出してください\n\n\n\n練習3: データ加工の組み合わせ\n以下の操作を1つのパイプでつなげて実行してください： 1. 土曜日 (day == \"Sat\") のデータを抽出 2. チップ率 (tip / total_bill * 100) を新しい列として追加 3. チップ率の高い順に並び替え 4. 上位5件を表示",
+    "text": "練習問題\n正解かどうかより、「コードが思考の流れを表しているか」を意識してください。\n\n練習1: 基礎確認\nglimpse() や dim() を使い、このデータセットが「何行何列」で、「変数の型は何か」を言葉で説明してください。\n\n\n練習2: 仮説の検証\n「女性客の方がチップ率が高いのではないか？」という仮説を検証するコードを書いてください。（ヒント：filterで女性を抽出し、mutateで率を計算し、summarizeで平均を出す、など方法は幾通りもあります）\n\n\n練習3: パイプラインの構築\n以下の処理をひとつのパイプラインで書いてみてください。\n\n土曜日 (Sat) のデータを抽出。\nチップ率を計算し、新しい列として追加。\nそのチップ率が高い順（降順）に並べ替え。\n上位5件を表示。",
     "crumbs": [
       "第2回 データの構造と扱い"
     ]
@@ -264,7 +264,7 @@
     "href": "03_desc_stat_1.html",
     "title": "第3回 記述統計 (1) 数値要約",
     "section": "",
-    "text": "今回の目標",
+    "text": "情報を「縮約」する\n手元に1万人の顧客データがあるとします。上司に「客層はどうだい？」と聞かれたら、どう答えますか。 1万人全員の年齢を読み上げるわけにはいきません。「だいたい30代です」と答えるはずです。\n記述統計（Descriptive Statistics）の本質は、ここにあります。 膨大な生のデータを、たった1つの数字（要約統計量）にまで圧縮する。多くの情報は捨てられますが、代わりに人間が理解できる「特徴」が浮かび上がります。\n本節では、この「情報の圧縮技術」を学びます。キーとなるのは次の2点です。",
     "crumbs": [
       "第3回 記述統計 (1) 数値要約"
     ]
@@ -294,7 +294,7 @@
     "href": "03_desc_stat_1.html#準備",
     "title": "第3回 記述統計 (1) 数値要約",
     "section": "準備",
-    "text": "準備\n今回も tidyverse と tips データを使います。\n\nlibrary(tidyverse)\nurl &lt;- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips &lt;- read_csv(url)",
+    "text": "準備\n前回に引き続き、tidyverse パッケージと、tips データセット（Bryant & Smith, 1995）を使います。\n\nlibrary(tidyverse)\nurl &lt;- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips &lt;- read_csv(url)",
     "crumbs": [
       "第3回 記述統計 (1) 数値要約"
     ]
@@ -304,7 +304,7 @@
     "href": "03_desc_stat_1.html#代表値データの中心",
     "title": "第3回 記述統計 (1) 数値要約",
     "section": "代表値：データの中心",
-    "text": "代表値：データの中心\n\n平均値 (Mean)\nすべてのデータを足して、データの個数で割ったものです。\n\\[\\bar{x} = \\frac{1}{n}\\sum_{i=1}^{n} x_i\\]\n\nmean(tips$total_bill)\n#&gt; [1] 19.78594\n\n\n\n中央値 (Median)\nデータを小さい順に並べたときに、ちょうど真ん中にくる値です。 外れ値（極端に大きい/小さい値）の影響を受けにくいという特徴があります。\n\nmedian(tips$total_bill)\n#&gt; [1] 17.795\n\n\n\n最頻値 (Mode)\nデータの中で最も頻繁に出現する値です。Rには標準で最頻値を求める関数がないため、自分で計算します。\n\n# カテゴリ変数の最頻値を確認\ntips %&gt;% \n  count(day) %&gt;% \n  arrange(desc(n))\n\n\n  \n\n\n\n\n\n平均値 vs 中央値：どちらを使うべきか\n\n\n\n状況\n推奨される代表値\n\n\n\n\n左右対称な分布\n平均値\n\n\n歪んだ分布（外れ値あり）\n中央値\n\n\n所得や資産のデータ\n中央値\n\n\nテストの点数\n平均値",
+    "text": "代表値：データの中心\nデータの中心的位置を示す指標です。\n\n平均値 (Mean)\n観測されたすべての値の総和を、データの個数（サンプルサイズ）で割った値です。統計学では一般に算術平均を指します。\n\\[\\bar{x} = \\frac{1}{n}\\sum_{i=1}^{n} x_i\\]\n\nmean(tips$total_bill)\n#&gt; [1] 19.78594\n\nこの指標は、全てのデータの影響を受けるため、極端な値（外れ値）の存在によって大きく変動するという性質があります。\n\n\n中央値 (Median)\nデータを大きさの順（昇順または降順）に並べた際、順位が中央に位置する値です。データ数が偶数の場合は、中央にある2つの値の平均をとります。 外れ値の影響を受けにくい（頑健性がある）という特徴を持ちます。\n\nmedian(tips$total_bill)\n#&gt; [1] 17.795\n\n\n\n最頻値 (Mode)\nデータセット内で最も頻繁に出現する値です。 RのBaseパッケージには統計的な最頻値を算出する関数が標準では含まれていないため、集計処理によって算出します。\n\n# カテゴリ変数の最頻値を確認\ntips %&gt;% \n  count(day) %&gt;% \n  arrange(desc(n))\n\n\n  \n\n\n\n\n\n平均値と中央値の使い分け\n分析対象の分布形状に応じて、適切な代表値を選択する必要があります。\n\n\n\n\n\n\n\n\n分布の形状\n特徴\n推奨される代表値\n\n\n\n\n左右対称な分布\n平均値と中央値がほぼ一致する\n平均値（数学的な扱いやすさから推奨されることが多い）\n\n\n歪んだ分布\n裾が長い方へ平均値が引っ張られる\n中央値（実感を反映しやすいため）\n\n\n所得分布（右に歪む）\n少数の高所得者が平均を引き上げる\n中央値\n\n\nテストの点数\n一般に正規分布（左右対称）を仮定する\n平均値",
     "crumbs": [
       "第3回 記述統計 (1) 数値要約"
     ]
@@ -314,7 +314,7 @@
     "href": "03_desc_stat_1.html#散布度データのばらつき",
     "title": "第3回 記述統計 (1) 数値要約",
     "section": "散布度：データのばらつき",
-    "text": "散布度：データのばらつき\n\n範囲 (Range)\n最大値と最小値の差です。\n\nrange(tips$total_bill)  # 最小値と最大値\n#&gt; [1]  3.07 50.81\n\nmax(tips$total_bill) - min(tips$total_bill)  # 範囲\n#&gt; [1] 47.74\n\n\n\n分散 (Variance)\nデータが平均値からどれくらい離れているかを表す指標です。 Rの var() 関数は不偏分散を計算します。\n\\[s^2 = \\frac{1}{n-1}\\sum_{i=1}^{n} (x_i - \\bar{x})^2\\]\n\nvar(tips$total_bill)\n#&gt; [1] 79.25294\n\n\n\n標準偏差 (Standard Deviation)\n分散の平方根をとったものです。元のデータと同じ単位になるので直感的に分かりやすいです。\n\\[s = \\sqrt{s^2}\\]\n\nsd(tips$total_bill)\n#&gt; [1] 8.902412\n\n\n\n変動係数 (Coefficient of Variation)\n標準偏差を平均値で割ったもので、単位に依存しないばらつきの指標です。異なる単位のデータのばらつきを比較するときに便利です。\n\\[CV = \\frac{s}{\\bar{x}} \\times 100\\%\\]\n\n# チップと支払総額のばらつきを比較\ncv_tip &lt;- sd(tips$tip) / mean(tips$tip) * 100\ncv_bill &lt;- sd(tips$total_bill) / mean(tips$total_bill) * 100\n\ncat(\"チップの変動係数:\", cv_tip, \"%\\n\")\n#&gt; チップの変動係数: 46.14775 %\ncat(\"支払総額の変動係数:\", cv_bill, \"%\\n\")\n#&gt; 支払総額の変動係数: 44.99362 %\n\n\n\n四分位数 (Quartiles)\nデータを小さい順に並べて4等分したときの区切り値です。 summary() 関数を使うと、最小値、第1四分位数、中央値、平均値、第3四分位数、最大値をまとめて表示できます。\n\nsummary(tips$total_bill)\n#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n#&gt;    3.07   13.35   17.80   19.79   24.13   50.81\n\n結果の見方:\n\nMin: 最小値\n1st Qu: 第1四分位数（データの下位25%の境界値）\nMedian: 中央値\nMean: 平均値\n3rd Qu: 第3四分位数（データの下位75%の境界値）\nMax: 最大値\n\n\n\n四分位範囲 (IQR: Interquartile Range)\n第3四分位数と第1四分位数の差を 四分位範囲 と呼びます。 データの中央50%がどれくらいの幅に収まっているかを表します。R では IQR() 関数で計算できます。\n\nIQR(tips$total_bill)\n#&gt; [1] 10.78\n\n四分位範囲は、外れ値の影響を受けにくい散布度の指標として有効です。",
+    "text": "散布度：データのばらつき\nデータの散らばり具合を数値化した指標です。\n\n範囲 (Range)\nデータの最大値と最小値の差です。\n\nrange(tips$total_bill)  # 最小値と最大値を返す関数\n#&gt; [1]  3.07 50.81\n\nmax(tips$total_bill) - min(tips$total_bill)  # 範囲（数値）の算出\n#&gt; [1] 47.74\n\n\n\n分散 (Variance)\n各データが平均値からどれくらい離れているか（偏差）を二乗し、平均したものです。 Rの var() 関数は、母集団の分散ではなく、不偏分散（分母が \\(n-1\\)）を計算することに注意してください。\n\\[s^2 = \\frac{1}{n-1}\\sum_{i=1}^{n} (x_i - \\bar{x})^2\\]\n\nvar(tips$total_bill)\n#&gt; [1] 79.25294\n\n\n\n標準偏差 (Standard Deviation)\n分散の正の平方根です。単位が元のデータと一致するため、解釈が容易であるという利点があります。\n\\[s = \\sqrt{s^2}\\]\n\nsd(tips$total_bill)\n#&gt; [1] 8.902412\n\n\n\n変動係数 (Coefficient of Variation)\n標準偏差を平均値で除した値です。単位の異なるデータ間や、平均値が大きく異なるデータ間でばらつきを比較する際に使用します。\n\\[CV = \\frac{s}{\\bar{x}} \\times 100\\%\\]\n\n# チップと支払総額の相対的なばらつきを比較\ncv_tip &lt;- sd(tips$tip) / mean(tips$tip) * 100\ncv_bill &lt;- sd(tips$total_bill) / mean(tips$total_bill) * 100\n\ncat(\"チップの変動係数:\", cv_tip, \"%\\n\")\n#&gt; チップの変動係数: 46.14775 %\ncat(\"支払総額の変動係数:\", cv_bill, \"%\\n\")\n#&gt; 支払総額の変動係数: 44.99362 %\n\n\n\n四分位数 (Quartiles)\nデータを小さい順に並べ、個数が等しくなるように4分割する3つの点（第1、第2、第3四分位数）です。 summary() 関数は、これらの記述統計量を一括して出力します。\n\nsummary(tips$total_bill)\n#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n#&gt;    3.07   13.35   17.80   19.79   24.13   50.81\n\n出力項目の定義:\n\nMin: 最小値\n1st Qu: 第1四分位数（25パーセンタイル）\nMedian: 中央値（50パーセンタイル＝第2四分位数）\nMean: 平均値\n3rd Qu: 第3四分位数（75パーセンタイル）\nMax: 最大値\n\n\n\n四分位範囲 (IQR: Interquartile Range)\n第3四分位数から第1四分位数を引いた値です。 データの中央50%が含まれる範囲を示し、分散と同様にばらつきの指標となりますが、外れ値に対して頑健であるという特徴があります。\n\nIQR(tips$total_bill)\n#&gt; [1] 10.78",
     "crumbs": [
       "第3回 記述統計 (1) 数値要約"
     ]
@@ -354,7 +354,7 @@
     "href": "03_desc_stat_1.html#課題",
     "title": "第3回 記述統計 (1) 数値要約",
     "section": "課題",
-    "text": "課題\n\ntips データを使って、時間帯 (time) ごとのチップ (tip) の平均値を計算してください。\nsummary() 関数を使って、チップ (tip) の分布を確認してください。",
+    "text": "課題\n自分の手でデータを縮約してみましょう。\n\ntips データを使用し、時間帯 (time) ごとのチップ (tip) の平均値を算出してください。\nsummary() 関数を使用し、チップ (tip) の分布の要約統計量を確認してください。",
     "crumbs": [
       "第3回 記述統計 (1) 数値要約"
     ]
@@ -364,7 +364,7 @@
     "href": "03_desc_stat_1.html#練習問題",
     "title": "第3回 記述統計 (1) 数値要約",
     "section": "練習問題",
-    "text": "練習問題\n\n練習1: 基本的な記述統計\ntips データの size（グループの人数）について以下を計算してください： 1. 平均値 2. 中央値 3. 標準偏差 4. 最小値と最大値\n\n\n練習2: グループ別の比較\n喫煙者 (smoker == \"Yes\") と非喫煙者 (smoker == \"No\") で、支払総額の平均値と標準偏差を比較してください。\n\n\n練習3: 外れ値の影響\n\ntips データに外れ値（total_bill = 100）を1つ追加したデータを作成してください\n元のデータと新しいデータで、平均値と中央値を比較してください\nどちらの代表値が外れ値の影響を受けやすいですか？",
+    "text": "練習問題\n\n練習1: 基本的な記述統計の算出\ntips データの size（グループの人数）について、以下の4つの統計量を算出してください。\n\n平均値\n中央値\n標準偏差\n範囲（最小値と最大値）\n\n\n\n練習2: グループ別の比較検証\n喫煙者 (smoker == \"Yes\") と非喫煙者 (smoker == \"No\") の2群において、支払総額 (total_bill) の平均値と標準偏差を比較してください。\n\n\n練習3: 外れ値の影響を体感する\n\ntips データに極端な外れ値（例: total_bill = 100）を持つ行を追加した新しいデータを作成してください。\n元のデータと新しいデータで、平均値と中央値がそれぞれどれくらい変化したかを確認してください。どちらが「頑健」でしたか？\n\n ※本節で用いた記述統計の指標一覧は、練習問題の振り返りとして自身のノートにまとめておくことを推奨します。",
     "crumbs": [
       "第3回 記述統計 (1) 数値要約"
     ]
@@ -374,7 +374,7 @@
     "href": "03_desc_stat_1.html#記述統計量のまとめ",
     "title": "第3回 記述統計 (1) 数値要約",
     "section": "記述統計量のまとめ",
-    "text": "記述統計量のまとめ\n\n\n\n種類\n指標\nR関数\n特徴\n\n\n\n\n代表値\n平均値\nmean()\n全データを使用、外れ値に敏感\n\n\n代表値\n中央値\nmedian()\n外れ値に頑健\n\n\n散布度\n分散\nvar()\n単位が元の2乗\n\n\n散布度\n標準偏差\nsd()\n元の単位と同じ\n\n\n散布度\n四分位範囲\nIQR()\n外れ値に頑健\n\n\n位置\n四分位数\nquantile()\nデータの位置を表す",
+    "text": "記述統計量のまとめ\n\n\n\n\n\n\n\n\n\n分類\n指標\nR関数\n主な特徴\n\n\n\n\n代表値\n平均値\nmean()\n全データを使用するため情報量が多いが、外れ値に弱い\n\n\n代表値\n中央値\nmedian()\n順位に基づくため、外れ値に対して頑健\n\n\n散布度\n分散\nvar()\n偏差の二乗平均（不偏分散）。単位は元の二乗になる\n\n\n散布度\n標準偏差\nsd()\n分散の平方根。単位は元データと一致し解釈しやすい\n\n\n散布度\n四分位範囲\nIQR()\n中央50%の範囲。外れ値の影響を受けにくい\n\n\n位置\n四分位数\nquantile()\nデータの分布上の位置（パーセンタイル）を示す",
     "crumbs": [
       "第3回 記述統計 (1) 数値要約"
     ]
@@ -384,7 +384,7 @@
     "href": "04_desc_stat_2.html",
     "title": "第4回 記述統計 (2) データの可視化",
     "section": "",
-    "text": "今回の目標",
+    "text": "要約の限界と「アンスコムの警鐘」\n前節では、膨大なデータを「平均値」や「分散」などの数値に縮約し、全体の特徴を掴みました。 しかし、縮約には副作用があります。「形の消失」です。\nAnscombe (1973) の有名な例、アンスコムのカルテットを見てみましょう。 一見、平均値も分散も相関係数もしっかり一致している4つのデータセットです。\nlibrary(tidyverse)\n# Rに標準で入っている anscombe データを整形\nanscombe_long &lt;- anscombe %&gt;%\n  pivot_longer(everything(),\n               names_to = c(\".value\", \"set\"),\n               names_pattern = \"(.)(.)\")\n\n# 統計量を確認：どれもほぼ同じ\nanscombe_long %&gt;%\n  group_by(set) %&gt;%\n  summarize(\n    mean_x = mean(x), mean_y = mean(y),\n    sd_x = sd(x), sd_y = sd(y),\n    cor = cor(x, y)\n  )\n数値だけなら「これらは同じ性質のデータだ」と結論づけてしまうでしょう。でも、グラフにして可視化した瞬間、景色は一変します。 [対象注意: 日本語フォント設定は環境依存あり]\nggplot(anscombe_long, aes(x = x, y = y)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_point() +\n  geom_smooth(method = \"lm\", se = FALSE) +\n  facet_wrap(~set) +\n  labs(title = \"数値は嘘をつかないが、真実を語るとは限らない\")\nきれいな直線、曲線、外れ値の影響…。数値要約で捨て去られた情報が、可視化ではっきりと浮かび上がりました。 データ分析において、可視化は分析の「後」の飾りではありません。分析の「最初」に行うべき、欠かせない診断です。",
     "crumbs": [
       "第4回 記述統計 (2) データの可視化"
     ]
@@ -414,7 +414,7 @@
     "href": "04_desc_stat_2.html#準備",
     "title": "第4回 記述統計 (2) データの可視化",
     "section": "準備",
-    "text": "準備\n\nurl &lt;- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips &lt;- read_csv(url)",
+    "text": "準備\n本節でも tips データセット（Bryant & Smith, 1995）を使います。\n\nurl &lt;- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips &lt;- read_csv(url)",
     "crumbs": [
       "第4回 記述統計 (2) データの可視化"
     ]
@@ -484,7 +484,7 @@
     "href": "04_desc_stat_2.html#課題",
     "title": "第4回 記述統計 (2) データの可視化",
     "section": "課題",
-    "text": "課題\n\ntip（チップ）のヒストグラムを作成してください。\ntotal_bill と tip の散布図を作成し、time（ランチ/ディナー）で色分けしてください。",
+    "text": "課題\n自分の手で可視化を行い、データからの発見を言語化してください。\n\ntip（チップ）の分布をヒストグラムで確認してください。何か気づく特徴はありますか？（キリの良い数字が多い、など）\ntotal_bill と tip の散布図を描き、time（ランチ/ディナー）で色分けして、時間帯による傾向の違いを議論してください。",
     "crumbs": [
       "第4回 記述統計 (2) データの可視化"
     ]
@@ -494,7 +494,7 @@
     "href": "04_desc_stat_2.html#練習問題",
     "title": "第4回 記述統計 (2) データの可視化",
     "section": "練習問題",
-    "text": "練習問題\n\n練習1: ヒストグラムのカスタマイズ\n\ntip のヒストグラムを作成し、ビンの数を10に変更してください\n色を自分の好きな色に変更してください\n適切なタイトルと軸ラベルを追加してください\n\n\n\n練習2: 複数のグラフの作成\n\n性別 (sex) ごとの tip の箱ひげ図を作成してください\n喫煙者 (smoker) ごとの total_bill のヒストグラムを、facet_wrap() を使って並べて表示してください\n\n\n\n練習3: 散布図の応用\n\ntotal_bill と tip の散布図を作成してください\n点の大きさを size（人数）に対応させてください（ヒント: aes(size = size)）\n回帰直線を追加してください",
+    "text": "練習問題\n\n練習1: ヒストグラムの最適化\n\ntip のヒストグラムを作成してください。\nビンの数（bins）を10, 30, 50と変えてみてください。分布の印象がどう変わるか観察してください。\n\n\n\n練習2: 多変量の可視化\n\n性別 (sex) ごとの tip の分布を箱ひげ図で比較してください。女性の方がばらつきが大きいですか？\n喫煙者 (smoker) ごとの total_bill の分布を、facet_wrap() を使って左右に並べて比較してください。\n\n\n\n練習3: 散布図への情報付加\n\ntotal_bill と tip の散布図を作成してください。\n点の大きさを size（人数）にマッピングしてください（aes(size = size)）。大人数のグループは右上に集まっていますか？\n全体の傾向を示す回帰直線を geom_smooth() で追加してください。",
     "crumbs": [
       "第4回 記述統計 (2) データの可視化"
     ]
@@ -1094,7 +1094,7 @@
     "href": "10_hypothesis_2.html#等分散の仮定",
     "title": "第10回 仮説検定 (2)",
     "section": "等分散の仮定",
-    "text": "等分散の仮定\n2標本t検定には、両群の分散が等しいという仮定があります。Rの t.test() はデフォルトでWelchのt検定（等分散を仮定しない）を使用します。\n\n# Welchのt検定（デフォルト）\nt.test(total_bill ~ time, data = tips)\n#&gt; \n#&gt;  Welch Two Sample t-test\n#&gt; \n#&gt; data:  total_bill by time\n#&gt; t = 3.123, df = 143.29, p-value = 0.002167\n#&gt; alternative hypothesis: true difference in means between group Dinner and group Lunch is not equal to 0\n#&gt; 95 percent confidence interval:\n#&gt;  1.331877 5.925088\n#&gt; sample estimates:\n#&gt; mean in group Dinner  mean in group Lunch \n#&gt;             20.79716             17.16868\n\n# Studentのt検定（等分散を仮定）\nt.test(total_bill ~ time, data = tips, var.equal = TRUE)\n#&gt; \n#&gt;  Two Sample t-test\n#&gt; \n#&gt; data:  total_bill by time\n#&gt; t = 2.8976, df = 242, p-value = 0.004105\n#&gt; alternative hypothesis: true difference in means between group Dinner and group Lunch is not equal to 0\n#&gt; 95 percent confidence interval:\n#&gt;  1.161839 6.095127\n#&gt; sample estimates:\n#&gt; mean in group Dinner  mean in group Lunch \n#&gt;             20.79716             17.16868\n\n等分散かどうかは、F検定やLevene検定で確認できます。\n\n# F検定（等分散の検定）\nvar.test(total_bill ~ time, data = tips)\n#&gt; \n#&gt;  F test to compare two variances\n#&gt; \n#&gt; data:  total_bill by time\n#&gt; F = 1.4046, num df = 175, denom df = 67, p-value = 0.1109\n#&gt; alternative hypothesis: true ratio of variances is not equal to 1\n#&gt; 95 percent confidence interval:\n#&gt;  0.9237626 2.0595995\n#&gt; sample estimates:\n#&gt; ratio of variances \n#&gt;           1.404557",
+    "text": "等分散の仮定\n2標本t検定には、両群の分散が等しいという仮定があります。Rの t.test() はデフォルトでWelchのt検定（等分散を仮定しない）を使用します。\n\n# Welchのt検定（デフォルト）\nt.test(total_bill ~ time, data = tips)\n#&gt; \n#&gt;  Welch Two Sample t-test\n#&gt; \n#&gt; data:  total_bill by time\n#&gt; t = 3.123, df = 143.29, p-value = 0.002167\n#&gt; alternative hypothesis: true difference in means between group Dinner and group Lunch is not equal to 0\n#&gt; 95 percent confidence interval:\n#&gt;  1.331877 5.925088\n#&gt; sample estimates:\n#&gt; mean in group Dinner  mean in group Lunch \n#&gt;             20.79716             17.16868\n\n# Studentのt検定（等分散を仮定）\nt.test(total_bill ~ time, data = tips, var.equal = TRUE)\n#&gt; \n#&gt;  Two Sample t-test\n#&gt; \n#&gt; data:  total_bill by time\n#&gt; t = 2.8976, df = 242, p-value = 0.004105\n#&gt; alternative hypothesis: true difference in means between group Dinner and group Lunch is not equal to 0\n#&gt; 95 percent confidence interval:\n#&gt;  1.161839 6.095127\n#&gt; sample estimates:\n#&gt; mean in group Dinner  mean in group Lunch \n#&gt;             20.79716             17.16868\n\n結果の比較:\n\nWelchのt検定 (等分散を仮定しない):\n\nt統計量: 3.123、自由度: 143.29、p値: 0.002167\n95%信頼区間: 1.33 〜 5.93\n自由度が小数になっているのは、Welch-Satterthwaiteの近似を使用しているためです。\n\nStudentのt検定 (等分散を仮定する):\n\nt統計量: 2.898、自由度: 242、p値: 0.004105\n95%信頼区間: 1.16 〜 6.10\n自由度は単純に n1 + n2 - 2 = 176 + 68 - 2 = 242 となります。\n\n両者の違い:\n\nWelchのt検定の方がp値が小さく（より有意）、信頼区間も狭くなっています。\nこれは、2群のサンプルサイズが異なる場合（ディナー176件 vs ランチ68件）、Welchの方がより正確だからです。\n実務上の推奨: 等分散性が確実でない限り、Welchのt検定を使用する方が安全 です。\n\n\n等分散かどうかは、F検定やLevene検定で確認できます。\n\n# F検定（等分散の検定）\nvar.test(total_bill ~ time, data = tips)\n#&gt; \n#&gt;  F test to compare two variances\n#&gt; \n#&gt; data:  total_bill by time\n#&gt; F = 1.4046, num df = 175, denom df = 67, p-value = 0.1109\n#&gt; alternative hypothesis: true ratio of variances is not equal to 1\n#&gt; 95 percent confidence interval:\n#&gt;  0.9237626 2.0595995\n#&gt; sample estimates:\n#&gt; ratio of variances \n#&gt;           1.404557\n\n結果の見方:\n\np値: 0.1109 となりました。\n\nこれは 0.05 より大きいため、帰無仮説（2群の分散が等しい）を棄却できません。\nつまり、ランチとディナーの支払総額の 分散に有意な差があるとは言えない という結論になります。\n\n分散比 (ratio of variances):\n\n1.4046 となっています。これはディナーの分散がランチの分散の約1.4倍であることを示します。\nしかし、95%信頼区間 (0.924 〜 2.060) が1を含んでいるため、この差は統計的に有意ではありません。\n\n実務的な意味:\n\n等分散性が棄却されなかったため、Studentのt検定を使用することもできますが、一般的には Welchのt検定（デフォルト）の方が安全 です。\nWelchのt検定は等分散を仮定しないため、分散が異なる場合でも適切に機能します。",
     "crumbs": [
       "第10回 仮説検定 (2)"
     ]
@@ -1104,7 +1104,7 @@
     "href": "10_hypothesis_2.html#効果量-effect-size",
     "title": "第10回 仮説検定 (2)",
     "section": "効果量 (Effect Size)",
-    "text": "効果量 (Effect Size)\np値だけでは効果の大きさがわかりません。効果量を計算することで、実質的な差の大きさを評価できます。\n\nCohen’s d\n2群の平均値の差を標準偏差で割った指標です。\n\\[d = \\frac{\\bar{x}_1 - \\bar{x}_2}{s_{pooled}}\\]\n\n\\(|d| &lt; 0.2\\): 小さい効果\n\\(0.2 \\le |d| &lt; 0.8\\): 中程度の効果\n\\(|d| \\ge 0.8\\): 大きい効果\n\n\n# Cohen's d の計算\ndinner &lt;- tips$total_bill[tips$time == \"Dinner\"]\nlunch &lt;- tips$total_bill[tips$time == \"Lunch\"]\n\nmean_diff &lt;- mean(dinner) - mean(lunch)\npooled_sd &lt;- sqrt(((length(dinner)-1)*var(dinner) + (length(lunch)-1)*var(lunch)) / \n                   (length(dinner) + length(lunch) - 2))\n\ncohens_d &lt;- mean_diff / pooled_sd\ncat(\"Cohen's d:\", cohens_d, \"\\n\")\n#&gt; Cohen's d: 0.4137406",
+    "text": "効果量 (Effect Size)\np値だけでは効果の大きさがわかりません。効果量を計算することで、実質的な差の大きさを評価できます。\n\nCohen’s d\n2群の平均値の差を標準偏差で割った指標です。\n\\[d = \\frac{\\bar{x}_1 - \\bar{x}_2}{s_{pooled}}\\]\n\n\\(|d| &lt; 0.2\\): 小さい効果\n\\(0.2 \\le |d| &lt; 0.8\\): 中程度の効果\n\\(|d| \\ge 0.8\\): 大きい効果\n\n\n# Cohen's d の計算\ndinner &lt;- tips$total_bill[tips$time == \"Dinner\"]\nlunch &lt;- tips$total_bill[tips$time == \"Lunch\"]\n\nmean_diff &lt;- mean(dinner) - mean(lunch)\npooled_sd &lt;- sqrt(((length(dinner)-1)*var(dinner) + (length(lunch)-1)*var(lunch)) / \n                   (length(dinner) + length(lunch) - 2))\n\ncohens_d &lt;- mean_diff / pooled_sd\ncat(\"Cohen's d:\", cohens_d, \"\\n\")\n#&gt; Cohen's d: 0.4137406\n\n結果の解釈:\n\n効果量の大きさ: Cohen’s d は 0.414 となりました。\n\nこれは 0.2 ≤ |d| &lt; 0.8 の範囲に入るため、中程度の効果 と判断されます。\nランチとディナーの支払総額の差は、実質的にも意味のある大きさであると言えます。\n\np値との関係:\n\nt検定でp値が 0.002167 と統計的に有意でした（統計的有意性）。\nCohen’s d が 0.414 で中程度の効果を示しています（実質的意義）。\nつまり、この差は統計的に有意であるだけでなく、実務的にも意味のある大きさだと結論できます。\n\n解釈のポイント:\n\nサンプルサイズが大きい場合、小さな差でもp値が有意になることがあります。\n効果量を確認することで、その差が実質的に意味があるかどうかを判断できます。\np値と効果量を併せて報告することが重要 です。",
     "crumbs": [
       "第10回 仮説検定 (2)"
     ]
@@ -1367,6 +1367,426 @@
     "text": "カイ二乗分布・t分布・F分布\nここまで、正規分布と二項分布（離散型確率分布）を学びました。 正規分布が中心極限定理により統計的推測の基礎となることを見てきましたが、実際の統計的推測（推定や検定）では、正規分布から派生した以下の3つの分布も頻繁に使われます。\n次回以降の講義で詳しく使い方を学びますが、ここではその概要を紹介します。\n\nカイ二乗分布 (Chi-square Distribution)\n標準正規分布に従う独立な確率変数を2乗して足し合わせた分布です。\n定義: \\(Z_1, Z_2, \\ldots, Z_k\\) が独立に標準正規分布 \\(N(0,1)\\) に従うとき、 \\[\\chi^2 = Z_1^2 + Z_2^2 + \\cdots + Z_k^2\\] は自由度 \\(k\\) のカイ二乗分布に従います。記号では \\(\\chi^2(k)\\) と書きます。\n性質: - パラメータは自由度 \\(k\\) のみ - 期待値: \\(E[\\chi^2] = k\\) - 分散: \\(V[\\chi^2] = 2k\\) - 常に正の値をとる（右に偏った分布）\n用途: 分散の推定、適合度検定、独立性の検定など\n\n# カイ二乗分布の可視化（自由度による違い）\nx &lt;- seq(0, 20, length.out = 200)\ndf_chi &lt;- data.frame(\n  x = rep(x, 3),\n  y = c(dchisq(x, df = 2),\n        dchisq(x, df = 5),\n        dchisq(x, df = 10)),\n  df = rep(c(\"自由度=2\", \"自由度=5\", \"自由度=10\"), each = length(x))\n)\n\nggplot(df_chi, aes(x = x, y = y, color = df)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_line(size = 1) +\n  labs(title = \"カイ二乗分布（自由度による変化）\", \n       x = \"値\", y = \"確率密度\", color = \"自由度\")\n\n\n\n\n\n\n\n\n\n\nt分布 (Student’s t-distribution)\n正規分布に似ているが、裾が厚い（外れ値が出やすい）分布です。 標本サイズが小さいときの検定や信頼区間の構築に使われます。\n定義: \\(Z \\sim N(0,1)\\) と \\(V \\sim \\chi^2(k)\\) が独立のとき、 \\[t = \\frac{Z}{\\sqrt{V/k}}\\] は自由度 \\(k\\) のt分布に従います。記号では \\(t(k)\\) と書きます。\n性質: - パラメータは自由度 \\(k\\) のみ - 平均0を中心とした対称な分布 - 自由度が大きくなると正規分布に近づく - 自由度が小さいほど裾が厚い\n用途: t検定、回帰係数の検定、平均値の信頼区間など\n\n# t分布と正規分布の比較\nx &lt;- seq(-4, 4, length.out = 200)\ndf_t &lt;- data.frame(\n  x = rep(x, 4),\n  y = c(dt(x, df = 1),\n        dt(x, df = 3),\n        dt(x, df = 10),\n        dnorm(x)),\n  type = rep(c(\"t分布 (df=1)\", \"t分布 (df=3)\", \n               \"t分布 (df=10)\", \"標準正規分布\"), each = length(x))\n)\n\nggplot(df_t, aes(x = x, y = y, color = type)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_line(size = 1) +\n  labs(title = \"t分布と標準正規分布の比較\", \n       x = \"値\", y = \"確率密度\", color = \"分布\")\n\n\n\n\n\n\n\n\n\n\nF分布 (F-distribution)\n2つのカイ二乗分布の比として定義される分布です。 分散の比の検定や分散分析（ANOVA）で使われます。\n定義: \\(V_1 \\sim \\chi^2(k_1)\\) と \\(V_2 \\sim \\chi^2(k_2)\\) が独立のとき、 \\[F = \\frac{V_1/k_1}{V_2/k_2}\\] は自由度 \\((k_1, k_2)\\) のF分布に従います。記号では \\(F(k_1, k_2)\\) と書きます。\n性質: - パラメータは2つの自由度 \\(k_1\\)（分子の自由度）と \\(k_2\\)（分母の自由度） - 常に正の値をとる - 右に偏った分布\n用途: 分散の比の検定、分散分析（ANOVA）、回帰分析のF検定など\n\n# F分布の可視化\nx &lt;- seq(0, 5, length.out = 200)\ndf_f &lt;- data.frame(\n  x = rep(x, 3),\n  y = c(df(x, df1 = 5, df2 = 10),\n        df(x, df1 = 10, df2 = 10),\n        df(x, df1 = 20, df2 = 10)),\n  df = rep(c(\"F(5,10)\", \"F(10,10)\", \"F(20,10)\"), each = length(x))\n)\n\nggplot(df_f, aes(x = x, y = y, color = df)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_line(size = 1) +\n  labs(title = \"F分布（自由度による変化）\", \n       x = \"値\", y = \"確率密度\", color = \"自由度\")\n\n\n\n\n\n\n\n\n\n\n3つの分布の関係\nこれらの分布は互いに関連しています：\n\nカイ二乗分布: 標準正規分布の2乗和\nt分布: 標準正規分布 ÷ √(カイ二乗分布/自由度)\nF分布: (カイ二乗分布/自由度) ÷ (カイ二乗分布/自由度)\n\nこれらは全て正規分布から導かれる分布で、統計的推測の基礎となります。 次回以降の講義（推定、検定、回帰分析）で実際に使用していきます。",
     "crumbs": [
       "第6回 主要な確率分布"
+    ]
+  },
+  {
+    "objectID": "02_data.html#本節の目的",
+    "href": "02_data.html#本節の目的",
+    "title": "第2回 データの構造と扱い",
+    "section": "",
+    "text": "Rにおけるデータの保持形式（データフレーム）の構造を理解する。\n外部ファイル（CSV形式）をR環境に読み込む手順を確立する。\nTidyverse パッケージ群を用いた、データの抽出・加工・集計手法を習得する。",
+    "crumbs": [
+      "第2回 データの構造と扱い"
+    ]
+  },
+  {
+    "objectID": "02_data.html#パッケージの導入",
+    "href": "02_data.html#パッケージの導入",
+    "title": "第2回 データの構造と扱い",
+    "section": "パッケージの導入",
+    "text": "パッケージの導入\nRには、標準機能（Base R）に加え、特定の目的のために機能を拡張する パッケージ という仕組みが存在します。 本講義では、データサイエンスにおける事実上の標準ツールセットである Tidyverse を採用します。\n\nTidyverseの概要\nTidyverseは、一貫した設計思想（Tidy Data principles）に基づいて設計されたRパッケージの集合体です。本講義では主に以下のパッケージを使用します。\n\n\n\nパッケージ\n主な機能\n\n\n\n\nggplot2\nデータの可視化（文法に基づく作図）\n\n\ndplyr\nデータの操作（抽出、加工、集計）\n\n\ntidyr\nデータの整形（整然データへの変換）\n\n\nreadr\nデータの読み込み（高速かつ安全なインポート）\n\n\nstringr\n文字列データの処理\n\n\nforcats\nカテゴリ変数（因子型）の操作\n\n\n\nパッケージを使用するには、環境ごとに一度だけの「インストール」と、Rを起動するたびに行う「ロード」の2段階の手順が必要です。\n1. インストール（初回のみ）\n講義環境（Posit Cloud等）で初めて実施する場合のみ、以下のコードを実行してください。\n\n# install.packages(\"tidyverse\") {.unnumbered}\n\n2. ロード（起動ごと）\nRセッションを開始するたびに、以下のコマンドで機能を有効化（ロード）します。\n\nlibrary(tidyverse)",
+    "crumbs": [
+      "第2回 データの構造と扱い"
+    ]
+  },
+  {
+    "objectID": "02_data.html#データフレームの構造",
+    "href": "02_data.html#データフレームの構造",
+    "title": "第2回 データの構造と扱い",
+    "section": "データフレームの構造",
+    "text": "データフレームの構造\n統計分析において、データは一般に「行（観測対象）」と「列（変数）」を持つ表形式で扱われます。Rではこの形式を データフレーム （またはtibble）と定義します。 Rには学習用データセットが標準で同梱されています。ここでは iris（アヤメの計測データ）[要出典] を例に構造を確認します。\n\nhead(iris) # 先頭の6行を表示\n\n\n  \n\n\n\n\n構造の確認手法\n未知のデータを扱う際は、まずその形式的特徴を把握する必要があります。\n\n# データの次元数（行数 × 列数）を確認\ndim(iris)\n#&gt; [1] 150   5\n\n# 変数名（列名）の一覧を取得\nnames(iris)\n#&gt; [1] \"Sepal.Length\" \"Sepal.Width\"  \"Petal.Length\" \"Petal.Width\"  \"Species\"\n\n# データ型を含む内部構造の要約を表示\nstr(iris)\n#&gt; 'data.frame':    150 obs. of  5 variables:\n#&gt;  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...\n#&gt;  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...\n#&gt;  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...\n#&gt;  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...\n#&gt;  $ Species     : Factor w/ 3 levels \"setosa\",\"versicolor\",..: 1 1 1 1 1 1 1 1 1 1 ...\n\n\n\nRにおける主なデータ型\nデータフレーム内の各列は、特定の「データ型」を持ちます。分析の前提として、以下の型区分を理解する必要があります。\n\n\n\nデータ型\n定義\n表記例\n\n\n\n\nnumeric\n実数値（倍精度浮動小数点数）\n1.5, 100, -3.14\n\n\ninteger\n整数値\n1L, 2L, 100L\n\n\ncharacter\n文字列（テキスト情報）\n“東京”, “hello”\n\n\nlogical\n論理値（真偽判定の結果）\nTRUE, FALSE\n\n\nfactor\nカテゴリ（順序や水準を持つ名義尺度）\n男性/女性, 大/中/小",
+    "crumbs": [
+      "第2回 データの構造と扱い"
+    ]
+  },
+  {
+    "objectID": "02_data.html#外部データの読み込み",
+    "href": "02_data.html#外部データの読み込み",
+    "title": "第2回 データの構造と扱い",
+    "section": "外部データの読み込み",
+    "text": "外部データの読み込み\n独自の分析を行うには、外部ファイルとして保存されたデータをR環境に取り込む（インポートする）必要があります。 本講義では、テキスト形式のデータ保存における標準規格であるCSV（Comma-Separated Values）ファイルの読み込みに、readr パッケージの read_csv() 関数を使用します。\n\n# ローカル環境に data.csv が存在する場合のコード例\n# df &lt;- read_csv(\"data.csv\")\n\n\n読み込み関数の比較と選択\n\n\n\n\n\n\n\n\n\n関数\n対象フォーマット\n提供パッケージ\n特徴\n\n\n\n\nread_csv()\nCSV（カンマ区切り）\nreadr (tidyverse)\n高速、文字化けに強い、tibble形式で出力\n\n\nread_tsv()\nTSV（タブ区切り）\nreadr (tidyverse)\nタブ区切りデータ用\n\n\nread_excel()\nExcel (.xlsx)\nreadxl\nExcelファイルを直接読み込む場合に必要\n\n\nread.csv()\nCSV\nbase R\n標準機能だが、文字列をfactor型に自動変換するなど[対象注意]の挙動がある\n\n\n\n\n\nインターネット上のデータの読み込み\n本節では演習用データとして、Bryant & Smith (1995) に基づくレストランのチップ支払いデータ (tips) を使用します。このデータはPythonの可視化ライブラリ seaborn のリポジトリで公開されているものを参照します。\n\nurl &lt;- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips &lt;- read_csv(url)\n\n読み込み直後に、データの概要を確認します。glimpse() は str() のtidyverse版であり、画面幅に合わせた見やすい一覧表示を提供します。\n\nglimpse(tips)\n#&gt; Rows: 244\n#&gt; Columns: 7\n#&gt; $ total_bill &lt;dbl&gt; 16.99, 10.34, 21.01, 23.68, 24.59, 25.29, 8.77, 26.88, 15.0…\n#&gt; $ tip        &lt;dbl&gt; 1.01, 1.66, 3.50, 3.31, 3.61, 4.71, 2.00, 3.12, 1.96, 3.23,…\n#&gt; $ sex        &lt;chr&gt; \"Female\", \"Male\", \"Male\", \"Male\", \"Female\", \"Male\", \"Male\",…\n#&gt; $ smoker     &lt;chr&gt; \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\",…\n#&gt; $ day        &lt;chr&gt; \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Su…\n#&gt; $ time       &lt;chr&gt; \"Dinner\", \"Dinner\", \"Dinner\", \"Dinner\", \"Dinner\", \"Dinner\",…\n#&gt; $ size       &lt;dbl&gt; 2, 3, 3, 2, 4, 4, 2, 4, 2, 2, 2, 4, 2, 4, 2, 2, 3, 3, 3, 3,…\n\n\n\ntipsデータセットの変数の定義\n各変数の定義は以下の通りです。[要一次情報: データセットの詳細な定義書の所在]\n\n\n\n変数名\n定義\n単位/形式\n\n\n\n\ntotal_bill\n請求総額\n米ドル\n\n\ntip\nチップ支払額\n米ドル\n\n\nsex\n支払者の性別\nFemale / Male\n\n\nsmoker\n喫煙席の使用有無\nYes / No\n\n\nday\n来店曜日\nSun, Sat, Thur, Fri\n\n\ntime\n時間帯\nDinner / Lunch\n\n\nsize\n同伴者を含むグループ人数\n人数（整数）",
+    "crumbs": [
+      "第2回 データの構造と扱い"
+    ]
+  },
+  {
+    "objectID": "02_data.html#データ操作-dplyr",
+    "href": "02_data.html#データ操作-dplyr",
+    "title": "第2回 データの構造と扱い",
+    "section": "データ操作 (dplyr)",
+    "text": "データ操作 (dplyr)\ndplyr パッケージは、データ操作のための「動詞（Verbs）」となる関数群を提供します。\n\n1. 列の選択: select()\n分析に必要な変数（列）のみを保持した新しいデータフレーム作成します。\n\ntips %&gt;% \n  select(total_bill, tip) %&gt;% \n  head()\n\n\n  \n\n\n\nパイプ演算子 %&gt;% について コード内の %&gt;% は「パイプ演算子」と呼ばれ、前段の処理結果（左側のデータ）を次段の関数（右側）の第一引数として渡す役割を持ちます。これにより、「tipsデータ に対し、selectを実行する」という論理的な記述が可能になります。\n\n\n2. 行の抽出: filter()\n指定した条件に合致する観測（行）のみを抽出します。 以下は、time 変数が “Dinner” と一致する行のみを抽出する例です。\n\ntips %&gt;% \n  filter(time == \"Dinner\") %&gt;% \n  head()\n\n\n  \n\n\n\n\n\n3. 変数の作成・更新: mutate()\n既存の列を用いた計算や変換を行い、その結果を新しい列として追加（または上書き）します。 ここでは、チップの対総額比率を計算します。\n\ntips %&gt;% \n  mutate(tip_rate = tip / total_bill) %&gt;% \n  select(total_bill, tip, tip_rate) %&gt;% \n  head()\n\n\n  \n\n\n\n\n\n4. データの並び替え: arrange()\n指定した列の値を基準に、行を並び替えます。デフォルトは昇順（小さい順）です。\n\n# 支払総額の昇順（小さい順）\ntips %&gt;% \n  arrange(total_bill) %&gt;% \n  head()\n\n\n  \n\n\n\n# 降順（大きい順）にする場合は desc() 関数で指定\ntips %&gt;% \n  arrange(desc(total_bill)) %&gt;% \n  head()\n\n\n  \n\n\n\n\n\n5. 要約統計量の算出: summarize()\nデータの集計を行い、平均値や合計値などの要約統計量を算出します。この操作を行うと、元のデータフレームは集計結果の行数（グループ化していなければ1行）に縮約されます。\n\ntips %&gt;% \n  summarize(\n    平均支払額 = mean(total_bill),\n    平均チップ = mean(tip),\n    データ数 = n() # 行数をカウントする関数\n  )\n\n\n  \n\n\n\nこれを group_by() 関数と組み合わせることで、「グループごとの集計」が可能になります。\n\n# 曜日ごとの平均支払額を計算\ntips %&gt;% \n  group_by(day) %&gt;% \n  summarize(\n    平均支払額 = mean(total_bill),\n    データ数 = n()\n  )",
+    "crumbs": [
+      "第2回 データの構造と扱い"
+    ]
+  },
+  {
+    "objectID": "02_data.html#パイプ演算子-を用いた処理の連結",
+    "href": "02_data.html#パイプ演算子-を用いた処理の連結",
+    "title": "第2回 データの構造と扱い",
+    "section": "パイプ演算子 %>% を用いた処理の連結",
+    "text": "パイプ演算子 %&gt;% を用いた処理の連結\nパイプ演算子を用いる最大の利点は、中間変教を作成することなく、思考の流れ通りに処理を記述できる点にあります。 以下に、「抽出」「加工」「並び替え」「選択」を一連のフローとして記述する例を示します。\n\n# 目的: ディナーのデータを対象に、チップ率（%）を算出し、支払額が高い順に上位10件を表示する\ntips %&gt;% \n  filter(time == \"Dinner\") %&gt;% \n  mutate(tip_rate = tip / total_bill * 100) %&gt;% \n  arrange(desc(total_bill)) %&gt;% \n  select(total_bill, tip, tip_rate, day) %&gt;% \n  head(10)",
+    "crumbs": [
+      "第2回 データの構造と扱い"
+    ]
+  },
+  {
+    "objectID": "02_data.html#データ操作の補足事項",
+    "href": "02_data.html#データ操作の補足事項",
+    "title": "第2回 データの構造と扱い",
+    "section": "データ操作の補足事項",
+    "text": "データ操作の補足事項\n\n列の選び方\nRには方言があります。\n\ntips$total_bill：ベクトルとして取り出す（Base R）。計算式の内部で使うことが多い。\ntips %&gt;% select(total_bill)：データフレームとして取り出す（Tidyverse）。データを加工し続ける時に使う。 使い分けですが、パイプラインの中では select でOKです。\n\n\n\nデータのチラ見（可視化）\n数字だけだと見逃します。ggplot2 でサッと可視化する癖をつけてください。\n\nggplot(tips, aes(x = total_bill, y = tip, color = time)) +\n  geom_point()",
+    "crumbs": [
+      "第2回 データの構造と扱い"
+    ]
+  },
+  {
+    "objectID": "02_data.html#演習課題",
+    "href": "02_data.html#演習課題",
+    "title": "第2回 データの構造と扱い",
+    "section": "演習課題",
+    "text": "演習課題\n読み込んだ tips データを使用し、以下の要件を満たすコードを作成・実行してください。\n\nday が “Sun”（日曜日）である行のみを filter() で抽出してください。\n上記で抽出したデータから、total_bill（支払総額）と size（人数）の2列のみを select() で選択し、結果を表示してください。",
+    "crumbs": [
+      "第2回 データの構造と扱い"
+    ]
+  },
+  {
+    "objectID": "02_data.html#dplyr-主要関数一覧",
+    "href": "02_data.html#dplyr-主要関数一覧",
+    "title": "第2回 データの構造と扱い",
+    "section": "dplyr 主要関数一覧",
+    "text": "dplyr 主要関数一覧\n本節で扱った主要関数の機能と構文をまとめます。\n\n\n\n関数\n役割\n構文例\n\n\n\n\nselect()\n列（変数）の選択\nselect(data, col1, col2)\n\n\nfilter()\n行（観測）の抽出\nfilter(data, x &gt; 10)\n\n\nmutate()\n列の作成・更新\nmutate(data, new = x + y)\n\n\narrange()\n行の並び替え\narrange(data, x)\n\n\nsummarize()\n集計・要約\nsummarize(data, mean(x))\n\n\ngroup_by()\nグループ化\ngroup_by(data, category)",
+    "crumbs": [
+      "第2回 データの構造と扱い"
+    ]
+  },
+  {
+    "objectID": "01_intro.html#グラフの描画",
+    "href": "01_intro.html#グラフの描画",
+    "title": "第1回 RとRStudioの基礎",
+    "section": "グラフの描画",
+    "text": "グラフの描画\nRの強力な機能の一つである可視化を体験する。ここではRに標準で同梱されているデータセット cars（1920年代の自動車の速度と停止距離のデータ）を使用する。\n\nlibrary(tidyverse)\n# 日本語フォント設定（Macの場合はHiraKakuProN-W3、Windowsの場合はMeiryo等を指定）\ntheme_set(theme_gray(base_family = \"HiraKakuProN-W3\"))\n\nggplot(cars, aes(x = speed, y = dist)) +\n  geom_point() +\n  labs(title = \"車の速度と停止距離\")\n\n\n\n\n\n\n\n\nggsave(\"figure/01_intro/cars.png\")",
+    "crumbs": [
+      "第1回 RとRStudioの基礎"
+    ]
+  },
+  {
+    "objectID": "01_intro.html#一般的な演算子と関数",
+    "href": "01_intro.html#一般的な演算子と関数",
+    "title": "第1回 RとRStudioの基礎",
+    "section": "一般的な演算子と関数",
+    "text": "一般的な演算子と関数\nデータ分析の実務において頻出する演算子を挙げる。\n\n算術演算子\n\n# 加算\n2 + 3\n#&gt; [1] 5\n\n# 減算\n10 - 4\n#&gt; [1] 6\n\n# 乗算\n5 * 6\n#&gt; [1] 30\n\n# 除算\n20 / 4\n#&gt; [1] 5\n\n# べき乗（累乗）\n2^3\n#&gt; [1] 8\n\n# 剰余（割り算の余り）\n10 %% 3\n#&gt; [1] 1\n\n\n\nベクトルの操作\n\n# ベクトルの定義\nx &lt;- c(1, 2, 3, 4, 5)\n\n# ベクトルに対するスカラー演算（全要素への適用）\nx * 2\n#&gt; [1]  2  4  6  8 10\n\n# 要素数の確認\nlength(x)\n#&gt; [1] 5\n\n# 総和\nsum(x)\n#&gt; [1] 15\n\n# 最大値・最小値\nmax(x)\n#&gt; [1] 5\nmin(x)\n#&gt; [1] 1",
+    "crumbs": [
+      "第1回 RとRStudioの基礎"
+    ]
+  },
+  {
+    "objectID": "01_intro.html#実践に向けた助言",
+    "href": "01_intro.html#実践に向けた助言",
+    "title": "第1回 RとRStudioの基礎",
+    "section": "実践に向けた助言",
+    "text": "実践に向けた助言\n筆者から学習者へのヒントを記す。\n\nヒント1: コメントの活用\nコード内に # を記述すると、それ以降の文字列はプログラムとして実行されない（コメントアウト）。 コードの意図や思考のプロセスを記録することは、将来の自分自身への説明責任を果たすために重要である。\n\n# 変数定義：xは観測値を表す（例）\nx &lt;- 10\n\n\n\nヒント2: エラーへの対処\nエラーの発生は学習プロセスの一部であり、失敗ではない。 エラーメッセージは「何が間違っているか」を示す論理的な指摘である。以下に代表例を挙げる。\n\ncould not find function: 関数名の誤入力、または必要なパッケージがロードされていない。\nobject not found: 変数が定義されていない（実行順序の誤りやタイポ）。\n構文エラー: 括弧 () {} の対応関係が崩れている場合など。\n\n\n\nヒント3: ドキュメントの参照\n関数の正確な仕様（定義、引数、戻り値）を確認する際は、? を用いて公式ヘルプを参照する習慣をつけること。\n\n?mean",
+    "crumbs": [
+      "第1回 RとRStudioの基礎"
+    ]
+  },
+  {
+    "objectID": "01_intro.html#なぜ今rを学ぶのか",
+    "href": "01_intro.html#なぜ今rを学ぶのか",
+    "title": "第1回 RとRStudioの基礎",
+    "section": "",
+    "text": "科学的検証のためのツール\nなぜこれほどRを推すのか。最大の理由は 再現性が確保できるから です。 Excelでの分析は、どうしても「手作業」の連続になります。どのセルをコピーし、どこでフィルタをかけ、どのグラフを選んだか。その履歴を完全に追跡するのは困難です。 一方、Rはすべての操作をコードとして残します。コードは「手順書」そのもの。第三者が同じコードを実行すれば、間違いなく同じ結果が出ます。科学的な検証において、この特性は欠かせません。\nもちろん、実利的なメリットも大きいです。\n\nOSSとコスト: 個人・組織を問わず無料（GPLライセンス）。\n統計機能: 世界中の統計家が開発に参加しており、最新の手法が22,000以上のパッケージ（CRAN）ですぐに使えます。\nキャリア: 定量的研究やデータサイエンスの職務記述書（JD）において、Rスキルは依然として強い武器になります。\n\n（Webアプリ開発やシステムへの組み込みならPythonやC++が適しています。適材適所です）\n\n\nRとExcel：対立ではなく使い分け\nよく「RかExcelか」と二項対立で語られますが、実際は「併用」が正解です。\n\n\n\n\n\n\n\n\nツール\n得意な領域\n苦手な領域\n\n\n\n\nExcel\n直感的な操作、データの閲覧、小規模な集計\n大規模データ（100万行〜）、手順の記録、複雑な統計モデル\n\n\nR\n大規模データの処理、高度な統計解析、再現性のある描画\nデータの直接入力、閲覧（スプレッドシート的な操作）\n\n\n\n私だって、データの概観やちょっとした検算にはExcelを使います。でも、論文に載せる分析や、来月も同じ処理をする業務なら、迷わずRを選びます。",
+    "crumbs": [
+      "第1回 RとRStudioの基礎"
+    ]
+  },
+  {
+    "objectID": "01_intro.html#rstudioというコックピット",
+    "href": "01_intro.html#rstudioというコックピット",
+    "title": "第1回 RとRStudioの基礎",
+    "section": "RStudioという「コックピット」",
+    "text": "RStudioという「コックピット」\nR本体はただの「計算エンジン」です。人間が楽に扱うために、統合開発環境（IDE）である RStudio を使います。 画面は4分割されていますが、データの流れで考えると分かりやすいでしょう。\n\nSource Editor (左上)：ここで「指示書（スクリプト）」を書く。\n\n料理ならレシピを書く場所。ここに書いたものだけが「再現可能な記録」として残ります。\n\nConsole (左下)：指示を実行し、結果を受け取る。\n\n実際にRが計算する場所。ちょっとした計算や、中身の確認用です。\n\nEnvironment (右上)：材料（データ・変数）を確認する。\n\nいまメモリ上に何があるかが見えています。\n\nFiles / Plots (右下)：成果物を確認する。\n\n描かれたグラフや、保存されたファイルはここに出ます。\n\n\n基本は、「左上で書いて、左下で実行させて、右と右下で結果を確認する」。この繰り返しです。",
+    "crumbs": [
+      "第1回 RとRStudioの基礎"
+    ]
+  },
+  {
+    "objectID": "01_intro.html#rと対話する計算と変数",
+    "href": "01_intro.html#rと対話する計算と変数",
+    "title": "第1回 RとRStudioの基礎",
+    "section": "Rと対話する（計算と変数）",
+    "text": "Rと対話する（計算と変数）\nまずは難しく考えず、Rを「やたら高機能な電卓」として使ってみましょう。 Consoleに直接入力してみてください。\n\n1 + 1\n#&gt; [1] 2\n(100 - 20) / 4\n#&gt; [1] 20\n\n\n情報を箱に入れる：変数\n計算結果を使い捨てにせず、取っておくための箱が 変数（オブジェクト） です。 R独特の記号 &lt;-（代入演算子）を使います。「右の値を左の箱に入れる」イメージの矢印です。\n\nprice &lt;- 1500\namount &lt;- 3\ntotal &lt;- price * amount\ntotal\n#&gt; [1] 4500\n\n大事なのは、price や amount という「名前」でデータを管理できること。「1500」という数値の意味を、人間が覚えておく必要はありません。\n\n\n便利な道具：関数\nよく使う処理は 関数 として用意されています。「機能名(データ)」の形で呼び出します。\n\n# 数値のベクトル（列）を作る c() 関数\nscores &lt;- c(80, 90, 75, 60, 95)\n\n# 平均値を計算する mean() 関数\nmean(scores)\n#&gt; [1] 80\n\n関数は無数にありますが、最初は「やりたいこと（機能）」と「入れるもの（引数）」の対応さえ意識できれば十分です。",
+    "crumbs": [
+      "第1回 RとRStudioの基礎"
+    ]
+  },
+  {
+    "objectID": "01_intro.html#エラーはrからの返信",
+    "href": "01_intro.html#エラーはrからの返信",
+    "title": "第1回 RとRStudioの基礎",
+    "section": "「エラー」はRからの返信",
+    "text": "「エラー」はRからの返信\nプログラミング初心者にとって、赤い文字のエラーメッセージは怖いかもしれません。「お前は間違ってる」と怒られた気分になるからでしょう。 でも、誤解です。エラーはRからの「この指示だと、ここが分からなくて実行できません」という、ただの返信です。\n\ncould not find function：「その関数を知りません」（綴りが違うか、パッケージを読み忘れていませんか？）\nobject not found：「その変数が見当たりません」（作る前に使おうとしていませんか？）\n\nエラーが出たら、まずはメッセージを読んでみてください。解決のヒントは必ずそこにあります。",
+    "crumbs": [
+      "第1回 RとRStudioの基礎"
+    ]
+  },
+  {
+    "objectID": "01_intro.html#グラフを描いてみる",
+    "href": "01_intro.html#グラフを描いてみる",
+    "title": "第1回 RとRStudioの基礎",
+    "section": "グラフを描いてみる",
+    "text": "グラフを描いてみる\n最後に、Rの「華」、可視化を試してみます。 解説は省きますが、数行書くだけで美しい散布図が描けることを確認してください。\n\nlibrary(tidyverse)\n# [対象注意] 日本語フォント設定は環境により異なります\ntheme_set(theme_gray(base_family = \"HiraKakuProN-W3\"))\n\nggplot(cars, aes(x = speed, y = dist)) +\n  geom_point() +\n  labs(title = \"車の速度と停止距離\") \n\n\n\n\n\n\n\n\nこのグラフも、コードの数値を少し変えるだけで、明日になっても（あるいは10年後でも）全く同じものを再現できます。",
+    "crumbs": [
+      "第1回 RとRStudioの基礎"
+    ]
+  },
+  {
+    "objectID": "01_intro.html#構成変更の意図",
+    "href": "01_intro.html#構成変更の意図",
+    "title": "第1回 RとRStudioの基礎",
+    "section": "構成変更の意図",
+    "text": "構成変更の意図\n\n導入の刷新: 定型的な「本講義では〜」を廃止し、「なぜRなのか（科学的な正しさ）」という核心からスタートすることで、読者の動機付けを強化しました。\n情報の重み付け: Rのメリットを羅列せず、「再現性」を最重要事項として強調し、コストや機能は実利的な補足として配置しました。\n対立の解消: R vs Excelを「対立」ではなく「使い分け」として再定義し、現場の実感に近い温度感に調整しました。\n操作説明のナラティブ化: 画面構成の説明を「左上から右下へ流れる」というストーリーで繋げ、無味乾燥なリストを回避しました。\nメタファーの使用: エラーを「恐怖」ではなく「コミュニケーション」と定義し直すことで、学習者の心理的障壁を下げる工夫を入れました。",
+    "crumbs": [
+      "第1回 RとRStudioの基礎"
+    ]
+  },
+  {
+    "objectID": "02_data.html#データを整える思想",
+    "href": "02_data.html#データを整える思想",
+    "title": "第2回 データの構造と扱い",
+    "section": "",
+    "text": "Tidyverse：人間中心のR\nRにも元々データ操作機能（Base R）はありますが、記法が少し特殊で、覚えるのが大変でした。 そこで生まれたのが Tidyverse です。「人間が読みやすく、書きやすい」ことを最優先に設計された、Rの「新しい方言」だと思ってください。\n\nインストール（世界への入り口）：初回のみ\n\n# install.packages(\"tidyverse\") {.unnumbered}\n\nロード（道具箱を開ける）：起動するたびに必要\n\nlibrary(tidyverse)\n\n\nこれだけで、必要な道具一式（加工、可視化、読み込み…）は揃います。",
+    "crumbs": [
+      "第2回 データの構造と扱い"
+    ]
+  },
+  {
+    "objectID": "02_data.html#データフレーム世界を表形式にする",
+    "href": "02_data.html#データフレーム世界を表形式にする",
+    "title": "第2回 データの構造と扱い",
+    "section": "データフレーム：世界を表形式にする",
+    "text": "データフレーム：世界を表形式にする\n私たちが分析する社会現象や自然現象は、混沌としています。それをコンピュータが理解できる唯一の形式が「行と列」です。 Rではこれを データフレーム と呼びます。\n\n行（Row）：ひとつの観測単位（1人の人間、1回の取引、1日の記録）\n列（Column）：属性や変数（年齢、金額、気温）\n\n\n現実をRに取り込む（CSV読み込み）\n手元にあるExcelやCSVファイルは、まだ「外の世界」のものです。これをRという「計算の世界」に引き入れる儀式が read_csv() です。\n今回は、Pythonのライブラリ等でもよく使われる tips（レストランのチップ支払い記録）[要出典] をWebから直接読み込んでみます。\n\nurl &lt;- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips &lt;- read_csv(url)\n\n# データの「顔」を確認する（tidyverse版のstr()）\nglimpse(tips)\n#&gt; Rows: 244\n#&gt; Columns: 7\n#&gt; $ total_bill &lt;dbl&gt; 16.99, 10.34, 21.01, 23.68, 24.59, 25.29, 8.77, 26.88, 15.0…\n#&gt; $ tip        &lt;dbl&gt; 1.01, 1.66, 3.50, 3.31, 3.61, 4.71, 2.00, 3.12, 1.96, 3.23,…\n#&gt; $ sex        &lt;chr&gt; \"Female\", \"Male\", \"Male\", \"Male\", \"Female\", \"Male\", \"Male\",…\n#&gt; $ smoker     &lt;chr&gt; \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\",…\n#&gt; $ day        &lt;chr&gt; \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Su…\n#&gt; $ time       &lt;chr&gt; \"Dinner\", \"Dinner\", \"Dinner\", \"Dinner\", \"Dinner\", \"Dinner\",…\n#&gt; $ size       &lt;dbl&gt; 2, 3, 3, 2, 4, 4, 2, 4, 2, 2, 2, 4, 2, 4, 2, 2, 3, 3, 3, 3,…\n\n読み込んだ瞬間、変数の型（数値なのか、文字なのか）が自動的に判定されています。Excelでよくある「数字だと思ったら文字として扱われて計算できない」といったトラブルを、入り口で防いでくれるのです。\n[要一次情報: データセットの詳細な定義書の所在]",
+    "crumbs": [
+      "第2回 データの構造と扱い"
+    ]
+  },
+  {
+    "objectID": "02_data.html#データ操作の文法-dplyr",
+    "href": "02_data.html#データ操作の文法-dplyr",
+    "title": "第2回 データの構造と扱い",
+    "section": "データ操作の文法 (dplyr)",
+    "text": "データ操作の文法 (dplyr)\nTidyverseの中核である dplyr パッケージは、データを加工するための「5つの動詞」を提供します。 これらはプログラミングの命令というより、英語の文法に近い感覚です。\n\nパイプ演算子 %&gt;%：考えた順に書く\nまず、Tidyverseの象徴である パイプ演算子 %&gt;%（または |&gt;）を概観します。これは「左から右へ、水を流す」イメージです。\n\nBase R: head(select(tips, total_bill)) → 内側から外側へ読む（直感的じゃない）\nTidyverse: tips %&gt;% select(total_bill) %&gt;% head() → 「データを、選んで、先頭を見る」（考えた順）\n\n\n\n1. 切り分ける：select() と filter()\n分析はまず、要らない部分を削ぎ落とすことから始まります。\n列（変数）を選ぶ：select() 「分析に性別と喫煙情報は関係ない」なら、こう。\n\ntips %&gt;% \n  select(total_bill, tip) %&gt;% \n  head()\n\n\n  \n\n\n\n行（観測）を絞る：filter() 「ディナーの客だけ見たい」なら、こう。\n\ntips %&gt;% \n  filter(time == \"Dinner\") %&gt;% \n  head()\n\n\n  \n\n\n\n\n\n2. 加工する：mutate()\n既存の列を使って新しい指標を作るときは mutate()（変化させる）を使います。 「チップの額」そのものより、「支払額に対するチップの割合」の方が意味があるでしょう。\n\ntips %&gt;% \n  mutate(tip_rate = tip / total_bill) %&gt;% \n  select(total_bill, tip, tip_rate) %&gt;% \n  head()\n\n\n  \n\n\n\n\n\n3. 並べる：arrange()\nデータは最初、「記録順」です。これを「意味のある順」に変えます。\n\n# チップを多く払った順（降順）に並べる\ntips %&gt;% \n  arrange(desc(tip)) %&gt;% \n  head()\n\n\n  \n\n\n\n\n\n4. 要約する：group_by() と summarize()\n個別の値より「傾向」が知りたいなら、データをグループにまとめて（group_by）、縮約（summarize）します。 「ランチとディナー、どっちが羽振りがいいのか？」という問いに答えてみましょう。\n\ntips %&gt;% \n  group_by(time) %&gt;% \n  summarize(\n    平均支払額 = mean(total_bill),\n    平均チップ = mean(tip),\n    データ数 = n()\n  )",
+    "crumbs": [
+      "第2回 データの構造と扱い"
+    ]
+  },
+  {
+    "objectID": "02_data.html#ストーリーとして記述する",
+    "href": "02_data.html#ストーリーとして記述する",
+    "title": "第2回 データの構造と扱い",
+    "section": "ストーリーとして記述する",
+    "text": "ストーリーとして記述する\nこれらの「動詞」と「パイプ」を組み合わせることで、複雑なデータ処理も一つのストーリーとして記述できます。\n\n問い：土曜日のディナーに来た客のうち、特にチップを弾んでくれた（総額の20%以上）のはどんな人たちか？支払額が高い順に見たい。\n\nこの思考プロセスをそのままコードにします。\n\ntips %&gt;% \n  filter(day == \"Sat\" & time == \"Dinner\") %&gt;%  # 土曜日のディナー客で\n  mutate(rate = tip / total_bill) %&gt;%          # チップ率を計算し\n  filter(rate &gt;= 0.2) %&gt;%                      # 20%以上に絞り込み\n  arrange(desc(total_bill)) %&gt;%                # 支払額が高い順に並べる\n  select(sex, size, total_bill, tip, rate)     # 必要な情報だけ見る\n\n\n  \n\n\n\nこの可読性こそが、私たちがTidyverseを選ぶ理由です。数ヶ月後の自分が読んでも、何をしたかったのか即座に理解できるでしょう。",
+    "crumbs": [
+      "第2回 データの構造と扱い"
+    ]
+  },
+  {
+    "objectID": "02_data.html#構成変更の意図",
+    "href": "02_data.html#構成変更の意図",
+    "title": "第2回 データの構造と扱い",
+    "section": "構成変更の意図",
+    "text": "構成変更の意図\n\n導入の物語化: 「目的」の箇条書きを廃止し、「データの掃除が8割」というデータ分析の厳しい現実と、それを解決するヒーローとしてのTidyverseという構図にしました。\nメタファーの多用: read_csvを「儀式」、変数操作を「動詞」、パイプを「思考の流れ」と例え、無機質な操作説明に血を通わせました。\n実用性の強調: filterやselectを単なる機能ではなく、「分析の第一歩」や「切り分け」という意思決定のツールとして位置づけました。\n「問い」中心の構成: 具体的な処理の説明において、「なぜその操作をするのか（例：羽振りがいいのはどっち？）」という問いを常に先行させました。\n結論の削除: 巻末の「まとめ表」は削除しました。代わりに練習問題を通じて、読者自身に要約させる形式（能動的な学習）へ誘導しています。",
+    "crumbs": [
+      "第2回 データの構造と扱い"
+    ]
+  },
+  {
+    "objectID": "02_data.html#データフレーム世界を表にする",
+    "href": "02_data.html#データフレーム世界を表にする",
+    "title": "第2回 データの構造と扱い",
+    "section": "データフレーム：世界を表にする",
+    "text": "データフレーム：世界を表にする\n現実のデータは、混沌としています。それをコンピュータが理解できる形は、結局「行と列」だけです。 Rでの呼び名は データフレーム。\n\n行（Row）：ひとつの観測単位（1人の人間、1回の取引、1日の記録）\n列（Column）：属性や変数（年齢、金額、気温）\n\n\n現実をRに取り込む（CSV読み込み）\n手元のExcelやCSVファイルは、まだ「外」にあります。これを「中」（Rの計算世界）に引き入れる儀式が read_csv() です。\n今回は、Pythonのライブラリ等でもよく使われる tips（レストランのチップ支払い記録）をWebから直接読み込んでみます。\n\nurl &lt;- \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips &lt;- read_csv(url)\n\n# データの「顔見せ」（tidyverse版のstr()）\nglimpse(tips)\n#&gt; Rows: 244\n#&gt; Columns: 7\n#&gt; $ total_bill &lt;dbl&gt; 16.99, 10.34, 21.01, 23.68, 24.59, 25.29, 8.77, 26.88, 15.0…\n#&gt; $ tip        &lt;dbl&gt; 1.01, 1.66, 3.50, 3.31, 3.61, 4.71, 2.00, 3.12, 1.96, 3.23,…\n#&gt; $ sex        &lt;chr&gt; \"Female\", \"Male\", \"Male\", \"Male\", \"Female\", \"Male\", \"Male\",…\n#&gt; $ smoker     &lt;chr&gt; \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\", \"No\",…\n#&gt; $ day        &lt;chr&gt; \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Sun\", \"Su…\n#&gt; $ time       &lt;chr&gt; \"Dinner\", \"Dinner\", \"Dinner\", \"Dinner\", \"Dinner\", \"Dinner\",…\n#&gt; $ size       &lt;dbl&gt; 2, 3, 3, 2, 4, 4, 2, 4, 2, 2, 2, 4, 2, 4, 2, 2, 3, 3, 3, 3,…\n\n読み込んだ瞬間、変数の型（数値なのか、文字なのか）は自動判定されます。Excelによくある「数字なのに文字扱い」みたいなトラブルも、入り口で防げます。\n[要一次情報: データセットの詳細な定義書の所在]",
+    "crumbs": [
+      "第2回 データの構造と扱い"
+    ]
+  },
+  {
+    "objectID": "02_data.html#ストーリーで書く",
+    "href": "02_data.html#ストーリーで書く",
+    "title": "第2回 データの構造と扱い",
+    "section": "ストーリーで書く",
+    "text": "ストーリーで書く\nこれらの「動詞」と「パイプ」を組み合わせれば、複雑なデータ処理も一つのストーリーとして記述できます。\n\n問い：土曜日のディナーに来た客のうち、特にチップを弾んでくれた（総額の20%以上）のはどんな人たちか？支払額が高い順に見たい。\n\nこの思考プロセスをそのままコードにします。\n\ntips %&gt;% \n  filter(day == \"Sat\" & time == \"Dinner\") %&gt;%  # 土曜日のディナー客で\n  mutate(rate = tip / total_bill) %&gt;%          # チップ率を計算し\n  filter(rate &gt;= 0.2) %&gt;%                      # 20%以上に絞り込み\n  arrange(desc(total_bill)) %&gt;%                # 支払額が高い順に並べる\n  select(sex, size, total_bill, tip, rate)     # 必要な情報だけ見る\n\n\n  \n\n\n\nこの「読みやすさ」こそ、私たちがTidyverseを選ぶ理由です。数ヶ月後の自分が見ても、「何がしたかったか」一目で分かります。",
+    "crumbs": [
+      "第2回 データの構造と扱い"
+    ]
+  },
+  {
+    "objectID": "03_desc_stat_1.html#本節の目的",
+    "href": "03_desc_stat_1.html#本節の目的",
+    "title": "第3回 記述統計 (1) 数値要約",
+    "section": "",
+    "text": "データの「中心的傾向」を示す代表値（平均値、中央値、最頻値）の定義と性質を理解する。\nデータの「広がり」を示す散布度（分散、標準偏差、四分位範囲）の定義と性質を理解する。\nRの基本関数を用いて、これらの統計量を算出する手順を確立する。",
+    "crumbs": [
+      "第3回 記述統計 (1) 数値要約"
+    ]
+  },
+  {
+    "objectID": "03_desc_stat_1.html#記述統計の定義",
+    "href": "03_desc_stat_1.html#記述統計の定義",
+    "title": "第3回 記述統計 (1) 数値要約",
+    "section": "記述統計の定義",
+    "text": "記述統計の定義\n記述統計（Descriptive Statistics）とは、手元にあるデータの特徴を、少数の数値（要約統計量）やグラフを用いて要約・記述する手法の総称です。 本講義では、データの分布を把握するために不可欠な以下の2つの側面を扱います。\n\n中心的傾向（Central Tendency）: データの分布がどこに中心を持つか（代表値）。\n散布度（Dispersion）: データが平均値の周りにどの程度広がっているか（ばらつき）。",
+    "crumbs": [
+      "第3回 記述統計 (1) 数値要約"
+    ]
+  },
+  {
+    "objectID": "03_desc_stat_1.html#外れ値の検出基準",
+    "href": "03_desc_stat_1.html#外れ値の検出基準",
+    "title": "第3回 記述統計 (1) 数値要約",
+    "section": "外れ値の検出基準",
+    "text": "外れ値の検出基準\nTukeyの方法に基づき、以下の基準を超える値を統計的な「外れ値」として扱うことが一般的です。\n\n下限: 第1四分位数 - 1.5 × IQR\n上限: 第3四分位数 + 1.5 × IQR\n\n\nQ1 &lt;- quantile(tips$total_bill, 0.25)\nQ3 &lt;- quantile(tips$total_bill, 0.75)\nIQR_val &lt;- IQR(tips$total_bill)\n\n# 外れ値の境界\nlower_bound &lt;- Q1 - 1.5 * IQR_val\nupper_bound &lt;- Q3 + 1.5 * IQR_val\n\ncat(\"外れ値の下限:\", lower_bound, \"\\n\")\n#&gt; 外れ値の下限: -2.8225\ncat(\"外れ値の上限:\", upper_bound, \"\\n\")\n#&gt; 外れ値の上限: 40.2975\n\n# 定義された外れ値を持つ観測を抽出\ntips %&gt;% \n  filter(total_bill &lt; lower_bound | total_bill &gt; upper_bound) %&gt;% \n  select(total_bill, tip, day, time)",
+    "crumbs": [
+      "第3回 記述統計 (1) 数値要約"
+    ]
+  },
+  {
+    "objectID": "03_desc_stat_1.html#平均値と中央値の乖離の可視化",
+    "href": "03_desc_stat_1.html#平均値と中央値の乖離の可視化",
+    "title": "第3回 記述統計 (1) 数値要約",
+    "section": "平均値と中央値の乖離の可視化",
+    "text": "平均値と中央値の乖離の可視化\n分布が非対称である場合、平均値と中央値は一致しません。 以下はヒストグラム上に両者を描画し、その位置関係を確認するコードです。 [対象注意: 日本語フォント設定は環境依存あり]\n\n# 平均と中央値を計算 {.unnumbered}\nmean_val &lt;- mean(tips$total_bill)\nmed_val &lt;- median(tips$total_bill)\n\n# プロット {.unnumbered}\nggplot(tips, aes(x = total_bill)) +\n  # theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定のためコメントアウト\n  geom_histogram(bins = 30, fill = \"lightgray\", color = \"white\") +\n  geom_vline(xintercept = mean_val, color = \"red\", linetype = \"dashed\", size = 1) +\n  geom_vline(xintercept = med_val, color = \"blue\", linetype = \"solid\", size = 1) +\n  annotate(\"text\", x = mean_val + 5, y = 30, label = \"Mean (Red)\", color = \"red\") +\n  annotate(\"text\", x = med_val - 5, y = 30, label = \"Median (Blue)\", color = \"blue\") +\n  labs(title = \"平均値（赤破線）と中央値（青実線）\")",
+    "crumbs": [
+      "第3回 記述統計 (1) 数値要約"
+    ]
+  },
+  {
+    "objectID": "03_desc_stat_1.html#グループごとの記述統計量",
+    "href": "03_desc_stat_1.html#グループごとの記述統計量",
+    "title": "第3回 記述統計 (1) 数値要約",
+    "section": "グループごとの記述統計量",
+    "text": "グループごとの記述統計量\n属性ごとの特徴を比較するためには、グループ別の集計が有効です。 dplyr パッケージの group_by() を使用して計算します。\n\ntips %&gt;% \n  group_by(sex) %&gt;% \n  summarize(\n    avg_bill = mean(total_bill),\n    sd_bill = sd(total_bill),\n    count = n() # サンプルサイズ\n  )",
+    "crumbs": [
+      "第3回 記述統計 (1) 数値要約"
+    ]
+  },
+  {
+    "objectID": "03_desc_stat_1.html#演習課題",
+    "href": "03_desc_stat_1.html#演習課題",
+    "title": "第3回 記述統計 (1) 数値要約",
+    "section": "演習課題",
+    "text": "演習課題\n\ntips データを使用し、時間帯 (time) ごとのチップ (tip) の平均値を算出してください。\nsummary() 関数を使用し、チップ (tip) の分布の要約統計量を確認してください。",
+    "crumbs": [
+      "第3回 記述統計 (1) 数値要約"
+    ]
+  },
+  {
+    "objectID": "03_desc_stat_1.html#情報を縮約する",
+    "href": "03_desc_stat_1.html#情報を縮約する",
+    "title": "第3回 記述統計 (1) 数値要約",
+    "section": "",
+    "text": "どこに集まっているか（中心的傾向）\nどれくらい散らばっているか（散布度）",
+    "crumbs": [
+      "第3回 記述統計 (1) 数値要約"
+    ]
+  },
+  {
+    "objectID": "03_desc_stat_1.html#中心を探す代表値",
+    "href": "03_desc_stat_1.html#中心を探す代表値",
+    "title": "第3回 記述統計 (1) 数値要約",
+    "section": "中心を探す：代表値",
+    "text": "中心を探す：代表値\nまずはデータの「顔」となる中心点を探します。ただ、「中心」の定義は一つではありません。\n\n1. 全員の声を聞く：平均値 (Mean)\nすべてのデータを足し合わせ、人数で割る。一番なじみ深い「中心」でしょう。\n\\[\\bar{x} = \\frac{1}{n}\\sum_{i=1}^{n} x_i\\]\n\nmean(tips$total_bill)\n#&gt; [1] 19.78594\n\nこの指標には「全員の値を公平に扱う」という民主的な良さがあります。反面、極端な声（外れ値）に弱いのが欠点です。たった一人の超富裕層がいるだけで、全員の平均所得は跳ね上がってしまいます。\n\n\n2. 真ん中の人を見る：中央値 (Median)\nデータを一列に並べたとき、ちょうど真ん中にいる人の値です。\n\nmedian(tips$total_bill)\n#&gt; [1] 17.795\n\nこちらは「順位」しか見ないので、極端な値の影響をほとんど受けません（頑健性）。\n\n\n3. 多派を見る：最頻値 (Mode)\n最も頻繁に現れる値です。数値データよりも、アンケートの回答（賛成/反対）などのカテゴリデータで威力を発揮します。\n\n# Rには標準関数がないため、集計して確認\ntips %&gt;% \n  count(day) %&gt;% \n  arrange(desc(n))\n\n\n  \n\n\n\n\n\n意思決定：平均か、中央値か\nどっちを使うべきか。迷ったら「世界の形（分布）」を見ます。\n\n\n\n\n\n\n\n分布の形状\n選び方の指針\n\n\n\n\n左右対称（テストの点数など）\nどちらもほぼ同じ値になります。数学的に扱いやすい平均値を選びます。\n\n\n歪んでいる（年収、貯蓄額など）\n右に裾が長い場合、平均値は高すぎ​​る値になります。実感を反映する中央値を選びます。",
+    "crumbs": [
+      "第3回 記述統計 (1) 数値要約"
+    ]
+  },
+  {
+    "objectID": "03_desc_stat_1.html#広がりを測る散布度",
+    "href": "03_desc_stat_1.html#広がりを測る散布度",
+    "title": "第3回 記述統計 (1) 数値要約",
+    "section": "広がりを測る：散布度",
+    "text": "広がりを測る：散布度\nデータの特徴は「中心」だけでは語れません。「平均年収500万」と言っても、全員が500万の国と、0円と1000万がいる国では全く別物です。 この「散らばり具合」を数値にします。\n\n最大と最小：範囲 (Range)\n一番上と一番下の差です。単純ですが、全体像を掴むにはこれで十分なことも多いです。\n\nrange(tips$total_bill)  # 最小値と最大値\n#&gt; [1]  3.07 50.81\nmax(tips$total_bill) - min(tips$total_bill)  # その差（範囲）\n#&gt; [1] 47.74\n\n\n\n中心からの距離：分散 (Variance)\n「平均からどれくらい離れているか」を全データについて計算し、平均したもの。 直感的には「差の絶対値」を平均したくなりますよね。でも、統計学では数学的な都合から「差を二乗」して扱います。\nRの注意点: Rの var() 関数は、手元のデータを標本とみなした不偏分散（分母が \\(n-1\\)）を計算します。\n\\[s^2 = \\frac{1}{n-1}\\sum_{i=1}^{n} (x_i - \\bar{x})^2\\]\n\nvar(tips$total_bill)\n#&gt; [1] 79.25294\n\n\n\n単位を戻す：標準偏差 (Standard Deviation)\n分散は計算過程で「二乗」しているため、単位が「ドルの二乗」のようになり、直感的に分かりにくい。 そこで、平方根をとって元の単位に戻したのが標準偏差です。\n\\[s = \\sqrt{s^2}\\]\n\nsd(tips$total_bill)\n#&gt; [1] 8.902412\n\n「平均値 \\(\\pm\\) 標準偏差」の範囲に、多くのデータ（正規分布なら約68%）が含まれると考えるとイメージしやすいでしょう。\n\n\n単位を消す：変動係数 (CV)\n「象の体重のばらつき」と「アリの体重のばらつき」を比べたいとき、標準偏差（kgやg）そのままでは比較できません。 平均値に対する比率（%）に直すことで、スケールの異なるデータでも比べられます。\n\\[CV = \\frac{s}{\\bar{x}} \\times 100\\%\\]\n\n# チップの額と、支払総額。どちらが「ばらついて」いるか？\ncv_tip &lt;- sd(tips$tip) / mean(tips$tip) * 100\ncv_bill &lt;- sd(tips$total_bill) / mean(tips$total_bill) * 100\n\ncat(\"チップの変動係数:\", cv_tip, \"%\\n\")\n#&gt; チップの変動係数: 46.14775 %\ncat(\"支払総額の変動係数:\", cv_bill, \"%\\n\")\n#&gt; 支払総額の変動係数: 44.99362 %",
+    "crumbs": [
+      "第3回 記述統計 (1) 数値要約"
+    ]
+  },
+  {
+    "objectID": "03_desc_stat_1.html#全体像をスキャンする四分位数",
+    "href": "03_desc_stat_1.html#全体像をスキャンする四分位数",
+    "title": "第3回 記述統計 (1) 数値要約",
+    "section": "全体像をスキャンする：四分位数",
+    "text": "全体像をスキャンする：四分位数\nデータを小さい順に並べて4等分した地点（25%, 50%, 75%）を四分位数と呼びます。 summary() 関数を使えば、これらの主要な統計量を一括で確認できます。\n\nsummary(tips$total_bill)\n#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n#&gt;    3.07   13.35   17.80   19.79   24.13   50.81\n\n\nMedian（50%地点）と Mean（平均）のズレを見ることで、データの歪みを推測できます。\n1st Qu（25%）から 3rd Qu（75%）の間には、データの中央半数が含まれます。\n\n\n安定した広がり：四分位範囲 (IQR)\nデータの中央50%が収まる幅（第3四分位数 \\(-\\) 第1四分位数）を四分位範囲と呼びます。 標準偏差と違い、極端な値の影響を受けないため、外れ値を含むデータでのばらつき指標として優秀です。\n\nIQR(tips$total_bill)\n#&gt; [1] 10.78",
+    "crumbs": [
+      "第3回 記述統計 (1) 数値要約"
+    ]
+  },
+  {
+    "objectID": "03_desc_stat_1.html#ノイズかシグナルか外れ値の検出",
+    "href": "03_desc_stat_1.html#ノイズかシグナルか外れ値の検出",
+    "title": "第3回 記述統計 (1) 数値要約",
+    "section": "ノイズか、シグナルか：外れ値の検出",
+    "text": "ノイズか、シグナルか：外れ値の検出\n統計分析において、極端に離れた値（外れ値）は厄介な存在です。入力ミス（ノイズ）なのか、特異な事象（シグナル）なのかを見極める必要があります。 一般的に、箱ひげ図のTukeyの基準を用いて「外れ値候補」を機械的に検出します。\n\n下限: 第1四分位数 - 1.5 × IQR\n上限: 第3四分位数 + 1.5 × IQR\n\n\nQ1 &lt;- quantile(tips$total_bill, 0.25)\nQ3 &lt;- quantile(tips$total_bill, 0.75)\nIQR_val &lt;- IQR(tips$total_bill)\n\n# 境界線の計算\nlower_bound &lt;- Q1 - 1.5 * IQR_val\nupper_bound &lt;- Q3 + 1.5 * IQR_val\n\ncat(\"外れ値の下限:\", lower_bound, \"\\n\")\n#&gt; 外れ値の下限: -2.8225\ncat(\"外れ値の上限:\", upper_bound, \"\\n\")\n#&gt; 外れ値の上限: 40.2975\n\n# 境界を超えたデータを抽出してみる\ntips %&gt;% \n  filter(total_bill &lt; lower_bound | total_bill &gt; upper_bound) %&gt;% \n  select(total_bill, tip, day, time)",
+    "crumbs": [
+      "第3回 記述統計 (1) 数値要約"
+    ]
+  },
+  {
+    "objectID": "03_desc_stat_1.html#分布の歪みを可視化する",
+    "href": "03_desc_stat_1.html#分布の歪みを可視化する",
+    "title": "第3回 記述統計 (1) 数値要約",
+    "section": "分布の歪みを可視化する",
+    "text": "分布の歪みを可視化する\n平均値と中央値がずれているとき、実際にグラフを描くとその理由がわかります。 ヒストグラムに両者の位置を重ねてみましょう。\n\n# 統計量の計算 {.unnumbered}\nmean_val &lt;- mean(tips$total_bill)\nmed_val &lt;- median(tips$total_bill)\n\n# プロット {.unnumbered}\nggplot(tips, aes(x = total_bill)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_histogram(bins = 30, fill = \"lightgray\", color = \"white\") +\n  geom_vline(xintercept = mean_val, color = \"red\", linetype = \"dashed\", size = 1) +\n  geom_vline(xintercept = med_val, color = \"blue\", linetype = \"solid\", size = 1) +\n  annotate(\"text\", x = mean_val + 5, y = 30, label = \"Mean (Red)\", color = \"red\") +\n  annotate(\"text\", x = med_val - 5, y = 30, label = \"Median (Blue)\", color = \"blue\") +\n  labs(title = \"平均値（赤破線）と中央値（青実線）\")",
+    "crumbs": [
+      "第3回 記述統計 (1) 数値要約"
+    ]
+  },
+  {
+    "objectID": "03_desc_stat_1.html#グループごとに要約する",
+    "href": "03_desc_stat_1.html#グループごとに要約する",
+    "title": "第3回 記述統計 (1) 数値要約",
+    "section": "グループごとに要約する",
+    "text": "グループごとに要約する\n全体の平均だけでは見えない違いもあります。性別や喫煙の有無など、属性ごとに分けて要約することで、より深い洞察が得られます。\n\ntips %&gt;% \n  group_by(sex) %&gt;% \n  summarize(\n    avg_bill = mean(total_bill),\n    sd_bill = sd(total_bill),\n    count = n() # サンプルサイズも必ず確認する\n  )",
+    "crumbs": [
+      "第3回 記述統計 (1) 数値要約"
+    ]
+  },
+  {
+    "objectID": "04_desc_stat_2.html#キャンバスに層を重ねるggplot2の思想",
+    "href": "04_desc_stat_2.html#キャンバスに層を重ねるggplot2の思想",
+    "title": "第4回 記述統計 (2) データの可視化",
+    "section": "キャンバスに層を重ねる：ggplot2の思想",
+    "text": "キャンバスに層を重ねる：ggplot2の思想\nRの可視化パッケージ ggplot2 の設計思想は、Wickham (2010) の “Layered Grammar of Graphics”（グラフィックスの層状文法）に基づいています。 Excelみたいに「棒グラフを作るボタン」があるわけではありません。\n\n「データ」という土台に、「座標」を定義し、「点や棒（Geom）」を乗せ、「説明（Labels）」を加える。\n\nこの工程をコードで書きます。\n\nggplot(data = tips, mapping = aes(x = total_bill, y = tip)) + # キャンバスと座標\n  geom_point()                                                # 何を描くか（点）",
+    "crumbs": [
+      "第4回 記述統計 (2) データの可視化"
+    ]
+  },
+  {
+    "objectID": "04_desc_stat_2.html#分布の形状を見る",
+    "href": "04_desc_stat_2.html#分布の形状を見る",
+    "title": "第4回 記述統計 (2) データの可視化",
+    "section": "1. 分布の形状を見る",
+    "text": "1. 分布の形状を見る\nまずは、データが「どんな形」をしているか確認します。\n\n山の形を知る：ヒストグラム\n連続した数値データ（金額など）が、どこに集まっているかを見に行きます。 山は一つか、二つか？ 左右対称か、歪んでいるか？\n\nggplot(tips, aes(x = total_bill)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_histogram(bins = 30, fill = \"skyblue\", color = \"white\") +\n  labs(title = \"支払総額の分布\", x = \"支払総額 ($)\", y = \"度数\")\n\n\n\n\n\n\n\n\n\n\n構造を要約する：箱ひげ図\nヒストグラムは詳細ですが、複数のグループ比較には不向きです。重なって見づらいから。 そこで箱ひげ図の出番です。分布の情報を「箱」と「ひげ」に要約します。\n\nggplot(tips, aes(x = day, y = total_bill, fill = day)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_boxplot() +\n  labs(title = \"曜日ごとの支払額の違い\", x = \"曜日\", y = \"支払総額\")\n\n\n\n\n\n\n\n\nTukeyの箱ひげ図の定義:\n\n箱: データの中央50%（第1四分位数〜第3四分位数）。この中に「普通」のデータが入ります。\n太線: 中央値（Median）。\n点: 箱から 1.5倍の四分位範囲 以上離れた値。統計的な「外れ値候補」として扱います。\n\n\n\n分布の機微を見る：バイオリンプロット\n箱ひげ図だと「山が2つある」などの情報は消えてしまいます。分布の形状（密度）そのものを表示したい場合は、バイオリン図を使います。\n\nggplot(tips, aes(x = day, y = total_bill, fill = day)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_violin() +\n  geom_boxplot(width = 0.1, fill = \"white\") + # 箱ひげ図も重ねると最強\n  labs(title = \"分布の形状比較（バイオリン+箱ひげ）\", x = \"曜日\", y = \"支払総額\")",
+    "crumbs": [
+      "第4回 記述統計 (2) データの可視化"
+    ]
+  },
+  {
+    "objectID": "04_desc_stat_2.html#関係性を探る",
+    "href": "04_desc_stat_2.html#関係性を探る",
+    "title": "第4回 記述統計 (2) データの可視化",
+    "section": "2. 関係性を探る",
+    "text": "2. 関係性を探る\n次は、2つの変数がどう関わっているかを探ります。\n\n2つの量の相関：散布図\n「たくさん食べた人は、たくさんチップを払うのか？」 2つの連続変数（横軸と縦軸）の関係をプロットします。\n\nggplot(tips, aes(x = total_bill, y = tip)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_point(color = \"blue\", alpha = 0.5) +\n  labs(title = \"支払総額とチップの正の相関\", x = \"支払総額\", y = \"チップ\")\n\n\n\n\n\n\n\n\nここに第3の次元（情報）を加えるのも簡単です。例えば、性別によって色を変えます（color = sex）。\n\nggplot(tips, aes(x = total_bill, y = tip, color = sex)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_point()\n\n\n\n\n\n\n\n\n\n\n状況ごとの違い：ファセット分割\n色分け（color）は便利ですが、情報が増えすぎると「スパゲッティ」のように絡まって読めなくなる。 そんなときは facet_wrap() でグラフ自体を分割してしまいましょう。\n\n# 喫煙の有無 × 時間帯 で状況を分解する\nggplot(tips, aes(x = total_bill, y = tip)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_point(aes(color = smoker)) +\n  facet_wrap(~ time) +\n  labs(title = \"条件による関係性の違い\", x = \"支払総額\", y = \"チップ\")",
+    "crumbs": [
+      "第4回 記述統計 (2) データの可視化"
+    ]
+  },
+  {
+    "objectID": "04_desc_stat_2.html#グラフを語らせるための調整",
+    "href": "04_desc_stat_2.html#グラフを語らせるための調整",
+    "title": "第4回 記述統計 (2) データの可視化",
+    "section": "グラフを「語らせる」ための調整",
+    "text": "グラフを「語らせる」ための調整\nデフォルトのままでは、グラフは「下書き」です。誰かに伝えるためには、意図が伝わるよう調整します。\n\n統計情報の重ね書き\n「傾向」を見せたいなら、生のデータ点だけでなく、平均値や回帰直線を重ねるのが効果的です。\n\nggplot(tips, aes(x = day, y = total_bill)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_boxplot(fill = \"lightblue\") +\n  stat_summary(fun = mean, geom = \"point\", color = \"red\", size = 3) + # 平均値を赤点で追加\n  stat_summary(fun = mean, geom = \"line\", aes(group = 1), color = \"red\", linetype = \"dashed\") +\n  labs(title = \"曜日ごとの傾向（赤点は平均値）\", x = \"曜日\", y = \"支払総額\")\n\n\n\n\n\n\n\n\n\n\nユニバーサルデザインへの配慮\nあなたのグラフを見る人の中には、特定の色が見えにくい人（色覚多様性）がいるかもしれません。 「赤と緑」の色分けだけで情報を伝えてはダメです。形状（shape）や線種（linetype）の違いを併用するか、誰もが識別しやすいカラーパレット（Viridisなど）の使用をおすすめします。",
+    "crumbs": [
+      "第4回 記述統計 (2) データの可視化"
     ]
   }
 ]

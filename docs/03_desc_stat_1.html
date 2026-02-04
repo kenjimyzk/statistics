@@ -258,37 +258,17 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
-  <ul>
-  <li><a href="#今回の目標" id="toc-今回の目標" class="nav-link active" data-scroll-target="#今回の目標">今回の目標</a></li>
-  <li><a href="#記述統計とは" id="toc-記述統計とは" class="nav-link" data-scroll-target="#記述統計とは">記述統計とは</a></li>
+  <ul class="collapse">
+  <li><a href="#情報を縮約する" id="toc-情報を縮約する" class="nav-link active" data-scroll-target="#情報を縮約する">情報を「縮約」する</a></li>
   <li><a href="#準備" id="toc-準備" class="nav-link" data-scroll-target="#準備">準備</a></li>
-  <li><a href="#代表値データの中心" id="toc-代表値データの中心" class="nav-link" data-scroll-target="#代表値データの中心">代表値：データの中心</a>
-  <ul class="collapse">
-  <li><a href="#平均値-mean" id="toc-平均値-mean" class="nav-link" data-scroll-target="#平均値-mean">平均値 (Mean)</a></li>
-  <li><a href="#中央値-median" id="toc-中央値-median" class="nav-link" data-scroll-target="#中央値-median">中央値 (Median)</a></li>
-  <li><a href="#最頻値-mode" id="toc-最頻値-mode" class="nav-link" data-scroll-target="#最頻値-mode">最頻値 (Mode)</a></li>
-  <li><a href="#平均値-vs-中央値どちらを使うべきか" id="toc-平均値-vs-中央値どちらを使うべきか" class="nav-link" data-scroll-target="#平均値-vs-中央値どちらを使うべきか">平均値 vs 中央値：どちらを使うべきか</a></li>
-  </ul></li>
-  <li><a href="#散布度データのばらつき" id="toc-散布度データのばらつき" class="nav-link" data-scroll-target="#散布度データのばらつき">散布度：データのばらつき</a>
-  <ul class="collapse">
-  <li><a href="#範囲-range" id="toc-範囲-range" class="nav-link" data-scroll-target="#範囲-range">範囲 (Range)</a></li>
-  <li><a href="#分散-variance" id="toc-分散-variance" class="nav-link" data-scroll-target="#分散-variance">分散 (Variance)</a></li>
-  <li><a href="#標準偏差-standard-deviation" id="toc-標準偏差-standard-deviation" class="nav-link" data-scroll-target="#標準偏差-standard-deviation">標準偏差 (Standard Deviation)</a></li>
-  <li><a href="#変動係数-coefficient-of-variation" id="toc-変動係数-coefficient-of-variation" class="nav-link" data-scroll-target="#変動係数-coefficient-of-variation">変動係数 (Coefficient of Variation)</a></li>
-  <li><a href="#四分位数-quartiles" id="toc-四分位数-quartiles" class="nav-link" data-scroll-target="#四分位数-quartiles">四分位数 (Quartiles)</a></li>
-  <li><a href="#四分位範囲-iqr-interquartile-range" id="toc-四分位範囲-iqr-interquartile-range" class="nav-link" data-scroll-target="#四分位範囲-iqr-interquartile-range">四分位範囲 (IQR: Interquartile Range)</a></li>
-  </ul></li>
-  <li><a href="#外れ値の検出" id="toc-外れ値の検出" class="nav-link" data-scroll-target="#外れ値の検出">外れ値の検出</a></li>
-  <li><a href="#平均値と中央値の違いを可視化" id="toc-平均値と中央値の違いを可視化" class="nav-link" data-scroll-target="#平均値と中央値の違いを可視化">平均値と中央値の違いを可視化</a></li>
-  <li><a href="#グループごとの集計" id="toc-グループごとの集計" class="nav-link" data-scroll-target="#グループごとの集計">グループごとの集計</a></li>
+  <li><a href="#中心を探す代表値" id="toc-中心を探す代表値" class="nav-link" data-scroll-target="#中心を探す代表値">中心を探す：代表値</a></li>
+  <li><a href="#広がりを測る散布度" id="toc-広がりを測る散布度" class="nav-link" data-scroll-target="#広がりを測る散布度">広がりを測る：散布度</a></li>
+  <li><a href="#全体像をスキャンする四分位数" id="toc-全体像をスキャンする四分位数" class="nav-link" data-scroll-target="#全体像をスキャンする四分位数">全体像をスキャンする：四分位数</a></li>
+  <li><a href="#ノイズかシグナルか外れ値の検出" id="toc-ノイズかシグナルか外れ値の検出" class="nav-link" data-scroll-target="#ノイズかシグナルか外れ値の検出">ノイズか、シグナルか：外れ値の検出</a></li>
+  <li><a href="#分布の歪みを可視化する" id="toc-分布の歪みを可視化する" class="nav-link" data-scroll-target="#分布の歪みを可視化する">分布の歪みを可視化する</a></li>
+  <li><a href="#グループごとに要約する" id="toc-グループごとに要約する" class="nav-link" data-scroll-target="#グループごとに要約する">グループごとに要約する</a></li>
   <li><a href="#課題" id="toc-課題" class="nav-link" data-scroll-target="#課題">課題</a></li>
-  <li><a href="#練習問題" id="toc-練習問題" class="nav-link" data-scroll-target="#練習問題">練習問題</a>
-  <ul class="collapse">
-  <li><a href="#練習1-基本的な記述統計" id="toc-練習1-基本的な記述統計" class="nav-link" data-scroll-target="#練習1-基本的な記述統計">練習1: 基本的な記述統計</a></li>
-  <li><a href="#練習2-グループ別の比較" id="toc-練習2-グループ別の比較" class="nav-link" data-scroll-target="#練習2-グループ別の比較">練習2: グループ別の比較</a></li>
-  <li><a href="#練習3-外れ値の影響" id="toc-練習3-外れ値の影響" class="nav-link" data-scroll-target="#練習3-外れ値の影響">練習3: 外れ値の影響</a></li>
-  </ul></li>
-  <li><a href="#記述統計量のまとめ" id="toc-記述統計量のまとめ" class="nav-link" data-scroll-target="#記述統計量のまとめ">記述統計量のまとめ</a></li>
+  <li><a href="#練習問題" id="toc-練習問題" class="nav-link" data-scroll-target="#練習問題">練習問題</a></li>
   </ul>
 </nav>
     </div>
@@ -320,55 +300,52 @@ window.Quarto = {
 <figcaption>記述統計 (1) 数値要約</figcaption>
 </figure>
 </div>
-<section id="今回の目標" class="level2">
-<h2 class="anchored" data-anchor-id="今回の目標">今回の目標</h2>
-<ul>
-<li>データの中心を表す指標（代表値）を理解する。</li>
-<li>データのばらつきを表す指標（散布度）を理解する。</li>
-<li>Rを使ってこれらの指標を計算する。</li>
-</ul>
-</section>
-<section id="記述統計とは" class="level2">
-<h2 class="anchored" data-anchor-id="記述統計とは">記述統計とは</h2>
-<p>記述統計（Descriptive Statistics）とは、データの特徴を数値やグラフで要約・記述する方法です。主に以下の2つの側面からデータを把握します：</p>
+<section id="情報を縮約する" class="level2">
+<h2 class="anchored" data-anchor-id="情報を縮約する">情報を「縮約」する</h2>
+<p>手元に1万人の顧客データがあるとします。上司に「客層はどうだい？」と聞かれたら、どう答えますか。 1万人全員の年齢を読み上げるわけにはいきません。「だいたい30代です」と答えるはずです。</p>
+<p>記述統計（Descriptive Statistics）の本質は、ここにあります。 膨大な生のデータを、たった1つの数字（要約統計量）にまで圧縮する。多くの情報は捨てられますが、代わりに人間が理解できる「特徴」が浮かび上がります。</p>
+<p>本節では、この「情報の圧縮技術」を学びます。キーとなるのは次の2点です。</p>
 <ol type="1">
-<li><strong>中心的傾向（代表値）</strong>: データの「中心」がどこにあるか</li>
-<li><strong>散布度（ばらつき）</strong>: データがどれくらい広がっているか</li>
+<li><strong>どこに集まっているか（中心的傾向）</strong></li>
+<li><strong>どれくらい散らばっているか（散布度）</strong></li>
 </ol>
 </section>
 <section id="準備" class="level2">
 <h2 class="anchored" data-anchor-id="準備">準備</h2>
-<p>今回も <code>tidyverse</code> と <code>tips</code> データを使います。</p>
+<p>前回に引き続き、<code>tidyverse</code> パッケージと、<code>tips</code> データセット（Bryant &amp; Smith, 1995）を使います。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>tips <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="代表値データの中心" class="level2">
-<h2 class="anchored" data-anchor-id="代表値データの中心">代表値：データの中心</h2>
-<section id="平均値-mean" class="level3">
-<h3 class="anchored" data-anchor-id="平均値-mean">平均値 (Mean)</h3>
-<p>すべてのデータを足して、データの個数で割ったものです。</p>
+<section id="中心を探す代表値" class="level2">
+<h2 class="anchored" data-anchor-id="中心を探す代表値">中心を探す：代表値</h2>
+<p>まずはデータの「顔」となる中心点を探します。ただ、「中心」の定義は一つではありません。</p>
+<section id="全員の声を聞く平均値-mean" class="level3">
+<h3 class="anchored" data-anchor-id="全員の声を聞く平均値-mean">1. 全員の声を聞く：平均値 (Mean)</h3>
+<p>すべてのデータを足し合わせ、人数で割る。一番なじみ深い「中心」でしょう。</p>
 <p><span class="math display">\[\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i\]</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(tips<span class="sc">$</span>total_bill)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 19.78594</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>この指標には「全員の値を公平に扱う」という民主的な良さがあります。反面、<strong>極端な声（外れ値）に弱い</strong>のが欠点です。たった一人の超富裕層がいるだけで、全員の平均所得は跳ね上がってしまいます。</p>
 </section>
-<section id="中央値-median" class="level3">
-<h3 class="anchored" data-anchor-id="中央値-median">中央値 (Median)</h3>
-<p>データを小さい順に並べたときに、ちょうど真ん中にくる値です。 外れ値（極端に大きい/小さい値）の影響を受けにくいという特徴があります。</p>
+<section id="真ん中の人を見る中央値-median" class="level3">
+<h3 class="anchored" data-anchor-id="真ん中の人を見る中央値-median">2. 真ん中の人を見る：中央値 (Median)</h3>
+<p>データを一列に並べたとき、ちょうど真ん中にいる人の値です。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(tips<span class="sc">$</span>total_bill)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 17.795</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>こちらは「順位」しか見ないので、極端な値の影響をほとんど受けません（頑健性）。</p>
 </section>
-<section id="最頻値-mode" class="level3">
-<h3 class="anchored" data-anchor-id="最頻値-mode">最頻値 (Mode)</h3>
-<p>データの中で最も頻繁に出現する値です。Rには標準で最頻値を求める関数がないため、自分で計算します。</p>
+<section id="多派を見る最頻値-mode" class="level3">
+<h3 class="anchored" data-anchor-id="多派を見る最頻値-mode">3. 多派を見る：最頻値 (Mode)</h3>
+<p>最も頻繁に現れる値です。数値データよりも、アンケートの回答（賛成/反対）などのカテゴリデータで威力を発揮します。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># カテゴリ変数の最頻値を確認</span></span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rには標準関数がないため、集計して確認</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(day) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -381,73 +358,72 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="平均値-vs-中央値どちらを使うべきか" class="level3">
-<h3 class="anchored" data-anchor-id="平均値-vs-中央値どちらを使うべきか">平均値 vs 中央値：どちらを使うべきか</h3>
+<section id="意思決定平均か中央値か" class="level3">
+<h3 class="anchored" data-anchor-id="意思決定平均か中央値か">意思決定：平均か、中央値か</h3>
+<p>どっちを使うべきか。迷ったら「世界の形（分布）」を見ます。</p>
 <table class="table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 75%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>状況</th>
-<th>推奨される代表値</th>
+<th>分布の形状</th>
+<th>選び方の指針</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>左右対称な分布</td>
-<td>平均値</td>
+<td><strong>左右対称</strong>（テストの点数など）</td>
+<td>どちらもほぼ同じ値になります。数学的に扱いやすい<strong>平均値</strong>を選びます。</td>
 </tr>
 <tr class="even">
-<td>歪んだ分布（外れ値あり）</td>
-<td>中央値</td>
-</tr>
-<tr class="odd">
-<td>所得や資産のデータ</td>
-<td>中央値</td>
-</tr>
-<tr class="even">
-<td>テストの点数</td>
-<td>平均値</td>
+<td><strong>歪んでいる</strong>（年収、貯蓄額など）</td>
+<td>右に裾が長い場合、平均値は高すぎ​​る値になります。実感を反映する<strong>中央値</strong>を選びます。</td>
 </tr>
 </tbody>
 </table>
 </section>
 </section>
-<section id="散布度データのばらつき" class="level2">
-<h2 class="anchored" data-anchor-id="散布度データのばらつき">散布度：データのばらつき</h2>
-<section id="範囲-range" class="level3">
-<h3 class="anchored" data-anchor-id="範囲-range">範囲 (Range)</h3>
-<p>最大値と最小値の差です。</p>
+<section id="広がりを測る散布度" class="level2">
+<h2 class="anchored" data-anchor-id="広がりを測る散布度">広がりを測る：散布度</h2>
+<p>データの特徴は「中心」だけでは語れません。「平均年収500万」と言っても、全員が500万の国と、0円と1000万がいる国では全く別物です。 この「散らばり具合」を数値にします。</p>
+<section id="最大と最小範囲-range" class="level3">
+<h3 class="anchored" data-anchor-id="最大と最小範囲-range">最大と最小：範囲 (Range)</h3>
+<p>一番上と一番下の差です。単純ですが、全体像を掴むにはこれで十分なことも多いです。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(tips<span class="sc">$</span>total_bill)  <span class="co"># 最小値と最大値</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  3.07 50.81</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(tips<span class="sc">$</span>total_bill) <span class="sc">-</span> <span class="fu">min</span>(tips<span class="sc">$</span>total_bill)  <span class="co"># 範囲</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 47.74</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(tips<span class="sc">$</span>total_bill) <span class="sc">-</span> <span class="fu">min</span>(tips<span class="sc">$</span>total_bill)  <span class="co"># その差（範囲）</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 47.74</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="分散-variance" class="level3">
-<h3 class="anchored" data-anchor-id="分散-variance">分散 (Variance)</h3>
-<p>データが平均値からどれくらい離れているかを表す指標です。 Rの <code>var()</code> 関数は不偏分散を計算します。</p>
+<section id="中心からの距離分散-variance" class="level3">
+<h3 class="anchored" data-anchor-id="中心からの距離分散-variance">中心からの距離：分散 (Variance)</h3>
+<p>「平均からどれくらい離れているか」を全データについて計算し、平均したもの。 直感的には「差の絶対値」を平均したくなりますよね。でも、統計学では数学的な都合から「差を<strong>二乗</strong>」して扱います。</p>
+<p><strong>Rの注意点</strong>: Rの <code>var()</code> 関数は、手元のデータを標本とみなした<strong>不偏分散</strong>（分母が <span class="math inline">\(n-1\)</span>）を計算します。</p>
 <p><span class="math display">\[s^2 = \frac{1}{n-1}\sum_{i=1}^{n} (x_i - \bar{x})^2\]</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(tips<span class="sc">$</span>total_bill)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 79.25294</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="標準偏差-standard-deviation" class="level3">
-<h3 class="anchored" data-anchor-id="標準偏差-standard-deviation">標準偏差 (Standard Deviation)</h3>
-<p>分散の平方根をとったものです。元のデータと同じ単位になるので直感的に分かりやすいです。</p>
+<section id="単位を戻す標準偏差-standard-deviation" class="level3">
+<h3 class="anchored" data-anchor-id="単位を戻す標準偏差-standard-deviation">単位を戻す：標準偏差 (Standard Deviation)</h3>
+<p>分散は計算過程で「二乗」しているため、単位が「ドルの二乗」のようになり、直感的に分かりにくい。 そこで、平方根をとって元の単位に戻したのが<strong>標準偏差</strong>です。</p>
 <p><span class="math display">\[s = \sqrt{s^2}\]</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(tips<span class="sc">$</span>total_bill)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 8.902412</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>「平均値 <span class="math inline">\(\pm\)</span> 標準偏差」の範囲に、多くのデータ（正規分布なら約68%）が含まれると考えるとイメージしやすいでしょう。</p>
 </section>
-<section id="変動係数-coefficient-of-variation" class="level3">
-<h3 class="anchored" data-anchor-id="変動係数-coefficient-of-variation">変動係数 (Coefficient of Variation)</h3>
-<p>標準偏差を平均値で割ったもので、単位に依存しないばらつきの指標です。異なる単位のデータのばらつきを比較するときに便利です。</p>
+<section id="単位を消す変動係数-cv" class="level3">
+<h3 class="anchored" data-anchor-id="単位を消す変動係数-cv">単位を消す：変動係数 (CV)</h3>
+<p>「象の体重のばらつき」と「アリの体重のばらつき」を比べたいとき、標準偏差（kgやg）そのままでは比較できません。 平均値に対する比率（%）に直すことで、スケールの異なるデータでも比べられます。</p>
 <p><span class="math display">\[CV = \frac{s}{\bar{x}} \times 100\%\]</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># チップと支払総額のばらつきを比較</span></span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># チップの額と、支払総額。どちらが「ばらついて」いるか？</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>cv_tip <span class="ot">&lt;-</span> <span class="fu">sd</span>(tips<span class="sc">$</span>tip) <span class="sc">/</span> <span class="fu">mean</span>(tips<span class="sc">$</span>tip) <span class="sc">*</span> <span class="dv">100</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>cv_bill <span class="ot">&lt;-</span> <span class="fu">sd</span>(tips<span class="sc">$</span>total_bill) <span class="sc">/</span> <span class="fu">mean</span>(tips<span class="sc">$</span>total_bill) <span class="sc">*</span> <span class="dv">100</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -457,47 +433,41 @@ window.Quarto = {
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 支払総額の変動係数: 44.99362 %</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="四分位数-quartiles" class="level3">
-<h3 class="anchored" data-anchor-id="四分位数-quartiles">四分位数 (Quartiles)</h3>
-<p>データを小さい順に並べて4等分したときの区切り値です。 <code>summary()</code> 関数を使うと、最小値、第1四分位数、中央値、平均値、第3四分位数、最大値をまとめて表示できます。</p>
+</section>
+<section id="全体像をスキャンする四分位数" class="level2">
+<h2 class="anchored" data-anchor-id="全体像をスキャンする四分位数">全体像をスキャンする：四分位数</h2>
+<p>データを小さい順に並べて4等分した地点（25%, 50%, 75%）を<strong>四分位数</strong>と呼びます。 <code>summary()</code> 関数を使えば、これらの主要な統計量を一括で確認できます。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tips<span class="sc">$</span>total_bill)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    3.07   13.35   17.80   19.79   24.13   50.81</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>結果の見方:</p>
 <ul>
-<li><strong>Min</strong>: 最小値</li>
-<li><strong>1st Qu</strong>: 第1四分位数（データの下位25%の境界値）</li>
-<li><strong>Median</strong>: 中央値</li>
-<li><strong>Mean</strong>: 平均値</li>
-<li><strong>3rd Qu</strong>: 第3四分位数（データの下位75%の境界値）</li>
-<li><strong>Max</strong>: 最大値</li>
+<li><strong>Median</strong>（50%地点）と <strong>Mean</strong>（平均）のズレを見ることで、データの歪みを推測できます。</li>
+<li><strong>1st Qu</strong>（25%）から <strong>3rd Qu</strong>（75%）の間には、データの中央半数が含まれます。</li>
 </ul>
-</section>
-<section id="四分位範囲-iqr-interquartile-range" class="level3">
-<h3 class="anchored" data-anchor-id="四分位範囲-iqr-interquartile-range">四分位範囲 (IQR: Interquartile Range)</h3>
-<p>第3四分位数と第1四分位数の差を <strong>四分位範囲</strong> と呼びます。 データの中央50%がどれくらいの幅に収まっているかを表します。R では <code>IQR()</code> 関数で計算できます。</p>
+<section id="安定した広がり四分位範囲-iqr" class="level3">
+<h3 class="anchored" data-anchor-id="安定した広がり四分位範囲-iqr">安定した広がり：四分位範囲 (IQR)</h3>
+<p>データの中央50%が収まる幅（第3四分位数 <span class="math inline">\(-\)</span> 第1四分位数）を<strong>四分位範囲</strong>と呼びます。 標準偏差と違い、極端な値の影響を受けないため、外れ値を含むデータでのばらつき指標として優秀です。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(tips<span class="sc">$</span>total_bill)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 10.78</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>四分位範囲は、外れ値の影響を受けにくい散布度の指標として有効です。</p>
 </section>
 </section>
-<section id="外れ値の検出" class="level2">
-<h2 class="anchored" data-anchor-id="外れ値の検出">外れ値の検出</h2>
-<p>統計分析では、極端に大きい・小さい値（外れ値）がデータに含まれていることがあります。 外れ値の基準として、以下がよく使われます。</p>
+<section id="ノイズかシグナルか外れ値の検出" class="level2">
+<h2 class="anchored" data-anchor-id="ノイズかシグナルか外れ値の検出">ノイズか、シグナルか：外れ値の検出</h2>
+<p>統計分析において、極端に離れた値（外れ値）は厄介な存在です。入力ミス（ノイズ）なのか、特異な事象（シグナル）なのかを見極める必要があります。 一般的に、箱ひげ図のTukeyの基準を用いて「外れ値候補」を機械的に検出します。</p>
 <ul>
-<li>第1四分位数 - 1.5 × IQR より小さい値</li>
-<li>第3四分位数 + 1.5 × IQR より大きい値</li>
+<li><strong>下限</strong>: 第1四分位数 - 1.5 × IQR</li>
+<li><strong>上限</strong>: 第3四分位数 + 1.5 × IQR</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Q1 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(tips<span class="sc">$</span>total_bill, <span class="fl">0.25</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>Q3 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(tips<span class="sc">$</span>total_bill, <span class="fl">0.75</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>IQR_val <span class="ot">&lt;-</span> <span class="fu">IQR</span>(tips<span class="sc">$</span>total_bill)</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 外れ値の境界</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 境界線の計算</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>lower_bound <span class="ot">&lt;-</span> Q1 <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> IQR_val</span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>upper_bound <span class="ot">&lt;-</span> Q3 <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> IQR_val</span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
@@ -506,7 +476,7 @@ window.Quarto = {
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"外れ値の上限:"</span>, upper_bound, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 外れ値の上限: 40.2975</span></span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 外れ値を持つデータを抽出</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 境界を超えたデータを抽出してみる</span></span>
 <span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
 <span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(total_bill <span class="sc">&lt;</span> lower_bound <span class="sc">|</span> total_bill <span class="sc">&gt;</span> upper_bound) <span class="sc">%&gt;%</span> </span>
 <span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(total_bill, tip, day, time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -519,17 +489,17 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="平均値と中央値の違いを可視化" class="level2">
-<h2 class="anchored" data-anchor-id="平均値と中央値の違いを可視化">平均値と中央値の違いを可視化</h2>
-<p>分布が歪んでいる場合、平均値と中央値はずれます。 ヒストグラムに直線を引いて確認してみましょう。</p>
+<section id="分布の歪みを可視化する" class="level2">
+<h2 class="anchored" data-anchor-id="分布の歪みを可視化する">分布の歪みを可視化する</h2>
+<p>平均値と中央値がずれているとき、実際にグラフを描くとその理由がわかります。 ヒストグラムに両者の位置を重ねてみましょう。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 平均と中央値を計算 {.unnumbered}</span></span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 統計量の計算 {.unnumbered}</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>mean_val <span class="ot">&lt;-</span> <span class="fu">mean</span>(tips<span class="sc">$</span>total_bill)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>med_val <span class="ot">&lt;-</span> <span class="fu">median</span>(tips<span class="sc">$</span>total_bill)</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># プロット {.unnumbered}</span></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tips, <span class="fu">aes</span>(<span class="at">x =</span> total_bill)) <span class="sc">+</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span> <span class="co"># [対象注意] Mac用設定</span></span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"lightgray"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> mean_val, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> med_val, <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
@@ -545,16 +515,16 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="グループごとの集計" class="level2">
-<h2 class="anchored" data-anchor-id="グループごとの集計">グループごとの集計</h2>
-<p><code>dplyr</code> の <code>group_by()</code> と <code>summarize()</code> を組み合わせると、グループごとの統計量を簡単に計算できます。 例えば、男女別 (<code>sex</code>) の支払総額 (<code>total_bill</code>) の平均と標準偏差を求めてみましょう。</p>
+<section id="グループごとに要約する" class="level2">
+<h2 class="anchored" data-anchor-id="グループごとに要約する">グループごとに要約する</h2>
+<p>全体の平均だけでは見えない違いもあります。性別や喫煙の有無など、属性ごとに分けて要約することで、より深い洞察が得られます。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> </span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span> </span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_bill =</span> <span class="fu">mean</span>(total_bill),</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_bill =</span> <span class="fu">sd</span>(total_bill),</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">count =</span> <span class="fu">n</span>() <span class="co"># データの個数</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">count =</span> <span class="fu">n</span>() <span class="co"># サンプルサイズも必ず確認する</span></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
@@ -567,82 +537,38 @@ window.Quarto = {
 </section>
 <section id="課題" class="level2">
 <h2 class="anchored" data-anchor-id="課題">課題</h2>
+<p>自分の手でデータを縮約してみましょう。</p>
 <ol type="1">
-<li><code>tips</code> データを使って、時間帯 (<code>time</code>) ごとのチップ (<code>tip</code>) の平均値を計算してください。</li>
-<li><code>summary()</code> 関数を使って、チップ (<code>tip</code>) の分布を確認してください。</li>
+<li><code>tips</code> データを使用し、時間帯 (<code>time</code>) ごとのチップ (<code>tip</code>) の平均値を算出してください。</li>
+<li><code>summary()</code> 関数を使用し、チップ (<code>tip</code>) の分布の要約統計量を確認してください。</li>
 </ol>
 </section>
 <section id="練習問題" class="level2">
 <h2 class="anchored" data-anchor-id="練習問題">練習問題</h2>
-<section id="練習1-基本的な記述統計" class="level3">
-<h3 class="anchored" data-anchor-id="練習1-基本的な記述統計">練習1: 基本的な記述統計</h3>
-<p><code>tips</code> データの <code>size</code>（グループの人数）について以下を計算してください： 1. 平均値 2. 中央値 3. 標準偏差 4. 最小値と最大値</p>
-</section>
-<section id="練習2-グループ別の比較" class="level3">
-<h3 class="anchored" data-anchor-id="練習2-グループ別の比較">練習2: グループ別の比較</h3>
-<p>喫煙者 (<code>smoker == "Yes"</code>) と非喫煙者 (<code>smoker == "No"</code>) で、支払総額の平均値と標準偏差を比較してください。</p>
-</section>
-<section id="練習3-外れ値の影響" class="level3">
-<h3 class="anchored" data-anchor-id="練習3-外れ値の影響">練習3: 外れ値の影響</h3>
+<section id="練習1-基本的な記述統計の算出" class="level3">
+<h3 class="anchored" data-anchor-id="練習1-基本的な記述統計の算出">練習1: 基本的な記述統計の算出</h3>
+<p><code>tips</code> データの <code>size</code>（グループの人数）について、以下の4つの統計量を算出してください。</p>
 <ol type="1">
-<li><code>tips</code> データに外れ値（<code>total_bill = 100</code>）を1つ追加したデータを作成してください</li>
-<li>元のデータと新しいデータで、平均値と中央値を比較してください</li>
-<li>どちらの代表値が外れ値の影響を受けやすいですか？</li>
+<li>平均値</li>
+<li>中央値</li>
+<li>標準偏差</li>
+<li>範囲（最小値と最大値）</li>
 </ol>
 </section>
+<section id="練習2-グループ別の比較検証" class="level3">
+<h3 class="anchored" data-anchor-id="練習2-グループ別の比較検証">練習2: グループ別の比較検証</h3>
+<p>喫煙者 (<code>smoker == "Yes"</code>) と非喫煙者 (<code>smoker == "No"</code>) の2群において、支払総額 (<code>total_bill</code>) の平均値と標準偏差を比較してください。</p>
 </section>
-<section id="記述統計量のまとめ" class="level2">
-<h2 class="anchored" data-anchor-id="記述統計量のまとめ">記述統計量のまとめ</h2>
-<table class="table">
-<thead>
-<tr class="header">
-<th>種類</th>
-<th>指標</th>
-<th>R関数</th>
-<th>特徴</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>代表値</td>
-<td>平均値</td>
-<td><code>mean()</code></td>
-<td>全データを使用、外れ値に敏感</td>
-</tr>
-<tr class="even">
-<td>代表値</td>
-<td>中央値</td>
-<td><code>median()</code></td>
-<td>外れ値に頑健</td>
-</tr>
-<tr class="odd">
-<td>散布度</td>
-<td>分散</td>
-<td><code>var()</code></td>
-<td>単位が元の2乗</td>
-</tr>
-<tr class="even">
-<td>散布度</td>
-<td>標準偏差</td>
-<td><code>sd()</code></td>
-<td>元の単位と同じ</td>
-</tr>
-<tr class="odd">
-<td>散布度</td>
-<td>四分位範囲</td>
-<td><code>IQR()</code></td>
-<td>外れ値に頑健</td>
-</tr>
-<tr class="even">
-<td>位置</td>
-<td>四分位数</td>
-<td><code>quantile()</code></td>
-<td>データの位置を表す</td>
-</tr>
-</tbody>
-</table>
+<section id="練習3-外れ値の影響を体感する" class="level3">
+<h3 class="anchored" data-anchor-id="練習3-外れ値の影響を体感する">練習3: 外れ値の影響を体感する</h3>
+<ol type="1">
+<li><code>tips</code> データに極端な外れ値（例: <code>total_bill = 100</code>）を持つ行を追加した新しいデータを作成してください。</li>
+<li>元のデータと新しいデータで、平均値と中央値がそれぞれどれくらい変化したかを確認してください。どちらが「頑健」でしたか？</li>
+</ol>
+<p><br> ※本節で用いた記述統計の指標一覧は、練習問題の振り返りとして自身のノートにまとめておくことを推奨します。</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
