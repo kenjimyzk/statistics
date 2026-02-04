@@ -514,7 +514,7 @@
     "href": "05_probability.html",
     "title": "第5回 確率論の基礎",
     "section": "",
-    "text": "今回の目標",
+    "text": "不確実性を飼いならす言語\nデータ分析のゴールは、手元のデータ（標本）から背後の世界（母集団）を推測すること。 でも、そこには必ず「ズレ」があります。今日のデータと明日のデータは、違うから。\nこの「ズレ」や「不確実性」を、「なんとなく」ではなく数学的に扱うための言語。それが確率論です。 統計学を学ぶ私たちにとって、避けては通れない共通言語です。",
     "crumbs": [
       "第5回 確率論の基礎"
     ]
@@ -554,7 +554,7 @@
     "href": "05_probability.html#確率変数と確率分布",
     "title": "第5回 確率論の基礎",
     "section": "確率変数と確率分布",
-    "text": "確率変数と確率分布\n\n確率変数 (Random Variable): サイコロの目やコインの裏表のように、とる値が確率的に決まる変数のこと。通常 \\(X\\) や \\(Y\\) などの大文字で表します。\n確率分布 (Probability Distribution): 確率変数がどのような値をどのような確率でとるかを表したものです。\n\n\n離散型と連続型\n\n離散型確率変数: とりうる値が飛び飛び（例：サイコロの目、コインの裏表）\n連続型確率変数: とりうる値が連続的（例：身長、気温）\n\n\n\n例：サイコロ\nサイコロを1回振ったときの出る目を \\(X\\) とすると、\\(X\\) は \\(\\{1, 2, 3, 4, 5, 6\\}\\) のいずれかの値をとります。 それぞれの目が出る確率は \\(1/6\\) です。\nRで表してみましょう。\n\nx &lt;- 1:6\nprob &lt;- rep(1/6, 6) # 1/6 を 6回繰り返す\n\ndata.frame(x, prob)\n\n\n  \n\n\n\nこれをグラフ（確率分布図）にしてみましょう。\n\nlibrary(tidyverse)\ntheme_set(theme_gray(base_family = \"HiraKakuProN-W3\"))\n\ndf &lt;- data.frame(x = factor(x), prob = prob)\n\nggplot(df, aes(x = x, y = prob)) +\n  geom_col(fill = \"orange\") +\n  ylim(0, 0.5) +\n  labs(title = \"サイコロの確率分布\", x = \"出る目\", y = \"確率\")",
+    "text": "確率変数と確率分布\n\n確率変数 (Random Variable, \\(X\\)): 試行の結果によって、とる値が確率的に定まる変数。\n\n表記: 通常、変数を大文字（\\(X, Y\\)）、実現値を小文字（\\(x, y\\)）で表します。\n\n確率分布 (Probability Distribution): 確率変数がとりうる値と、その確率（または確率密度）の対応関係。\n\n\n離散型と連続型\n\n\n\n\n\n\n\n\n種類\n定義\n例\n\n\n\n\n離散型 (Discrete)\nとりうる値が飛び飛び（可算個）\nサイコロの目、コインの裏表、不良品の数\n\n\n連続型 (Continuous)\nとりうる値が連続的（実数区間）\n身長、時間、温度\n\n\n\n\n\n離散型の例：サイコロ\n確率変数 \\(X\\) を「サイコロの目」とします。\\(X \\in \\{1, 2, 3, 4, 5, 6\\}\\) であり、それぞれの確率は \\(1/6\\) です。\nRでこの分布を表現します。\n\nx &lt;- 1:6\nprob &lt;- rep(1/6, 6) # 全ての確率が等しく 1/6\n\ndata.frame(x, prob)\n\n\n  \n\n\n\n分布の可視化： [対象注意: 日本語フォント設定は環境依存あり]\n\nlibrary(tidyverse)\ntheme_set(theme_gray(base_family = \"HiraKakuProN-W3\"))\n\ndf &lt;- data.frame(x = factor(x), prob = prob)\n\nggplot(df, aes(x = x, y = prob)) +\n  geom_col(fill = \"orange\") +\n  ylim(0, 0.5) +\n  labs(title = \"サイコロの確率分布\", x = \"出る目\", y = \"確率\")",
     "crumbs": [
       "第5回 確率論の基礎"
     ]
@@ -564,7 +564,7 @@
     "href": "05_probability.html#期待値-expected-value",
     "title": "第5回 確率論の基礎",
     "section": "期待値 (Expected Value)",
-    "text": "期待値 (Expected Value)\n確率変数の「平均的な値」のことです。\\(E[X]\\) と書きます。 とりうる値に、その確率を掛けて足し合わせることで計算できます。\n\\[ E[X] = \\sum x_i P(X=x_i) \\]\nサイコロの期待値を計算してみましょう。\n3.5 という結果になります。サイコロの目は整数ですが、平均すると3.5になるという意味です。\nRで計算してみましょう。\n\n# 期待値の計算\nE_X &lt;- sum(x * prob)\nE_X\n#&gt; [1] 3.5\n\n\n期待値の性質\n期待値には以下のような便利な性質があります。\n\n定数を足す: \\(E[X + c] = E[X] + c\\)\n定数を掛ける: \\(E[cX] = c \\cdot E[X]\\)\n線形性: \\(E[aX + bY] = aE[X] + bE[Y]\\)",
+    "text": "期待値 (Expected Value)\n確率変数の「平均的な値」であり、分布の重心を表します。記号 \\(E[X]\\) または \\(\\mu\\) で表されます。 離散型の場合、とりうる値にその確率を掛けて総和をとることで定義されます。\n\\[ E[X] = \\sum_{i} x_i P(X=x_i) \\]\nサイコロの期待値の計算：\n\\[ 1 \\times \\frac{1}{6} + 2 \\times \\frac{1}{6} + \\cdots + 6 \\times \\frac{1}{6} = 3.5 \\]\nRでの計算：\n\n# 期待値の定義通りの計算\nE_X &lt;- sum(x * prob)\nE_X\n#&gt; [1] 3.5\n\n\n期待値の性質（線形性）\n期待値には以下の重要な性質（線形性）があります。\\(a, b\\) は定数とします。\n\n\\(E[X + b] = E[X] + b\\) （平行移動）\n\\(E[aX] = a E[X]\\) （定数倍）\n\\(E[aX + bY] = aE[X] + bE[Y]\\) （和の期待値は期待値の和）",
     "crumbs": [
       "第5回 確率論の基礎"
     ]
@@ -574,7 +574,7 @@
     "href": "05_probability.html#分散-variance",
     "title": "第5回 確率論の基礎",
     "section": "分散 (Variance)",
-    "text": "分散 (Variance)\n確率変数の「ばらつき」を表す指標です。\\(V[X]\\) と書きます。 「（値 - 期待値）の2乗」の期待値として定義されます。\n\\[ V[X] = E[(X - E[X])^2] = \\sum (x_i - E[X])^2 P(X=x_i) \\]\nサイコロの分散を計算してみましょう。\n\n# 分散の計算\nV_X &lt;- sum((x - E_X)^2 * prob)\nV_X\n#&gt; [1] 2.916667\n\n# 標準偏差\nsqrt(V_X)\n#&gt; [1] 1.707825\n\n\n分散の性質\n分散には以下のような便利な性質があります。\n\n定数を足す: \\(V[X + c] = V[X]\\)（定数を足しても分散は変わらない）\n定数を掛ける: \\(V[cX] = c^2 \\cdot V[X]\\)\n別の計算式: \\(V[X] = E[X^2] - (E[X])^2\\)\n\n\n# 別の計算式で確認\nE_X2 &lt;- sum(x^2 * prob)  # E[X^2]\nE_X2 - E_X^2  # V[X] = E[X^2] - (E[X])^2\n#&gt; [1] 2.916667",
+    "text": "分散 (Variance)\n確率変数の「ばらつき」の大きさ、つまり期待値からの散らばり具合を表す指標です。記号 \\(V[X]\\) または \\(\\sigma^2\\) で表されます。 定義は「平均（期待値）からの偏差の二乗の期待値」です。\n\\[ V[X] = E[(X - E[X])^2] = \\sum_{i} (x_i - E[X])^2 P(X=x_i) \\]\nサイコロの分散の計算：\n\n# 分散の定義通りの計算\nV_X &lt;- sum((x - E_X)^2 * prob)\nV_X\n#&gt; [1] 2.916667\n\n# 標準偏差 (Standard Deviation)\nsqrt(V_X)\n#&gt; [1] 1.707825\n\n\n分散の性質\n\n\\(V[X + b] = V[X]\\) （平行移動してもばらつきは変わらない）\n\\(V[aX] = a^2 V[X]\\) （定数倍すると分散は2乗倍になる）\n計算公式: \\(V[X] = E[X^2] - (E[X])^2\\)\n\n\n# 公式を用いた検算\nE_X2 &lt;- sum(x^2 * prob)  # E[X^2]: 二乗の期待値\nE_X2 - E_X^2             # V[X]\n#&gt; [1] 2.916667",
     "crumbs": [
       "第5回 確率論の基礎"
     ]
@@ -594,7 +594,7 @@
     "href": "05_probability.html#課題",
     "title": "第5回 確率論の基礎",
     "section": "課題",
-    "text": "課題\n\nコインを1回投げて、表が出たら 100円、裏が出たら 0円もらえるギャンブルがあります。 表が出る確率を 0.5、裏が出る確率を 0.5 とするとき、もらえる金額の期待値を計算してください。\nもし表が出る確率が 0.1、裏が出る確率が 0.9 だったら、期待値はどうなりますか？",
+    "text": "課題\n\nコインの期待値: 表が出る確率 \\(0.5\\)、裏が出る確率 \\(0.5\\) のコインがあります。表なら100円、裏なら0円を得るときの賞金の期待値を計算してください。\n確率の変化: もし表が出る確率が \\(0.1\\)（裏は \\(0.9\\)）の歪んだコインを使用した場合、期待値はどう変化するか計算してください。",
     "crumbs": [
       "第5回 確率論の基礎"
     ]
@@ -604,7 +604,7 @@
     "href": "05_probability.html#練習問題",
     "title": "第5回 確率論の基礎",
     "section": "練習問題",
-    "text": "練習問題\n\n練習1: サイコロの問題\n\n2つのサイコロを振ったとき、目の合計が7になる確率を計算してください\n目の合計の期待値を計算してください\n\n\n\n練習2: 宝くじの期待値\n1等（100万円）が当たる確率が 1/10000、2等（10万円）が当たる確率が 1/1000、ハズレ（0円）がそれ以外の宝くじがあります。この宝くじの期待値を計算してください。\n\n\n練習3: ギャンブルの期待値\nコインを3回投げて、表が出た回数 × 100円がもらえるゲームがあります。 1. とりうる値（0円、100円、200円、300円）それぞれの確率を計算してください 2. 期待値を計算してください",
+    "text": "練習問題\n\n練習1: サイコロの和\n\n2つのサイコロを振ったとき、目の合計が「7」になる組み合わせを列挙し、その確率を計算してください。\n目の合計の期待値を、期待値の線形性 \\(E[X+Y] = E[X] + E[Y]\\) を用いて計算してください。\n\n\n\n練習2: 宝くじの期待値評価\n以下の条件の宝くじの期待値を算出してください。 - 1等（100万円）：確率 \\(1/10000\\) - 2等（10万円）：確率 \\(1/1000\\) - ハズレ（0円）：上記以外\n\n\n練習3: 二項分布の実験\nコインを3回投げて、表が出た回数 \\(X\\) (\\(X \\in \\{0, 1, 2, 3\\}\\)) に応じて \\(100X\\) 円がもらえるゲームを考えます。 1. \\(X\\) がとる各値の確率を計算してください（樹形図などを想像してください）。 2. このゲームの賞金の期待値を計算してください。",
     "crumbs": [
       "第5回 確率論の基礎"
     ]
@@ -624,7 +624,7 @@
     "href": "06_distributions.html",
     "title": "第6回 主要な確率分布",
     "section": "",
-    "text": "今回の目標",
+    "text": "世界を支配する「釣り鐘」\n身長、テストの点数、工場の部品サイズ、株価の変動…。 まったく異なるこれらすべての現象に、どこにでも現れる不思議な曲線があります。 正規分布（Normal Distribution）。またの名を、ガウス分布。\nなぜ世界は、ことあるごとに正規分布したがるのか？ その秘密は、統計学で最強の定理（中心極限定理）にあります。まずはこの「王様」の振る舞いを知ることから始めましょう。\n本節では、統計解析の主役である正規分布と、その親戚たち（二項分布、t分布など）を、Rを使って自在に操れるようになります。",
     "crumbs": [
       "第6回 主要な確率分布"
     ]
@@ -644,7 +644,7 @@
     "href": "06_distributions.html#rにおける確率分布関数",
     "title": "第6回 主要な確率分布",
     "section": "Rにおける確率分布関数",
-    "text": "Rにおける確率分布関数\nRでは、各確率分布に対して4種類の関数が用意されています：\n\n\n\n接頭辞\n意味\n例（正規分布）\n\n\n\n\nd\n確率密度（density）\ndnorm()\n\n\np\n累積確率（probability）\npnorm()\n\n\nq\n分位点（quantile）\nqnorm()\n\n\nr\n乱数生成（random）\nrnorm()",
+    "text": "Rにおける確率分布関数\nRでは、主要な確率分布に対して以下4種類の関数が標準実装されています。関数名は [接頭辞] + [分布の略称] の形式で統一されています。\n\n\n\n接頭辞\n機能\n確率論的定義\n例（正規分布 norm）\n\n\n\n\nd\n確率密度/質量 (Density)\n\\(f(x)\\) または \\(P(X=x)\\)\ndnorm()\n\n\np\n累積分布 (Probability)\n\\(F(q) = P(X \\le q)\\)\npnorm()\n\n\nq\n分位点 (Quantile)\n\\(F^{-1}(p)\\)\nqnorm()\n\n\nr\n乱数生成 (Random)\n-\nrnorm()",
     "crumbs": [
       "第6回 主要な確率分布"
     ]
@@ -654,7 +654,7 @@
     "href": "06_distributions.html#正規分布-normal-distribution",
     "title": "第6回 主要な確率分布",
     "section": "正規分布 (Normal Distribution)",
-    "text": "正規分布 (Normal Distribution)\n自然界や社会現象でよく見られる、釣鐘型の分布です。 平均 \\(\\mu\\) と分散 \\(\\sigma^2\\) という2つのパラメータで形が決まります。\n\\[f(x) = \\frac{1}{\\sqrt{2\\pi\\sigma^2}} \\exp\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2}\\right)\\]\nRには正規分布に関する関数が用意されています。\n\ndnorm(): 確率密度 (Density)\npnorm(): 累積確率 (Probability)\nqnorm(): 分位点 (Quantile)\nrnorm(): 乱数生成 (Random number)\n\n\n正規分布のグラフを描く\n標準正規分布（平均0、分散1）を描いてみましょう。\n\nlibrary(tidyverse)\n\n# x軸の範囲を決める {.unnumbered}\nx &lt;- seq(-4, 4, length.out = 100)\n# y軸（確率密度）を計算 {.unnumbered}\ny &lt;- dnorm(x, mean = 0, sd = 1)\n\n# データフレームにする {.unnumbered}\ndf &lt;- data.frame(x, y)\n\n# プロット {.unnumbered}\nggplot(df, aes(x = x, y = y)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_line() +\n  labs(title = \"標準正規分布\")\n\n\n\n\n\n\n\n\n\n\n平均と標準偏差の影響\n\n# 異なるパラメータの正規分布を比較\nx &lt;- seq(-10, 15, length.out = 200)\ndf_compare &lt;- data.frame(\n  x = rep(x, 3),\n  y = c(dnorm(x, mean = 0, sd = 1),\n        dnorm(x, mean = 5, sd = 1),\n        dnorm(x, mean = 0, sd = 2)),\n  type = rep(c(\"μ=0, σ=1\", \"μ=5, σ=1\", \"μ=0, σ=2\"), each = length(x))\n)\n\nggplot(df_compare, aes(x = x, y = y, color = type)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_line(size = 1) +\n  labs(title = \"正規分布のパラメータによる変化\", color = \"パラメータ\")",
+    "text": "正規分布 (Normal Distribution)\n正規分布（ガウス分布）は、統計学において最も基本的かつ重要な連続型確率分布です。 平均 \\(\\mu\\) と標準偏差 \\(\\sigma\\)（または分散 \\(\\sigma^2\\)）の2つのパラメータによって一意に定まります。\n確率密度関数: \\[f(x) = \\frac{1}{\\sqrt{2\\pi\\sigma^2}} \\exp\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2}\\right)\\]\n\n正規分布の可視化\n平均0、分散1の「標準正規分布」を描画します。 [対象注意: 日本語フォント設定は環境依存あり]\n\nlibrary(tidyverse)\n\n# x軸の範囲定義\nx &lt;- seq(-4, 4, length.out = 100)\n# 確率密度の計算\ny &lt;- dnorm(x, mean = 0, sd = 1)\n\ndf &lt;- data.frame(x, y)\n\nggplot(df, aes(x = x, y = y)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_line() +\n  labs(title = \"標準正規分布 (Mean=0, SD=1)\")\n\n\n\n\n\n\n\n\n\n\nパラメータによる変化\n平均 \\(\\mu\\) は分布の中心位置を、標準偏差 \\(\\sigma\\) は分布の広がり（幅）を決定します。\n\nx &lt;- seq(-10, 15, length.out = 200)\ndf_compare &lt;- data.frame(\n  x = rep(x, 3),\n  y = c(dnorm(x, mean = 0, sd = 1),\n        dnorm(x, mean = 5, sd = 1),\n        dnorm(x, mean = 0, sd = 2)),\n  type = rep(c(\"μ=0, σ=1\", \"μ=5, σ=1\", \"μ=0, σ=2\"), each = length(x))\n)\n\nggplot(df_compare, aes(x = x, y = y, color = type)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_line(size = 1) +\n  labs(title = \"パラメータによる正規分布の変化\", color = \"設定\")",
     "crumbs": [
       "第6回 主要な確率分布"
     ]
@@ -664,7 +664,7 @@
     "href": "06_distributions.html#確率の計算",
     "title": "第6回 主要な確率分布",
     "section": "確率の計算",
-    "text": "確率の計算\n「平均50、標準偏差10のテストで、60点以上をとる確率は？」\nこれは、正規分布の右側の面積を求めることと同じです。 pnorm(q, mean, sd) は、「値 q 以下 になる確率」（左側の面積）を返します。 したがって、「60点以上」は 1 - pnorm(60, ...) で求められます。\n\n# 60点以下になる確率 {.unnumbered}\np_lower &lt;- pnorm(60, mean = 50, sd = 10)\n\n# 60点以上になる確率 {.unnumbered}\n1 - p_lower\n#&gt; [1] 0.1586553\n\n約15.9%であることがわかります。",
+    "text": "確率の計算\n例題：「平均50、標準偏差10の正規分布に従う集団において、値が60以上となる確率はいくらか？」\nRの pnorm(q) は累積確率（\\(-\\infty\\) から \\(q\\) までの面積）を返すため、右側の面積を求める場合は全体（1）から引きます。\n\n# P(X &lt;= 60)\np_lower &lt;- pnorm(60, mean = 50, sd = 10)\n\n# P(X &gt;= 60) = 1 - P(X &lt;= 60)\n1 - p_lower\n#&gt; [1] 0.1586553\n\n計算結果は約15.9%となります。",
     "crumbs": [
       "第6回 主要な確率分布"
     ]
@@ -674,7 +674,7 @@
     "href": "06_distributions.html#二項分布-binomial-distribution",
     "title": "第6回 主要な確率分布",
     "section": "二項分布 (Binomial Distribution)",
-    "text": "二項分布 (Binomial Distribution)\n二項分布は、ベルヌーイ試行を \\(n\\) 回独立に繰り返したときの成功回数の分布です。\n\nベルヌーイ試行から二項分布へ\n各試行が独立なベルヌーイ試行 \\(X_1, X_2, \\ldots, X_n\\) があるとき、それぞれは： - \\(X_i \\sim \\text{Bernoulli}(p)\\)（成功確率 \\(p\\) のベルヌーイ分布）\nこれらの合計（総成功回数）を \\(Y\\) とすると： \\[Y = X_1 + X_2 + \\cdots + X_n\\]\nこの \\(Y\\) が従う分布が二項分布です： \\[Y \\sim \\text{Binomial}(n, p)\\]\n\n\n確率質量関数\n\\(n\\) 回の試行のうち、ちょうど \\(k\\) 回成功する確率は：\n\\[P(Y = k) = \\binom{n}{k} p^k (1-p)^{n-k}\\]\nここで：\n\n\\(n\\): 試行回数\n\\(p\\): 1回の試行で成功する確率（ベルヌーイ試行の成功確率）\n\\(k\\): 成功回数（\\(k = 0, 1, 2, \\ldots, n\\)）\n\\(\\binom{n}{k} = \\frac{n!}{k!(n-k)!}\\): 二項係数（\\(n\\) 個から \\(k\\) 個を選ぶ組み合わせの数）\n\n\n\n期待値と分散\n二項分布の期待値と分散は：\n\n期待値: \\(E[Y] = np\\)（ベルヌーイ分布の期待値 \\(p\\) の \\(n\\) 倍）\n分散: \\(V[Y] = np(1-p)\\)（ベルヌーイ分布の分散 \\(p(1-p)\\) の \\(n\\) 倍）\n\n\n\nRでの計算例\n例：コインを10回投げて、ちょうど5回表が出る確率。 dbinom(x, size, prob) を使います。\n\ndbinom(5, size = 10, prob = 0.5)\n#&gt; [1] 0.2460938\n\n二項分布の形をグラフで確認してみましょう。\n\nx &lt;- 0:10\nprob &lt;- dbinom(x, size = 10, prob = 0.5)\ndf_binom &lt;- data.frame(x = factor(x), prob = prob)\n\nggplot(df_binom, aes(x = x, y = prob)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_col(fill = \"lightgreen\") +\n  labs(title = \"二項分布 (n=10, p=0.5)\", x = \"表が出る回数\", y = \"確率\")\n\n\n\n\n\n\n\n\n\n\n成功確率の影響\n\n# 成功確率が異なる場合の比較\nx &lt;- 0:20\ndf_binom_compare &lt;- data.frame(\n  x = rep(x, 3),\n  prob = c(dbinom(x, size = 20, prob = 0.3),\n           dbinom(x, size = 20, prob = 0.5),\n           dbinom(x, size = 20, prob = 0.7)),\n  p = rep(c(\"p=0.3\", \"p=0.5\", \"p=0.7\"), each = length(x))\n)\n\nggplot(df_binom_compare, aes(x = x, y = prob, fill = p)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_col(position = \"dodge\") +\n  labs(title = \"二項分布 (n=20) の成功確率による変化\", x = \"成功回数\", y = \"確率\")\n\n\n\n\n\n\n\n\n\n\n二項分布の期待値と分散\n\n期待値: \\(E[X] = np\\)\n分散: \\(V[X] = np(1-p)\\)\n\n\nn &lt;- 10\np &lt;- 0.5\n\ncat(\"期待値:\", n * p, \"\\n\")\n#&gt; 期待値: 5\ncat(\"分散:\", n * p * (1-p), \"\\n\")\n#&gt; 分散: 2.5\n\n\n\n二項分布の正規近似\n二項分布には重要な性質があります：試行回数 \\(n\\) が大きくなると、二項分布は正規分布に近づきます。\n具体的には、\\(X \\sim \\text{Binomial}(n, p)\\) のとき、\\(n\\) が十分大きければ： \\[X \\approx N(\\mu = np, \\sigma^2 = np(1-p))\\]\nと近似できます。\nこれを視覚的に確認してみましょう：\n\n# 試行回数による二項分布の形の変化\nn_values &lt;- c(10, 30, 100)\np &lt;- 0.3\n\ndf_binom_approx &lt;- data.frame()\nfor(n in n_values) {\n  x &lt;- 0:n\n  prob &lt;- dbinom(x, size = n, prob = p)\n  df_temp &lt;- data.frame(\n    x = x,\n    prob = prob,\n    n = paste0(\"n=\", n)\n  )\n  df_binom_approx &lt;- rbind(df_binom_approx, df_temp)\n}\n\nggplot(df_binom_approx, aes(x = x, y = prob)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_col(fill = \"steelblue\") +\n  facet_wrap(~ n, scales = \"free_x\") +\n  labs(title = \"二項分布 (p=0.3) の試行回数による変化\",\n       subtitle = \"n が大きくなると釣鐘型（正規分布に近い形）になる\",\n       x = \"成功回数\", y = \"確率\")\n\n\n\n\n\n\n\n\n\\(n\\) が大きくなるにつれて、分布が滑らかな釣鐘型（正規分布の形）に近づいていることがわかります。\n\n\n次回予告：中心極限定理\nこの「試行回数が増えると正規分布に近づく」という現象は、実は中心極限定理と呼ばれるもっと一般的な定理の特殊なケースです。\n中心極限定理 (Central Limit Theorem, CLT) は： - 元の分布の形に関わらず、標本サイズが大きければ標本平均の分布は正規分布に近づく\nという驚くべき定理で、統計学の最も重要な定理の一つです。\n次回（第7回 標本分布）では、この中心極限定理について詳しく学びます。 この定理があるからこそ、多くの統計的推測（推定や検定）で正規分布を使うことができるのです。",
+    "text": "二項分布 (Binomial Distribution)\n二項分布は、結果が2通り（成功/失敗）の試行を固定回数繰り返すモデルです。\n\n前提：ベルヌーイ試行\n「コイン投げ」のように、結果が \\(\\{0, 1\\}\\) のいずれかである試行をベルヌーイ試行と呼びます。 確率変数 \\(X\\) が成功確率 \\(p\\) のベルヌーイ分布に従うとき：\n\\[P(X=1) = p, \\quad P(X=0) = 1-p\\]\n期待値は \\(E[X]=p\\)、分散は \\(V[X]=p(1-p)\\) となります。\n\n\n二項分布の定義\n以下の条件（ベルヌーイ試行の反復）を満たす確率変数を考えます。\n\n試行回数 \\(n\\) が固定されている。\n各試行は独立である。\n成功確率 \\(p\\) は常に一定である。\n\nこのとき、総成功回数 \\(X\\) はパラメータ \\((n, p)\\) の二項分布に従います。 \\[X \\sim \\text{Binomial}(n, p)\\]\n確率質量関数: \\[P(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}\\]\n\n\nRでの計算と可視化\n例：公正なコインを10回投げたとき、表がちょうど5回出る確率。\n\ndbinom(5, size = 10, prob = 0.5)\n#&gt; [1] 0.2460938\n\n分布全体（\\(k=0 \\sim 10\\)）の可視化：\n\nx &lt;- 0:10\nprob &lt;- dbinom(x, size = 10, prob = 0.5)\ndf_binom &lt;- data.frame(x = factor(x), prob = prob)\n\nggplot(df_binom, aes(x = x, y = prob)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_col(fill = \"lightgreen\") +\n  labs(title = \"二項分布 (n=10, p=0.5)\", x = \"成功回数\", y = \"確率\")\n\n\n\n\n\n\n\n\n\n\n二項分布の期待値と分散\n\n期待値: \\(E[X] = np\\)\n分散: \\(V[X] = np(1-p)\\)\n\n\n\n二項分布の正規近似\n試行回数 \\(n\\) が十分に大きい場合、二項分布は正規分布 \\(N(np, np(1-p))\\) で近似可能です（ド・モアブル＝ラプラスの定理）。 これは中心極限定理の一例です。\n\n# 試行回数 n を変化させた場合の分布形状\nn_values &lt;- c(30, 10, 100)\np &lt;- 0.3\n\ndf_binom_approx &lt;- data.frame()\nfor(n in n_values) {\n  x &lt;- 0:n\n  prob &lt;- dbinom(x, size = n, prob = p)\n  df_binom_approx &lt;- rbind(df_binom_approx, data.frame(x=x, prob=prob, n=paste0(\"n=\", n)))\n}\n\nggplot(df_binom_approx, aes(x = x, y = prob)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_col(fill = \"steelblue\") +\n  facet_wrap(~ fct_relevel(n, \"n=10\", \"n=30\", \"n=100\"), scales = \"free_x\") +\n  labs(title = \"nの増加に伴う二項分布の正規近似\", x = \"成功回数\", y = \"確率\")",
     "crumbs": [
       "第6回 主要な確率分布"
     ]
@@ -694,7 +694,7 @@
     "href": "06_distributions.html#正規分布の重要性",
     "title": "第6回 主要な確率分布",
     "section": "正規分布の重要性",
-    "text": "正規分布の重要性\n正規分布は統計学で最も重要な分布の一つです。その理由は:\n\n自然界・社会現象で頻出: 身長、テストの点数、測定誤差など、多くの現象が正規分布に従います。\n中心極限定理: 標本サイズが大きければ、どんな分布でも標本平均の分布は正規分布に近づきます（第7回で詳しく学びます）。\n計算しやすい: 数学的に扱いやすい性質があり、多くの統計手法の基礎となっています。\n\n\n正規分布の68-95-99.7ルール\n正規分布において、データがどの範囲に収まるかの目安があります。\n\n平均 ± 1標準偏差 の範囲に、約68%のデータが含まれる\n平均 ± 2標準偏差 の範囲に、約95%のデータが含まれる\n平均 ± 3標準偏差 の範囲に、約99.7%のデータが含まれる\n\n\n# 視覚的に確認\nx &lt;- seq(-4, 4, length.out = 100)\ny &lt;- dnorm(x)\ndf &lt;- data.frame(x, y)\n\nggplot(df, aes(x = x, y = y)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_line() +\n  geom_area(data = filter(df, x &gt;= -1 & x &lt;= 1), fill = \"blue\", alpha = 0.3) +\n  geom_area(data = filter(df, x &gt;= -2 & x &lt;= 2), fill = \"green\", alpha = 0.2) +\n  geom_area(data = filter(df, x &gt;= -3 & x &lt;= 3), fill = \"red\", alpha = 0.1) +\n  labs(title = \"正規分布の68-95-99.7ルール\", x = \"標準偏差\", y = \"確率密度\")",
+    "text": "正規分布の重要性\n正規分布が統計学で特別視される主な理由は以下の通りです。\n\n中心極限定理 (CLT): 元の分布がどのような形であっても、標本サイズが十分に大きければ、標本平均の分布は正規分布に近似します。これにより、多種多様なデータの統計的推測が可能になります（第7回詳述）。\n誤差のモデル化: 多数の微小な独立した要因が積み重なって生じる誤差（測定誤差など）は、理論的に正規分布に従うことが示されます。\n\n\n経験則（68-95-99.7ルール）\n正規分布には以下の確率的性質があります。\n\n\\(\\mu \\pm 1\\sigma\\) の範囲: 約68.3%\n\\(\\mu \\pm 2\\sigma\\) の範囲: 約95.4%\n\\(\\mu \\pm 3\\sigma\\) の範囲: 約99.7%\n\n\nx &lt;- seq(-4, 4, length.out = 100)\ny &lt;- dnorm(x)\ndf &lt;- data.frame(x, y)\n\nggplot(df, aes(x = x, y = y)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_line() +\n  geom_area(data = filter(df, x &gt;= -1 & x &lt;= 1), fill = \"blue\", alpha = 0.3) +\n  geom_area(data = filter(df, x &gt;= -2 & x &lt;= 2), fill = \"green\", alpha = 0.2) +\n  geom_area(data = filter(df, x &gt;= -3 & x &lt;= 3), fill = \"red\", alpha = 0.1) +\n  labs(title = \"正規分布の区間確率 (1SD, 2SD, 3SD)\", x = \"標準偏差 (z)\", y = \"確率密度\")",
     "crumbs": [
       "第6回 主要な確率分布"
     ]
@@ -704,7 +704,7 @@
     "href": "06_distributions.html#課題",
     "title": "第6回 主要な確率分布",
     "section": "課題",
-    "text": "課題\n\n日本人の成人男性の平均身長が171cm、標準偏差が6cmの正規分布に従うと仮定します。 身長が180cm以上の人は、全体の何パーセントいますか？\nサイコロを10回振って、1の目がちょうど2回出る確率を計算してください。",
+    "text": "課題\n自らの手で確率を計算し、モデルの感覚を掴んでください。\n\n正規分布の計算: 日本人成人男性の身長が平均171cm、標準偏差6cmの正規分布に従うと仮定します。 身長が180cm以上の人は、上位何パーセントに含まれますか？\n二項分布の計算: サイコロを10回振ったとき、1の目が「ちょうど2回」出る確率は？（ヒント：\\(n=10, p=1/6\\)）",
     "crumbs": [
       "第6回 主要な確率分布"
     ]
@@ -714,7 +714,7 @@
     "href": "06_distributions.html#練習問題",
     "title": "第6回 主要な確率分布",
     "section": "練習問題",
-    "text": "練習問題\n\n練習1: 正規分布の確率計算\n平均50点、標準偏差10点のテストについて：\n\n40点以下になる確率を求めてください\n40点から60点の間に入る確率を求めてください\n上位10%に入るには何点以上必要ですか？（ヒント: qnorm() を使います）\n\n\n\n練習2: 二項分布\n歩留まり率が90%（不良品率10%）の製品を20個作るとき：\n\n不良品が1つも出ない確率を求めてください\n不良品が3つ以上出る確率を求めてください\n\n\n\n練習3: 分布の比較\n正規分布から100個の乱数を生成し（rnorm(100, mean=0, sd=1)）、ヒストグラムを描いてください。 乱数の個数を1000個、10000個に増やすとどうなりますか？",
+    "text": "練習問題\n\n練習1: テストの点数分布\n平均50点、標準偏差10点の正規分布に従うテストについて：\n\n40点以下となる確率は？\n40点から60点の間に入る確率は？\n上位10%に入るには何点以上必要ですか？ (qnormを使って逆算してください)\n\n\n\n練習2: 不良品の発生確率\n不良品率が10% (\\(p=0.1\\)) の製造ラインで製品を20個 (\\(n=20\\)) 作る場合： 1. 不良品が1個も出ない確率 2. 不良品が3個以上出る確率（sum(dbinom(3:20, ...))）\n\n\n練習3: 乱数シミュレーション\n標準正規分布から乱数を100個生成しヒストグラムを描画してください。 その後、サンプルサイズを1,000個、10,000個と増やしたとき、ヒストグラムの形状がどのように理論分布（釣鐘型）に近づくか確認してください。",
     "crumbs": [
       "第6回 主要な確率分布"
     ]
@@ -1787,6 +1787,166 @@
     "text": "グラフを「語らせる」ための調整\nデフォルトのままでは、グラフは「下書き」です。誰かに伝えるためには、意図が伝わるよう調整します。\n\n統計情報の重ね書き\n「傾向」を見せたいなら、生のデータ点だけでなく、平均値や回帰直線を重ねるのが効果的です。\n\nggplot(tips, aes(x = day, y = total_bill)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_boxplot(fill = \"lightblue\") +\n  stat_summary(fun = mean, geom = \"point\", color = \"red\", size = 3) + # 平均値を赤点で追加\n  stat_summary(fun = mean, geom = \"line\", aes(group = 1), color = \"red\", linetype = \"dashed\") +\n  labs(title = \"曜日ごとの傾向（赤点は平均値）\", x = \"曜日\", y = \"支払総額\")\n\n\n\n\n\n\n\n\n\n\nユニバーサルデザインへの配慮\nあなたのグラフを見る人の中には、特定の色が見えにくい人（色覚多様性）がいるかもしれません。 「赤と緑」の色分けだけで情報を伝えてはダメです。形状（shape）や線種（linetype）の違いを併用するか、誰もが識別しやすいカラーパレット（Viridisなど）の使用をおすすめします。",
     "crumbs": [
       "第4回 記述統計 (2) データの可視化"
+    ]
+  },
+  {
+    "objectID": "05_probability.html#本節の目的",
+    "href": "05_probability.html#本節の目的",
+    "title": "第5回 確率論の基礎",
+    "section": "",
+    "text": "確率変数および確率分布の定義と、離散型・連続型の違いを理解する。\n期待値（平均）と分散の定義を理解し、その性質（線形性など）を確認する。\nRのシミュレーション機能を用いて、理論値と標本統計量の関係を検証する。",
+    "crumbs": [
+      "第5回 確率論の基礎"
+    ]
+  },
+  {
+    "objectID": "05_probability.html#なぜ確率論が必要か",
+    "href": "05_probability.html#なぜ確率論が必要か",
+    "title": "第5回 確率論の基礎",
+    "section": "なぜ確率論が必要か",
+    "text": "なぜ確率論が必要か\n統計学は、観測されたデータ（標本）から、背後にあるメカニズム（母集団）を推測する学問です。この推測には常に「不確実性」が伴います。 この不確実性を定量的に評価し、数学的に扱うための言語が「確率論」です。",
+    "crumbs": [
+      "第5回 確率論の基礎"
+    ]
+  },
+  {
+    "objectID": "05_probability.html#確率の定義",
+    "href": "05_probability.html#確率の定義",
+    "title": "第5回 確率論の基礎",
+    "section": "確率の定義",
+    "text": "確率の定義\n確率（Probability）とは、ある試行において特定の事象が生じる「起こりやすさ」を \\(0\\) から \\(1\\) の数値で定量化したものです。 数学的には、Kolmogorovの公理系等に基づきますが、本講義では直感的な理解を優先します。\n\n\\(P(A) = 0\\): 事象Aは（ほぼ）起こらない\n\\(P(A) = 1\\): 事象Aは（ほぼ）確実に起こる\n\\(P(A) = 0.5\\): 起こるかどうかが五分五分である\n\n\n計算例\n「公正な（偏りのない）サイコロ」を1回振るという試行において：\n\n# 1の目が出る確率\n1 / 6\n#&gt; [1] 0.1666667\n\n# 偶数（2, 4, 6）の目が出る確率\n3 / 6\n#&gt; [1] 0.5",
+    "crumbs": [
+      "第5回 確率論の基礎"
+    ]
+  },
+  {
+    "objectID": "05_probability.html#同時確率と独立性",
+    "href": "05_probability.html#同時確率と独立性",
+    "title": "第5回 確率論の基礎",
+    "section": "同時確率と独立性",
+    "text": "同時確率と独立性\n\n独立であるとはどういうことか\n2つの事象 \\(A\\) と \\(B\\) が「独立」。これは、お互いに影響し合わないこと。 数学的な定義はシンプルです。\n\\[P(A \\cap B) = P(A) \\times P(B)\\]\n「AかつBが起こる確率」が、単純な掛け算で計算できるなら、それは独立。 逆に、掛け算で合わないなら、裏で何かがつながっています（相関や因果）。",
+    "crumbs": [
+      "第5回 確率論の基礎"
+    ]
+  },
+  {
+    "objectID": "05_probability.html#連続型確率変数への拡張",
+    "href": "05_probability.html#連続型確率変数への拡張",
+    "title": "第5回 確率論の基礎",
+    "section": "連続型確率変数への拡張",
+    "text": "連続型確率変数への拡張\n身長や温度のように連続的な値をとる変数の場合、特定の値をとる確率は（数学的厳密性の下では）\\(0\\) となります。 そのため、確率密度関数 (Probability Density Function, PDF) \\(f(x)\\) を用いて、「ある区間に入る確率」を面積として定義します。\n\n定義の違い\n\n\n\n\n\n\n\n\n性質\n離散型\n連続型\n\n\n\n\n確率の定義\n各点での確率 \\(P(X=x)\\)\n密度関数 \\(f(x)\\) の積分（面積）\n\n\n全確率\n\\(\\sum P(X=x_i) = 1\\)\n\\(\\int_{-\\infty}^{\\infty} f(x) dx = 1\\)\n\n\n期待値\n\\(\\sum x_i P(X=x_i)\\)\n\\(\\int x f(x) dx\\)\n\n\n特定値の確率\n正の値を取りうる\n常に \\(0\\) (\\(P(X=a) = 0\\))\n\n\n\n※連続型において \\(P(X=a)=0\\) とは、「決して起こらない（空事象）」という意味ではなく、「一点の確率は測度ゼロである」という解析学的な意味です。\n\n\n一様分布 (Uniform Distribution)\n最も基本的な連続分布です。区間 \\([a, b]\\) 内で確率密度が一定である分布を指します。 Rの runif() 関数などで生成・操作できます。\n\n# U(0, 1) の密度関数の可視化\nx &lt;- seq(0, 1, length.out = 100)\nf_x &lt;- dunif(x, min = 0, max = 1)\n\ndf &lt;- data.frame(x, f_x)\n\nggplot(df, aes(x = x, y = f_x)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") +\n  geom_line(color = \"blue\", size = 1.5) +\n  ylim(0, 1.5) +\n  labs(title = \"一様分布 U(0,1) の確率密度関数\", x = \"x\", y = \"密度 f(x)\")\n\n\n\n\n\n\n\n\n\n\nシミュレーションによる大数の法則の確認\n理論上の期待値と、実際に乱数を生成して計算した平均値（標本平均）の関係を確認します。\n\n# 乱数生成（10,000回試行）\nset.seed(123)\nsamples &lt;- runif(10000, min = 0, max = 1)\n\n# サンプル統計量の計算\ncat(\"サンプル平均:\", mean(samples), \"\\n\")\n#&gt; サンプル平均: 0.4975494\ncat(\"理論的期待値:\", 0.5, \"\\n\\n\")\n#&gt; 理論的期待値: 0.5\n\ncat(\"サンプル分散:\", var(samples), \"\\n\")\n#&gt; サンプル分散: 0.08219329\ncat(\"理論的分散:\", 1/12, \"(約 0.0833)\\n\")\n#&gt; 理論的分散: 0.08333333 (約 0.0833)\n\n試行回数を増やせば、サンプル平均は理論的期待値に収束します（大数の法則）。",
+    "crumbs": [
+      "第5回 確率論の基礎"
+    ]
+  },
+  {
+    "objectID": "05_probability.html#可能性の地図確率分布",
+    "href": "05_probability.html#可能性の地図確率分布",
+    "title": "第5回 確率論の基礎",
+    "section": "可能性の地図：確率分布",
+    "text": "可能性の地図：確率分布\n「次に何が起こるか」は誰にもわかりません。でも、「何がどれくらいの可能性で起こりうるか」の全体像なら描けます。\n\n確率変数 (\\(X\\)): コインの表裏やサイコロの目のように、結果が偶然で決まる変数。\n確率分布: 変数がとりうる値と、その確率の対応関係。いわば「可能性の地図」です。\n\n\nデジタルとアナログ：離散と連続\n確率変数には、大きく2つのタイプがあります。\n\n\n\n\n\n\n\n\n\nタイプ\nイメージ\n具体例\n特徴\n\n\n\n\n離散型 (Discrete)\nデジタル（飛び飛び）\nサイコロの目、人数\n1つ1つの値に確率がある (\\(P(X=x)\\))\n\n\n連続型 (Continuous)\nアナログ（連続）\n身長、時間、気温\n一点狙いの確率はゼロ。面積で確率を考える\n\n\n\n\n\n離散型の実験：サイコロの地図\n一番シンプルな離散分布、「公正なサイコロ」を考えます。 1から6までの目が、すべて均等に \\(1/6\\) の確率で出ます。\n\nx &lt;- 1:6\nprob &lt;- rep(1/6, 6) # 全て 1/6\n\n# 分布の可視化\nlibrary(tidyverse)\ntheme_set(theme_gray(base_family = \"HiraKakuProN-W3\")) # [対象注意] Mac用設定\n\ndata.frame(x = factor(x), prob = prob) %&gt;% \n  ggplot(aes(x = x, y = prob)) +\n  geom_col(fill = \"orange\", width = 0.5) +\n  ylim(0, 0.5) +\n  labs(title = \"サイコロの確率分布（離散型）\", x = \"出る目\", y = \"確率\")",
+    "crumbs": [
+      "第5回 確率論の基礎"
+    ]
+  },
+  {
+    "objectID": "05_probability.html#分布の特徴を捉える",
+    "href": "05_probability.html#分布の特徴を捉える",
+    "title": "第5回 確率論の基礎",
+    "section": "分布の特徴を捉える",
+    "text": "分布の特徴を捉える\n地図全体を眺めるのは大変です。特徴を一言で表す「要約」がほしい。記述統計で学んだ「平均」と「分散」。こいつらが、確率論の世界では期待値と分散として再登場します。\n\n1. 期待値 (Expected Value): 「賭け」の相場\nもしサイコロ博打を何千回も繰り返したら、平均で何点とれるか。 それが期待値 \\(E[X]\\) 。分布の「重心」です。\n\\[ E[X] = \\sum_{i} x_i P(X=x_i) \\]\nサイコロなら： \\[ 1 \\times \\frac{1}{6} + \\cdots + 6 \\times \\frac{1}{6} = 3.5 \\]\n「3.5」という目は実際には出ません。でも、長く続ければこの値に落ち着く。これがこのゲームの「平均的な相場」です。\n\n\n2. 分散 (Variance): リスクの大きさ\n期待値（重心）から、どれくらい離れた値が出やすいか。 このブレこそ、リスク。統計学では分散 \\(V[X]\\) と呼びます。\n\\[ V[X] = E[(X - E[X])^2] \\]\n\n# Rで計算\nE_X &lt;- sum(x * prob)\nV_X &lt;- sum((x - E_X)^2 * prob)\n\ncat(\"期待値:\", E_X, \"\\n\")\n#&gt; 期待値: 3.5\ncat(\"分散:\", V_X, \"\\n\")\n#&gt; 分散: 2.916667\ncat(\"標準偏差:\", sqrt(V_X), \"\\n\")\n#&gt; 標準偏差: 1.707825\n\n\n\n線形性：計算を楽にする魔法\n期待値と分散には、計算を劇的に楽にする性質（魔法）があります。 例えば、「サイコロの目を10倍して3を足したスコア」の平均を知りたいとき、いちいちシミュレーションしなくていい。\n\n期待値: \\(E[10X + 3] = 10 E[X] + 3 = 10(3.5) + 3 = 38\\)\n分散: \\(V[10X + 3] = 100 V[X]\\) （定数の足し算は無視。掛け算は二乗で効く）",
+    "crumbs": [
+      "第5回 確率論の基礎"
+    ]
+  },
+  {
+    "objectID": "05_probability.html#連続の世界へ",
+    "href": "05_probability.html#連続の世界へ",
+    "title": "第5回 確率論の基礎",
+    "section": "連続の世界へ",
+    "text": "連続の世界へ\n身長や時間など、連続的な数値の場合、「ちょうど170.000…cmである確率」は実質ゼロです。 そこで、確率密度関数 (PDF) を使い、「点」ではなく「面積」で確率を考えます。\n\n確率密度関数とは\n\n\\(f(x)\\) というカーブの下側の面積が、確率になります。\n全区間の面積（全確率）は、必ず 1 。\n\n\n\n実験：一様分布シミュレーション\n0から1までの乱数を発生させる「一様分布」で、理論と現実を比べてみます。 理論上の期待値は \\(0.5\\)、分散は \\(1/12 \\approx 0.083\\) です。\n\n# 1. 密度関数の可視化（理論）\nggplot(data.frame(x = c(0, 1)), aes(x)) +\n  stat_function(fun = dunif, args = list(min = 0, max = 1), \n                geom = \"area\", fill = \"lightblue\", alpha = 0.5) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  labs(title = \"一様分布 U(0,1) の密度関数\", y = \"密度 f(x)\")\n\n\n\n\n\n\n\n\n# 2. シミュレーション（現実）\nset.seed(123)\nsamples &lt;- runif(10000)\n\ncat(\"--- シミュレーション結果 ---\\n\")\n#&gt; --- シミュレーション結果 ---\ncat(\"サンプル平均:\", mean(samples), \" (理論値: 0.5)\\n\")\n#&gt; サンプル平均: 0.4975494  (理論値: 0.5)\ncat(\"サンプル分散:\", var(samples), \" (理論値: 0.0833...)\\n\")\n#&gt; サンプル分散: 0.08219329  (理論値: 0.0833...)\n\n回数を重ねるほど、現実は理論（期待値）に近づいていきます。大数の法則です。",
+    "crumbs": [
+      "第5回 確率論の基礎"
+    ]
+  },
+  {
+    "objectID": "05_probability.html#課題練習問題",
+    "href": "05_probability.html#課題練習問題",
+    "title": "第5回 確率論の基礎",
+    "section": "課題/練習問題",
+    "text": "課題/練習問題\n自力で計算し、Rで確かめてみてください。\n\n課題1: 歪んだコインのギャンブル\n表が出る確率が \\(0.1\\)、裏が \\(0.9\\) のコインがあります。 表なら100円、裏なら0円もらえるとき、このギャンブルの期待値（参加料の適正価格）はいくらですか？\n\n\n課題2: 独立性の検証\n「雨が降る確率」が30%、「傘を持つ確率」が50%だとします。 もし「雨が降り、かつ傘を持っている確率」が15%なら、雨と傘は独立と言えますか？ （ヒント：\\(0.3 \\times 0.5\\) と比べてください）\n※本節の公式（期待値・分散の定義、線形性）は、次回の「推測統計」でフル活用します。手計算できるようになっておいてください。",
+    "crumbs": [
+      "第5回 確率論の基礎"
+    ]
+  },
+  {
+    "objectID": "06_distributions.html#本節の目的",
+    "href": "06_distributions.html#本節の目的",
+    "title": "第6回 主要な確率分布",
+    "section": "",
+    "text": "連続型分布の代表である 正規分布 の性質と重要性を理解する。\n離散型分布の代表である 二項分布 の定義（ベルヌーイ試行）を理解する。\n推測統計で利用される派生分布（t分布、カイ二乗分布、F分布）の概要を把握する。",
+    "crumbs": [
+      "第6回 主要な確率分布"
+    ]
+  },
+  {
+    "objectID": "06_distributions.html#推測統計のための派生分布",
+    "href": "06_distributions.html#推測統計のための派生分布",
+    "title": "第6回 主要な確率分布",
+    "section": "推測統計のための派生分布",
+    "text": "推測統計のための派生分布\n統計的推測（推定・検定）では、正規分布から数学的に導出される以下の確率分布が不可欠です。これらは第8回以降で詳細に扱いますが、ここではその出自と用途を定義します。\n\n1. カイ二乗分布 (\\(\\chi^2\\))\n\n定義: 標準正規分布に従う独立な確率変数の二乗和が従う分布。\n用途: 母分散の推定・検定、クロス集計表の独立性検定。\n特徴: 常に正の値をとる。自由度 \\(k\\) によって形状が決まる。\n\n\n\n2. t分布 (Student’s t)\n\n定義: 母分散が未知の場合に、標本分散を用いて標準化した平均値が従う分布。\n用途: 小標本における平均値の検定（t検定）、回帰係数の有意性検定。\n特徴: 正規分布に似ているが、裾が厚い（極端な値が出やすい）。自由度が大きくなると正規分布に収束する。\n\n\n\n3. F分布\n\n定義: 2つの独立なカイ二乗分布（をそれぞれの自由度で割ったもの）の比が従う分布。\n用途: 等分散性の検定、分散分析 (ANOVA)。\n特徴: 2つの自由度 \\((df1, df2)\\) を持つ。常に正の値をとる。",
+    "crumbs": [
+      "第6回 主要な確率分布"
+    ]
+  },
+  {
+    "objectID": "06_distributions.html#分布リファレンス",
+    "href": "06_distributions.html#分布リファレンス",
+    "title": "第6回 主要な確率分布",
+    "section": "分布リファレンス",
+    "text": "分布リファレンス\n\n\n\n分布名\nR関数接頭辞\n主要な用途\n決定パラメータ\n\n\n\n\n正規分布\nnorm\n連続データのモデル化、誤差\nmean, sd\n\n\n二項分布\nbinom\n成功回数の確率\nsize (n), prob (p)\n\n\nt分布\nt\n平均の検定（分散未知）\ndf (自由度)\n\n\nカイ二乗分布\nchisq\n分散の検定、独立性検定\ndf (自由度)\n\n\nF分布\nf\n分散分析、等分散検定\ndf1, df2 (自由度)",
+    "crumbs": [
+      "第6回 主要な確率分布"
+    ]
+  },
+  {
+    "objectID": "06_distributions.html#統計学の王様正規分布",
+    "href": "06_distributions.html#統計学の王様正規分布",
+    "title": "第6回 主要な確率分布",
+    "section": "1. 統計学の王様：正規分布",
+    "text": "1. 統計学の王様：正規分布\n正規分布は、平均 \\(\\mu\\) と分散 \\(\\sigma^2\\) 。たった2つのパラメータで完全に決まる、左右対称の美しい釣鐘型をしています。\n\\[f(x) = \\frac{1}{\\sqrt{2\\pi\\sigma^2}} \\exp\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2}\\right)\\]\n数式は複雑に見えますが、Rなら一瞬で描けます。\n\n4つの魔法の呪文\nRには確率分布を扱うための共通の「呪文（接頭辞）」があります。これさえ覚えれば、勝てます。\n\nd (Density): 確率密度。グラフの高さ。 (dnorm)\np (Probability): 累積確率。ある地点より左側の面積。 (pnorm)\nq (Quantile): 分位点。確率から値を逆算する。 (qnorm)\nr (Random): 乱数生成。シミュレーション用。 (rnorm)\n\n\n\n正規分布を描いてみる\nまずは標準正規分布（平均0、分散1）を見てみましょう。\n\nlibrary(tidyverse)\n\n# x軸の範囲定義\nx &lt;- seq(-4, 4, length.out = 100)\n# 確率密度の計算 (dnorm)\ny &lt;- dnorm(x, mean = 0, sd = 1)\n\ndf &lt;- data.frame(x, y)\n\nggplot(df, aes(x = x, y = y)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_line() +\n  labs(title = \"標準正規分布 (Mean=0, SD=1)\")\n\n\n\n\n\n\n\n\n\n\nパラメータを変えてみる\n平均がズレると山が移動し、標準偏差が大きくなると山が平らになります。\n\nx &lt;- seq(-10, 15, length.out = 200)\ndf_compare &lt;- data.frame(\n  x = rep(x, 3),\n  y = c(dnorm(x, mean = 0, sd = 1),\n        dnorm(x, mean = 5, sd = 1),\n        dnorm(x, mean = 0, sd = 2)),\n  type = rep(c(\"μ=0, σ=1\", \"μ=5, σ=1\", \"μ=0, σ=2\"), each = length(x))\n)\n\nggplot(df_compare, aes(x = x, y = y, color = type)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_line(size = 1) +\n  labs(title = \"パラメータによる正規分布の変化\", color = \"設定\")",
+    "crumbs": [
+      "第6回 主要な確率分布"
+    ]
+  },
+  {
+    "objectID": "06_distributions.html#現実の問いに答える確率計算",
+    "href": "06_distributions.html#現実の問いに答える確率計算",
+    "title": "第6回 主要な確率分布",
+    "section": "現実の問いに答える：確率計算",
+    "text": "現実の問いに答える：確率計算\n「平均50、標準偏差10のテストで、60点以上をとる確率は？」 この問いに答えるのが p (累積確率) の関数です。\npnorm(60) は「\\(-\\infty\\) から 60 までの面積」を返します。 「60点以上」を知りたいなら、全体（100% = 1）から「60点以下」の確率を引けばいい。\n\n# P(X &gt;= 60) = 1 - P(X &lt;= 60)\n1 - pnorm(60, mean = 50, sd = 10)\n#&gt; [1] 0.1586553\n\n約15.9%。クラスの16%は、偏差値60以上ということ。\n\n68-95-99.7 ルール\n正規分布には、覚えておくべき相場観があります。 「データの大半は、平均から標準偏差の3倍以内に収まる」というルールです。\n\n\\(\\pm 1\\sigma\\): 約68% （偏差値40〜60）\n\\(\\pm 2\\sigma\\): 約95% （偏差値30〜70）\n\\(\\pm 3\\sigma\\): 約99.7% （ほぼすべて）\n\n\nx &lt;- seq(-4, 4, length.out = 100)\ny &lt;- dnorm(x)\ndf &lt;- data.frame(x, y)\n\nggplot(df, aes(x = x, y = y)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_line() +\n  geom_area(data = filter(df, x &gt;= -1 & x &lt;= 1), fill = \"blue\", alpha = 0.3) +\n  geom_area(data = filter(df, x &gt;= -2 & x &lt;= 2), fill = \"green\", alpha = 0.2) +\n  geom_area(data = filter(df, x &gt;= -3 & x &lt;= 3), fill = \"red\", alpha = 0.1) +\n  labs(title = \"正規分布の区間確率 (1SD, 2SD, 3SD)\", x = \"標準偏差 (z)\", y = \"確率密度\")",
+    "crumbs": [
+      "第6回 主要な確率分布"
+    ]
+  },
+  {
+    "objectID": "06_distributions.html#コイン投げの積み重ね二項分布",
+    "href": "06_distributions.html#コイン投げの積み重ね二項分布",
+    "title": "第6回 主要な確率分布",
+    "section": "2. コイン投げの積み重ね：二項分布",
+    "text": "2. コイン投げの積み重ね：二項分布\n次に、離散型の代表、二項分布。 「成功か失敗か」のギャンブル（ベルヌーイ試行）を \\(n\\) 回繰り返したとき、何回勝てるか？を表す分布です。\n\n二項分布の3条件\n単なる繰り返しではなく、3つの条件が必要です。 1. 回数 \\(n\\) が決まっている。 2. 毎回のリセット（独立性）。前の結果に引きずられない。 3. 勝率 \\(p\\) が変わらない。\n\n\nシミュレーション：運命の分かれ道\nコイン投げ（\\(p=0.5\\)）を10回行う勝負を考えます。 「ちょうど5回勝つ確率」はどれくらいか。\n\n# dbinom で確率（点）を計算\ndbinom(5, size = 10, prob = 0.5)\n#&gt; [1] 0.2460938\n\n約24.6%。意外と低いですか？ すべてのパターンの確率を並べてみます。\n\nx &lt;- 0:10\nprob &lt;- dbinom(x, size = 10, prob = 0.5)\ndf_binom &lt;- data.frame(x = factor(x), prob = prob)\n\nggplot(df_binom, aes(x = x, y = prob)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_col(fill = \"lightgreen\") +\n  labs(title = \"二項分布 (n=10, p=0.5)\", x = \"成功回数\", y = \"確率\")\n\n\n\n\n\n\n\n\n\n\n回数を増やすと、奇跡が起きる\nここからが統計学のハイライト。 このカクカクした二項分布、試行回数 \\(n\\) をどんどん増やしていくと、どうなるか。\n\n# 試行回数 n を変化させた場合の分布形状\nn_values &lt;- c(30, 10, 100) # ユーザーによる順序指定あり\np &lt;- 0.3\n\ndf_binom_approx &lt;- data.frame()\nfor(n in n_values) {\n  x &lt;- 0:n\n  prob &lt;- dbinom(x, size = n, prob = p)\n  df_binom_approx &lt;- rbind(df_binom_approx, data.frame(x=x, prob=prob, n=paste0(\"n=\", n)))\n}\n\nggplot(df_binom_approx, aes(x = x, y = prob)) +\n  theme_gray(base_family = \"HiraKakuProN-W3\") + # [対象注意] Mac用設定\n  geom_col(fill = \"steelblue\") +\n  # nの順序を整えて表示（小さいnから順に見るため）\n  facet_wrap(~ fct_relevel(n, \"n=10\", \"n=30\", \"n=100\"), scales = \"free_x\") +\n  labs(title = \"nの増加に伴う二項分布の正規近似\", x = \"成功回数\")\n\n\n\n\n\n\n\n\n\\(n\\) が増えるにつれて、分布の左右対称性が増し、きれいな釣鐘型に近づいているのがわかります。 「離散的なコイン投げ」が、積み重なることで「連続的な正規分布」に化けました。\nこれを正規近似（ド・モアブル＝ラプラスの定理）と呼び、後の中心極限定理へとつながる重要な性質です。",
+    "crumbs": [
+      "第6回 主要な確率分布"
+    ]
+  },
+  {
+    "objectID": "06_distributions.html#正規分布の子供たち派生分布",
+    "href": "06_distributions.html#正規分布の子供たち派生分布",
+    "title": "第6回 主要な確率分布",
+    "section": "3. 正規分布の子供たち（派生分布）",
+    "text": "3. 正規分布の子供たち（派生分布）\n最後に、推測統計の現場で頻繁に使われる3つの分布を紹介します。 これらはすべて、正規分布を親として生まれた「正規分布ファミリー」。 今は定義を丸暗記する必要はありません。「何のために生まれたか」という役割だけ、押さえておきます。\n\nカイ二乗分布 (\\(\\chi^2\\))：ブレの分析官\n\n出自: 標準正規分布の2乗和。\n役割: 「分散（ばらつき）」を分析すること。\n特徴: 2乗しているのでマイナスにはなりません。適合度検定などで活躍します。\n\n\n\nt分布 (\\(t\\))：現場の代役\n\n出自: 正規分布 ÷ \\(\\sqrt{\\chi^2/k}\\)。\n役割: データ数（標本）が少ないときに、正規分布の代役を務める。\n特徴: 正規分布より裾が厚く、外れ値のリスクを織り込んでいます。「母分散がわからない」という現実的な状況で、平均値を検定するための分布です。\n\n\n\nF分布 (\\(F\\))：比較のスペシャリスト\n\n出自: 2つのカイ二乗分布の比。\n役割: 2つの「分散」を比べること。\n特徴: 分散分析（ANOVA）で、グループ間の差が誤差より大きいかを判定する際に使われます。",
+    "crumbs": [
+      "第6回 主要な確率分布"
     ]
   }
 ]
