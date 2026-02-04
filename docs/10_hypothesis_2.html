@@ -266,9 +266,6 @@ window.Quarto = {
   <li><a href="#課題" id="toc-課題" class="nav-link" data-scroll-target="#課題">課題</a></li>
   <li><a href="#練習問題" id="toc-練習問題" class="nav-link" data-scroll-target="#練習問題">練習問題</a></li>
   <li><a href="#まとめ" id="toc-まとめ" class="nav-link" data-scroll-target="#まとめ">まとめ</a></li>
-  <li><a href="#課題-1" id="toc-課題-1" class="nav-link" data-scroll-target="#課題-1">課題</a></li>
-  <li><a href="#練習問題-1" id="toc-練習問題-1" class="nav-link" data-scroll-target="#練習問題-1">練習問題</a></li>
-  <li><a href="#まとめ-1" id="toc-まとめ-1" class="nav-link" data-scroll-target="#まとめ-1">まとめ</a></li>
   </ul>
 </nav>
     </div>
@@ -413,7 +410,12 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="練習問題">練習問題</h2>
 <section id="練習1-検定の選択" class="level3">
 <h3 class="anchored" data-anchor-id="練習1-検定の選択">練習1: 検定の選択</h3>
-<p>以下のシナリオにおいて、最も適切な検定手法（対応ありt検定 / 対応なし(Welch)t検定）を選んでください。 1. A組30人とB組30人のテストの平均点の比較。 2. 高血圧患者30人の、降圧剤投与前と投与後の血圧の比較。 3. 10組の双子における、兄と弟の身長の比較。</p>
+<p>以下のシナリオにおいて、最も適切な検定手法（対応ありt検定 / 対応なし(Welch)t検定）を選んでください。</p>
+<ol type="1">
+<li>A組30人とB組30人のテストの平均点の比較。</li>
+<li>高血圧患者30人の、降圧剤投与前と投与後の血圧の比較。</li>
+<li>10組の双子における、兄と弟の身長の比較。</li>
+</ol>
 </section>
 <section id="練習2-サンプルサイズとp値" class="level3">
 <h3 class="anchored" data-anchor-id="練習2-サンプルサイズとp値">練習2: サンプルサイズとp値</h3>
@@ -426,66 +428,6 @@ window.Quarto = {
 </section>
 <section id="まとめ" class="level2">
 <h2 class="anchored" data-anchor-id="まとめ">まとめ</h2>
-<table class="table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>検定手法</th>
-<th>適用場面</th>
-<th>キャッチコピー</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Welchのt検定</strong></td>
-<td>独立した2群</td>
-<td>全地形対応の万能車。デフォルトはこれ。</td>
-</tr>
-<tr class="even">
-<td><strong>対応のあるt検定</strong></td>
-<td>同一ペアの比較</td>
-<td>変化（差分）狙い撃ち。検出力高め。</td>
-</tr>
-<tr class="odd">
-<td><strong>効果量 (Cohen’s d)</strong></td>
-<td>関係性の強さ</td>
-<td>p値に頼らない、実力のスコア。</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="課題-1" class="level2">
-<h2 class="anchored" data-anchor-id="課題-1">課題</h2>
-<ol type="1">
-<li><strong>喫煙の有無とチップ</strong>: <code>tips</code> データを使って、喫煙者 (<code>Smoker</code>) と非喫煙者 (<code>Non-Smoker</code>) で、チップの額 (<code>tip</code>) に差があるかを検定してください（Welchのt検定）。 また、その差の効果量 (Cohen’s d) を計算し、統計的有意性と実質的意味について論じてください。</li>
-</ol>
-</section>
-<section id="練習問題-1" class="level2">
-<h2 class="anchored" data-anchor-id="練習問題-1">練習問題</h2>
-<section id="練習1-検定の選択-1" class="level3">
-<h3 class="anchored" data-anchor-id="練習1-検定の選択-1">練習1: 検定の選択</h3>
-<p>以下のシナリオにおいて、最も適切な検定手法（対応ありt検定 / 対応なし(Welch)t検定）を選んでください。</p>
-<ol type="1">
-<li>A組30人とB組30人のテストの平均点の比較。</li>
-<li>高血圧患者30人の、降圧剤投与前と投与後の血圧の比較。</li>
-<li>10組の双子における、兄と弟の身長の比較。</li>
-</ol>
-</section>
-<section id="練習2-サンプルサイズとp値-1" class="level3">
-<h3 class="anchored" data-anchor-id="練習2-サンプルサイズとp値-1">練習2: サンプルサイズとp値</h3>
-<p>効果量 <span class="math inline">\(d=0.5\)</span> （中程度）の差がある2つの母集団から、 (a) <span class="math inline">\(n=10\)</span> ずつ (b) <span class="math inline">\(n=100\)</span> ずつ データを抽出し、t検定を行った場合のp値をシミュレーションで比較してください。サンプルサイズがp値に与える影響を確認します。</p>
-</section>
-<section id="練習3-等分散性の確認はいらない-1" class="level3">
-<h3 class="anchored" data-anchor-id="練習3-等分散性の確認はいらない-1">練習3: 等分散性の確認はいらない？</h3>
-<p>「まずF検定をしてからt検定の種類を選ぶ」という手順が、現在では推奨されない理由を自分の言葉で説明してください。</p>
-</section>
-</section>
-<section id="まとめ-1" class="level2">
-<h2 class="anchored" data-anchor-id="まとめ-1">まとめ</h2>
 <table class="table">
 <colgroup>
 <col style="width: 25%">
