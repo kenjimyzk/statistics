@@ -1,5 +1,6 @@
 /.quarto/
 /.jupyter/
+/.jupyter_cache/
 /.ipynb_checkpoints/
 /.vscode/
 /__pycache__/
@@ -8,3 +9,6 @@
 /*.pyd
 /*.env
 test_*.*
+/*_files/
+/*_cache/
+.DS_Store
