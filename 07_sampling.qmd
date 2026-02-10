@@ -73,6 +73,7 @@ sample2.mean()
 ```{python}
 import numpy as np
 import matplotlib.pyplot as plt
+import japanize_matplotlib  # noqa: F401
 
 rng = np.random.default_rng(0)
 n = 1000
@@ -101,6 +102,7 @@ plt.show()
 ```{python}
 import numpy as np
 import matplotlib.pyplot as plt
+import japanize_matplotlib  # noqa: F401
 
 rng = np.random.default_rng(123)
 
@@ -133,6 +135,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import japanize_matplotlib  # noqa: F401
 
 rng = np.random.default_rng(123)
 

@@ -34,6 +34,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import japanize_matplotlib  # noqa: F401
 from scipy.stats import ttest_ind
 
 url = "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"

@@ -30,5 +30,5 @@
 また、以下のパッケージを主に使用します。
 
 ```bash
-pip install numpy pandas matplotlib seaborn scipy statsmodels
+pip install -r requirements.txt
 ```

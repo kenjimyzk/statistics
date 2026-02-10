@@ -73,6 +73,7 @@ tips["total_bill"].mean()
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import japanize_matplotlib  # noqa: F401
 from scipy.stats import t
 
 rng = np.random.default_rng(123)

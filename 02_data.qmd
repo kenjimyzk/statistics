@@ -160,6 +160,7 @@ pandasにも「取り出し方の違い」があります。
 ```{python}
 import seaborn as sns
 import matplotlib.pyplot as plt
+import japanize_matplotlib  # noqa: F401
 
 ax = sns.scatterplot(data=tips, x="total_bill", y="tip", hue="time")
 ax.set(xlabel="支払総額 ($)", ylabel="チップ ($)")

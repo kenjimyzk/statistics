@@ -174,6 +174,7 @@ model_dummy.rsquared_adj
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import japanize_matplotlib  # noqa: F401
 
 coef = pd.DataFrame(
   {

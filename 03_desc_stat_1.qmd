@@ -185,6 +185,7 @@ tips.loc[
 ```{python}
 import seaborn as sns
 import matplotlib.pyplot as plt
+import japanize_matplotlib  # noqa: F401
 
 mean_val = tips["total_bill"].mean()
 med_val = tips["total_bill"].median()

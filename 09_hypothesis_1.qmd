@@ -56,6 +56,7 @@ t分布を使って、「無罪（偶然）」の範囲を可視化してみま�
 ```{python}
 import numpy as np
 import matplotlib.pyplot as plt
+import japanize_matplotlib  # noqa: F401
 from scipy.stats import t
 
 df = 9

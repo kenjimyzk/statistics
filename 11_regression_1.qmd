@@ -83,6 +83,7 @@ model.summary()
 ```{python}
 import seaborn as sns
 import matplotlib.pyplot as plt
+import japanize_matplotlib  # noqa: F401
 
 ax = sns.regplot(data=tips, x="total_bill", y="tip", line_kws={"color": "red"})
 ax.set(title="予測マシン（回帰直線）の可視化", xlabel="支払総額 ($)", ylabel="チップ ($)")
@@ -115,6 +116,7 @@ plt.show()
 # 予測値と残差の準備
 import matplotlib.pyplot as plt
 import seaborn as sns
+import japanize_matplotlib  # noqa: F401
 from statsmodels.graphics.gofplots import qqplot
 
 tips_aug = tips.assign(pred=model.fittedvalues, resid=model.resid)

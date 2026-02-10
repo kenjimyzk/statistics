@@ -36,6 +36,7 @@ stats
 
 ```{python}
 import matplotlib.pyplot as plt
+import japanize_matplotlib  # noqa: F401
 
 g = sns.lmplot(
   data=anscombe,
@@ -61,7 +62,7 @@ plt.show()
 本節でも `tips` データセット（Bryant & Smith, 1995）を使います。
 
 ```{python}
-url <- "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
+url = "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
 import pandas as pd
 
 tips = pd.read_csv(url)
@@ -97,6 +98,7 @@ plt.show()
 ```{python}
 import seaborn as sns
 import matplotlib.pyplot as plt
+import japanize_matplotlib  # noqa: F401
 
 ax = sns.histplot(data=tips, x="total_bill", bins=30, color="skyblue", edgecolor="white")
 ax.set(title="支払総額の分布", xlabel="支払総額 ($)", ylabel="度数")
@@ -111,6 +113,7 @@ plt.show()
 ```{python}
 import seaborn as sns
 import matplotlib.pyplot as plt
+import japanize_matplotlib  # noqa: F401
 
 order = ["Thur", "Fri", "Sat", "Sun"]
 ax = sns.boxplot(data=tips, x="day", y="total_bill", order=order)
@@ -131,6 +134,7 @@ plt.show()
 ```{python}
 import seaborn as sns
 import matplotlib.pyplot as plt
+import japanize_matplotlib  # noqa: F401
 
 order = ["Thur", "Fri", "Sat", "Sun"]
 ax = sns.violinplot(data=tips, x="day", y="total_bill", order=order, inner=None)
@@ -151,6 +155,7 @@ plt.show()
 ```{python}
 import seaborn as sns
 import matplotlib.pyplot as plt
+import japanize_matplotlib  # noqa: F401
 
 ax = sns.scatterplot(data=tips, x="total_bill", y="tip", color="blue", alpha=0.5)
 ax.set(title="支払総額とチップの正の相関", xlabel="支払総額 ($)", ylabel="チップ ($)")
@@ -162,6 +167,7 @@ plt.show()
 ```{python}
 import seaborn as sns
 import matplotlib.pyplot as plt
+import japanize_matplotlib  # noqa: F401
 
 ax = sns.scatterplot(data=tips, x="total_bill", y="tip", hue="sex")
 ax.set(xlabel="支払総額 ($)", ylabel="チップ ($)")
@@ -176,6 +182,7 @@ plt.show()
 ```{python}
 import seaborn as sns
 import matplotlib.pyplot as plt
+import japanize_matplotlib  # noqa: F401
 
 g = sns.relplot(
   data=tips,
@@ -201,6 +208,7 @@ plt.show()
 ```{python}
 import seaborn as sns
 import matplotlib.pyplot as plt
+import japanize_matplotlib  # noqa: F401
 
 order = ["Thur", "Fri", "Sat", "Sun"]
 ax = sns.boxplot(data=tips, x="day", y="total_bill", order=order, color="lightblue")

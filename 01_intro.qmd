@@ -110,6 +110,7 @@ stats.mean(scores)
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import japanize_matplotlib  # noqa: F401
 
 url = "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
 tips = pd.read_csv(url)
