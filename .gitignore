@@ -2,3 +2,5 @@
 /*_files
 /*_cache
 .DS_Store
+.quarto/
+test_*.*
