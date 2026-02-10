@@ -41,7 +41,7 @@ p値とは、**「もし被告人が無罪だとしたら、こんな証拠が�
 *   **p値が極めて小さい（0.001とか）**: 「無罪だとしたら、こんな証拠が出るのはありえない（奇跡に近い）」。
     *   判決：無罪ではないだろう。**有罪（有意）**！
 
-### 判決の基準：有意水準 ($\alpha$)
+### 判決の基準：有意水準
 
 どこまで確率が低ければ「ありえない」と判断するのか？
 その基準を**有意水準**と呼び、通常 **5% (0.05)** に設定します。
@@ -55,7 +55,8 @@ t分布を使って、「無罪（偶然）」の範囲を可視化してみま�
 
 ```{r}
 library(tidyverse)
-# theme_set(theme_gray(base_family = "HiraKakuProN-W3")) # [対象注意] Mac用設定
+theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
+# theme_set(theme_gray()) # [対象注意] Mac用設定
 
 # t分布 (自由度9)
 x <- seq(-4, 4, length.out = 100)
@@ -66,7 +67,7 @@ df_t <- data.frame(x, y)
 critical_val <- qt(0.975, df = 9)
 
 ggplot(df_t, aes(x = x, y = y)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_line() +
   geom_area(data = filter(df_t, x > critical_val), fill = "red", alpha = 0.5) +
   geom_area(data = filter(df_t, x < -critical_val), fill = "red", alpha = 0.5) +

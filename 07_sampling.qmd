@@ -44,6 +44,7 @@ Rでパラレルワールドをシミュレーションしてみましょう。
 
 ```{r}
 library(tidyverse)
+theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
 set.seed(1)
 
 # 母集団分布（平均50, 標準偏差10の正規分布）
@@ -77,7 +78,7 @@ cumulative_mean <- cumsum(dice_rolls) / (1:n)
 df <- data.frame(n = 1:n, mean = cumulative_mean)
 
 ggplot(df, aes(x = n, y = mean)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_line() +
   geom_hline(yintercept = 3.5, color = "red", linetype = "dashed") +
   labs(title = "大数の法則: 試行回数と標本平均の収束", y = "標本平均")
@@ -108,7 +109,7 @@ for (i in 1:n_samples) {
 }
 
 ggplot(data.frame(x = means), aes(x = x)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_histogram(bins = 30, fill = "orange", color = "white") +
   labs(title = "標本平均の分布 (n=30)", x = "標本平均")
 ```
@@ -134,7 +135,7 @@ for (n in sample_sizes) {
 results$size <- factor(results$size, levels = paste0("n=", sample_sizes))
 
 ggplot(results, aes(x = means)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_histogram(bins = 30, fill = "steelblue", color = "white") +
   facet_wrap(~size, scales = "free_y") +
   labs(title = "中心極限定理: サンプルサイズによる標本分布の変化", x = "標本平均")

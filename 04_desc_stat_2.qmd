@@ -12,6 +12,7 @@ Anscombe (1973) の有名な例、アンスコムのカルテットを見てみ�
 
 ```{r}
 library(tidyverse)
+theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
 # Rに標準で入っている anscombe データを整形
 anscombe_long <- anscombe %>%
   pivot_longer(everything(),
@@ -33,7 +34,7 @@ anscombe_long %>%
 
 ```{r}
 ggplot(anscombe_long, aes(x = x, y = y)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
   facet_wrap(~set) +
@@ -78,7 +79,7 @@ ggplot(data = tips, mapping = aes(x = total_bill, y = tip)) + # キャンバス�
 
 ```{r}
 ggplot(tips, aes(x = total_bill)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_histogram(bins = 30, fill = "skyblue", color = "white") +
   labs(title = "支払総額の分布", x = "支払総額 ($)", y = "度数")
 ```
@@ -90,7 +91,7 @@ ggplot(tips, aes(x = total_bill)) +
 
 ```{r}
 ggplot(tips, aes(x = day, y = total_bill, fill = day)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_boxplot() +
   labs(title = "曜日ごとの支払額の違い", x = "曜日", y = "支払総額")
 ```
@@ -107,7 +108,7 @@ ggplot(tips, aes(x = day, y = total_bill, fill = day)) +
 
 ```{r}
 ggplot(tips, aes(x = day, y = total_bill, fill = day)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_violin() +
   geom_boxplot(width = 0.1, fill = "white") + # 箱ひげ図も重ねると最強
   labs(title = "分布の形状比較（バイオリン+箱ひげ）", x = "曜日", y = "支払総額")
@@ -124,7 +125,7 @@ ggplot(tips, aes(x = day, y = total_bill, fill = day)) +
 
 ```{r}
 ggplot(tips, aes(x = total_bill, y = tip)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_point(color = "blue", alpha = 0.5) +
   labs(title = "支払総額とチップの正の相関", x = "支払総額", y = "チップ")
 ```
@@ -133,7 +134,7 @@ ggplot(tips, aes(x = total_bill, y = tip)) +
 
 ```{r}
 ggplot(tips, aes(x = total_bill, y = tip, color = sex)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_point()
 ```
 
@@ -145,7 +146,7 @@ ggplot(tips, aes(x = total_bill, y = tip, color = sex)) +
 ```{r}
 # 喫煙の有無 × 時間帯 で状況を分解する
 ggplot(tips, aes(x = total_bill, y = tip)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_point(aes(color = smoker)) +
   facet_wrap(~ time) +
   labs(title = "条件による関係性の違い", x = "支払総額", y = "チップ")
@@ -160,7 +161,7 @@ ggplot(tips, aes(x = total_bill, y = tip)) +
 
 ```{r}
 ggplot(tips, aes(x = day, y = total_bill)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_boxplot(fill = "lightblue") +
   stat_summary(fun = mean, geom = "point", color = "red", size = 3) + # 平均値を赤点で追加
   stat_summary(fun = mean, geom = "line", aes(group = 1), color = "red", linetype = "dashed") +

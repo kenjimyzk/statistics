@@ -33,6 +33,7 @@
 
 ```{r}
 library(tidyverse)
+theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
 url <- "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
 tips <- read_csv(url)
 
@@ -78,7 +79,7 @@ summary(model)
 
 ```{r}
 ggplot(tips, aes(x = total_bill, y = tip)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_point() +
   geom_smooth(method = "lm", color = "red") +
   labs(title = "予測マシン（回帰直線）の可視化")
@@ -94,7 +95,7 @@ ggplot(tips, aes(x = total_bill, y = tip)) +
 注目するのは、予測と実測のズレ、すなわち **残差 (Residuals)** 。
 完璧なモデルなら、残差は単なる「ランダムなノイズ」になる。もし残差に何らかのパターン（癖）が残っていたら、モデルはまだ何か重要な情報を見落としていることになる。
 
-### 決定係数 ($R^2$): 説明力
+### 決定係数: 説明力
 
 まず、このモデルがデータのバラつきの何％を説明できたかを確認する。
 
@@ -113,14 +114,14 @@ tips_aug <- tips %>%
 
 # 1. 残差プロット（クセがないか？）
 p1 <- ggplot(tips_aug, aes(x = pred, y = resid)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_point() +
   geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
   labs(title = "残差の散らばり")
 
 # 2. Q-Qプロット（正規分布しているか？）
 p2 <- ggplot(tips_aug, aes(sample = resid)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   stat_qq() +
   stat_qq_line(color = "red") +
   labs(title = "残差の正規性")

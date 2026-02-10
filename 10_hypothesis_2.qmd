@@ -31,12 +31,13 @@
 
 ```{r}
 library(tidyverse)
+theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
 url <- "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
 tips <- read_csv(url)
 
 # 箱ひげ図：2つの島の地形確認
 ggplot(tips, aes(x = time, y = total_bill, fill = time)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_boxplot() +
   labs(title = "ランチとディナーの支払総額比較")
 

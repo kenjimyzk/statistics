@@ -42,6 +42,7 @@ Tipsデータセットを使って、チップの支払総額の平均を点推�
 
 ```{r}
 library(tidyverse)
+theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
 url <- "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
 tips <- read_csv(url)
 
@@ -70,6 +71,7 @@ mean(tips$total_bill)
 
 ```{r}
 library(tidyverse)
+theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
 set.seed(123)
 
 # ゲームの設定
@@ -96,7 +98,7 @@ for (i in 1:n_sim) {
 
 # 結果発表
 ggplot(results, aes(x = id, ymin = lower, ymax = upper, color = hit)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_errorbar(width = 0.5) +
   geom_hline(yintercept = mu, linetype = "dashed") +
   labs(title = "95%信頼区間のシミュレーション (100回)", 

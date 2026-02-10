@@ -34,6 +34,7 @@ $$ \text{結果} \ (Y) = \text{切片} + (\beta_1 \times \text{要因1}) + (\bet
 
 ```{r}
 library(tidyverse)
+theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
 library(broom)
 url <- "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
 tips <- read_csv(url)
@@ -94,26 +95,30 @@ summary(model_inter)
 ### シミュレーション：バイアスの除去
 
 重回帰分析を使えば、この黒幕（交絡因子）を表舞台に引きずり出し、無力化できる。
+ここでは、あえて「神様の視点」で真実のデータを作り出し、それを分析者が正しく見抜けるか実験してみよう。
 
 ```{r}
 set.seed(123)
 n <- 200
-# 真実はこうだ：
-ability <- rnorm(n, 100, 15) # 能力（黒幕）
-education <- 12 + 0.05 * ability + rnorm(n, 0, 2) # 能力が高いと教育も長い
-wage <- 20 + 2 * education + 0.3 * ability + rnorm(n, 0, 5) # 賃金は両方で決まる
+
+# 1. 神様の視点（データの生成）
+ability <- rnorm(n, 100, 15) # 能力（黒幕）：平均100、標準偏差15でばらつく
+education <- 12 + 0.05 * ability + rnorm(n, 0, 2) # 能力が高いと教育年数も長くなる傾向
+wage <- 20 + 2 * education + 0.3 * ability + rnorm(n, 0, 5) # 賃金は教育と能力の両方で決まる
 
 sim_data <- tibble(wage, education, ability)
 
-# 1. 失敗：黒幕（能力）を無視
+# 2. 失敗：黒幕（能力）を無視してしまう
+# 教育の係数が過大に評価される（本当は2.0なのに……）
 lm(wage ~ education, data = sim_data) %>% coef()
 
-# 2. 成功：黒幕をモデルに入れてコントロール
+# 3. 成功：黒幕をモデルに入れてコントロール（統制）する
+# 教育の係数が真の値（2.0）に近づく！
 lm(wage ~ education + ability, data = sim_data) %>% coef()
 ```
 
-能力をモデルに加えることで、教育の係数は真の値（2.0）に近づく。
-重回帰分析は、予測だけでなく、偏りのない**因果推論**を行うための強力なツールなのだ。
+能力をモデルに加える（コントロールする）ことで、教育が賃金に与える純粋な効果（係数）は、真の値である **2.0** に近づいた。
+重回帰分析は、単なる予測ツールではない。変数を適切に選ぶことで、偏りのない **因果推論** を行うための強力な武器になるのだ。
 
 ## 4. 良いモデルの選び方
 
@@ -131,33 +136,34 @@ vif(model_multi)
 
 ### 調整済み決定係数：シンプルさへのボーナス
 
-通常の決定係数 $R^2$ は、無駄な変数を足しても増えてしまう。
-「変数の数」のペナルティを加味した **調整済み決定係数 (Adjusted $R^2$)** を使おう。
-情報量規準 **AIC** や **BIC** も、シンプルで高性能なモデルを選ぶための指標だ。
+通常の決定係数 $R^2$ は、無駄な変数を足しても増えてしまうという欠点がある。
+そこで、「変数の数」が増えることにペナルティを課した **調整済み決定係数 (Adjusted $R^2$)** を使おう。
+この値が大きいほど、バランスの良い優れたモデルと言える。
 
 ```{r}
-# 調整済みR²の比較
-model_simple <- lm(tip ~ total_bill, data = tips) # 単回帰モデルの再定義
+# 調整済み決定係数 (Adjusted R-squared) を比較してみよう
+model_simple <- lm(tip ~ total_bill, data = tips) # 前回の単回帰モデル
 
-models <- list(
-  "Simple" = model_simple,
-  "Multi" = model_multi,
-  "Dummy" = model_dummy
-)
-sapply(models, function(m) summary(m)$adj.r.squared)
+# それぞれのモデルの「成績表」から数値を取り出す
+summary(model_simple)$adj.r.squared
+summary(model_multi)$adj.r.squared
+summary(model_dummy)$adj.r.squared
 ```
+
+モデルが複雑になるにつれて、値が改善しているのがわかるはずだ。
+（※より高度な基準として AIC や BIC もあるが、まずはこれを羅針盤にしよう）
 
 ## 係数の可視化
 
 数字の羅列を見るよりも、グラフで可視化したほうが直感的に理解できる。
 
 ```{r}
-theme_set(theme_gray(base_family = "HiraKakuProN-W3")) # [対象注意] Mac用設定
+theme_set(theme_gray()) # [対象注意] Mac用設定
 
 tidy(model_dummy, conf.int = TRUE) %>%
   filter(term != "(Intercept)") %>%
   ggplot(aes(x = estimate, y = term)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_point() +
   geom_errorbarh(aes(xmin = conf.low, xmax = conf.high), height = 0.2) +
   geom_vline(xintercept = 0, color = "red", linetype = "dashed") +
@@ -166,12 +172,18 @@ tidy(model_dummy, conf.int = TRUE) %>%
 
 ## 最終課題
 
-自分の興味のあるデータセット（Rの組み込みデータやWeb上のオープンデータ）を見つけ、以下の分析レポートを作成してください。
+自分の興味のあるデータセットを見つけ、分析レポートを作成してください。
+データセットの例：
+- `mpg` (自動車の燃費データ: `ggplot2` パッケージに同梱)
+- `diamonds` (ダイヤモンドの価格データ: `ggplot2` パッケージに同梱)
+- `palmerpenguins` (ペンギンの身体測定データ: 要パッケージインストール)
 
-1.  **問いの設定**: 何を明らかにしたいか（例：燃費に影響するのは重量か馬力か？）
-2.  **データの可視化**: ヒストグラムや散布図による概観。
-3.  **モデリング**: 適切な回帰モデルの構築。
-4.  **結果の解釈**: 推定された係数の意味と、統計的な妥当性。
+**レポート構成案**:
+
+1.  **問いの設定**: 何を明らかにしたいか（例：ダイヤモンドの価格を決めるのはカラット数か、透明度か？）
+2.  **データの可視化**: ヒストグラムや散布図でデータを「見る」。
+3.  **モデリング**: 重回帰モデルを構築し、係数を推定する。
+4.  **結果の解釈**: 「他の条件を一定としたとき」、その変数は結果にどう影響しているか？を言葉で説明する。
 
 ## 講義のまとめ
 

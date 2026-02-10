@@ -37,7 +37,8 @@ prob <- rep(1/6, 6) # 全て 1/6
 
 # 分布の可視化
 library(tidyverse)
-theme_set(theme_gray(base_family = "HiraKakuProN-W3")) # [対象注意] Mac用設定
+theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
+theme_set(theme_gray()) # [対象注意] Mac用設定
 
 data.frame(x = factor(x), prob = prob) %>% 
   ggplot(aes(x = x, y = prob)) +
@@ -107,7 +108,7 @@ cat("標準偏差:", sqrt(V_X), "\n")
 ggplot(data.frame(x = c(0, 1)), aes(x)) +
   stat_function(fun = dunif, args = list(min = 0, max = 1), 
                 geom = "area", fill = "lightblue", alpha = 0.5) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   labs(title = "一様分布 U(0,1) の密度関数", y = "密度 f(x)")
 
 # 2. シミュレーション（現実）

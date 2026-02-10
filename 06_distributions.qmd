@@ -36,6 +36,7 @@ Rには確率分布を扱うための共通の「呪文（接頭辞）」があ�
 
 ```{r}
 library(tidyverse)
+theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
 
 # x軸の範囲定義
 x <- seq(-4, 4, length.out = 100)
@@ -45,7 +46,7 @@ y <- dnorm(x, mean = 0, sd = 1)
 df <- data.frame(x, y)
 
 ggplot(df, aes(x = x, y = y)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_line() +
   labs(title = "標準正規分布 (Mean=0, SD=1)")
 ```
@@ -65,7 +66,7 @@ df_compare <- data.frame(
 )
 
 ggplot(df_compare, aes(x = x, y = y, color = type)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_line(size = 1) +
   labs(title = "パラメータによる正規分布の変化", color = "設定")
 ```
@@ -100,7 +101,7 @@ y <- dnorm(x)
 df <- data.frame(x, y)
 
 ggplot(df, aes(x = x, y = y)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_line() +
   geom_area(data = filter(df, x >= -1 & x <= 1), fill = "blue", alpha = 0.3) +
   geom_area(data = filter(df, x >= -2 & x <= 2), fill = "green", alpha = 0.2) +
@@ -139,7 +140,7 @@ prob <- dbinom(x, size = 10, prob = 0.5)
 df_binom <- data.frame(x = factor(x), prob = prob)
 
 ggplot(df_binom, aes(x = x, y = prob)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_col(fill = "lightgreen") +
   labs(title = "二項分布 (n=10, p=0.5)", x = "成功回数", y = "確率")
 ```
@@ -162,7 +163,7 @@ for(n in n_values) {
 }
 
 ggplot(df_binom_approx, aes(x = x, y = prob)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_col(fill = "steelblue") +
   # nの順序を整えて表示（小さいnから順に見るため）
   facet_wrap(~ fct_relevel(n, "n=10", "n=30", "n=100"), scales = "free_x") +
@@ -180,19 +181,19 @@ $n$ が増えるにつれて、分布の左右対称性が増し、きれいな�
 これらはすべて、正規分布を親として生まれた「正規分布ファミリー」。
 今は定義を丸暗記する必要はありません。「何のために生まれたか」という役割だけ、押さえておきます。
 
-### カイ二乗分布 ($\chi^2$)：ブレの分析官
+### カイ二乗分布：ブレの分析官
 
 -   **出自**: 標準正規分布の2乗和。
 -   **役割**: 「分散（ばらつき）」を分析すること。
 -   **特徴**: 2乗しているのでマイナスにはなりません。適合度検定などで活躍します。
 
-### t分布 ($t$)：現場の代役
+### t分布：現場の代役
 
 -   **出自**: 正規分布 ÷ $\sqrt{\chi^2/k}$。
 -   **役割**: データ数（標本）が少ないときに、正規分布の代役を務める。
 -   **特徴**: 正規分布より裾が厚く、外れ値のリスクを織り込んでいます。「母分散がわからない」という現実的な状況で、平均値を検定するための分布です。
 
-### F分布 ($F$)：比較のスペシャリスト
+### F分布：比較のスペシャリスト
 
 -   **出自**: 2つのカイ二乗分布の比。
 -   **役割**: 2つの「分散」を比べること。

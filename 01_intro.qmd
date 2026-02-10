@@ -106,8 +106,9 @@ mean(scores)
 
 ```{r}
 library(tidyverse)
-# [対象注意] 日本語フォント設定は環境により異なります
 theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
+# [対象注意] 日本語フォント設定は環境により異なります
+# theme_set(theme_gray())
 
 ggplot(cars, aes(x = speed, y = dist)) +
   geom_point() +

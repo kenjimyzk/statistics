@@ -21,6 +21,7 @@ Rにも元々データ操作機能（Base R）はありますが、記法が少�
 2.  **ロード（道具箱を開ける）**：起動するたびに必要
     ```{r}
     library(tidyverse)
+theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
     ```
 
 これだけで、必要な道具一式（加工、可視化、読み込み...）は揃います。

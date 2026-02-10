@@ -21,6 +21,7 @@
 
 ```{r}
 library(tidyverse)
+theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
 url <- "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
 tips <- read_csv(url)
 ```
@@ -186,7 +187,7 @@ med_val <- median(tips$total_bill)
 
 # プロット {.unnumbered}
 ggplot(tips, aes(x = total_bill)) +
-  theme_gray(base_family = "HiraKakuProN-W3") + # [対象注意] Mac用設定
+  theme_gray() + # [対象注意] Mac用設定
   geom_histogram(bins = 30, fill = "lightgray", color = "white") +
   geom_vline(xintercept = mean_val, color = "red", linetype = "dashed", size = 1) +
   geom_vline(xintercept = med_val, color = "blue", linetype = "solid", size = 1) +
