@@ -4,7 +4,7 @@ project:
 
 book:
   title: "経済学のためのデータ分析入門 (R編)"
-  author: "みやざきけんじ"
+  author: "そら"
   date: "2025-12-02"
   chapters:
     - index.qmd
@@ -29,15 +29,26 @@ format:
       number-sections: true
       code-fold: false
       df-print: paged
+      knitr:
+        opts_chunk:
+          dev: "ragg_png"
     pdf:
       pdf-engine: lualatex
-      documentclass: ltjsarticle
-      classoption: lualatex,ja=standard
-    docx: default 
+      documentclass: ltjsbook
+      classoption: lualatex,ja=standard,12pt
+      knitr:
+        opts_chunk:
+          dev: "cairo_pdf"
+    docx:
+      knitr:
+        opts_chunk:
+          dev: "ragg_png" 
+      reference-doc: reference_font_yugothic.docx
 
 execute:
   warning: false
   message: false
+  cache: true
 knitr:
   opts_chunk:
     comment: "#>"
