@@ -1,1 +1,10 @@
 /.quarto/
+/.jupyter/
+/.ipynb_checkpoints/
+/.vscode/
+/__pycache__/
+/*.pyc
+/*.pyo
+/*.pyd
+/*.env
+test_*.*
