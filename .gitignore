@@ -11,6 +11,5 @@
 test_*.*
 /*_files/
 /*_cache/
-.DS_Storesecret.txt
 secret.txt
 .DS_Store
