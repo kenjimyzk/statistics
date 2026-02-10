@@ -1,1 +1,4 @@
-/.quarto/
+/.quarto/*
+/*_files
+/*_cache
+.DS_Store
