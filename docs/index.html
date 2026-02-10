@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="みやざきけんじ">
-<meta name="dcterms.date" content="2025-12-02">
+<meta name="author" content="そら">
+<meta name="dcterms.date" content="2026-02-01">
 
-<title>経済学のためのデータ分析入門 (R編)</title>
+<title>経済学のためのデータ分析入門 (Python編)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -131,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">経済学のためのデータ分析入門 (R編)</a> 
+      <a href="./">経済学のためのデータ分析入門 (Python編)</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -150,7 +150,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">第1回 RとRStudioの基礎</span></a>
+ <span class="menu-text">第1回 PythonとJupyter（/VS Code）の基礎</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -242,7 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">経済学のためのデータ分析入門 (R編)</h1>
+<h1 class="title">経済学のためのデータ分析入門 (Python編)</h1>
 </div>
 
 
@@ -252,14 +252,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>みやざきけんじ </p>
+             <p>そら </p>
           </div>
   </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 2, 2025</p>
+      <p class="date">February 1, 2026</p>
     </div>
   </div>
   
@@ -273,15 +273,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="はじめに" class="level1 unnumbered">
 <h1 class="unnumbered">はじめに</h1>
-<p>この講義ノートは、経済学部の1年生を対象とした「Rによる統計学入門」の資料です。 プログラミング未経験者を想定し、データの読み込みから基礎的な統計分析、そして回帰分析までを半期（全12回）で学びます。</p>
-<p>本講義では、現代的なRの記法である <strong>Tidyverse</strong> を中心に解説します。</p>
+<p>この講義ノートは、経済学部の1年生を対象とした「Pythonによる統計学入門」の資料です。 プログラミング未経験者を想定し、データの読み込みから基礎的な統計分析、そして回帰分析までを半期（全12回）で学びます。</p>
+<p>本講義では、Pythonの <strong>pandas</strong>（データ操作）と <strong>seaborn / matplotlib</strong>（可視化）を中心に解説します。</p>
 <section id="シラバス" class="level2">
 <h2 class="anchored" data-anchor-id="シラバス">シラバス</h2>
 <ol type="1">
-<li><strong>RとRStudioの基礎</strong>: インストール、基本操作、計算</li>
+<li><strong>PythonとJupyter（/VS Code）の基礎</strong>: インストール、基本操作、計算</li>
 <li><strong>データの構造と扱い</strong>: ベクトル、データフレーム、データの読み込み</li>
 <li><strong>記述統計 (1) 数値要約</strong>: 平均、分散、標準偏差、四分位数</li>
-<li><strong>記述統計 (2) データの可視化</strong>: ggplot2によるグラフ作成</li>
+<li><strong>記述統計 (2) データの可視化</strong>: seaborn / matplotlib によるグラフ作成</li>
 <li><strong>確率論の基礎</strong>: 確率変数、期待値、分散</li>
 <li><strong>主要な確率分布</strong>: 正規分布、二項分布</li>
 <li><strong>標本分布</strong>: 母集団と標本、中心極限定理</li>
@@ -296,11 +296,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="準備">準備</h2>
 <p>この講義では以下のソフトウェアを使用します。</p>
 <ul>
-<li><a href="https://cran.r-project.org/">R</a></li>
-<li><a href="https://posit.co/download/rstudio-desktop/">RStudio Desktop</a></li>
+<li><a href="https://www.python.org/">Python</a></li>
+<li><a href="https://jupyter.org/">JupyterLab</a>（または VS Code）</li>
 </ul>
 <p>また、以下のパッケージを主に使用します。</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
@@ -720,8 +720,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01_intro.html" class="pagination-link" aria-label="第1回 RとRStudioの基礎">
-        <span class="nav-page-text">第1回 RとRStudioの基礎</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./01_intro.html" class="pagination-link" aria-label="第1回 PythonとJupyter（/VS Code）の基礎">
+        <span class="nav-page-text">第1回 PythonとJupyter（/VS Code）の基礎</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

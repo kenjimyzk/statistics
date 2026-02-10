@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>経済学のためのデータ分析入門 (R編) - 第12回 重回帰分析と因果推論</title>
+<title>経済学のためのデータ分析入門 (Python編) - 第12回 重回帰分析と因果推論</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,7 +57,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -101,8 +101,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -160,7 +161,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">経済学のためのデータ分析入門 (R編)</a> 
+      <a href="./">経済学のためのデータ分析入門 (Python編)</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -179,7 +180,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">第1回 RとRStudioの基礎</span></a>
+ <span class="menu-text">第1回 PythonとJupyter（/VS Code）の基礎</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -317,34 +318,148 @@ window.Quarto = {
 </section>
 <section id="実践-支払いと人数の分離" class="level3">
 <h3 class="anchored" data-anchor-id="実践-支払いと人数の分離">実践: 支払いと人数の分離</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>tips <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 重回帰モデル：チップを「支払額」と「人数」で説明する</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>model_multi <span class="ot">&lt;-</span> <span class="fu">lm</span>(tip <span class="sc">~</span> total_bill <span class="sc">+</span> size, <span class="at">data =</span> tips)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_multi)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = tip ~ total_bill + size, data = tips)</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -2.9279 -0.5547 -0.0852  0.5095  4.0425 </span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept) 0.668945   0.193609   3.455  0.00065 ***</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total_bill  0.092713   0.009115  10.172  &lt; 2e-16 ***</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; size        0.192598   0.085315   2.258  0.02487 *  </span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 1.014 on 241 degrees of freedom</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.4679, Adjusted R-squared:  0.4635 </span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 105.9 on 2 and 241 DF,  p-value: &lt; 2.2e-16</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fb14016b" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>tips <span class="op">=</span> pd.read_csv(url)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 重回帰モデル：チップを「支払額」と「人数」で説明する</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>model_multi <span class="op">=</span> smf.ols(<span class="st">"tip ~ total_bill + size"</span>, data<span class="op">=</span>tips).fit()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>model_multi.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>OLS Regression Results</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>tip</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.468</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Model:</td>
+<td>OLS</td>
+<td data-quarto-table-cell-role="th">Adj. R-squared:</td>
+<td>0.463</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Method:</td>
+<td>Least Squares</td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>105.9</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Tue, 10 Feb 2026</td>
+<td data-quarto-table-cell-role="th">Prob (F-statistic):</td>
+<td>9.67e-34</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>22:34:08</td>
+<td data-quarto-table-cell-role="th">Log-Likelihood:</td>
+<td>-347.99</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>244</td>
+<td data-quarto-table-cell-role="th">AIC:</td>
+<td>702.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Df Residuals:</td>
+<td>241</td>
+<td data-quarto-table-cell-role="th">BIC:</td>
+<td>712.5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Df Model:</td>
+<td>2</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Covariance Type:</td>
+<td>nonrobust</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">coef</td>
+<td data-quarto-table-cell-role="th">std err</td>
+<td data-quarto-table-cell-role="th">t</td>
+<td data-quarto-table-cell-role="th">P&gt;|t|</td>
+<td data-quarto-table-cell-role="th">[0.025</td>
+<td data-quarto-table-cell-role="th">0.975]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Intercept</td>
+<td>0.6689</td>
+<td>0.194</td>
+<td>3.455</td>
+<td>0.001</td>
+<td>0.288</td>
+<td>1.050</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">total_bill</td>
+<td>0.0927</td>
+<td>0.009</td>
+<td>10.172</td>
+<td>0.000</td>
+<td>0.075</td>
+<td>0.111</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">size</td>
+<td>0.1926</td>
+<td>0.085</td>
+<td>2.258</td>
+<td>0.025</td>
+<td>0.025</td>
+<td>0.361</td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Omnibus:</td>
+<td>24.753</td>
+<td data-quarto-table-cell-role="th">Durbin-Watson:</td>
+<td>2.100</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Prob(Omnibus):</td>
+<td>0.000</td>
+<td data-quarto-table-cell-role="th">Jarque-Bera (JB):</td>
+<td>46.169</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Skew:</td>
+<td>0.545</td>
+<td data-quarto-table-cell-role="th">Prob(JB):</td>
+<td>9.43e-11</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Kurtosis:</td>
+<td>4.831</td>
+<td data-quarto-table-cell-role="th">Cond. No.</td>
+<td>67.6</td>
+</tr>
+</tbody>
+</table>
+<br><br>Notes:<br>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</div>
+</div>
 </div>
 <p><strong>解釈</strong>: - <code>total_bill</code>: <strong>0.093</strong> - 「もし人数が同じなら」、支払いが1ドル増えるごとにチップは約9.3セント増える。 - <code>size</code>: <strong>0.193</strong> - 「もし支払額が同じなら」、人数が1人増えるごとにチップは約19.3セント増える。</p>
 </section>
@@ -355,49 +470,205 @@ window.Quarto = {
 <section id="ダミー変数スイッチのonoff" class="level3">
 <h3 class="anchored" data-anchor-id="ダミー変数スイッチのonoff">ダミー変数：スイッチのON/OFF</h3>
 <p>「喫煙席か？」のような情報は、計算できるよう <strong>0 (No)</strong> と <strong>1 (Yes)</strong> に変換する。これをダミー変数と呼ぶ。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 喫煙者ダミー（Yes/No）を追加</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>model_dummy <span class="ot">&lt;-</span> <span class="fu">lm</span>(tip <span class="sc">~</span> total_bill <span class="sc">+</span> size <span class="sc">+</span> smoker, <span class="at">data =</span> tips)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model_dummy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"0.70901552","3":"0.204881334","4":"3.4606155","5":"6.377517e-04"},{"1":"total_bill","2":"0.09388839","3":"0.009331358","4":"10.0616002","5":"4.264666e-20"},{"1":"size","2":"0.18033156","3":"0.087803311","4":"2.0538128","5":"4.107743e-02"},{"1":"smokerYes","2":"-0.08343255","3":"0.138000465","4":"-0.6045817","5":"5.460281e-01"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div id="9d588a3f" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 喫煙者ダミー（Yes/No）を追加</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>model_dummy <span class="op">=</span> smf.ols(<span class="st">"tip ~ total_bill + size + C(smoker)"</span>, data<span class="op">=</span>tips).fit()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>pd.DataFrame({<span class="st">"term"</span>: model_dummy.params.index, <span class="st">"estimate"</span>: model_dummy.params.values})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">term</th>
+<th data-quarto-table-cell-role="th">estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Intercept</td>
+<td>0.709016</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>C(smoker)[T.Yes]</td>
+<td>-0.083433</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>total_bill</td>
+<td>0.093888</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>size</td>
+<td>0.180332</td>
+</tr>
+</tbody>
+</table>
+
 </div>
 </div>
 </div>
-<p><code>smokerYes</code> の係数は、喫煙席に座ることで生じる「上乗せ分」を表す。</p>
+</div>
+<p><code>C(smoker)[T.Yes]</code> の係数は、喫煙席に座ることで生じる「上乗せ分」を表す（基準カテゴリとの差）。</p>
 </section>
 <section id="交互作用相乗効果に気づく" class="level3">
 <h3 class="anchored" data-anchor-id="交互作用相乗効果に気づく">交互作用：「相乗効果」に気づく</h3>
 <p>「ビールと枝豆」のように、組み合わせることで効果が変わることもある。 例えば、「喫煙者の方が、支払額に対するチップの払いっぷりが良い（傾きが急）」かもしれない。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># : は交互作用のみ、* は主効果＋交互作用</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>model_inter <span class="ot">&lt;-</span> <span class="fu">lm</span>(tip <span class="sc">~</span> total_bill <span class="sc">*</span> smoker, <span class="at">data =</span> tips)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_inter)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = tip ~ total_bill * smoker, data = tips)</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -2.6789 -0.5238 -0.1205  0.4749  4.8999 </span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                       Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)           0.360069   0.202058   1.782 0.076012 .  </span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total_bill            0.137156   0.009678  14.172  &lt; 2e-16 ***</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; smokerYes             1.204203   0.312263   3.856 0.000148 ***</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total_bill:smokerYes -0.067566   0.014189  -4.762 3.32e-06 ***</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 0.9785 on 240 degrees of freedom</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.506,  Adjusted R-squared:  0.4998 </span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 81.95 on 3 and 240 DF,  p-value: &lt; 2.2e-16</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="ee0fab7d" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># : は交互作用のみ、* は主効果＋交互作用</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>model_inter <span class="op">=</span> smf.ols(<span class="st">"tip ~ total_bill * C(smoker)"</span>, data<span class="op">=</span>tips).fit()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>model_inter.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>OLS Regression Results</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>tip</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.506</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Model:</td>
+<td>OLS</td>
+<td data-quarto-table-cell-role="th">Adj. R-squared:</td>
+<td>0.500</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Method:</td>
+<td>Least Squares</td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>81.95</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Tue, 10 Feb 2026</td>
+<td data-quarto-table-cell-role="th">Prob (F-statistic):</td>
+<td>1.56e-36</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>22:34:08</td>
+<td data-quarto-table-cell-role="th">Log-Likelihood:</td>
+<td>-338.91</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>244</td>
+<td data-quarto-table-cell-role="th">AIC:</td>
+<td>685.8</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Df Residuals:</td>
+<td>240</td>
+<td data-quarto-table-cell-role="th">BIC:</td>
+<td>699.8</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Df Model:</td>
+<td>3</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Covariance Type:</td>
+<td>nonrobust</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">coef</td>
+<td data-quarto-table-cell-role="th">std err</td>
+<td data-quarto-table-cell-role="th">t</td>
+<td data-quarto-table-cell-role="th">P&gt;|t|</td>
+<td data-quarto-table-cell-role="th">[0.025</td>
+<td data-quarto-table-cell-role="th">0.975]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Intercept</td>
+<td>0.3601</td>
+<td>0.202</td>
+<td>1.782</td>
+<td>0.076</td>
+<td>-0.038</td>
+<td>0.758</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">C(smoker)[T.Yes]</td>
+<td>1.2042</td>
+<td>0.312</td>
+<td>3.856</td>
+<td>0.000</td>
+<td>0.589</td>
+<td>1.819</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">total_bill</td>
+<td>0.1372</td>
+<td>0.010</td>
+<td>14.172</td>
+<td>0.000</td>
+<td>0.118</td>
+<td>0.156</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">total_bill:C(smoker)[T.Yes]</td>
+<td>-0.0676</td>
+<td>0.014</td>
+<td>-4.762</td>
+<td>0.000</td>
+<td>-0.096</td>
+<td>-0.040</td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Omnibus:</td>
+<td>45.973</td>
+<td data-quarto-table-cell-role="th">Durbin-Watson:</td>
+<td>2.078</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Prob(Omnibus):</td>
+<td>0.000</td>
+<td data-quarto-table-cell-role="th">Jarque-Bera (JB):</td>
+<td>122.757</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Skew:</td>
+<td>0.830</td>
+<td data-quarto-table-cell-role="th">Prob(JB):</td>
+<td>2.21e-27</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Kurtosis:</td>
+<td>6.053</td>
+<td data-quarto-table-cell-role="th">Cond. No.</td>
+<td>132.</td>
+</tr>
+</tbody>
+</table>
+<br><br>Notes:<br>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
 </div>
-<p><code>total_bill:smokerYes</code> が有意なら、2つの要因には相乗効果（あるいは相殺効果）があると言える。</p>
+</div>
+</div>
+<p><code>total_bill:C(smoker)[T.Yes]</code> が有意なら、2つの要因には相乗効果（あるいは相殺効果）があると言える。</p>
 </section>
 </section>
 <section id="真犯人を探せ因果推論とバイアス" class="level2">
@@ -410,28 +681,37 @@ window.Quarto = {
 </section>
 <section id="シミュレーションバイアスの除去" class="level3">
 <h3 class="anchored" data-anchor-id="シミュレーションバイアスの除去">シミュレーション：バイアスの除去</h3>
-<p>重回帰分析を使えば、この黒幕（交絡因子）を表舞台に引きずり出し、無力化できる。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">200</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 真実はこうだ：</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>ability <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">100</span>, <span class="dv">15</span>) <span class="co"># 能力（黒幕）</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>education <span class="ot">&lt;-</span> <span class="dv">12</span> <span class="sc">+</span> <span class="fl">0.05</span> <span class="sc">*</span> ability <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">2</span>) <span class="co"># 能力が高いと教育も長い</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>wage <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> education <span class="sc">+</span> <span class="fl">0.3</span> <span class="sc">*</span> ability <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">5</span>) <span class="co"># 賃金は両方で決まる</span></span>
+<p>重回帰分析を使えば、この黒幕（交絡因子）を表舞台に引きずり出し、無力化できる。 ここでは、あえて「神様の視点」で真実のデータを作り出し、それを分析者が正しく見抜けるか実験してみよう。</p>
+<div id="0c867887" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">123</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">200</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>sim_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(wage, education, ability)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 失敗：黒幕（能力）を無視</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(wage <span class="sc">~</span> education, <span class="at">data =</span> sim_data) <span class="sc">%&gt;%</span> <span class="fu">coef</span>()</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)   education </span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   41.674916    2.494524</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 神様の視点（データの生成）</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>ability <span class="op">=</span> rng.normal(<span class="dv">100</span>, <span class="dv">15</span>, size<span class="op">=</span>n)  <span class="co"># 能力（黒幕）</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>education <span class="op">=</span> <span class="dv">12</span> <span class="op">+</span> <span class="fl">0.05</span> <span class="op">*</span> ability <span class="op">+</span> rng.normal(<span class="dv">0</span>, <span class="dv">2</span>, size<span class="op">=</span>n)  <span class="co"># 能力が高いと教育年数も長くなる</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>wage <span class="op">=</span> <span class="dv">20</span> <span class="op">+</span> <span class="dv">2</span> <span class="op">*</span> education <span class="op">+</span> <span class="fl">0.3</span> <span class="op">*</span> ability <span class="op">+</span> rng.normal(<span class="dv">0</span>, <span class="dv">5</span>, size<span class="op">=</span>n)  <span class="co"># 賃金は教育と能力の両方で決まる</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>sim_data <span class="op">=</span> pd.DataFrame({<span class="st">"wage"</span>: wage, <span class="st">"education"</span>: education, <span class="st">"ability"</span>: ability})</span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 成功：黒幕をモデルに入れてコントロール</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(wage <span class="sc">~</span> education <span class="sc">+</span> ability, <span class="at">data =</span> sim_data) <span class="sc">%&gt;%</span> <span class="fu">coef</span>()</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)   education     ability </span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  22.7681915   1.8733537   0.2955295</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 失敗：黒幕（能力）を無視してしまう（除外変数バイアス）</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>m1 <span class="op">=</span> smf.ols(<span class="st">"wage ~ education"</span>, data<span class="op">=</span>sim_data).fit()</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>m1.params</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 成功：黒幕をモデルに入れてコントロール（統制）する</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>m2 <span class="op">=</span> smf.ols(<span class="st">"wage ~ education + ability"</span>, data<span class="op">=</span>sim_data).fit()</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>m2.params</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>Intercept    22.070785
+education     1.799787
+ability       0.311450
+dtype: float64</code></pre>
 </div>
-<p>能力をモデルに加えることで、教育の係数は真の値（2.0）に近づく。 重回帰分析は、予測だけでなく、偏りのない<strong>因果推論</strong>を行うための強力なツールなのだ。</p>
+</div>
+<p>能力をモデルに加える（コントロールする）ことで、教育が賃金に与える純粋な効果（係数）は、真の値である <strong>2.0</strong> に近づいた。 重回帰分析は、単なる予測ツールではない。変数を適切に選ぶことで、偏りのない <strong>因果推論</strong> を行うための強力な武器になるのだ。</p>
 </section>
 </section>
 <section id="良いモデルの選び方" class="level2">
@@ -440,49 +720,99 @@ window.Quarto = {
 <section id="多重共線性マルチコ似た者同士の喧嘩" class="level3">
 <h3 class="anchored" data-anchor-id="多重共線性マルチコ似た者同士の喧嘩">多重共線性（マルチコ）：似た者同士の喧嘩</h3>
 <p>似たような変数（例：身長と座高）を両方入れると、お互いが邪魔をし合って、係数の推定がおかしくなる。 <strong>VIF</strong> という指標チェックし、10を超えていたら要注意。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(model_multi)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total_bill       size </span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   1.557586   1.557586</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="51e3e992" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.outliers_influence <span class="im">import</span> variance_inflation_factor</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> model_multi.model.exog</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>names <span class="op">=</span> model_multi.model.exog_names</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>vif <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  {<span class="st">"term"</span>: names, <span class="st">"VIF"</span>: [variance_inflation_factor(X, i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(X.shape[<span class="dv">1</span>])]}</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>vif.query(<span class="st">'term != "Intercept"'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">term</th>
+<th data-quarto-table-cell-role="th">VIF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>total_bill</td>
+<td>1.557586</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>size</td>
+<td>1.557586</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="調整済み決定係数シンプルさへのボーナス" class="level3">
 <h3 class="anchored" data-anchor-id="調整済み決定係数シンプルさへのボーナス">調整済み決定係数：シンプルさへのボーナス</h3>
-<p>通常の決定係数 <span class="math inline">\(R^2\)</span> は、無駄な変数を足しても増えてしまう。 「変数の数」のペナルティを加味した <strong>調整済み決定係数 (Adjusted <span class="math inline">\(R^2\)</span>)</strong> を使おう。 情報量規準 <strong>AIC</strong> や <strong>BIC</strong> も、シンプルで高性能なモデルを選ぶための指標だ。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 調整済みR²の比較</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>model_simple <span class="ot">&lt;-</span> <span class="fu">lm</span>(tip <span class="sc">~</span> total_bill, <span class="at">data =</span> tips) <span class="co"># 単回帰モデルの再定義</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Simple"</span> <span class="ot">=</span> model_simple,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Multi"</span> <span class="ot">=</span> model_multi,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Dummy"</span> <span class="ot">=</span> model_dummy</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(models, <span class="cf">function</span>(m) <span class="fu">summary</span>(m)<span class="sc">$</span>adj.r.squared)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Simple     Multi     Dummy </span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.4543712 0.4634533 0.4620370</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>通常の決定係数 <span class="math inline">\(R^2\)</span> は、無駄な変数を足しても増えてしまうという欠点がある。 そこで、「変数の数」が増えることにペナルティを課した <strong>調整済み決定係数 (Adjusted <span class="math inline">\(R^2\)</span>)</strong> を使おう。 この値が大きいほど、バランスの良い優れたモデルと言える。</p>
+<div id="ce9c3c51" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 調整済み決定係数 (Adjusted R-squared) を比較してみよう</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>model_simple <span class="op">=</span> smf.ols(<span class="st">"tip ~ total_bill"</span>, data<span class="op">=</span>tips).fit()  <span class="co"># 前回の単回帰モデル</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>model_simple.rsquared_adj</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>model_multi.rsquared_adj</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>model_dummy.rsquared_adj</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>0.46203699058834746</code></pre>
 </div>
+</div>
+<p>モデルが複雑になるにつれて、値が改善しているのがわかるはずだ。 （※より高度な基準として AIC や BIC もあるが、まずはこれを羅針盤にしよう）</p>
 </section>
 </section>
 <section id="係数の可視化" class="level2">
 <h2 class="anchored" data-anchor-id="係数の可視化">係数の可視化</h2>
 <p>数字の羅列を見るよりも、グラフで可視化したほうが直感的に理解できる。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>)) <span class="co"># [対象注意] Mac用設定</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model_dummy, <span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> term)) <span class="sc">+</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span> <span class="co"># [対象注意] Mac用設定</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> conf.low, <span class="at">xmax =</span> conf.high), <span class="at">height =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"重回帰分析の係数プロット"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<div id="3e85aaed" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> japanize_matplotlib  <span class="co"># noqa: F401</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>coef <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"term"</span>: model_dummy.params.index,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"estimate"</span>: model_dummy.params.values,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>conf <span class="op">=</span> model_dummy.conf_int().rename(columns<span class="op">=</span>{<span class="dv">0</span>: <span class="st">"conf_low"</span>, <span class="dv">1</span>: <span class="st">"conf_high"</span>})</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>coef <span class="op">=</span> coef.merge(conf, left_on<span class="op">=</span><span class="st">"term"</span>, right_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>coef <span class="op">=</span> coef.query(<span class="st">'term != "Intercept"'</span>).sort_values(<span class="st">"estimate"</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.arange(<span class="bu">len</span>(coef))</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>xerr <span class="op">=</span> np.vstack([coef[<span class="st">"estimate"</span>] <span class="op">-</span> coef[<span class="st">"conf_low"</span>], coef[<span class="st">"conf_high"</span>] <span class="op">-</span> coef[<span class="st">"estimate"</span>]])</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>plt.errorbar(coef[<span class="st">"estimate"</span>], y, xerr<span class="op">=</span>xerr, fmt<span class="op">=</span><span class="st">"o"</span>, color<span class="op">=</span><span class="st">"black"</span>, ecolor<span class="op">=</span><span class="st">"gray"</span>, capsize<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">"red"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>plt.yticks(y, coef[<span class="st">"term"</span>])</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"重回帰分析の係数プロット"</span>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"推定係数（95%信頼区間）"</span>)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="12_regression_2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="12_regression_2_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -490,12 +820,13 @@ window.Quarto = {
 </section>
 <section id="最終課題" class="level2">
 <h2 class="anchored" data-anchor-id="最終課題">最終課題</h2>
-<p>自分の興味のあるデータセット（Rの組み込みデータやWeb上のオープンデータ）を見つけ、以下の分析レポートを作成してください。</p>
+<p>自分の興味のあるデータセットを見つけ、分析レポートを作成してください。 データセットの例： - <code>mpg</code>（自動車の燃費データ：<code>seaborn</code> の例として有名） - <code>diamonds</code>（ダイヤモンドの価格データ：データセットとして定番） - <code>palmerpenguins</code>（ペンギンの身体測定データ：Pythonでも利用可能）</p>
+<p><strong>レポート構成案</strong>:</p>
 <ol type="1">
-<li><strong>問いの設定</strong>: 何を明らかにしたいか（例：燃費に影響するのは重量か馬力か？）</li>
-<li><strong>データの可視化</strong>: ヒストグラムや散布図による概観。</li>
-<li><strong>モデリング</strong>: 適切な回帰モデルの構築。</li>
-<li><strong>結果の解釈</strong>: 推定された係数の意味と、統計的な妥当性。</li>
+<li><strong>問いの設定</strong>: 何を明らかにしたいか（例：ダイヤモンドの価格を決めるのはカラット数か、透明度か？）</li>
+<li><strong>データの可視化</strong>: ヒストグラムや散布図でデータを「見る」。</li>
+<li><strong>モデリング</strong>: 重回帰モデルを構築し、係数を推定する。</li>
+<li><strong>結果の解釈</strong>: 「他の条件を一定としたとき」、その変数は結果にどう影響しているか？を言葉で説明する。</li>
 </ol>
 </section>
 <section id="講義のまとめ" class="level2">
@@ -505,7 +836,7 @@ window.Quarto = {
 <section id="練習問題" class="level2">
 <h2 class="anchored" data-anchor-id="練習問題">練習問題</h2>
 <ol type="1">
-<li><strong>モデル選択の実践</strong>: <code>mtcars</code> データセットにおいて、燃費 (<code>mpg</code>) を説明する最適な変数の組み合わせを、調整済み <span class="math inline">\(R^2\)</span> や AIC を用いて探してください。</li>
+<li><strong>モデル選択の実践</strong>: <code>tips</code> データセットにおいて、チップ額 (<code>tip</code>) を説明する変数（例：<code>total_bill</code>, <code>size</code>, <code>time</code>, <code>smoker</code> など）の組み合わせを、調整済み <span class="math inline">\(R^2\)</span> や AIC を用いて探してください。</li>
 <li><strong>交互作用の解釈</strong>: 先ほどの喫煙者と支払額の交互作用モデルについて、具体的な数値を用いて、「喫煙者なら10ドル増えるごとにチップはどう変わるか」を説明してください。</li>
 <li><strong>交絡の発見</strong>: あなたの身の回りで「相関はあるが因果ではない（共通の原因がある）」と思われる例を挙げ、因果図を描いて説明してください。</li>
 </ol>

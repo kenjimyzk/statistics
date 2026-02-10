@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>経済学のためのデータ分析入門 (R編) - 第6回 主要な確率分布</title>
+<title>経済学のためのデータ分析入門 (Python編) - 第6回 主要な確率分布</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -102,8 +102,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -161,7 +159,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">経済学のためのデータ分析入門 (R編)</a> 
+      <a href="./">経済学のためのデータ分析入門 (Python編)</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -180,7 +178,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">第1回 RとRStudioの基礎</span></a>
+ <span class="menu-text">第1回 PythonとJupyter（/VS Code）の基礎</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -301,44 +299,44 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="世界を支配する釣り鐘">世界を支配する「釣り鐘」</h2>
 <p>身長、テストの点数、工場の部品サイズ、株価の変動…。 まったく異なるこれらすべての現象に、どこにでも現れる不思議な曲線があります。 <strong>正規分布（Normal Distribution）</strong>。またの名を、<strong>ガウス分布</strong>。</p>
 <p>なぜ世界は、ことあるごとに正規分布したがるのか？ その秘密は、統計学で最強の定理（中心極限定理）にあります。まずはこの「王様」の振る舞いを知ることから始めましょう。</p>
-<p>本節では、統計解析の主役である正規分布と、その親戚たち（二項分布、t分布など）を、Rを使って自在に操れるようになります。</p>
+<p>本節では、統計解析の主役である正規分布と、その親戚たち（二項分布、t分布など）を、Pythonを使って自在に操れるようになります。</p>
 </section>
 <section id="統計学の王様正規分布" class="level2">
 <h2 class="anchored" data-anchor-id="統計学の王様正規分布">1. 統計学の王様：正規分布</h2>
 <p>正規分布は、平均 <span class="math inline">\(\mu\)</span> と分散 <span class="math inline">\(\sigma^2\)</span> 。たった2つのパラメータで完全に決まる、左右対称の美しい釣鐘型をしています。</p>
 <p><span class="math display">\[f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\]</span></p>
-<p>数式は複雑に見えますが、Rなら一瞬で描けます。</p>
-<section id="つの魔法の呪文" class="level3">
-<h3 class="anchored" data-anchor-id="つの魔法の呪文">4つの魔法の呪文</h3>
-<p>Rには確率分布を扱うための共通の「呪文（接頭辞）」があります。これさえ覚えれば、勝てます。</p>
+<p>数式は複雑に見えますが、Pythonなら一瞬で描けます。</p>
+<section id="つの基本操作" class="level3">
+<h3 class="anchored" data-anchor-id="つの基本操作">4つの基本操作</h3>
+<p>Pythonでは <strong>SciPy</strong>（<code>scipy.stats</code>）を使うのが定番です。確率分布は共通のインターフェースを持ちます。</p>
 <ul>
-<li><strong><code>d</code> (Density)</strong>: 確率密度。グラフの高さ。 (<code>dnorm</code>)</li>
-<li><strong><code>p</code> (Probability)</strong>: 累積確率。ある地点より左側の面積。 (<code>pnorm</code>)</li>
-<li><strong><code>q</code> (Quantile)</strong>: 分位点。確率から値を逆算する。 (<code>qnorm</code>)</li>
-<li><strong><code>r</code> (Random)</strong>: 乱数生成。シミュレーション用。 (<code>rnorm</code>)</li>
+<li><strong>PDF/PMF</strong>: 密度（連続）/確率（離散）。グラフの高さ。 (<code>norm.pdf</code>, <code>binom.pmf</code>)</li>
+<li><strong>CDF</strong>: 累積確率。ある地点より左側の面積。 (<code>norm.cdf</code>)</li>
+<li><strong>PPF</strong>: 分位点。確率から値を逆算。 (<code>norm.ppf</code>)</li>
+<li><strong>RVS</strong>: 乱数生成。シミュレーション用。 (<code>norm.rvs</code>)</li>
 </ul>
 </section>
 <section id="正規分布を描いてみる" class="level3">
 <h3 class="anchored" data-anchor-id="正規分布を描いてみる">正規分布を描いてみる</h3>
 <p>まずは標準正規分布（平均0、分散1）を見てみましょう。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># x軸の範囲定義</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 確率密度の計算 (dnorm)</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x, y)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span> <span class="co"># [対象注意] Mac用設定</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"標準正規分布 (Mean=0, SD=1)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<div id="028ea336" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> japanize_matplotlib  <span class="co"># noqa: F401</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">100</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> norm.pdf(x, loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"標準正規分布 (Mean=0, SD=1)"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"x"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"密度"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="06_distributions_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="06_distributions_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -347,24 +345,31 @@ window.Quarto = {
 <section id="パラメータを変えてみる" class="level3">
 <h3 class="anchored" data-anchor-id="パラメータを変えてみる">パラメータを変えてみる</h3>
 <p>平均がズレると山が移動し、標準偏差が大きくなると山が平らになります。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">15</span>, <span class="at">length.out =</span> <span class="dv">200</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df_compare <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">rep</span>(x, <span class="dv">3</span>),</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>),</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">1</span>),</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>)),</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"μ=0, σ=1"</span>, <span class="st">"μ=5, σ=1"</span>, <span class="st">"μ=0, σ=2"</span>), <span class="at">each =</span> <span class="fu">length</span>(x))</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_compare, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> type)) <span class="sc">+</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span> <span class="co"># [対象注意] Mac用設定</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"パラメータによる正規分布の変化"</span>, <span class="at">color =</span> <span class="st">"設定"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<div id="285c45b3" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> japanize_matplotlib  <span class="co"># noqa: F401</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">200</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>df_compare <span class="op">=</span> pd.concat(</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  [</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame({<span class="st">"x"</span>: x, <span class="st">"y"</span>: norm.pdf(x, loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>), <span class="st">"type"</span>: <span class="st">"μ=0, σ=1"</span>}),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame({<span class="st">"x"</span>: x, <span class="st">"y"</span>: norm.pdf(x, loc<span class="op">=</span><span class="dv">5</span>, scale<span class="op">=</span><span class="dv">1</span>), <span class="st">"type"</span>: <span class="st">"μ=5, σ=1"</span>}),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame({<span class="st">"x"</span>: x, <span class="st">"y"</span>: norm.pdf(x, loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">2</span>), <span class="st">"type"</span>: <span class="st">"μ=0, σ=2"</span>}),</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  ],</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  ignore_index<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.lineplot(data<span class="op">=</span>df_compare, x<span class="op">=</span><span class="st">"x"</span>, y<span class="op">=</span><span class="st">"y"</span>, hue<span class="op">=</span><span class="st">"type"</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"パラメータによる正規分布の変化"</span>, xlabel<span class="op">=</span><span class="st">"x"</span>, ylabel<span class="op">=</span><span class="st">"密度"</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="06_distributions_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="06_distributions_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -375,10 +380,14 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="現実の問いに答える確率計算">現実の問いに答える：確率計算</h2>
 <p>「平均50、標準偏差10のテストで、60点以上をとる確率は？」 この問いに答えるのが <strong><code>p</code> (累積確率)</strong> の関数です。</p>
 <p><code>pnorm(60)</code> は「<span class="math inline">\(-\infty\)</span> から 60 までの面積」を返します。 「60点<strong>以上</strong>」を知りたいなら、全体（100% = 1）から「60点<strong>以下</strong>」の確率を引けばいい。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># P(X &gt;= 60) = 1 - P(X &lt;= 60)</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">60</span>, <span class="at">mean =</span> <span class="dv">50</span>, <span class="at">sd =</span> <span class="dv">10</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.1586553</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="bd23035a" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># P(X &gt;= 60) = 1 - P(X &lt;= 60)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">-</span> norm.cdf(<span class="dv">60</span>, loc<span class="op">=</span><span class="dv">50</span>, scale<span class="op">=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>0.15865525393145707</code></pre>
+</div>
 </div>
 <p>約15.9%。クラスの16%は、偏差値60以上ということ。</p>
 <section id="ルール" class="level3">
@@ -389,22 +398,28 @@ window.Quarto = {
 <li><span class="math inline">\(\pm 2\sigma\)</span>: 約95% （偏差値30〜70）</li>
 <li><span class="math inline">\(\pm 3\sigma\)</span>: 約99.7% （ほぼすべて）</li>
 </ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x, y)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span> <span class="co"># [対象注意] Mac用設定</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">data =</span> <span class="fu">filter</span>(df, x <span class="sc">&gt;=</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">&amp;</span> x <span class="sc">&lt;=</span> <span class="dv">1</span>), <span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">data =</span> <span class="fu">filter</span>(df, x <span class="sc">&gt;=</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">&amp;</span> x <span class="sc">&lt;=</span> <span class="dv">2</span>), <span class="at">fill =</span> <span class="st">"green"</span>, <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">data =</span> <span class="fu">filter</span>(df, x <span class="sc">&gt;=</span> <span class="sc">-</span><span class="dv">3</span> <span class="sc">&amp;</span> x <span class="sc">&lt;=</span> <span class="dv">3</span>), <span class="at">fill =</span> <span class="st">"red"</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"正規分布の区間確率 (1SD, 2SD, 3SD)"</span>, <span class="at">x =</span> <span class="st">"標準偏差 (z)"</span>, <span class="at">y =</span> <span class="st">"確率密度"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<div id="0b7e7069" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> japanize_matplotlib  <span class="co"># noqa: F401</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">400</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> norm.pdf(x)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, color<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>plt.fill_between(x, <span class="dv">0</span>, y, where<span class="op">=</span>(x <span class="op">&gt;=</span> <span class="op">-</span><span class="dv">1</span>) <span class="op">&amp;</span> (x <span class="op">&lt;=</span> <span class="dv">1</span>), color<span class="op">=</span><span class="st">"blue"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, label<span class="op">=</span><span class="st">"±1σ"</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>plt.fill_between(x, <span class="dv">0</span>, y, where<span class="op">=</span>(x <span class="op">&gt;=</span> <span class="op">-</span><span class="dv">2</span>) <span class="op">&amp;</span> (x <span class="op">&lt;=</span> <span class="dv">2</span>), color<span class="op">=</span><span class="st">"green"</span>, alpha<span class="op">=</span><span class="fl">0.2</span>, label<span class="op">=</span><span class="st">"±2σ"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>plt.fill_between(x, <span class="dv">0</span>, y, where<span class="op">=</span>(x <span class="op">&gt;=</span> <span class="op">-</span><span class="dv">3</span>) <span class="op">&amp;</span> (x <span class="op">&lt;=</span> <span class="dv">3</span>), color<span class="op">=</span><span class="st">"red"</span>, alpha<span class="op">=</span><span class="fl">0.1</span>, label<span class="op">=</span><span class="st">"±3σ"</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"正規分布の区間確率 (1SD, 2SD, 3SD)"</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"標準偏差 (z)"</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"確率密度"</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="06_distributions_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="06_distributions_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -421,25 +436,35 @@ window.Quarto = {
 <section id="シミュレーション運命の分かれ道" class="level3">
 <h3 class="anchored" data-anchor-id="シミュレーション運命の分かれ道">シミュレーション：運命の分かれ道</h3>
 <p>コイン投げ（<span class="math inline">\(p=0.5\)</span>）を10回行う勝負を考えます。 「ちょうど5回勝つ確率」はどれくらいか。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dbinom で確率（点）を計算</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dbinom</span>(<span class="dv">5</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.2460938</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="762d287e" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> binom</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># pmf で確率（点）を計算</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>binom.pmf(<span class="dv">5</span>, n<span class="op">=</span><span class="dv">10</span>, p<span class="op">=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>0.2460937500000002</code></pre>
+</div>
 </div>
 <p>約24.6%。意外と低いですか？ すべてのパターンの確率を並べてみます。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>prob <span class="ot">&lt;-</span> <span class="fu">dbinom</span>(x, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df_binom <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">factor</span>(x), <span class="at">prob =</span> prob)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_binom, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> prob)) <span class="sc">+</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span> <span class="co"># [対象注意] Mac用設定</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"lightgreen"</span>) <span class="sc">+</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"二項分布 (n=10, p=0.5)"</span>, <span class="at">x =</span> <span class="st">"成功回数"</span>, <span class="at">y =</span> <span class="st">"確率"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<div id="6943c604" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> japanize_matplotlib  <span class="co"># noqa: F401</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> binom</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">11</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>prob <span class="op">=</span> binom.pmf(x, n<span class="op">=</span><span class="dv">10</span>, p<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>df_binom <span class="op">=</span> pd.DataFrame({<span class="st">"x"</span>: x.astype(<span class="bu">str</span>), <span class="st">"prob"</span>: prob})</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.barplot(data<span class="op">=</span>df_binom, x<span class="op">=</span><span class="st">"x"</span>, y<span class="op">=</span><span class="st">"prob"</span>, color<span class="op">=</span><span class="st">"lightgreen"</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"二項分布 (n=10, p=0.5)"</span>, xlabel<span class="op">=</span><span class="st">"成功回数"</span>, ylabel<span class="op">=</span><span class="st">"確率"</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="06_distributions_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="06_distributions_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -448,28 +473,36 @@ window.Quarto = {
 <section id="回数を増やすと奇跡が起きる" class="level3">
 <h3 class="anchored" data-anchor-id="回数を増やすと奇跡が起きる">回数を増やすと、奇跡が起きる</h3>
 <p>ここからが統計学のハイライト。 このカクカクした二項分布、試行回数 <span class="math inline">\(n\)</span> をどんどん増やしていくと、どうなるか。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 試行回数 n を変化させた場合の分布形状</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>n_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">10</span>, <span class="dv">100</span>) <span class="co"># ユーザーによる順序指定あり</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>df_binom_approx <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(n <span class="cf">in</span> n_values) {</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span>n</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  prob <span class="ot">&lt;-</span> <span class="fu">dbinom</span>(x, <span class="at">size =</span> n, <span class="at">prob =</span> p)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  df_binom_approx <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df_binom_approx, <span class="fu">data.frame</span>(<span class="at">x=</span>x, <span class="at">prob=</span>prob, <span class="at">n=</span><span class="fu">paste0</span>(<span class="st">"n="</span>, n)))</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_binom_approx, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> prob)) <span class="sc">+</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span> <span class="co"># [対象注意] Mac用設定</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># nの順序を整えて表示（小さいnから順に見るため）</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> <span class="fu">fct_relevel</span>(n, <span class="st">"n=10"</span>, <span class="st">"n=30"</span>, <span class="st">"n=100"</span>), <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"nの増加に伴う二項分布の正規近似"</span>, <span class="at">x =</span> <span class="st">"成功回数"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<div id="1e823b54" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> japanize_matplotlib  <span class="co"># noqa: F401</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> binom</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 試行回数 n を変化させた場合の分布形状（表示順を指定）</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>n_values <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">100</span>]</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="fl">0.3</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> n_values:</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> np.arange(<span class="dv">0</span>, n <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  prob <span class="op">=</span> binom.pmf(x, n<span class="op">=</span>n, p<span class="op">=</span>p)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  rows.append(pd.DataFrame({<span class="st">"x"</span>: x, <span class="st">"prob"</span>: prob, <span class="st">"n"</span>: <span class="ss">f"n=</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">"</span>}))</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>df_binom_approx <span class="op">=</span> pd.concat(rows, ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> sns.FacetGrid(df_binom_approx, col<span class="op">=</span><span class="st">"n"</span>, col_order<span class="op">=</span>[<span class="ss">f"n=</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> n <span class="kw">in</span> n_values], sharex<span class="op">=</span><span class="va">False</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>g.map_dataframe(sns.barplot, x<span class="op">=</span><span class="st">"x"</span>, y<span class="op">=</span><span class="st">"prob"</span>, color<span class="op">=</span><span class="st">"steelblue"</span>)</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>g.set_axis_labels(<span class="st">"成功回数"</span>, <span class="st">"確率"</span>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>g.fig.suptitle(<span class="st">"nの増加に伴う二項分布の正規近似"</span>)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>g.fig.tight_layout()</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="06_distributions_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="06_distributions_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -481,24 +514,24 @@ window.Quarto = {
 <section id="正規分布の子供たち派生分布" class="level2">
 <h2 class="anchored" data-anchor-id="正規分布の子供たち派生分布">3. 正規分布の子供たち（派生分布）</h2>
 <p>最後に、推測統計の現場で頻繁に使われる3つの分布を紹介します。 これらはすべて、正規分布を親として生まれた「正規分布ファミリー」。 今は定義を丸暗記する必要はありません。「何のために生まれたか」という役割だけ、押さえておきます。</p>
-<section id="カイ二乗分布-chi2ブレの分析官" class="level3">
-<h3 class="anchored" data-anchor-id="カイ二乗分布-chi2ブレの分析官">カイ二乗分布 (<span class="math inline">\(\chi^2\)</span>)：ブレの分析官</h3>
+<section id="カイ二乗分布ブレの分析官" class="level3">
+<h3 class="anchored" data-anchor-id="カイ二乗分布ブレの分析官">カイ二乗分布：ブレの分析官</h3>
 <ul>
 <li><strong>出自</strong>: 標準正規分布の2乗和。</li>
 <li><strong>役割</strong>: 「分散（ばらつき）」を分析すること。</li>
 <li><strong>特徴</strong>: 2乗しているのでマイナスにはなりません。適合度検定などで活躍します。</li>
 </ul>
 </section>
-<section id="t分布-t現場の代役" class="level3">
-<h3 class="anchored" data-anchor-id="t分布-t現場の代役">t分布 (<span class="math inline">\(t\)</span>)：現場の代役</h3>
+<section id="t分布現場の代役" class="level3">
+<h3 class="anchored" data-anchor-id="t分布現場の代役">t分布：現場の代役</h3>
 <ul>
 <li><strong>出自</strong>: 正規分布 ÷ <span class="math inline">\(\sqrt{\chi^2/k}\)</span>。</li>
 <li><strong>役割</strong>: データ数（標本）が少ないときに、正規分布の代役を務める。</li>
 <li><strong>特徴</strong>: 正規分布より裾が厚く、外れ値のリスクを織り込んでいます。「母分散がわからない」という現実的な状況で、平均値を検定するための分布です。</li>
 </ul>
 </section>
-<section id="f分布-f比較のスペシャリスト" class="level3">
-<h3 class="anchored" data-anchor-id="f分布-f比較のスペシャリスト">F分布 (<span class="math inline">\(F\)</span>)：比較のスペシャリスト</h3>
+<section id="f分布比較のスペシャリスト" class="level3">
+<h3 class="anchored" data-anchor-id="f分布比較のスペシャリスト">F分布：比較のスペシャリスト</h3>
 <ul>
 <li><strong>出自</strong>: 2つのカイ二乗分布の比。</li>
 <li><strong>役割</strong>: 2つの「分散」を比べること。</li>

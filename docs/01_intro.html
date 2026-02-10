@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>経済学のためのデータ分析入門 (R編) - 第1回 RとRStudioの基礎</title>
+<title>経済学のためのデータ分析入門 (Python編) - 第1回 PythonとJupyter（/VS Code）の基礎</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -102,8 +102,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
 </head>
@@ -117,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro.html">第1回 RとRStudioの基礎</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro.html">第1回 PythonとJupyter（/VS Code）の基礎</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -132,7 +130,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">経済学のためのデータ分析入門 (R編)</a> 
+      <a href="./">経済学のためのデータ分析入門 (Python編)</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -151,7 +149,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01_intro.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">第1回 RとRStudioの基礎</span></a>
+ <span class="menu-text">第1回 PythonとJupyter（/VS Code）の基礎</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -230,10 +228,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul class="collapse">
-  <li><a href="#なぜ今rを学ぶのか" id="toc-なぜ今rを学ぶのか" class="nav-link active" data-scroll-target="#なぜ今rを学ぶのか">なぜ今、Rを学ぶのか</a></li>
-  <li><a href="#rstudioというコックピット" id="toc-rstudioというコックピット" class="nav-link" data-scroll-target="#rstudioというコックピット">RStudioという「コックピット」</a></li>
-  <li><a href="#rと対話する計算と変数" id="toc-rと対話する計算と変数" class="nav-link" data-scroll-target="#rと対話する計算と変数">Rと対話する（計算と変数）</a></li>
-  <li><a href="#エラーはrからの返信" id="toc-エラーはrからの返信" class="nav-link" data-scroll-target="#エラーはrからの返信">「エラー」はRからの返信</a></li>
+  <li><a href="#なぜ今pythonを学ぶのか" id="toc-なぜ今pythonを学ぶのか" class="nav-link active" data-scroll-target="#なぜ今pythonを学ぶのか">なぜ今、Pythonを学ぶのか</a></li>
+  <li><a href="#jupytervs-codeというコックピット" id="toc-jupytervs-codeというコックピット" class="nav-link" data-scroll-target="#jupytervs-codeというコックピット">Jupyter（/VS Code）という「コックピット」</a></li>
+  <li><a href="#pythonと対話する計算と変数" id="toc-pythonと対話する計算と変数" class="nav-link" data-scroll-target="#pythonと対話する計算と変数">Pythonと対話する（計算と変数）</a></li>
+  <li><a href="#エラーはpythonからの返信" id="toc-エラーはpythonからの返信" class="nav-link" data-scroll-target="#エラーはpythonからの返信">「エラー」はPythonからの返信</a></li>
   <li><a href="#グラフを描いてみる" id="toc-グラフを描いてみる" class="nav-link" data-scroll-target="#グラフを描いてみる">グラフを描いてみる</a></li>
   <li><a href="#課題" id="toc-課題" class="nav-link" data-scroll-target="#課題">課題</a></li>
   </ul>
@@ -244,7 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">第1回 RとRStudioの基礎</h1>
+<h1 class="title">第1回 PythonとJupyter（/VS Code）の基礎</h1>
 </div>
 
 
@@ -264,27 +262,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="figure/01_intro/infographic.png" class="img-fluid figure-img"></p>
-<figcaption>RとRStudioの基礎</figcaption>
+<figcaption>PythonとJupyter（/VS Code）の基礎</figcaption>
 </figure>
 </div>
-<section id="なぜ今rを学ぶのか" class="level2">
-<h2 class="anchored" data-anchor-id="なぜ今rを学ぶのか">なぜ今、Rを学ぶのか</h2>
-<p>統計解析ソフトは山ほどあります。Excelで事足りることもあれば、Pythonがハマる場面もあるでしょう。それでも、多くの研究者が <strong>R</strong> を選び続けるのには理由があります。</p>
+<section id="なぜ今pythonを学ぶのか" class="level2">
+<h2 class="anchored" data-anchor-id="なぜ今pythonを学ぶのか">なぜ今、Pythonを学ぶのか</h2>
+<p>統計解析ソフトは山ほどあります。Excelで事足りることもあれば、Pythonがハマる場面もあるでしょう。それでも、多くの研究者が <strong>Python</strong> を選び続けるのには理由があります。</p>
 <p>「科学的な正しさ」への執着。これに尽きます。</p>
-<p>本講義の狙いは、単なるツールの操作説明ではありません。<strong>R</strong> という言語の根底にある「再現性（Reproducibility）」の思想を理解し、<strong>RStudio</strong> を通じてそれを実践する力を養うことです。</p>
+<p>本講義の狙いは、単なるツールの操作説明ではありません。<strong>Python</strong> による「再現性（Reproducibility）」の思想を理解し、<strong>Jupyter（またはVS Code）</strong> を通じてそれを実践する力を養うことです。</p>
 <section id="科学的検証のためのツール" class="level3">
 <h3 class="anchored" data-anchor-id="科学的検証のためのツール">科学的検証のためのツール</h3>
-<p>なぜこれほどRを推すのか。最大の理由は <strong>再現性が確保できるから</strong> です。 Excelでの分析は、どうしても「手作業」の連続になります。どのセルをコピーし、どこでフィルタをかけ、どのグラフを選んだか。その履歴を完全に追跡するのは困難です。 一方、Rはすべての操作をコードとして残します。コードは「手順書」そのもの。第三者が同じコードを実行すれば、間違いなく同じ結果が出ます。科学的な検証において、この特性は欠かせません。</p>
+<p>なぜこれほどPythonを推すのか。最大の理由は <strong>再現性が確保できるから</strong> です。 Excelでの分析は、どうしても「手作業」の連続になります。どのセルをコピーし、どこでフィルタをかけ、どのグラフを選んだか。その履歴を完全に追跡するのは困難です。 一方、Pythonはすべての操作をコードとして残します。コードは「手順書」そのもの。第三者が同じコードを実行すれば、間違いなく同じ結果が出ます。科学的な検証において、この特性は欠かせません。</p>
 <p>もちろん、実利的なメリットも大きいです。</p>
 <ul>
 <li><strong>OSSとコスト</strong>: 個人・組織を問わず無料（GPLライセンス）。</li>
-<li><strong>統計機能</strong>: 世界中の統計家が開発に参加しており、最新の手法が22,000以上のパッケージ（CRAN）ですぐに使えます。</li>
-<li><strong>キャリア</strong>: 定量的研究やデータサイエンスの職務記述書（JD）において、Rスキルは依然として強い武器になります。</li>
+<li><strong>ライブラリの豊富さ</strong>: 数値計算（NumPy）、データ操作（pandas）、可視化（matplotlib / seaborn）、統計モデリング（statsmodels）などが揃っています。</li>
+<li><strong>キャリア</strong>: データ分析・データサイエンスの職務記述書（JD）でPythonは定番スキルです。</li>
 </ul>
 <p>（Webアプリ開発やシステムへの組み込みならPythonやC++が適しています。適材適所です）</p>
 </section>
-<section id="rとexcel対立ではなく使い分け" class="level3">
-<h3 class="anchored" data-anchor-id="rとexcel対立ではなく使い分け">RとExcel：対立ではなく使い分け</h3>
+<section id="pythonとexcel対立ではなく使い分け" class="level3">
+<h3 class="anchored" data-anchor-id="pythonとexcel対立ではなく使い分け">PythonとExcel：対立ではなく使い分け</h3>
 <p>よく「RかExcelか」と二項対立で語られますが、実際は「併用」が正解です。</p>
 <table class="table">
 <colgroup>
@@ -306,97 +304,108 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>大規模データ（100万行〜）、手順の記録、複雑な統計モデル</td>
 </tr>
 <tr class="even">
-<td><strong>R</strong></td>
+<td><strong>Python</strong></td>
 <td>大規模データの処理、高度な統計解析、再現性のある描画</td>
 <td>データの直接入力、閲覧（スプレッドシート的な操作）</td>
 </tr>
 </tbody>
 </table>
-<p>私だって、データの概観やちょっとした検算にはExcelを使います。でも、論文に載せる分析や、来月も同じ処理をする業務なら、迷わずRを選びます。</p>
+<p>私だって、データの概観やちょっとした検算にはExcelを使います。でも、論文に載せる分析や、来月も同じ処理をする業務なら、迷わずPythonを選びます。</p>
 </section>
 </section>
-<section id="rstudioというコックピット" class="level2">
-<h2 class="anchored" data-anchor-id="rstudioというコックピット">RStudioという「コックピット」</h2>
-<p>R本体はただの「計算エンジン」です。人間が楽に扱うために、統合開発環境（IDE）である <strong>RStudio</strong> を使います。 画面は4分割されていますが、データの流れで考えると分かりやすいでしょう。</p>
+<section id="jupytervs-codeというコックピット" class="level2">
+<h2 class="anchored" data-anchor-id="jupytervs-codeというコックピット">Jupyter（/VS Code）という「コックピット」</h2>
+<p>Python本体はただの「計算エンジン」です。人間が楽に扱うために、ノートブック環境の <strong>Jupyter</strong>（または統合開発環境のVS Code）を使います。 画面は4分割されていますが、データの流れで考えると分かりやすいでしょう。</p>
 <ol type="1">
-<li><strong>Source Editor (左上)</strong>：ここで「指示書（スクリプト）」を書く。
+<li><strong>Editor / Notebook</strong>：ここで「指示書（コード）」を書く。
 <ul>
 <li>料理ならレシピを書く場所。ここに書いたものだけが「再現可能な記録」として残ります。</li>
 </ul></li>
-<li><strong>Console (左下)</strong>：指示を実行し、結果を受け取る。
+<li><strong>実行結果（セル出力 / Terminal）</strong>：指示を実行し、結果を受け取る。
 <ul>
-<li>実際にRが計算する場所。ちょっとした計算や、中身の確認用です。</li>
+<li>実際にPythonが計算する場所。ちょっとした確認用です。</li>
 </ul></li>
-<li><strong>Environment (右上)</strong>：材料（データ・変数）を確認する。
+<li><strong>変数/データの確認</strong>：データフレームや変数を確認する。
 <ul>
-<li>いまメモリ上に何があるかが見えています。</li>
+<li>いまメモリ上に何があるかを把握します。</li>
 </ul></li>
-<li><strong>Files / Plots (右下)</strong>：成果物を確認する。
+<li><strong>Plots / Files</strong>：グラフやファイルを確認する。
 <ul>
-<li>描かれたグラフや、保存されたファイルはここに出ます。</li>
+<li>描かれた図や保存物はここで見ます。</li>
 </ul></li>
 </ol>
 <p>基本は、「左上で書いて、左下で実行させて、右と右下で結果を確認する」。この繰り返しです。</p>
 </section>
-<section id="rと対話する計算と変数" class="level2">
-<h2 class="anchored" data-anchor-id="rと対話する計算と変数">Rと対話する（計算と変数）</h2>
-<p>まずは難しく考えず、Rを「やたら高機能な電卓」として使ってみましょう。 Consoleに直接入力してみてください。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>(<span class="dv">100</span> <span class="sc">-</span> <span class="dv">20</span>) <span class="sc">/</span> <span class="dv">4</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="pythonと対話する計算と変数" class="level2">
+<h2 class="anchored" data-anchor-id="pythonと対話する計算と変数">Pythonと対話する（計算と変数）</h2>
+<p>まずは難しく考えず、Pythonを「やたら高機能な電卓」として使ってみましょう。 セル（またはREPL）に直接入力してみてください。</p>
+<div id="11bc1f1d" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>(<span class="dv">100</span> <span class="op">-</span> <span class="dv">20</span>) <span class="op">/</span> <span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>20.0</code></pre>
+</div>
 </div>
 <section id="情報を箱に入れる変数" class="level3">
 <h3 class="anchored" data-anchor-id="情報を箱に入れる変数">情報を箱に入れる：変数</h3>
-<p>計算結果を使い捨てにせず、取っておくための箱が <strong>変数（オブジェクト）</strong> です。 R独特の記号 <code>&lt;-</code>（代入演算子）を使います。「右の値を左の箱に入れる」イメージの矢印です。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>price <span class="ot">&lt;-</span> <span class="dv">1500</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>amount <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> price <span class="sc">*</span> amount</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>total</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4500</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>計算結果を使い捨てにせず、取っておくための箱が <strong>変数（オブジェクト）</strong> です。 Pythonでは <code>=</code>（代入）を使います。「右の値を左の箱に入れる」イメージです。</p>
+<div id="dfe18c90" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>price <span class="op">=</span> <span class="dv">1500</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>amount <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> price <span class="op">*</span> amount</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>total</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>4500</code></pre>
+</div>
 </div>
 <p>大事なのは、<code>price</code> や <code>amount</code> という「名前」でデータを管理できること。「1500」という数値の意味を、人間が覚えておく必要はありません。</p>
 </section>
 <section id="便利な道具関数" class="level3">
 <h3 class="anchored" data-anchor-id="便利な道具関数">便利な道具：関数</h3>
 <p>よく使う処理は <strong>関数</strong> として用意されています。「機能名(データ)」の形で呼び出します。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 数値のベクトル（列）を作る c() 関数</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>scores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">90</span>, <span class="dv">75</span>, <span class="dv">60</span>, <span class="dv">95</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 平均値を計算する mean() 関数</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(scores)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 80</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fcf80e29" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statistics <span class="im">as</span> stats</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 数値のリスト（列）を作る</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>scores <span class="op">=</span> [<span class="dv">80</span>, <span class="dv">90</span>, <span class="dv">75</span>, <span class="dv">60</span>, <span class="dv">95</span>]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 平均値を計算する</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>stats.mean(scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>80</code></pre>
+</div>
 </div>
 <p>関数は無数にありますが、最初は「やりたいこと（機能）」と「入れるもの（引数）」の対応さえ意識できれば十分です。</p>
 </section>
 </section>
-<section id="エラーはrからの返信" class="level2">
-<h2 class="anchored" data-anchor-id="エラーはrからの返信">「エラー」はRからの返信</h2>
-<p>プログラミング初心者にとって、赤い文字のエラーメッセージは怖いかもしれません。「お前は間違ってる」と怒られた気分になるからでしょう。 でも、誤解です。エラーはRからの「この指示だと、ここが分からなくて実行できません」という、ただの返信です。</p>
+<section id="エラーはpythonからの返信" class="level2">
+<h2 class="anchored" data-anchor-id="エラーはpythonからの返信">「エラー」はPythonからの返信</h2>
+<p>プログラミング初心者にとって、赤い文字のエラーメッセージは怖いかもしれません。「お前は間違ってる」と怒られた気分になるからでしょう。 でも、誤解です。エラーはPythonからの「この指示だと、ここが分からなくて実行できません」という、ただの返信です。</p>
 <ul>
-<li><strong><code>could not find function</code></strong>：「その関数を知りません」（綴りが違うか、パッケージを読み忘れていませんか？）</li>
-<li><strong><code>object not found</code></strong>：「その変数が見当たりません」（作る前に使おうとしていませんか？）</li>
+<li><strong><code>NameError</code></strong>：「その名前が見当たりません」（変数を作る前に使っていませんか？）</li>
+<li><strong><code>ModuleNotFoundError</code></strong>：「そのライブラリが見つかりません」（インストールし忘れていませんか？）</li>
 </ul>
 <p>エラーが出たら、まずはメッセージを読んでみてください。解決のヒントは必ずそこにあります。</p>
 </section>
 <section id="グラフを描いてみる" class="level2">
 <h2 class="anchored" data-anchor-id="グラフを描いてみる">グラフを描いてみる</h2>
-<p>最後に、Rの「華」、可視化を試してみます。 解説は省きますが、数行書くだけで美しい散布図が描けることを確認してください。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># [対象注意] 日本語フォント設定は環境により異なります</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>))</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cars, <span class="fu">aes</span>(<span class="at">x =</span> speed, <span class="at">y =</span> dist)) <span class="sc">+</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"車の速度と停止距離"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<p>最後に、Pythonの「華」、可視化を試してみます。 解説は省きますが、数行書くだけで美しい散布図が描けることを確認してください。</p>
+<div id="f6da466f" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> japanize_matplotlib  <span class="co"># noqa: F401</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>tips <span class="op">=</span> pd.read_csv(url)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.scatterplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">"total_bill"</span>, y<span class="op">=</span><span class="st">"tip"</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"支払総額とチップ"</span>, xlabel<span class="op">=</span><span class="st">"支払総額 ($)"</span>, ylabel<span class="op">=</span><span class="st">"チップ ($)"</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01_intro_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="01_intro_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -408,7 +417,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>自身の年齢を変数 <code>age</code> に代入してください。</li>
 <li>変数 <code>age</code> を使って、10年後の年齢を計算してください。</li>
-<li>任意の数値を3つ格納したベクトルを作成し、その平均値を求めてください。</li>
+<li>任意の数値を3つ格納したリストを作成し、その平均値を求めてください。</li>
 </ol>
 
 

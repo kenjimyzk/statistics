@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>経済学のためのデータ分析入門 (R編) - 第8回 統計的推定</title>
+<title>経済学のためのデータ分析入門 (Python編) - 第8回 統計的推定</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,7 +57,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -102,8 +102,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -161,7 +162,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">経済学のためのデータ分析入門 (R編)</a> 
+      <a href="./">経済学のためのデータ分析入門 (Python編)</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -180,7 +181,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">第1回 RとRStudioの基礎</span></a>
+ <span class="menu-text">第1回 PythonとJupyter（/VS Code）の基礎</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -332,14 +333,17 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="点推定一点豪華主義">2. 点推定：一点豪華主義</h2>
 <p>母数（知りたい真の値）を、たった一つの値で言い当てる方法です。 例えば、「日本の平均年収は450万円だ！」と言い切るのが点推定。</p>
 <p>Tipsデータセットを使って、チップの支払総額の平均を点推定してみましょう。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>tips <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 点推定（標本平均）</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(tips<span class="sc">$</span>total_bill)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 19.78594</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="19b054f9" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>tips <span class="op">=</span> pd.read_csv(url)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 点推定（標本平均）</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>tips[<span class="st">"total_bill"</span>].mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>19.78594262295082</code></pre>
+</div>
 </div>
 <p>答えは <code>19.78594</code>。これが、現時点での私たちの「ベストな予想」。 しかし、これだけでは不十分です。「で、その予想はどれくらい信用できるの？」という問いに答えられないから。</p>
 </section>
@@ -352,45 +356,54 @@ window.Quarto = {
 <p>よくある誤解：「真の平均値がこの区間に入る確率は95%だ」 正しくは：「<strong>この方法で輪投げ（区間推定）を100回やったら、そのうち95回は的（真の平均値）が入る</strong>」</p>
 <p>的（母数）は動きません。動くのは、私たちが投げる輪（信頼区間）のほう。</p>
 <p>シミュレーションで、実際に輪投げを100回やってみましょう。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ゲームの設定</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>n_sim <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>n_sample <span class="ot">&lt;-</span> <span class="dv">30</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">50</span>      <span class="co"># 的の位置（真の母平均）</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">10</span>   <span class="co"># 手ブレの大きさ（母標準偏差）</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 結果の記録</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span>n_sim, <span class="at">lower =</span> <span class="cn">NA</span>, <span class="at">upper =</span> <span class="cn">NA</span>, <span class="at">hit =</span> <span class="cn">NA</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_sim) {</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1回の輪投げ（標本抽出）</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_sample, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 輪の大きさを計算（95%信頼区間）</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>lower[i] <span class="ot">&lt;-</span> test<span class="sc">$</span>conf.int[<span class="dv">1</span>]</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>upper[i] <span class="ot">&lt;-</span> test<span class="sc">$</span>conf.int[<span class="dv">2</span>]</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 的に入ったか判定</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>hit[i] <span class="ot">&lt;-</span> (mu <span class="sc">&gt;=</span> results<span class="sc">$</span>lower[i] <span class="sc">&amp;</span> mu <span class="sc">&lt;=</span> results<span class="sc">$</span>upper[i])</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 結果発表</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results, <span class="fu">aes</span>(<span class="at">x =</span> id, <span class="at">ymin =</span> lower, <span class="at">ymax =</span> upper, <span class="at">color =</span> hit)) <span class="sc">+</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuProN-W3"</span>) <span class="sc">+</span> <span class="co"># [対象注意] Mac用設定</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> mu, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"95%信頼区間のシミュレーション (100回)"</span>, </span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"試行回数"</span>, <span class="at">y =</span> <span class="st">"区間推定の結果"</span>,</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"赤色は的を外した失敗回"</span>) <span class="sc">+</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"TRUE"</span> <span class="ot">=</span> <span class="st">"gray"</span>, <span class="st">"FALSE"</span> <span class="ot">=</span> <span class="st">"red"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<div id="80e259fa" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> japanize_matplotlib  <span class="co"># noqa: F401</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> t</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">123</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># ゲームの設定</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>n_sim <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>n_sample <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>mu <span class="op">=</span> <span class="dv">50</span>       <span class="co"># 的の位置（真の母平均）</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="dv">10</span>    <span class="co"># 手ブレの大きさ（母標準偏差）</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>conf_level <span class="op">=</span> <span class="fl">0.95</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> conf_level</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, n_sim <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1回の輪投げ（標本抽出）</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> rng.normal(loc<span class="op">=</span>mu, scale<span class="op">=</span>sigma, size<span class="op">=</span>n_sample)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 95%信頼区間（母分散未知 → t分布）</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  xbar <span class="op">=</span> x.mean()</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  s <span class="op">=</span> x.std(ddof<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  crit <span class="op">=</span> t.ppf(<span class="dv">1</span> <span class="op">-</span> alpha <span class="op">/</span> <span class="dv">2</span>, df<span class="op">=</span>n_sample <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  half <span class="op">=</span> crit <span class="op">*</span> s <span class="op">/</span> np.sqrt(n_sample)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  lower <span class="op">=</span> xbar <span class="op">-</span> half</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  upper <span class="op">=</span> xbar <span class="op">+</span> half</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  hit <span class="op">=</span> (mu <span class="op">&gt;=</span> lower) <span class="kw">and</span> (mu <span class="op">&lt;=</span> upper)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  rows.append({<span class="st">"id"</span>: i, <span class="st">"lower"</span>: lower, <span class="st">"upper"</span>: upper, <span class="st">"hit"</span>: hit})</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> pd.DataFrame(rows)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="co"># 結果発表</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> results[<span class="st">"hit"</span>].<span class="bu">map</span>({<span class="va">True</span>: <span class="st">"gray"</span>, <span class="va">False</span>: <span class="st">"red"</span>})</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>plt.vlines(results[<span class="st">"id"</span>], results[<span class="st">"lower"</span>], results[<span class="st">"upper"</span>], colors<span class="op">=</span>colors, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>plt.axhline(mu, linestyle<span class="op">=</span><span class="st">"--"</span>, color<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"95%信頼区間のシミュレーション (100回)"</span>)</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"試行回数"</span>)</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"区間推定の結果"</span>)</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>plt.figtext(<span class="fl">0.5</span>, <span class="fl">0.01</span>, <span class="st">"赤色は的を外した失敗回"</span>, ha<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="08_estimation_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="08_estimation_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -404,23 +417,24 @@ window.Quarto = {
 <p>これは「標準正規分布」によく似ていますが、少しだけ裾が広くなっています。 なぜか？</p>
 <p>母分散（真のばらつき）がわからないため、代わりに標本から計算した不偏分散を使うからです。 「本当のばらつきがわからない」という不確実性の分だけ、区間（輪の大きさ）を少し広めにとって安全策をとる。それが、t分布の役割。</p>
 <p>データ数（サンプルサイズ）が増えれば、この不確実性は減り、t分布は正規分布に近づいていく。</p>
-<section id="rで実践平均の区間推定" class="level3">
-<h3 class="anchored" data-anchor-id="rで実践平均の区間推定">Rで実践：平均の区間推定</h3>
-<p><code>t.test()</code> 関数を使えば、面倒な計算なしで信頼区間を求められます。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 支払総額の95%信頼区間</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(tips<span class="sc">$</span>total_bill)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  One Sample t-test</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  tips$total_bill</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = 34.717, df = 243, p-value &lt; 2.2e-16</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true mean is not equal to 0</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  18.66333 20.90855</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean of x </span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  19.78594</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="pythonで実践平均の区間推定" class="level3">
+<h3 class="anchored" data-anchor-id="pythonで実践平均の区間推定">Pythonで実践：平均の区間推定</h3>
+<p>母分散が未知のとき、平均の信頼区間は「標本平均 ± t臨界値 × 標準誤差」で計算できます。</p>
+<div id="1a0f84a7" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 支払総額の95%信頼区間</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> t</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> tips[<span class="st">"total_bill"</span>].to_numpy()</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(x)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>xbar <span class="op">=</span> x.mean()</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> x.std(ddof<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>crit <span class="op">=</span> t.ppf(<span class="fl">0.975</span>, df<span class="op">=</span>n <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>half <span class="op">=</span> crit <span class="op">*</span> s <span class="op">/</span> np.sqrt(n)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>(xbar <span class="op">-</span> half, xbar <span class="op">+</span> half)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>(18.663331704358473, 20.908553541543167)</code></pre>
+</div>
 </div>
 <p><code>95 percent confidence interval</code> の行を見てください。 これが、「今回の輪投げの結果」です。</p>
 </section>
@@ -432,22 +446,65 @@ window.Quarto = {
 <li><strong>サンプルサイズ</strong>: データが増えれば、的の位置がはっきり見えるので、輪は小さく（精度良く）なる。</li>
 <li><strong>ばらつき</strong>: データが暴れている（分散が大きい）と、安全のために輪を大きくする必要がある。</li>
 </ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 信頼係数ごとの比較</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>res_90 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(tips<span class="sc">$</span>total_bill, <span class="at">conf.level =</span> <span class="fl">0.90</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>res_95 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(tips<span class="sc">$</span>total_bill, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>res_99 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(tips<span class="sc">$</span>total_bill, <span class="at">conf.level =</span> <span class="fl">0.99</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Confidence_Level =</span> <span class="fu">c</span>(<span class="st">"90%"</span>, <span class="st">"95%"</span>, <span class="st">"99%"</span>),</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Lower =</span> <span class="fu">c</span>(res_90<span class="sc">$</span>conf.int[<span class="dv">1</span>], res_95<span class="sc">$</span>conf.int[<span class="dv">1</span>], res_99<span class="sc">$</span>conf.int[<span class="dv">1</span>]),</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Upper =</span> <span class="fu">c</span>(res_90<span class="sc">$</span>conf.int[<span class="dv">2</span>], res_95<span class="sc">$</span>conf.int[<span class="dv">2</span>], res_99<span class="sc">$</span>conf.int[<span class="dv">2</span>])</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["Confidence_Level"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Lower"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Upper"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"90%","2":"18.84492","3":"20.72696"},{"1":"95%","2":"18.66333","3":"20.90855"},{"1":"99%","2":"18.30631","3":"21.26557"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div id="fc44c068" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> t</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mean_ci(x, conf_level: <span class="bu">float</span>):</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> np.asarray(x, dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  n <span class="op">=</span> <span class="bu">len</span>(x)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  xbar <span class="op">=</span> x.mean()</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  s <span class="op">=</span> x.std(ddof<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  alpha <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> conf_level</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  crit <span class="op">=</span> t.ppf(<span class="dv">1</span> <span class="op">-</span> alpha <span class="op">/</span> <span class="dv">2</span>, df<span class="op">=</span>n <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  half <span class="op">=</span> crit <span class="op">*</span> s <span class="op">/</span> np.sqrt(n)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> xbar <span class="op">-</span> half, xbar <span class="op">+</span> half</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>levels <span class="op">=</span> [<span class="fl">0.90</span>, <span class="fl">0.95</span>, <span class="fl">0.99</span>]</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cl <span class="kw">in</span> levels:</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  lo, hi <span class="op">=</span> mean_ci(tips[<span class="st">"total_bill"</span>], cl)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  rows.append({<span class="st">"Confidence_Level"</span>: <span class="ss">f"</span><span class="sc">{</span><span class="bu">int</span>(cl <span class="op">*</span> <span class="dv">100</span>)<span class="sc">}</span><span class="ss">%"</span>, <span class="st">"Lower"</span>: lo, <span class="st">"Upper"</span>: hi})</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(rows)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Confidence_Level</th>
+<th data-quarto-table-cell-role="th">Lower</th>
+<th data-quarto-table-cell-role="th">Upper</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>90%</td>
+<td>18.844923</td>
+<td>20.726963</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>95%</td>
+<td>18.663332</td>
+<td>20.908554</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>99%</td>
+<td>18.306313</td>
+<td>21.265572</td>
+</tr>
+</tbody>
+</table>
+
+</div>
 </div>
 </div>
 </div>
@@ -457,19 +514,17 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="母比率の区間推定">5. 母比率の区間推定</h2>
 <p>平均値だけでなく、「割合（比率）」も区間推定できます。 「内閣支持率は 45% ± 3%」といったニュースは、これを使っています。</p>
 <p>例：100人中60人が賛成。母集団での賛成率は？</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="at">x =</span> <span class="dv">60</span>, <span class="at">n =</span> <span class="dv">100</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1-sample proportions test with continuity correction</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  60 out of 100, null probability 0.5</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; X-squared = 3.61, df = 1, p-value = 0.05743</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true p is not equal to 0.5</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.4970036 0.6952199</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   p </span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="659b1aa2" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.proportion <span class="im">import</span> proportion_confint</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">60</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>nobs <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>phat <span class="op">=</span> count <span class="op">/</span> nobs</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>ci <span class="op">=</span> proportion_confint(count, nobs, alpha<span class="op">=</span><span class="fl">0.05</span>, method<span class="op">=</span><span class="st">"wilson"</span>)  <span class="co"># スコア（Wilson）区間</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>{<span class="st">"p_hat"</span>: phat, <span class="st">"ci_95"</span>: ci}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>{'p_hat': 0.6, 'ci_95': (0.5020025867910618, 0.6905987135675411)}</code></pre>
+</div>
 </div>
 </section>
 <section id="課題" class="level2">
@@ -483,7 +538,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="練習問題">練習問題</h2>
 <section id="練習1-信頼区間の幅とサンプルサイズ" class="level3">
 <h3 class="anchored" data-anchor-id="練習1-信頼区間の幅とサンプルサイズ">練習1: 信頼区間の幅とサンプルサイズ</h3>
-<p>記述統計的に同じ平均と分散を持つデータでも、サンプルサイズが異なると信頼区間はどう変わるか確認してください。 （<code>rnorm</code> で <span class="math inline">\(n=10\)</span> と <span class="math inline">\(n=100\)</span> のデータを生成し、<code>t.test</code> で比較）</p>
+<p>記述統計的に同じ平均と分散を持つデータでも、サンプルサイズが異なると信頼区間はどう変わるか確認してください。 （<code>numpy.random.Generator.normal</code> で <span class="math inline">\(n=10\)</span> と <span class="math inline">\(n=100\)</span> のデータを生成し、t分布を用いた信頼区間の式で比較）</p>
 </section>
 <section id="練習2-母比率のシミュレーション" class="level3">
 <h3 class="anchored" data-anchor-id="練習2-母比率のシミュレーション">練習2: 母比率のシミュレーション</h3>
@@ -509,7 +564,7 @@ window.Quarto = {
 <tr class="header">
 <th>概念</th>
 <th>説明</th>
-<th>R関数</th>
+<th>Pythonでの実装例</th>
 </tr>
 </thead>
 <tbody>
@@ -526,12 +581,12 @@ window.Quarto = {
 <tr class="odd">
 <td><strong>信頼区間</strong></td>
 <td>輪投げの輪。的（母数）を捉える確率的範囲。</td>
-<td><code>t.test()</code>, <code>prop.test()</code></td>
+<td><code>scipy.stats.t.ppf</code> + 式、<code>statsmodels.stats.proportion.proportion_confint</code></td>
 </tr>
 <tr class="even">
 <td><strong>t分布</strong></td>
 <td>データ不足の不確実性を考慮した、少し幅広の正規分布。</td>
-<td><code>dt()</code>, <code>pt()</code></td>
+<td><code>scipy.stats.t</code></td>
 </tr>
 </tbody>
 </table>
