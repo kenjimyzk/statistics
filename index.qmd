@@ -1,16 +1,16 @@
 # はじめに {.unnumbered}
 
-この講義ノートは、経済学部の1年生を対象とした「Rによる統計学入門」の資料です。
+この講義ノートは、経済学部の1年生を対象とした「Pythonによる統計学入門」の資料です。
 プログラミング未経験者を想定し、データの読み込みから基礎的な統計分析、そして回帰分析までを半期（全12回）で学びます。
 
-本講義では、現代的なRの記法である **Tidyverse** を中心に解説します。
+本講義では、Pythonの **pandas**（データ操作）と **seaborn / matplotlib**（可視化）を中心に解説します。
 
 ## シラバス
 
-1.  **RとRStudioの基礎**: インストール、基本操作、計算
+1.  **PythonとJupyter（/VS Code）の基礎**: インストール、基本操作、計算
 2.  **データの構造と扱い**: ベクトル、データフレーム、データの読み込み
 3.  **記述統計 (1) 数値要約**: 平均、分散、標準偏差、四分位数
-4.  **記述統計 (2) データの可視化**: ggplot2によるグラフ作成
+4.  **記述統計 (2) データの可視化**: seaborn / matplotlib によるグラフ作成
 5.  **確率論の基礎**: 確率変数、期待値、分散
 6.  **主要な確率分布**: 正規分布、二項分布
 7.  **標本分布**: 母集団と標本、中心極限定理
@@ -24,11 +24,11 @@
 
 この講義では以下のソフトウェアを使用します。
 
--   [R](https://cran.r-project.org/)
--   [RStudio Desktop](https://posit.co/download/rstudio-desktop/)
+-   [Python](https://www.python.org/)
+-   [JupyterLab](https://jupyter.org/)（または VS Code）
 
 また、以下のパッケージを主に使用します。
 
-```r
-install.packages("tidyverse")
+```bash
+pip install numpy pandas matplotlib seaborn scipy statsmodels
 ```

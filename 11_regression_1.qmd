@@ -31,17 +31,18 @@
 
 「支払額 ($X$) が多い客ほど、チップ ($Y$) も多く払うのか？」を確認してみよう。
 
-```{r}
-library(tidyverse)
-theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
-url <- "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
-tips <- read_csv(url)
+```{python}
+import pandas as pd
+from scipy.stats import pearsonr
+
+url = "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
+tips = pd.read_csv(url)
 
 # 相関係数の算出
-cor(tips$total_bill, tips$tip)
+tips["total_bill"].corr(tips["tip"])
 
 # 検定: その相関は偶然ではないか？
-cor.test(tips$total_bill, tips$tip)
+pearsonr(tips["total_bill"], tips["tip"])
 ```
 
 結果は $r \approx 0.68$。
@@ -63,10 +64,12 @@ $$ \text{予測値} = \text{切片} + \text{傾き} \times \text{支払額} $$
 これは、$X$ と $Y$ の**交換レート**のようなもの。
 「支払額を1ドル投入すると、チップが何ドル返ってくるか？」を表す。
 
-```{r}
+```{python}
 # 予測モデルの作成
-model <- lm(tip ~ total_bill, data = tips)
-summary(model)
+import statsmodels.formula.api as smf
+
+model = smf.ols("tip ~ total_bill", data=tips).fit()
+model.summary()
 ```
 
 **解析結果**:
@@ -77,12 +80,13 @@ summary(model)
 
 ### 直線の可視化
 
-```{r}
-ggplot(tips, aes(x = total_bill, y = tip)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_point() +
-  geom_smooth(method = "lm", color = "red") +
-  labs(title = "予測マシン（回帰直線）の可視化")
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+ax = sns.regplot(data=tips, x="total_bill", y="tip", line_kws={"color": "red"})
+ax.set(title="予測マシン（回帰直線）の可視化", xlabel="支払総額 ($)", ylabel="チップ ($)")
+plt.show()
 ```
 
 赤い線が、推定された予測モデルだ。
@@ -107,28 +111,27 @@ ggplot(tips, aes(x = total_bill, y = tip)) +
 
 モデル変な癖がないか、レントゲン（残差プロット）を撮って確認する。
 
-```{r}
+```{python}
 # 予測値と残差の準備
-tips_aug <- tips %>%
-  mutate(pred = predict(model), resid = residuals(model))
+import matplotlib.pyplot as plt
+import seaborn as sns
+from statsmodels.graphics.gofplots import qqplot
+
+tips_aug = tips.assign(pred=model.fittedvalues, resid=model.resid)
+
+fig, axes = plt.subplots(1, 2, figsize=(10, 4))
 
 # 1. 残差プロット（クセがないか？）
-p1 <- ggplot(tips_aug, aes(x = pred, y = resid)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_point() +
-  geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
-  labs(title = "残差の散らばり")
+sns.scatterplot(data=tips_aug, x="pred", y="resid", ax=axes[0])
+axes[0].axhline(0, color="red", linestyle="--")
+axes[0].set(title="残差の散らばり", xlabel="予測値", ylabel="残差")
 
 # 2. Q-Qプロット（正規分布しているか？）
-p2 <- ggplot(tips_aug, aes(sample = resid)) +
-  theme_gray() + # [対象注意] Mac用設定
-  stat_qq() +
-  stat_qq_line(color = "red") +
-  labs(title = "残差の正規性")
+qqplot(tips_aug["resid"], line="45", ax=axes[1])
+axes[1].set(title="残差の正規性")
 
-# 並べて表示
-p1
-p2
+plt.tight_layout()
+plt.show()
 ```
 
 *   **残差プロット**: 0の周りにバランスよく散らばっていれば合格。

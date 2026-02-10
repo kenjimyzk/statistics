@@ -7,21 +7,20 @@
 データ分析において、一番時間を食う作業は何でしょうか。複雑な統計モデルの構築ではありません。「データの掃除（Data Wrangling）」です。
 形式の揃っていないデータ、謎の空白、表記の揺れ。これらを人間が扱える形に整えるだけで、プロジェクトの時間の8割が消えることすらあります。
 
-本節では、この泥臭い作業をエレガントに片付ける武器、**Tidyverse** を導入します。
+本節では、この泥臭い作業をエレガントに片付ける武器、**pandas** を導入します。
 
-### Tidyverse：人間中心のR
+### pandas：人間中心のPython
 
-Rにも元々データ操作機能（Base R）はありますが、記法が少し特殊で、覚えるのが大変でした。
-そこで生まれたのが **Tidyverse** です。「人間が読みやすく、書きやすい」ことを最優先に設計された、Rの「新しい方言」だと思ってください。
+Pythonにもデータを扱う手段は色々ありますが、表形式データ（行と列）を扱うなら **pandas** が事実上の標準です。
+「人間が読みやすく、書きやすい」ことを優先しつつ、現実のデータ分析に必要な機能が一通り揃っています。
 
 1.  **インストール（世界への入り口）**：初回のみ
-    ```{r}
-    # install.packages("tidyverse") {.unnumbered}
+    ```{bash}
+    pip install pandas
     ```
 2.  **ロード（道具箱を開ける）**：起動するたびに必要
-    ```{r}
-    library(tidyverse)
-theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
+    ```{python}
+    import pandas as pd
     ```
 
 これだけで、必要な道具一式（加工、可視化、読み込み...）は揃います。
@@ -29,99 +28,100 @@ theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
 ## データフレーム：世界を表にする
 
 現実のデータは、混沌としています。それをコンピュータが理解できる形は、結局「行と列」だけです。
-Rでの呼び名は **データフレーム**。
+Python（pandas）での呼び名も **データフレーム** です。
 
 -   **行（Row）**：ひとつの観測単位（1人の人間、1回の取引、1日の記録）
 -   **列（Column）**：属性や変数（年齢、金額、気温）
 
-### 現実をRに取り込む（CSV読み込み）
+### 現実をPythonに取り込む（CSV読み込み）
 
-手元のExcelやCSVファイルは、まだ「外」にあります。これを「中」（Rの計算世界）に引き入れる儀式が `read_csv()` です。
+手元のExcelやCSVファイルは、まだ「外」にあります。これを「中」（Pythonの計算世界）に引き入れる儀式が `read_csv()` です。
 
 今回は、Pythonのライブラリ等でもよく使われる `tips`（レストランのチップ支払い記録）をWebから直接読み込んでみます。
 
-```{r}
-url <- "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
-tips <- read_csv(url)
+```{python}
+import pandas as pd
 
-# データの「顔見せ」（tidyverse版のstr()）
-glimpse(tips)
+url = "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
+tips = pd.read_csv(url)
+
+# データの「顔見せ」
+tips.info()
+tips.head()
 ```
 
 読み込んだ瞬間、変数の型（数値なのか、文字なのか）は自動判定されます。Excelによくある「数字なのに文字扱い」みたいなトラブルも、入り口で防げます。
 
 [要一次情報: データセットの詳細な定義書の所在]
 
-## データ操作の文法 (dplyr)
+## データ操作の文法（pandas）
 
-Tidyverseの中核である `dplyr` パッケージは、データを加工するための「5つの動詞」を提供します。
-これらはプログラミングの命令というより、英語の文法に近い感覚です。
+pandasには、データ加工の基本操作が一通り揃っています。
+「列を選ぶ」「行を絞る」「新しい列を作る」「並べ替える」「グループ集計する」――これらがデータ分析の基本動作です。
 
-### パイプ演算子 `%>%`：考えた順に書く
+### つなげて書く：メソッドチェーン
 
-まず、Tidyverseの象徴である **パイプ演算子** `%>%`（または `|>`）を概観します。これは「左から右へ、水を流す」イメージです。
+pandasでは「メソッドチェーン（メソッドを連結して書く）」で、思考の順番に処理を書けます。
 
--   **Base R**: `head(select(tips, total_bill))` → 内側から外側へ読む（直感的じゃない）
--   **Tidyverse**: `tips %>% select(total_bill) %>% head()` → 「データを、選んで、先頭を見る」（考えた順）
+-   **単発**: `tips[["total_bill"]].head()` → 「列を選んで、先頭を見る」
+-   **連結**: `tips.query('time == "Dinner"').sort_values("tip", ascending=False).head()` → 「絞って、並べて、先頭を見る」
 
-### 1. 切り分ける：`select()` と `filter()`
+### 1. 切り分ける：列の選択と行の抽出
 
 分析はまず、要らない部分を削ぎ落とすことから始まります。
 
-**列（変数）を選ぶ：`select()`**
+**列（変数）を選ぶ**
 「分析に性別と喫煙情報は関係ない」なら、こう。
 
-```{r}
-tips %>% 
-  select(total_bill, tip) %>% 
-  head()
+```{python}
+tips[["total_bill", "tip"]].head()
 ```
 
-**行（観測）を絞る：`filter()`**
+**行（観測）を絞る**
 「ディナーの客だけ見たい」なら、こう。
 
-```{r}
-tips %>% 
-  filter(time == "Dinner") %>% 
-  head()
+```{python}
+tips.query('time == "Dinner"').head()
 ```
 
-### 2. 加工する：`mutate()`
+### 2. 加工する：新しい列を作る
 
-既存の列を使って新しい指標を作るときは `mutate()`（変化させる）を使います。
+既存の列を使って新しい指標を作るときは `assign()` が便利です。
 「チップの額」そのものより、「支払額に対するチップの割合」の方が意味があるでしょう。
 
-```{r}
-tips %>% 
-  mutate(tip_rate = tip / total_bill) %>% 
-  select(total_bill, tip, tip_rate) %>% 
-  head()
+```{python}
+(
+  tips
+  .assign(tip_rate=lambda df: df["tip"] / df["total_bill"])
+  .loc[:, ["total_bill", "tip", "tip_rate"]]
+  .head()
+)
 ```
 
-### 3. 並べる：`arrange()`
+### 3. 並べる：並べ替え
 
 データは最初、「記録順」です。これを「意味のある順」に変えます。
 
-```{r}
+```{python}
 # チップを多く払った順（降順）に並べる
-tips %>% 
-  arrange(desc(tip)) %>% 
-  head()
+tips.sort_values("tip", ascending=False).head()
 ```
 
-### 4. 要約する：`group_by()` と `summarize()`
+### 4. 要約する：グループ集計
 
-個別の値より「傾向」が知りたいなら、データをグループにまとめて（`group_by`）、縮約（`summarize`）します。
+個別の値より「傾向」が知りたいなら、グループにまとめて（`groupby`）、縮約（`agg`）します。
 「ランチとディナー、どっちが羽振りがいいのか？」という問いに答えてみましょう。
 
-```{r}
-tips %>% 
-  group_by(time) %>% 
-  summarize(
-    平均支払額 = mean(total_bill),
-    平均チップ = mean(tip),
-    データ数 = n()
+```{python}
+(
+  tips
+  .groupby("time", as_index=False)
+  .agg(
+    平均支払額=("total_bill", "mean"),
+    平均チップ=("tip", "mean"),
+    データ数=("tip", "size"),
   )
+)
 ```
 
 ## ストーリーで書く
@@ -132,32 +132,38 @@ tips %>%
 
 この思考プロセスをそのままコードにします。
 
-```{r}
-tips %>% 
-  filter(day == "Sat" & time == "Dinner") %>%  # 土曜日のディナー客で
-  mutate(rate = tip / total_bill) %>%          # チップ率を計算し
-  filter(rate >= 0.2) %>%                      # 20%以上に絞り込み
-  arrange(desc(total_bill)) %>%                # 支払額が高い順に並べる
-  select(sex, size, total_bill, tip, rate)     # 必要な情報だけ見る
+```{python}
+(
+  tips
+  .query('day == "Sat" and time == "Dinner"')                       # 土曜日のディナー客で
+  .assign(rate=lambda df: df["tip"] / df["total_bill"])              # チップ率を計算し
+  .query("rate >= 0.2")                                              # 20%以上に絞り込み
+  .sort_values("total_bill", ascending=False)                        # 支払額が高い順に並べる
+  .loc[:, ["sex", "size", "total_bill", "tip", "rate"]]              # 必要な情報だけ見る
+)
 ```
 
-この「読みやすさ」こそ、私たちがTidyverseを選ぶ理由です。数ヶ月後の自分が見ても、「何がしたかったか」一目で分かります。
+この「読みやすさ」こそ、私たちがpandas（メソッドチェーン）を使う理由です。数ヶ月後の自分が見ても、「何がしたかったか」一目で分かります。
 
 ## データ操作の補足事項
 
 ### 列の選び方
-Rには方言があります。
+pandasにも「取り出し方の違い」があります。
 
-- `tips$total_bill`：ベクトルとして取り出す（Base R）。計算式の内部で使うことが多い。
-- `tips %>% select(total_bill)`：データフレームとして取り出す（Tidyverse）。データを加工し続ける時に使う。
-使い分けですが、パイプラインの中では `select` でOKです。
+- `tips["total_bill"]`：1本の列（Series）として取り出す。計算式の内部で使うことが多い。
+- `tips[["total_bill"]]`：データフレームのまま取り出す。加工を続けるときに便利。
+使い分けですが、複数列を扱う処理では `tips[["col1", "col2"]]` の形が無難です。
 
 ### データのチラ見（可視化）
-数字だけだと見逃します。`ggplot2` でサッと可視化する癖をつけてください。
+数字だけだと見逃します。`seaborn` でサッと可視化する癖をつけてください。
 
-```{r}
-ggplot(tips, aes(x = total_bill, y = tip, color = time)) +
-  geom_point()
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+ax = sns.scatterplot(data=tips, x="total_bill", y="tip", hue="time")
+ax.set(xlabel="支払総額 ($)", ylabel="チップ ($)")
+plt.show()
 ```
 
 ## 課題

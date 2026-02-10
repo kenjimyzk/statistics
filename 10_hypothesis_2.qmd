@@ -29,20 +29,25 @@
 しかし、現代の統計学では**Welchのt検定**という「全地形対応車」を最初から使うのが常識。
 これなら、分散が違っていても安全に走行（検定）できる。
 
-```{r}
-library(tidyverse)
-theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
-url <- "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
-tips <- read_csv(url)
+```{python}
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from scipy.stats import ttest_ind
+
+url = "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
+tips = pd.read_csv(url)
 
 # 箱ひげ図：2つの島の地形確認
-ggplot(tips, aes(x = time, y = total_bill, fill = time)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_boxplot() +
-  labs(title = "ランチとディナーの支払総額比較")
+ax = sns.boxplot(data=tips, x="time", y="total_bill")
+ax.set(title="ランチとディナーの支払総額比較", xlabel="", ylabel="支払総額 ($)")
+plt.show()
 
-# Welchのt検定（デフォルトで適用されます）
-t.test(total_bill ~ time, data = tips)
+# Welchのt検定（equal_var=False）
+dinner = tips.loc[tips["time"] == "Dinner", "total_bill"]
+lunch = tips.loc[tips["time"] == "Lunch", "total_bill"]
+ttest_ind(dinner, lunch, equal_var=False)
 ```
 
 **判定**:
@@ -61,13 +66,15 @@ p値は約 `0.002`。これは「差がないとしたら、こんなデータ�
 
 同じ人のデータを追跡することで、個人の「もともとの性質」をキャンセルし、純粋な「変化」だけを取り出すことができる。
 
-```{r}
-# 5人のダイエット記録
-before <- c(70, 80, 75, 60, 65)
-after  <- c(68, 78, 74, 58, 64)
+```{python}
+import numpy as np
+from scipy.stats import ttest_rel
 
-# paired = TRUE で「対応あり」を指定
-t.test(before, after, paired = TRUE)
+# 5人のダイエット記録
+before = np.array([70, 80, 75, 60, 65])
+after  = np.array([68, 78, 74, 58, 64])
+
+ttest_rel(before, after)
 ```
 
 **事実確認**:
@@ -94,12 +101,21 @@ $$Cohen's \ d = \frac{\text{平均値の差}}{\text{標準偏差（ばらつき�
 *   **0.5**: 中くらい（肉眼でもなんとなく分かる）
 *   **0.8**: 大きい（誰が見ても明らか）
 
-```{r}
-# ランチとディナーの差のスコア（Cohen's d）
-d_val <- (mean(tips$total_bill[tips$time=="Dinner"]) - mean(tips$total_bill[tips$time=="Lunch"])) /
-         sd(tips$total_bill)
+```{python}
+import numpy as np
 
-d_val
+def cohens_d(x, y):
+  x = np.asarray(x, dtype=float)
+  y = np.asarray(y, dtype=float)
+  nx = len(x)
+  ny = len(y)
+  sx = x.std(ddof=1)
+  sy = y.std(ddof=1)
+  s_pooled = np.sqrt(((nx - 1) * sx**2 + (ny - 1) * sy**2) / (nx + ny - 2))
+  return (x.mean() - y.mean()) / s_pooled
+
+# ランチとディナーの差のスコア（Cohen's d）
+cohens_d(dinner, lunch)
 ```
 
 スコアは約 `0.41`。中程度の効果だ。
@@ -132,8 +148,8 @@ d_val
 
 ## まとめ
 
-| 検定手法 | 適用場面 | Rコード | 備考 |
+| 検定手法 | 適用場面 | Pythonコード | 備考 |
 |---|---|---|---|
-| **Welchのt検定** | 独立した2群の比較 | `t.test(y ~ x)` | デフォルト。等分散を仮定しない。 |
-| **対応のあるt検定** | 同一対象・ペアの比較 | `t.test(y1, y2, paired=TRUE)` | 差分の1標本検定と等価。検出力が高い。 |
+| **Welchのt検定** | 独立した2群の比較 | `scipy.stats.ttest_ind(x, y, equal_var=False)` | 等分散を仮定しない。 |
+| **対応のあるt検定** | 同一対象・ペアの比較 | `scipy.stats.ttest_rel(before, after)` | 差分の1標本検定と等価。検出力が高い。 |
 | **効果量 (Cohen's d)** | 差の実質的な大きさ | (計算式参照) | サンプルサイズに依存しない指標。 |

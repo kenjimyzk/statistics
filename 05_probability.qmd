@@ -31,20 +31,19 @@
 一番シンプルな離散分布、「公正なサイコロ」を考えます。
 1から6までの目が、すべて均等に $1/6$ の確率で出ます。
 
-```{r}
-x <- 1:6
-prob <- rep(1/6, 6) # 全て 1/6
+```{python}
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-# 分布の可視化
-library(tidyverse)
-theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
-theme_set(theme_gray()) # [対象注意] Mac用設定
+x = np.arange(1, 7)
+prob = np.repeat(1 / 6, 6)  # 全て 1/6
 
-data.frame(x = factor(x), prob = prob) %>% 
-  ggplot(aes(x = x, y = prob)) +
-  geom_col(fill = "orange", width = 0.5) +
-  ylim(0, 0.5) +
-  labs(title = "サイコロの確率分布（離散型）", x = "出る目", y = "確率")
+df = pd.DataFrame({"x": x.astype(str), "prob": prob})
+ax = sns.barplot(data=df, x="x", y="prob", color="orange")
+ax.set(ylim=(0, 0.5), title="サイコロの確率分布（離散型）", xlabel="出る目", ylabel="確率")
+plt.show()
 ```
 
 ## 分布の特徴を捉える
@@ -70,14 +69,13 @@ $$ 1 \times \frac{1}{6} + \cdots + 6 \times \frac{1}{6} = 3.5 $$
 
 $$ V[X] = E[(X - E[X])^2] $$
 
-```{r}
-# Rで計算
-E_X <- sum(x * prob)
-V_X <- sum((x - E_X)^2 * prob)
+```{python}
+E_X = (x * prob).sum()
+V_X = ((x - E_X) ** 2 * prob).sum()
 
-cat("期待値:", E_X, "\n")
-cat("分散:", V_X, "\n")
-cat("標準偏差:", sqrt(V_X), "\n")
+print("期待値:", E_X)
+print("分散:", V_X)
+print("標準偏差:", np.sqrt(V_X))
 ```
 
 ### 線形性：計算を楽にする魔法
@@ -103,21 +101,27 @@ cat("標準偏差:", sqrt(V_X), "\n")
 0から1までの乱数を発生させる「一様分布」で、理論と現実を比べてみます。
 理論上の期待値は $0.5$、分散は $1/12 \approx 0.083$ です。
 
-```{r}
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import uniform
+
 # 1. 密度関数の可視化（理論）
-ggplot(data.frame(x = c(0, 1)), aes(x)) +
-  stat_function(fun = dunif, args = list(min = 0, max = 1), 
-                geom = "area", fill = "lightblue", alpha = 0.5) +
-  theme_gray() + # [対象注意] Mac用設定
-  labs(title = "一様分布 U(0,1) の密度関数", y = "密度 f(x)")
+xs = np.linspace(0, 1, 200)
+ys = uniform.pdf(xs, loc=0, scale=1)
+plt.fill_between(xs, ys, color="lightblue", alpha=0.5)
+plt.title("一様分布 U(0,1) の密度関数")
+plt.ylabel("密度 f(x)")
+plt.xlabel("x")
+plt.show()
 
 # 2. シミュレーション（現実）
-set.seed(123)
-samples <- runif(10000)
+rng = np.random.default_rng(123)
+samples = rng.random(10000)
 
-cat("--- シミュレーション結果 ---\n")
-cat("サンプル平均:", mean(samples), " (理論値: 0.5)\n")
-cat("サンプル分散:", var(samples), " (理論値: 0.0833...)\n")
+print("--- シミュレーション結果 ---")
+print("サンプル平均:", samples.mean(), " (理論値: 0.5)")
+print("サンプル分散:", samples.var(ddof=1), " (理論値: 1/12 ≈ 0.0833...)")
 ```
 
 回数を重ねるほど、現実は理論（期待値）に近づいていきます。**大数の法則**です。
@@ -136,7 +140,7 @@ $$P(A \cap B) = P(A) \times P(B)$$
 
 ## 課題/練習問題
 
-自力で計算し、Rで確かめてみてください。
+自力で計算し、Pythonで確かめてみてください。
 
 ### 課題1: 歪んだコインのギャンブル
 表が出る確率が $0.1$、裏が $0.9$ のコインがあります。

@@ -32,16 +32,16 @@ $$ \text{結果} \ (Y) = \text{切片} + (\beta_1 \times \text{要因1}) + (\bet
 
 ### 実践: 支払いと人数の分離
 
-```{r}
-library(tidyverse)
-theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
-library(broom)
-url <- "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
-tips <- read_csv(url)
+```{python}
+import pandas as pd
+import statsmodels.formula.api as smf
+
+url = "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
+tips = pd.read_csv(url)
 
 # 重回帰モデル：チップを「支払額」と「人数」で説明する
-model_multi <- lm(tip ~ total_bill + size, data = tips)
-summary(model_multi)
+model_multi = smf.ols("tip ~ total_bill + size", data=tips).fit()
+model_multi.summary()
 ```
 
 **解釈**:
@@ -58,26 +58,28 @@ summary(model_multi)
 
 「喫煙席か？」のような情報は、計算できるよう **0 (No)** と **1 (Yes)** に変換する。これをダミー変数と呼ぶ。
 
-```{r}
+```{python}
 # 喫煙者ダミー（Yes/No）を追加
-model_dummy <- lm(tip ~ total_bill + size + smoker, data = tips)
-tidy(model_dummy)
+model_dummy = smf.ols("tip ~ total_bill + size + C(smoker)", data=tips).fit()
+
+import pandas as pd
+pd.DataFrame({"term": model_dummy.params.index, "estimate": model_dummy.params.values})
 ```
 
-`smokerYes` の係数は、喫煙席に座ることで生じる「上乗せ分」を表す。
+`C(smoker)[T.Yes]` の係数は、喫煙席に座ることで生じる「上乗せ分」を表す（基準カテゴリとの差）。
 
 ### 交互作用：「相乗効果」に気づく
 
 「ビールと枝豆」のように、組み合わせることで効果が変わることもある。
 例えば、「喫煙者の方が、支払額に対するチップの払いっぷりが良い（傾きが急）」かもしれない。
 
-```{r}
+```{python}
 # : は交互作用のみ、* は主効果＋交互作用
-model_inter <- lm(tip ~ total_bill * smoker, data = tips)
-summary(model_inter)
+model_inter = smf.ols("tip ~ total_bill * C(smoker)", data=tips).fit()
+model_inter.summary()
 ```
 
-`total_bill:smokerYes` が有意なら、2つの要因には相乗効果（あるいは相殺効果）があると言える。
+`total_bill:C(smoker)[T.Yes]` が有意なら、2つの要因には相乗効果（あるいは相殺効果）があると言える。
 
 ## 3. 真犯人を探せ：因果推論とバイアス
 
@@ -97,24 +99,28 @@ summary(model_inter)
 重回帰分析を使えば、この黒幕（交絡因子）を表舞台に引きずり出し、無力化できる。
 ここでは、あえて「神様の視点」で真実のデータを作り出し、それを分析者が正しく見抜けるか実験してみよう。
 
-```{r}
-set.seed(123)
-n <- 200
+```{python}
+import numpy as np
+import pandas as pd
+import statsmodels.formula.api as smf
+
+rng = np.random.default_rng(123)
+n = 200
 
 # 1. 神様の視点（データの生成）
-ability <- rnorm(n, 100, 15) # 能力（黒幕）：平均100、標準偏差15でばらつく
-education <- 12 + 0.05 * ability + rnorm(n, 0, 2) # 能力が高いと教育年数も長くなる傾向
-wage <- 20 + 2 * education + 0.3 * ability + rnorm(n, 0, 5) # 賃金は教育と能力の両方で決まる
+ability = rng.normal(100, 15, size=n)  # 能力（黒幕）
+education = 12 + 0.05 * ability + rng.normal(0, 2, size=n)  # 能力が高いと教育年数も長くなる
+wage = 20 + 2 * education + 0.3 * ability + rng.normal(0, 5, size=n)  # 賃金は教育と能力の両方で決まる
 
-sim_data <- tibble(wage, education, ability)
+sim_data = pd.DataFrame({"wage": wage, "education": education, "ability": ability})
 
-# 2. 失敗：黒幕（能力）を無視してしまう
-# 教育の係数が過大に評価される（本当は2.0なのに……）
-lm(wage ~ education, data = sim_data) %>% coef()
+# 2. 失敗：黒幕（能力）を無視してしまう（除外変数バイアス）
+m1 = smf.ols("wage ~ education", data=sim_data).fit()
+m1.params
 
 # 3. 成功：黒幕をモデルに入れてコントロール（統制）する
-# 教育の係数が真の値（2.0）に近づく！
-lm(wage ~ education + ability, data = sim_data) %>% coef()
+m2 = smf.ols("wage ~ education + ability", data=sim_data).fit()
+m2.params
 ```
 
 能力をモデルに加える（コントロールする）ことで、教育が賃金に与える純粋な効果（係数）は、真の値である **2.0** に近づいた。
@@ -129,9 +135,17 @@ lm(wage ~ education + ability, data = sim_data) %>% coef()
 似たような変数（例：身長と座高）を両方入れると、お互いが邪魔をし合って、係数の推定がおかしくなる。
 **VIF** という指標チェックし、10を超えていたら要注意。
 
-```{r}
-library(car)
-vif(model_multi)
+```{python}
+import pandas as pd
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+X = model_multi.model.exog
+names = model_multi.model.exog_names
+
+vif = pd.DataFrame(
+  {"term": names, "VIF": [variance_inflation_factor(X, i) for i in range(X.shape[1])]}
+)
+vif.query('term != "Intercept"')
 ```
 
 ### 調整済み決定係数：シンプルさへのボーナス
@@ -140,14 +154,13 @@ vif(model_multi)
 そこで、「変数の数」が増えることにペナルティを課した **調整済み決定係数 (Adjusted $R^2$)** を使おう。
 この値が大きいほど、バランスの良い優れたモデルと言える。
 
-```{r}
+```{python}
 # 調整済み決定係数 (Adjusted R-squared) を比較してみよう
-model_simple <- lm(tip ~ total_bill, data = tips) # 前回の単回帰モデル
+model_simple = smf.ols("tip ~ total_bill", data=tips).fit()  # 前回の単回帰モデル
 
-# それぞれのモデルの「成績表」から数値を取り出す
-summary(model_simple)$adj.r.squared
-summary(model_multi)$adj.r.squared
-summary(model_dummy)$adj.r.squared
+model_simple.rsquared_adj
+model_multi.rsquared_adj
+model_dummy.rsquared_adj
 ```
 
 モデルが複雑になるにつれて、値が改善しているのがわかるはずだ。
@@ -157,26 +170,40 @@ summary(model_dummy)$adj.r.squared
 
 数字の羅列を見るよりも、グラフで可視化したほうが直感的に理解できる。
 
-```{r}
-theme_set(theme_gray()) # [対象注意] Mac用設定
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 
-tidy(model_dummy, conf.int = TRUE) %>%
-  filter(term != "(Intercept)") %>%
-  ggplot(aes(x = estimate, y = term)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_point() +
-  geom_errorbarh(aes(xmin = conf.low, xmax = conf.high), height = 0.2) +
-  geom_vline(xintercept = 0, color = "red", linetype = "dashed") +
-  labs(title = "重回帰分析の係数プロット")
+coef = pd.DataFrame(
+  {
+    "term": model_dummy.params.index,
+    "estimate": model_dummy.params.values,
+  }
+)
+conf = model_dummy.conf_int().rename(columns={0: "conf_low", 1: "conf_high"})
+coef = coef.merge(conf, left_on="term", right_index=True)
+coef = coef.query('term != "Intercept"').sort_values("estimate").reset_index(drop=True)
+
+y = np.arange(len(coef))
+xerr = np.vstack([coef["estimate"] - coef["conf_low"], coef["conf_high"] - coef["estimate"]])
+
+plt.errorbar(coef["estimate"], y, xerr=xerr, fmt="o", color="black", ecolor="gray", capsize=3)
+plt.axvline(0, color="red", linestyle="--")
+plt.yticks(y, coef["term"])
+plt.title("重回帰分析の係数プロット")
+plt.xlabel("推定係数（95%信頼区間）")
+plt.tight_layout()
+plt.show()
 ```
 
 ## 最終課題
 
 自分の興味のあるデータセットを見つけ、分析レポートを作成してください。
 データセットの例：
-- `mpg` (自動車の燃費データ: `ggplot2` パッケージに同梱)
-- `diamonds` (ダイヤモンドの価格データ: `ggplot2` パッケージに同梱)
-- `palmerpenguins` (ペンギンの身体測定データ: 要パッケージインストール)
+- `mpg`（自動車の燃費データ：`seaborn` の例として有名）
+- `diamonds`（ダイヤモンドの価格データ：データセットとして定番）
+- `palmerpenguins`（ペンギンの身体測定データ：Pythonでも利用可能）
 
 **レポート構成案**:
 
@@ -193,6 +220,6 @@ tidy(model_dummy, conf.int = TRUE) %>%
 
 ## 練習問題
 
-1.  **モデル選択の実践**: `mtcars` データセットにおいて、燃費 (`mpg`) を説明する最適な変数の組み合わせを、調整済み $R^2$ や AIC を用いて探してください。
+1.  **モデル選択の実践**: `tips` データセットにおいて、チップ額 (`tip`) を説明する変数（例：`total_bill`, `size`, `time`, `smoker` など）の組み合わせを、調整済み $R^2$ や AIC を用いて探してください。
 2.  **交互作用の解釈**: 先ほどの喫煙者と支払額の交互作用モデルについて、具体的な数値を用いて、「喫煙者なら10ドル増えるごとにチップはどう変わるか」を説明してください。
 3.  **交絡の発見**: あなたの身の回りで「相関はあるが因果ではない（共通の原因がある）」と思われる例を挙げ、因果図を描いて説明してください。

@@ -40,23 +40,23 @@
 
 現実には調査は1回しかできません。しかし、この「もし何度もやったらどうなるか」という仮想的な分布こそが、推測の精度の鍵を握っています。
 
-Rでパラレルワールドをシミュレーションしてみましょう。
+Pythonでパラレルワールドをシミュレーションしてみましょう。
 
-```{r}
-library(tidyverse)
-theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
-set.seed(1)
+```{python}
+import numpy as np
+
+rng = np.random.default_rng(1)
 
 # 母集団分布（平均50, 標準偏差10の正規分布）
-population <- rnorm(100000, mean = 50, sd = 10)
+population = rng.normal(loc=50, scale=10, size=100_000)
 
 # パラレルワールド1：1回目の抽出（n=100）
-sample1 <- sample(population, 100)
-mean(sample1)
+sample1 = rng.choice(population, size=100, replace=False)
+sample1.mean()
 
 # パラレルワールド2：もう1回抽出
-sample2 <- sample(population, 100)
-mean(sample2)
+sample2 = rng.choice(population, size=100, replace=False)
+sample2.mean()
 ```
 
 毎回結果が少しずつ違う。この「ブレ」を数学的に捉えるのが目標です。
@@ -70,18 +70,21 @@ mean(sample2)
 サンプルサイズ $n$ を大きくしていくと、標本平均は母平均（真の値）に限りなく近づいていく。
 「数は力なり」。データが多ければ多いほど、誤差は消えていく。
 
-```{r}
-n <- 1000
-dice_rolls <- sample(1:6, n, replace = TRUE)
-cumulative_mean <- cumsum(dice_rolls) / (1:n)
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
 
-df <- data.frame(n = 1:n, mean = cumulative_mean)
+rng = np.random.default_rng(0)
+n = 1000
+dice_rolls = rng.integers(1, 7, size=n)
+cumulative_mean = np.cumsum(dice_rolls) / np.arange(1, n + 1)
 
-ggplot(df, aes(x = n, y = mean)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_line() +
-  geom_hline(yintercept = 3.5, color = "red", linetype = "dashed") +
-  labs(title = "大数の法則: 試行回数と標本平均の収束", y = "標本平均")
+plt.plot(np.arange(1, n + 1), cumulative_mean)
+plt.axhline(3.5, color="red", linestyle="--")
+plt.title("大数の法則: 試行回数と標本平均の収束")
+plt.ylabel("標本平均")
+plt.xlabel("試行回数 n")
+plt.show()
 ```
 
 ### 中心極限定理 (CLT)：混沌からの秩序
@@ -95,23 +98,28 @@ ggplot(df, aes(x = n, y = mean)) +
 **実験：一様分布から正規分布へ**
 母集団として平坦な一様分布を用意し、そこから標本平均を計算する実験を行います。
 
-```{r}
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+
+rng = np.random.default_rng(123)
+
 # 1. 一様分布のヒストグラム（母集団の形状）
-hist(runif(10000), main = "Population (Uniform Distribution)", xlab = "x")
+population = rng.random(10_000)
+plt.hist(population, bins=30, color="gray", edgecolor="white")
+plt.title("Population (Uniform Distribution)")
+plt.xlabel("x")
+plt.show()
 
 # 2. 標本平均の分布（CLTの確認）
-n_samples <- 1000
-n <- 30 # サンプルサイズ
-means <- numeric(n_samples)
+n_samples = 1000
+n = 30  # サンプルサイズ
+means = rng.random((n_samples, n)).mean(axis=1)
 
-for (i in 1:n_samples) {
-  means[i] <- mean(runif(n))
-}
-
-ggplot(data.frame(x = means), aes(x = x)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_histogram(bins = 30, fill = "orange", color = "white") +
-  labs(title = "標本平均の分布 (n=30)", x = "標本平均")
+plt.hist(means, bins=30, color="orange", edgecolor="white")
+plt.title("標本平均の分布 (n=30)")
+plt.xlabel("標本平均")
+plt.show()
 ```
 
 見事に釣鐘型（正規分布）が現れました。これが中心極限定理の威力。
@@ -120,25 +128,30 @@ ggplot(data.frame(x = means), aes(x = x)) +
 
 データが増えると、分布はどう変化するのか。
 
-```{r}
-sample_sizes <- c(5, 30, 100)
-n_samples <- 2000
+```{python}
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-results <- data.frame()
-for (n in sample_sizes) {
-  # n個の平均をn_samples回計算
-  means <- replicate(n_samples, mean(runif(n)))
-  results <- bind_rows(results, data.frame(means = means, size = paste0("n=", n)))
-}
+rng = np.random.default_rng(123)
 
-# nの順序指定
-results$size <- factor(results$size, levels = paste0("n=", sample_sizes))
+sample_sizes = [5, 30, 100]
+n_samples = 2000
 
-ggplot(results, aes(x = means)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_histogram(bins = 30, fill = "steelblue", color = "white") +
-  facet_wrap(~size, scales = "free_y") +
-  labs(title = "中心極限定理: サンプルサイズによる標本分布の変化", x = "標本平均")
+rows = []
+for n in sample_sizes:
+  means = rng.random((n_samples, n)).mean(axis=1)
+  rows.append(pd.DataFrame({"means": means, "size": f"n={n}"}))
+
+results = pd.concat(rows, ignore_index=True)
+
+g = sns.FacetGrid(results, col="size", col_order=[f"n={n}" for n in sample_sizes], sharey=False)
+g.map_dataframe(sns.histplot, x="means", bins=30, color="steelblue", edgecolor="white")
+g.set_axis_labels("標本平均", "度数")
+g.fig.suptitle("中心極限定理: サンプルサイズによる標本分布の変化")
+g.fig.tight_layout()
+plt.show()
 ```
 
 $n$ が増えるにつれて、分布は正規分布に近づくだけでなく、その幅（ばらつき）が小さくシャープになっていく。
@@ -152,15 +165,17 @@ $$SE(\bar{X}) = \frac{\sigma}{\sqrt{n}}$$
 この式は非常に重要なことを教えてくれる。
 精度を上げる（SEを小さくする）には、サンプルサイズ $n$ を大きくすればいい。ただし、$\sqrt{n}$ で効いてくるため、精度を2倍にするにはサンプルを4倍にする必要があります。
 
-```{r}
-# 理論上のSE
-true_se <- sqrt(1/12 / 30)
+```{python}
+import numpy as np
+
+# 理論上のSE（母分散が 1/12 の一様分布 U(0,1) から、n=30 の平均）
+true_se = np.sqrt((1 / 12) / 30)
 
 # シミュレーションのSE（標本平均の標準偏差）
-sim_se <- sd(results %>% filter(size == "n=30") %>% pull(means))
+sim_se = results.loc[results["size"] == "n=30", "means"].std(ddof=1)
 
-cat("理論的SE:", true_se, "\n")
-cat("シミュレーションSE:", sim_se, "\n")
+print("理論的SE:", true_se)
+print("シミュレーションSE:", sim_se)
 ```
 
 ### 標準偏差(SD) vs 標準誤差(SE)
@@ -182,7 +197,7 @@ cat("シミュレーションSE:", sim_se, "\n")
 ## 練習問題
 
 ### 練習1: 指数分布のCLT
-指数分布（`rexp`）は右に裾が長い歪んだ分布です。この分布からサンプルを抽出しても、標本平均の分布は正規分布に近づくか、シミュレーションで確認してください。
+指数分布（`scipy.stats.expon`）は右に裾が長い歪んだ分布です。この分布からサンプルを抽出しても、標本平均の分布は正規分布に近づくか、シミュレーションで確認してください。
 
 ### 練習2: サンプルサイズと精度
 標準誤差の式 $SE = \sigma / \sqrt{n}$ に基づき、以下の問いに答えてください。

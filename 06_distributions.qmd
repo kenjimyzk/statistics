@@ -11,7 +11,7 @@
 なぜ世界は、ことあるごとに正規分布したがるのか？
 その秘密は、統計学で最強の定理（中心極限定理）にあります。まずはこの「王様」の振る舞いを知ることから始めましょう。
 
-本節では、統計解析の主役である正規分布と、その親戚たち（二項分布、t分布など）を、Rを使って自在に操れるようになります。
+本節では、統計解析の主役である正規分布と、その親戚たち（二項分布、t分布など）を、Pythonを使って自在に操れるようになります。
 
 ## 1. 統計学の王様：正規分布
 
@@ -19,56 +19,60 @@
 
 $$f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
 
-数式は複雑に見えますが、Rなら一瞬で描けます。
+数式は複雑に見えますが、Pythonなら一瞬で描けます。
 
-### 4つの魔法の呪文
+### 4つの基本操作
 
-Rには確率分布を扱うための共通の「呪文（接頭辞）」があります。これさえ覚えれば、勝てます。
+Pythonでは **SciPy**（`scipy.stats`）を使うのが定番です。確率分布は共通のインターフェースを持ちます。
 
--   **`d` (Density)**: 確率密度。グラフの高さ。 (`dnorm`)
--   **`p` (Probability)**: 累積確率。ある地点より左側の面積。 (`pnorm`)
--   **`q` (Quantile)**: 分位点。確率から値を逆算する。 (`qnorm`)
--   **`r` (Random)**: 乱数生成。シミュレーション用。 (`rnorm`)
+-   **PDF/PMF**: 密度（連続）/確率（離散）。グラフの高さ。 (`norm.pdf`, `binom.pmf`)
+-   **CDF**: 累積確率。ある地点より左側の面積。 (`norm.cdf`)
+-   **PPF**: 分位点。確率から値を逆算。 (`norm.ppf`)
+-   **RVS**: 乱数生成。シミュレーション用。 (`norm.rvs`)
 
 ### 正規分布を描いてみる
 
 まずは標準正規分布（平均0、分散1）を見てみましょう。
 
-```{r}
-library(tidyverse)
-theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
 
-# x軸の範囲定義
-x <- seq(-4, 4, length.out = 100)
-# 確率密度の計算 (dnorm)
-y <- dnorm(x, mean = 0, sd = 1)
+x = np.linspace(-4, 4, 100)
+y = norm.pdf(x, loc=0, scale=1)
 
-df <- data.frame(x, y)
-
-ggplot(df, aes(x = x, y = y)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_line() +
-  labs(title = "標準正規分布 (Mean=0, SD=1)")
+plt.plot(x, y)
+plt.title("標準正規分布 (Mean=0, SD=1)")
+plt.xlabel("x")
+plt.ylabel("密度")
+plt.show()
 ```
 
 ### パラメータを変えてみる
 
 平均がズレると山が移動し、標準偏差が大きくなると山が平らになります。
 
-```{r}
-x <- seq(-10, 15, length.out = 200)
-df_compare <- data.frame(
-  x = rep(x, 3),
-  y = c(dnorm(x, mean = 0, sd = 1),
-        dnorm(x, mean = 5, sd = 1),
-        dnorm(x, mean = 0, sd = 2)),
-  type = rep(c("μ=0, σ=1", "μ=5, σ=1", "μ=0, σ=2"), each = length(x))
+```{python}
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+
+x = np.linspace(-10, 15, 200)
+df_compare = pd.concat(
+  [
+    pd.DataFrame({"x": x, "y": norm.pdf(x, loc=0, scale=1), "type": "μ=0, σ=1"}),
+    pd.DataFrame({"x": x, "y": norm.pdf(x, loc=5, scale=1), "type": "μ=5, σ=1"}),
+    pd.DataFrame({"x": x, "y": norm.pdf(x, loc=0, scale=2), "type": "μ=0, σ=2"}),
+  ],
+  ignore_index=True,
 )
 
-ggplot(df_compare, aes(x = x, y = y, color = type)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_line(size = 1) +
-  labs(title = "パラメータによる正規分布の変化", color = "設定")
+ax = sns.lineplot(data=df_compare, x="x", y="y", hue="type")
+ax.set(title="パラメータによる正規分布の変化", xlabel="x", ylabel="密度")
+plt.show()
 ```
 
 ## 現実の問いに答える：確率計算
@@ -79,9 +83,11 @@ ggplot(df_compare, aes(x = x, y = y, color = type)) +
 `pnorm(60)` は「$-\infty$ から 60 までの面積」を返します。
 「60点**以上**」を知りたいなら、全体（100% = 1）から「60点**以下**」の確率を引けばいい。
 
-```{r}
+```{python}
+from scipy.stats import norm
+
 # P(X >= 60) = 1 - P(X <= 60)
-1 - pnorm(60, mean = 50, sd = 10)
+1 - norm.cdf(60, loc=50, scale=10)
 ```
 
 約15.9%。クラスの16%は、偏差値60以上ということ。
@@ -95,18 +101,23 @@ ggplot(df_compare, aes(x = x, y = y, color = type)) +
 -   $\pm 2\sigma$: 約95% （偏差値30〜70）
 -   $\pm 3\sigma$: 約99.7% （ほぼすべて）
 
-```{r}
-x <- seq(-4, 4, length.out = 100)
-y <- dnorm(x)
-df <- data.frame(x, y)
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
 
-ggplot(df, aes(x = x, y = y)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_line() +
-  geom_area(data = filter(df, x >= -1 & x <= 1), fill = "blue", alpha = 0.3) +
-  geom_area(data = filter(df, x >= -2 & x <= 2), fill = "green", alpha = 0.2) +
-  geom_area(data = filter(df, x >= -3 & x <= 3), fill = "red", alpha = 0.1) +
-  labs(title = "正規分布の区間確率 (1SD, 2SD, 3SD)", x = "標準偏差 (z)", y = "確率密度")
+x = np.linspace(-4, 4, 400)
+y = norm.pdf(x)
+
+plt.plot(x, y, color="black")
+plt.fill_between(x, 0, y, where=(x >= -1) & (x <= 1), color="blue", alpha=0.3, label="±1σ")
+plt.fill_between(x, 0, y, where=(x >= -2) & (x <= 2), color="green", alpha=0.2, label="±2σ")
+plt.fill_between(x, 0, y, where=(x >= -3) & (x <= 3), color="red", alpha=0.1, label="±3σ")
+plt.title("正規分布の区間確率 (1SD, 2SD, 3SD)")
+plt.xlabel("標準偏差 (z)")
+plt.ylabel("確率密度")
+plt.legend()
+plt.show()
 ```
 
 ## 2. コイン投げの積み重ね：二項分布
@@ -126,23 +137,30 @@ ggplot(df, aes(x = x, y = y)) +
 コイン投げ（$p=0.5$）を10回行う勝負を考えます。
 「ちょうど5回勝つ確率」はどれくらいか。
 
-```{r}
-# dbinom で確率（点）を計算
-dbinom(5, size = 10, prob = 0.5)
+```{python}
+from scipy.stats import binom
+
+# pmf で確率（点）を計算
+binom.pmf(5, n=10, p=0.5)
 ```
 
 約24.6%。意外と低いですか？
 すべてのパターンの確率を並べてみます。
 
-```{r}
-x <- 0:10
-prob <- dbinom(x, size = 10, prob = 0.5)
-df_binom <- data.frame(x = factor(x), prob = prob)
+```{python}
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from scipy.stats import binom
 
-ggplot(df_binom, aes(x = x, y = prob)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_col(fill = "lightgreen") +
-  labs(title = "二項分布 (n=10, p=0.5)", x = "成功回数", y = "確率")
+x = np.arange(0, 11)
+prob = binom.pmf(x, n=10, p=0.5)
+df_binom = pd.DataFrame({"x": x.astype(str), "prob": prob})
+
+ax = sns.barplot(data=df_binom, x="x", y="prob", color="lightgreen")
+ax.set(title="二項分布 (n=10, p=0.5)", xlabel="成功回数", ylabel="確率")
+plt.show()
 ```
 
 ### 回数を増やすと、奇跡が起きる
@@ -150,24 +168,31 @@ ggplot(df_binom, aes(x = x, y = prob)) +
 ここからが統計学のハイライト。
 このカクカクした二項分布、試行回数 $n$ をどんどん増やしていくと、どうなるか。
 
-```{r}
-# 試行回数 n を変化させた場合の分布形状
-n_values <- c(30, 10, 100) # ユーザーによる順序指定あり
-p <- 0.3
+```{python}
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from scipy.stats import binom
 
-df_binom_approx <- data.frame()
-for(n in n_values) {
-  x <- 0:n
-  prob <- dbinom(x, size = n, prob = p)
-  df_binom_approx <- rbind(df_binom_approx, data.frame(x=x, prob=prob, n=paste0("n=", n)))
-}
+# 試行回数 n を変化させた場合の分布形状（表示順を指定）
+n_values = [10, 30, 100]
+p = 0.3
 
-ggplot(df_binom_approx, aes(x = x, y = prob)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_col(fill = "steelblue") +
-  # nの順序を整えて表示（小さいnから順に見るため）
-  facet_wrap(~ fct_relevel(n, "n=10", "n=30", "n=100"), scales = "free_x") +
-  labs(title = "nの増加に伴う二項分布の正規近似", x = "成功回数")
+rows = []
+for n in n_values:
+  x = np.arange(0, n + 1)
+  prob = binom.pmf(x, n=n, p=p)
+  rows.append(pd.DataFrame({"x": x, "prob": prob, "n": f"n={n}"}))
+
+df_binom_approx = pd.concat(rows, ignore_index=True)
+
+g = sns.FacetGrid(df_binom_approx, col="n", col_order=[f"n={n}" for n in n_values], sharex=False, sharey=True)
+g.map_dataframe(sns.barplot, x="x", y="prob", color="steelblue")
+g.set_axis_labels("成功回数", "確率")
+g.fig.suptitle("nの増加に伴う二項分布の正規近似")
+g.fig.tight_layout()
+plt.show()
 ```
 
 $n$ が増えるにつれて、分布の左右対称性が増し、きれいな釣鐘型に近づいているのがわかります。

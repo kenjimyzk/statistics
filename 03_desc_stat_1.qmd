@@ -17,13 +17,13 @@
 
 ## 準備
 
-前回に引き続き、`tidyverse` パッケージと、`tips` データセット（Bryant & Smith, 1995）を使います。
+前回に引き続き、`pandas` と `tips` データセット（Bryant & Smith, 1995）を使います。
 
-```{r}
-library(tidyverse)
-theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
-url <- "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
-tips <- read_csv(url)
+```{python}
+import pandas as pd
+
+url = "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
+tips = pd.read_csv(url)
 ```
 
 ## 中心を探す：代表値
@@ -36,8 +36,8 @@ tips <- read_csv(url)
 
 $$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$$
 
-```{r}
-mean(tips$total_bill)
+```{python}
+tips["total_bill"].mean()
 ```
 
 この指標には「全員の値を公平に扱う」という民主的な良さがあります。反面、**極端な声（外れ値）に弱い**のが欠点です。たった一人の超富裕層がいるだけで、全員の平均所得は跳ね上がってしまいます。
@@ -46,8 +46,8 @@ mean(tips$total_bill)
 
 データを一列に並べたとき、ちょうど真ん中にいる人の値です。
 
-```{r}
-median(tips$total_bill)
+```{python}
+tips["total_bill"].median()
 ```
 
 こちらは「順位」しか見ないので、極端な値の影響をほとんど受けません（頑健性）。
@@ -56,11 +56,9 @@ median(tips$total_bill)
 
 最も頻繁に現れる値です。数値データよりも、アンケートの回答（賛成/反対）などのカテゴリデータで威力を発揮します。
 
-```{r}
-# Rには標準関数がないため、集計して確認
-tips %>% 
-  count(day) %>% 
-  arrange(desc(n))
+```{python}
+# 最頻値は value_counts() で確認できる
+tips["day"].value_counts()
 ```
 
 ### 意思決定：平均か、中央値か
@@ -81,9 +79,12 @@ tips %>%
 
 一番上と一番下の差です。単純ですが、全体像を掴むにはこれで十分なことも多いです。
 
-```{r}
-range(tips$total_bill)  # 最小値と最大値
-max(tips$total_bill) - min(tips$total_bill)  # その差（範囲）
+```{python}
+# 最小値と最大値
+tips["total_bill"].min(), tips["total_bill"].max()
+
+# その差（範囲）
+tips["total_bill"].max() - tips["total_bill"].min()
 ```
 
 ### 中心からの距離：分散 (Variance)
@@ -91,12 +92,12 @@ max(tips$total_bill) - min(tips$total_bill)  # その差（範囲）
 「平均からどれくらい離れているか」を全データについて計算し、平均したもの。
 直感的には「差の絶対値」を平均したくなりますよね。でも、統計学では数学的な都合から「差を**二乗**」して扱います。
 
-**Rの注意点**: Rの `var()` 関数は、手元のデータを標本とみなした**不偏分散**（分母が $n-1$）を計算します。
+**Python（pandas）の注意点**: `pandas.Series.var()` は、手元のデータを標本とみなした**不偏分散**（分母が $n-1$、`ddof=1`）がデフォルトです。
 
 $$s^2 = \frac{1}{n-1}\sum_{i=1}^{n} (x_i - \bar{x})^2$$
 
-```{r}
-var(tips$total_bill)
+```{python}
+tips["total_bill"].var()
 ```
 
 ### 単位を戻す：標準偏差 (Standard Deviation)
@@ -106,8 +107,8 @@ var(tips$total_bill)
 
 $$s = \sqrt{s^2}$$
 
-```{r}
-sd(tips$total_bill)
+```{python}
+tips["total_bill"].std()
 ```
 
 「平均値 $\pm$ 標準偏差」の範囲に、多くのデータ（正規分布なら約68%）が含まれると考えるとイメージしやすいでしょう。
@@ -119,22 +120,22 @@ sd(tips$total_bill)
 
 $$CV = \frac{s}{\bar{x}} \times 100\%$$
 
-```{r}
+```{python}
 # チップの額と、支払総額。どちらが「ばらついて」いるか？
-cv_tip <- sd(tips$tip) / mean(tips$tip) * 100
-cv_bill <- sd(tips$total_bill) / mean(tips$total_bill) * 100
+cv_tip = tips["tip"].std() / tips["tip"].mean() * 100
+cv_bill = tips["total_bill"].std() / tips["total_bill"].mean() * 100
 
-cat("チップの変動係数:", cv_tip, "%\n")
-cat("支払総額の変動係数:", cv_bill, "%\n")
+print(f"チップの変動係数: {cv_tip:.2f}%")
+print(f"支払総額の変動係数: {cv_bill:.2f}%")
 ```
 
 ## 全体像をスキャンする：四分位数
 
 データを小さい順に並べて4等分した地点（25%, 50%, 75%）を**四分位数**と呼びます。
-`summary()` 関数を使えば、これらの主要な統計量を一括で確認できます。
+`describe()` を使えば、これらの主要な統計量を一括で確認できます。
 
-```{r}
-summary(tips$total_bill)
+```{python}
+tips["total_bill"].describe()
 ```
 
 -   **Median**（50%地点）と **Mean**（平均）のズレを見ることで、データの歪みを推測できます。
@@ -145,8 +146,8 @@ summary(tips$total_bill)
 データの中央50%が収まる幅（第3四分位数 $-$ 第1四分位数）を**四分位範囲**と呼びます。
 標準偏差と違い、極端な値の影響を受けないため、外れ値を含むデータでのばらつき指標として優秀です。
 
-```{r}
-IQR(tips$total_bill)
+```{python}
+tips["total_bill"].quantile(0.75) - tips["total_bill"].quantile(0.25)
 ```
 
 ## ノイズか、シグナルか：外れ値の検出
@@ -157,22 +158,23 @@ IQR(tips$total_bill)
 -   **下限**: 第1四分位数 - 1.5 × IQR
 -   **上限**: 第3四分位数 + 1.5 × IQR
 
-```{r}
-Q1 <- quantile(tips$total_bill, 0.25)
-Q3 <- quantile(tips$total_bill, 0.75)
-IQR_val <- IQR(tips$total_bill)
+```{python}
+Q1 = tips["total_bill"].quantile(0.25)
+Q3 = tips["total_bill"].quantile(0.75)
+IQR_val = Q3 - Q1
 
 # 境界線の計算
-lower_bound <- Q1 - 1.5 * IQR_val
-upper_bound <- Q3 + 1.5 * IQR_val
+lower_bound = Q1 - 1.5 * IQR_val
+upper_bound = Q3 + 1.5 * IQR_val
 
-cat("外れ値の下限:", lower_bound, "\n")
-cat("外れ値の上限:", upper_bound, "\n")
+print("外れ値の下限:", lower_bound)
+print("外れ値の上限:", upper_bound)
 
 # 境界を超えたデータを抽出してみる
-tips %>% 
-  filter(total_bill < lower_bound | total_bill > upper_bound) %>% 
-  select(total_bill, tip, day, time)
+tips.loc[
+  (tips["total_bill"] < lower_bound) | (tips["total_bill"] > upper_bound),
+  ["total_bill", "tip", "day", "time"],
+]
 ```
 
 ## 分布の歪みを可視化する
@@ -180,34 +182,38 @@ tips %>%
 平均値と中央値がずれているとき、実際にグラフを描くとその理由がわかります。
 ヒストグラムに両者の位置を重ねてみましょう。
 
-```{r}
-# 統計量の計算 {.unnumbered}
-mean_val <- mean(tips$total_bill)
-med_val <- median(tips$total_bill)
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-# プロット {.unnumbered}
-ggplot(tips, aes(x = total_bill)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_histogram(bins = 30, fill = "lightgray", color = "white") +
-  geom_vline(xintercept = mean_val, color = "red", linetype = "dashed", size = 1) +
-  geom_vline(xintercept = med_val, color = "blue", linetype = "solid", size = 1) +
-  annotate("text", x = mean_val + 5, y = 30, label = "Mean (Red)", color = "red") +
-  annotate("text", x = med_val - 5, y = 30, label = "Median (Blue)", color = "blue") +
-  labs(title = "平均値（赤破線）と中央値（青実線）")
+mean_val = tips["total_bill"].mean()
+med_val = tips["total_bill"].median()
+
+ax = sns.histplot(data=tips, x="total_bill", bins=30, color="lightgray", edgecolor="white")
+ax.axvline(mean_val, color="red", linestyle="--", linewidth=2)
+ax.axvline(med_val, color="blue", linestyle="-", linewidth=2)
+
+y_top = ax.get_ylim()[1]
+ax.text(mean_val, y_top * 0.9, "Mean", color="red", ha="left")
+ax.text(med_val, y_top * 0.8, "Median", color="blue", ha="right")
+ax.set(title="平均値（赤破線）と中央値（青実線）", xlabel="支払総額 ($)", ylabel="度数")
+plt.show()
 ```
 
 ## グループごとに要約する
 
 全体の平均だけでは見えない違いもあります。性別や喫煙の有無など、属性ごとに分けて要約することで、より深い洞察が得られます。
 
-```{r}
-tips %>% 
-  group_by(sex) %>% 
-  summarize(
-    avg_bill = mean(total_bill),
-    sd_bill = sd(total_bill),
-    count = n() # サンプルサイズも必ず確認する
+```{python}
+(
+  tips
+  .groupby("sex", as_index=False)
+  .agg(
+    avg_bill=("total_bill", "mean"),
+    sd_bill=("total_bill", "std"),
+    count=("total_bill", "size"),  # サンプルサイズも必ず確認する
   )
+)
 ```
 
 ## 課題
@@ -215,7 +221,7 @@ tips %>%
 自分の手でデータを縮約してみましょう。
 
 1.  `tips` データを使用し、時間帯 (`time`) ごとのチップ (`tip`) の平均値を算出してください。
-2.  `summary()` 関数を使用し、チップ (`tip`) の分布の要約統計量を確認してください。
+2.  `describe()` を使用し、チップ (`tip`) の分布の要約統計量を確認してください。
 
 ## 練習問題
 

@@ -3,8 +3,8 @@ project:
   output-dir: docs
 
 book:
-  title: "経済学のためのデータ分析入門 (R編)"
-  author: "みやざきけんじ"
+  title: "経済学のためのデータ分析入門 (Python編)"
+  author: "そら"
   date: "2025-12-02"
   chapters:
     - index.qmd
@@ -31,15 +31,12 @@ format:
       df-print: paged
     pdf:
       pdf-engine: lualatex
-      documentclass: ltjsarticle
-      classoption: lualatex,ja=standard
-    docx: default 
+      documentclass: ltjsbook
+      classoption: lualatex,ja=standard,12pt
+    docx:
+      reference-doc: reference_font_yugothic.docx
 
 execute:
   warning: false
-  message: false
-knitr:
-  opts_chunk:
-    comment: "#>"
-    collapse: true
-
+  cache: true
+jupyter: python3

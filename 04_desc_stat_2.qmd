@@ -10,35 +10,47 @@
 Anscombe (1973) の有名な例、アンスコムのカルテットを見てみましょう。
 一見、平均値も分散も相関係数もしっかり一致している4つのデータセットです。
 
-```{r}
-library(tidyverse)
-theme_set(theme_gray(base_family = "HiraKakuProN-W3"))
-# Rに標準で入っている anscombe データを整形
-anscombe_long <- anscombe %>%
-  pivot_longer(everything(),
-               names_to = c(".value", "set"),
-               names_pattern = "(.)(.)")
+```{python}
+import pandas as pd
+import seaborn as sns
 
-# 統計量を確認：どれもほぼ同じ
-anscombe_long %>%
-  group_by(set) %>%
-  summarize(
-    mean_x = mean(x), mean_y = mean(y),
-    sd_x = sd(x), sd_y = sd(y),
-    cor = cor(x, y)
+# seabornに用意されている anscombe（アンスコムのカルテット）
+anscombe = sns.load_dataset("anscombe")  # columns: dataset, x, y
+
+stats = (
+  anscombe
+  .groupby("dataset")
+  .agg(
+    mean_x=("x", "mean"),
+    mean_y=("y", "mean"),
+    sd_x=("x", "std"),
+    sd_y=("y", "std"),
   )
+)
+stats["cor"] = anscombe.groupby("dataset").apply(lambda g: g["x"].corr(g["y"]))
+stats
 ```
 
 数値だけなら「これらは同じ性質のデータだ」と結論づけてしまうでしょう。でも、グラフにして可視化した瞬間、景色は一変します。
 [対象注意: 日本語フォント設定は環境依存あり]
 
-```{r}
-ggplot(anscombe_long, aes(x = x, y = y)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE) +
-  facet_wrap(~set) +
-  labs(title = "数値は嘘をつかないが、真実を語るとは限らない")
+```{python}
+import matplotlib.pyplot as plt
+
+g = sns.lmplot(
+  data=anscombe,
+  x="x",
+  y="y",
+  col="dataset",
+  ci=None,
+  height=3,
+  scatter_kws={"s": 35, "alpha": 0.9},
+  line_kws={"color": "red"},
+)
+g.set_axis_labels("x", "y")
+g.fig.suptitle("数値は嘘をつかないが、真実を語るとは限らない")
+g.fig.tight_layout()
+plt.show()
 ```
 
 きれいな直線、曲線、外れ値の影響...。数値要約で捨て去られた情報が、可視化ではっきりと浮かび上がりました。
@@ -48,24 +60,29 @@ ggplot(anscombe_long, aes(x = x, y = y)) +
 
 本節でも `tips` データセット（Bryant & Smith, 1995）を使います。
 
-```{r}
+```{python}
 url <- "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
-tips <- read_csv(url)
+import pandas as pd
+
+tips = pd.read_csv(url)
 ```
 
-## キャンバスに層を重ねる：ggplot2の思想
+## キャンバスに層を重ねる：seaborn / matplotlibの考え方
 
-Rの可視化パッケージ **ggplot2** の設計思想は、Wickham (2010) の "Layered Grammar of Graphics"（グラフィックスの層状文法）に基づいています。
+Pythonの可視化では、**seaborn**（統計可視化）と **matplotlib**（土台）が定番です。
 Excelみたいに「棒グラフを作るボタン」があるわけではありません。
 
 > 「データ」という土台に、「座標」を定義し、「点や棒（Geom）」を乗せ、「説明（Labels）」を加える。
 
 この工程をコードで書きます。
 
-```{r}
+```{python}
 #| eval: false
-ggplot(data = tips, mapping = aes(x = total_bill, y = tip)) + # キャンバスと座標
-  geom_point()                                                # 何を描くか（点）
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+ax = sns.scatterplot(data=tips, x="total_bill", y="tip")  # キャンバスと座標＋点
+plt.show()
 ```
 
 ## 1. 分布の形状を見る
@@ -77,11 +94,13 @@ ggplot(data = tips, mapping = aes(x = total_bill, y = tip)) + # キャンバス�
 連続した数値データ（金額など）が、どこに集まっているかを見に行きます。
 山は一つか、二つか？ 左右対称か、歪んでいるか？
 
-```{r}
-ggplot(tips, aes(x = total_bill)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_histogram(bins = 30, fill = "skyblue", color = "white") +
-  labs(title = "支払総額の分布", x = "支払総額 ($)", y = "度数")
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+ax = sns.histplot(data=tips, x="total_bill", bins=30, color="skyblue", edgecolor="white")
+ax.set(title="支払総額の分布", xlabel="支払総額 ($)", ylabel="度数")
+plt.show()
 ```
 
 ### 構造を要約する：箱ひげ図
@@ -89,11 +108,14 @@ ggplot(tips, aes(x = total_bill)) +
 ヒストグラムは詳細ですが、複数のグループ比較には不向きです。重なって見づらいから。
 そこで**箱ひげ図**の出番です。分布の情報を「箱」と「ひげ」に要約します。
 
-```{r}
-ggplot(tips, aes(x = day, y = total_bill, fill = day)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_boxplot() +
-  labs(title = "曜日ごとの支払額の違い", x = "曜日", y = "支払総額")
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+order = ["Thur", "Fri", "Sat", "Sun"]
+ax = sns.boxplot(data=tips, x="day", y="total_bill", order=order)
+ax.set(title="曜日ごとの支払額の違い", xlabel="曜日", ylabel="支払総額 ($)")
+plt.show()
 ```
 
 **Tukeyの箱ひげ図の定義**:
@@ -106,12 +128,15 @@ ggplot(tips, aes(x = day, y = total_bill, fill = day)) +
 
 箱ひげ図だと「山が2つある」などの情報は消えてしまいます。分布の形状（密度）そのものを表示したい場合は、バイオリン図を使います。
 
-```{r}
-ggplot(tips, aes(x = day, y = total_bill, fill = day)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_violin() +
-  geom_boxplot(width = 0.1, fill = "white") + # 箱ひげ図も重ねると最強
-  labs(title = "分布の形状比較（バイオリン+箱ひげ）", x = "曜日", y = "支払総額")
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+order = ["Thur", "Fri", "Sat", "Sun"]
+ax = sns.violinplot(data=tips, x="day", y="total_bill", order=order, inner=None)
+sns.boxplot(data=tips, x="day", y="total_bill", order=order, width=0.2, color="white", ax=ax)
+ax.set(title="分布の形状比較（バイオリン+箱ひげ）", xlabel="曜日", ylabel="支払総額 ($)")
+plt.show()
 ```
 
 ## 2. 関係性を探る
@@ -123,19 +148,24 @@ ggplot(tips, aes(x = day, y = total_bill, fill = day)) +
 「たくさん食べた人は、たくさんチップを払うのか？」
 2つの連続変数（横軸と縦軸）の関係をプロットします。
 
-```{r}
-ggplot(tips, aes(x = total_bill, y = tip)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_point(color = "blue", alpha = 0.5) +
-  labs(title = "支払総額とチップの正の相関", x = "支払総額", y = "チップ")
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+ax = sns.scatterplot(data=tips, x="total_bill", y="tip", color="blue", alpha=0.5)
+ax.set(title="支払総額とチップの正の相関", xlabel="支払総額 ($)", ylabel="チップ ($)")
+plt.show()
 ```
 
 ここに第3の次元（情報）を加えるのも簡単です。例えば、性別によって色を変えます（`color = sex`）。
 
-```{r}
-ggplot(tips, aes(x = total_bill, y = tip, color = sex)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_point()
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+ax = sns.scatterplot(data=tips, x="total_bill", y="tip", hue="sex")
+ax.set(xlabel="支払総額 ($)", ylabel="チップ ($)")
+plt.show()
 ```
 
 ### 状況ごとの違い：ファセット分割
@@ -143,13 +173,22 @@ ggplot(tips, aes(x = total_bill, y = tip, color = sex)) +
 色分け（color）は便利ですが、情報が増えすぎると「スパゲッティ」のように絡まって読めなくなる。
 そんなときは `facet_wrap()` でグラフ自体を分割してしまいましょう。
 
-```{r}
-# 喫煙の有無 × 時間帯 で状況を分解する
-ggplot(tips, aes(x = total_bill, y = tip)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_point(aes(color = smoker)) +
-  facet_wrap(~ time) +
-  labs(title = "条件による関係性の違い", x = "支払総額", y = "チップ")
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+g = sns.relplot(
+  data=tips,
+  x="total_bill",
+  y="tip",
+  hue="smoker",
+  col="time",
+  kind="scatter",
+)
+g.set_axis_labels("支払総額 ($)", "チップ ($)")
+g.fig.suptitle("条件による関係性の違い")
+g.fig.tight_layout()
+plt.show()
 ```
 
 ## グラフを「語らせる」ための調整
@@ -159,13 +198,20 @@ ggplot(tips, aes(x = total_bill, y = tip)) +
 ### 統計情報の重ね書き
 「傾向」を見せたいなら、生のデータ点だけでなく、平均値や回帰直線を重ねるのが効果的です。
 
-```{r}
-ggplot(tips, aes(x = day, y = total_bill)) +
-  theme_gray() + # [対象注意] Mac用設定
-  geom_boxplot(fill = "lightblue") +
-  stat_summary(fun = mean, geom = "point", color = "red", size = 3) + # 平均値を赤点で追加
-  stat_summary(fun = mean, geom = "line", aes(group = 1), color = "red", linetype = "dashed") +
-  labs(title = "曜日ごとの傾向（赤点は平均値）", x = "曜日", y = "支払総額")
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+order = ["Thur", "Fri", "Sat", "Sun"]
+ax = sns.boxplot(data=tips, x="day", y="total_bill", order=order, color="lightblue")
+
+means = tips.groupby("day")["total_bill"].mean().reindex(order)
+xs = range(len(order))
+ax.scatter(xs, means.values, color="red", s=60)
+ax.plot(xs, means.values, color="red", linestyle="--")
+
+ax.set(title="曜日ごとの傾向（赤点は平均値）", xlabel="曜日", ylabel="支払総額 ($)")
+plt.show()
 ```
 
 ### ユニバーサルデザインへの配慮
