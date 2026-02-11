@@ -27,8 +27,3 @@
 -   [Python](https://www.python.org/)
 -   [JupyterLab](https://jupyter.org/)（または VS Code）
 
-また、以下のパッケージを主に使用します。
-
-```bash
-pip install -r requirements.txt
-```

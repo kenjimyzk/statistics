@@ -24,7 +24,7 @@
     "href": "index.html#準備",
     "title": "経済学のためのデータ分析入門 (Python編)",
     "section": "準備",
-    "text": "準備\nこの講義では以下のソフトウェアを使用します。\n\nPython\nJupyterLab（または VS Code）\n\nまた、以下のパッケージを主に使用します。\npip install -r requirements.txt",
+    "text": "準備\nこの講義では以下のソフトウェアを使用します。\n\nPython\nJupyterLab（または VS Code）",
     "crumbs": [
       "はじめに"
     ]
@@ -32,71 +32,71 @@
   {
     "objectID": "01_intro.html",
     "href": "01_intro.html",
-    "title": "第1回 PythonとJupyter（/VS Code）の基礎",
+    "title": "第1回 PythonとJupyter（またはVS Code）の基礎",
     "section": "",
     "text": "なぜ今、Pythonを学ぶのか\n統計解析ソフトは山ほどあります。Excelで事足りることもあれば、Pythonがハマる場面もあるでしょう。それでも、多くの研究者が Python を選び続けるのには理由があります。\n「科学的な正しさ」への執着。これに尽きます。\n本講義の狙いは、単なるツールの操作説明ではありません。Python による「再現性（Reproducibility）」の思想を理解し、Jupyter（またはVS Code） を通じてそれを実践する力を養うことです。",
     "crumbs": [
-      "第1回 PythonとJupyter（/VS Code）の基礎"
+      "第1回 PythonとJupyter（またはVS Code）の基礎"
     ]
   },
   {
     "objectID": "01_intro.html#なぜ今pythonを学ぶのか",
     "href": "01_intro.html#なぜ今pythonを学ぶのか",
-    "title": "第1回 PythonとJupyter（/VS Code）の基礎",
+    "title": "第1回 PythonとJupyter（またはVS Code）の基礎",
     "section": "",
     "text": "科学的検証のためのツール\nなぜこれほどPythonを推すのか。最大の理由は 再現性が確保できるから です。 Excelでの分析は、どうしても「手作業」の連続になります。どのセルをコピーし、どこでフィルタをかけ、どのグラフを選んだか。その履歴を完全に追跡するのは困難です。 一方、Pythonはすべての操作をコードとして残します。コードは「手順書」そのもの。第三者が同じコードを実行すれば、間違いなく同じ結果が出ます。科学的な検証において、この特性は欠かせません。\nもちろん、実利的なメリットも大きいです。\n\nOSSとコスト: 個人・組織を問わず無料（GPLライセンス）。\nライブラリの豊富さ: 数値計算（NumPy）、データ操作（pandas）、可視化（matplotlib / seaborn）、統計モデリング（statsmodels）などが揃っています。\nキャリア: データ分析・データサイエンスの職務記述書（JD）でPythonは定番スキルです。\n\n（Webアプリ開発やシステムへの組み込みならPythonやC++が適しています。適材適所です）\n\n\nPythonとExcel：対立ではなく使い分け\nよく「RかExcelか」と二項対立で語られますが、実際は「併用」が正解です。\n\n\n\n\n\n\n\n\nツール\n得意な領域\n苦手な領域\n\n\n\n\nExcel\n直感的な操作、データの閲覧、小規模な集計\n大規模データ（100万行〜）、手順の記録、複雑な統計モデル\n\n\nPython\n大規模データの処理、高度な統計解析、再現性のある描画\nデータの直接入力、閲覧（スプレッドシート的な操作）\n\n\n\n私だって、データの概観やちょっとした検算にはExcelを使います。でも、論文に載せる分析や、来月も同じ処理をする業務なら、迷わずPythonを選びます。",
     "crumbs": [
-      "第1回 PythonとJupyter（/VS Code）の基礎"
+      "第1回 PythonとJupyter（またはVS Code）の基礎"
     ]
   },
   {
-    "objectID": "01_intro.html#jupytervs-codeというコックピット",
-    "href": "01_intro.html#jupytervs-codeというコックピット",
-    "title": "第1回 PythonとJupyter（/VS Code）の基礎",
-    "section": "Jupyter（/VS Code）という「コックピット」",
-    "text": "Jupyter（/VS Code）という「コックピット」\nPython本体はただの「計算エンジン」です。人間が楽に扱うために、ノートブック環境の Jupyter（または統合開発環境のVS Code）を使います。 画面は4分割されていますが、データの流れで考えると分かりやすいでしょう。\n\nEditor / Notebook：ここで「指示書（コード）」を書く。\n\n料理ならレシピを書く場所。ここに書いたものだけが「再現可能な記録」として残ります。\n\n実行結果（セル出力 / Terminal）：指示を実行し、結果を受け取る。\n\n実際にPythonが計算する場所。ちょっとした確認用です。\n\n変数/データの確認：データフレームや変数を確認する。\n\nいまメモリ上に何があるかを把握します。\n\nPlots / Files：グラフやファイルを確認する。\n\n描かれた図や保存物はここで見ます。\n\n\n基本は、「左上で書いて、左下で実行させて、右と右下で結果を確認する」。この繰り返しです。",
+    "objectID": "01_intro.html#jupyterまたはvs-codeというコックピット",
+    "href": "01_intro.html#jupyterまたはvs-codeというコックピット",
+    "title": "第1回 PythonとJupyter（またはVS Code）の基礎",
+    "section": "Jupyter（またはVS Code）という「コックピット」",
+    "text": "Jupyter（またはVS Code）という「コックピット」\nPython本体はただの「計算エンジン」です。人間が楽に扱うために、ノートブック環境の Jupyter（または統合開発環境のVS Code）を使います。 画面は4分割されていますが、データの流れで考えると分かりやすいでしょう。\n\nEditor / Notebook：ここで「指示書（コード）」を書く。\n\n料理ならレシピを書く場所。ここに書いたものだけが「再現可能な記録」として残ります。\n\n実行結果（セル出力 / Terminal）：指示を実行し、結果を受け取る。\n\n実際にPythonが計算する場所。ちょっとした確認用です。\n\n変数/データの確認：データフレームや変数を確認する。\n\nいまメモリ上に何があるかを把握します。\n\nPlots / Files：グラフやファイルを確認する。\n\n描かれた図や保存物はここで見ます。\n\n\n基本は、「左上で書いて、左下で実行させて、右と右下で結果を確認する」。この繰り返しです。",
     "crumbs": [
-      "第1回 PythonとJupyter（/VS Code）の基礎"
+      "第1回 PythonとJupyter（またはVS Code）の基礎"
     ]
   },
   {
     "objectID": "01_intro.html#pythonと対話する計算と変数",
     "href": "01_intro.html#pythonと対話する計算と変数",
-    "title": "第1回 PythonとJupyter（/VS Code）の基礎",
+    "title": "第1回 PythonとJupyter（またはVS Code）の基礎",
     "section": "Pythonと対話する（計算と変数）",
     "text": "Pythonと対話する（計算と変数）\nまずは難しく考えず、Pythonを「やたら高機能な電卓」として使ってみましょう。 セル（またはREPL）に直接入力してみてください。\n\n1 + 1\n(100 - 20) / 4\n\n20.0\n\n\n\n情報を箱に入れる：変数\n計算結果を使い捨てにせず、取っておくための箱が 変数（オブジェクト） です。 Pythonでは =（代入）を使います。「右の値を左の箱に入れる」イメージです。\n\nprice = 1500\namount = 3\ntotal = price * amount\ntotal\n\n4500\n\n\n大事なのは、price や amount という「名前」でデータを管理できること。「1500」という数値の意味を、人間が覚えておく必要はありません。\n\n\n便利な道具：関数\nよく使う処理は 関数 として用意されています。「機能名(データ)」の形で呼び出します。\n\nimport statistics as stats\n\n# 数値のリスト（列）を作る\nscores = [80, 90, 75, 60, 95]\n\n# 平均値を計算する\nstats.mean(scores)\n\n80\n\n\n関数は無数にありますが、最初は「やりたいこと（機能）」と「入れるもの（引数）」の対応さえ意識できれば十分です。",
     "crumbs": [
-      "第1回 PythonとJupyter（/VS Code）の基礎"
+      "第1回 PythonとJupyter（またはVS Code）の基礎"
     ]
   },
   {
     "objectID": "01_intro.html#エラーはpythonからの返信",
     "href": "01_intro.html#エラーはpythonからの返信",
-    "title": "第1回 PythonとJupyter（/VS Code）の基礎",
+    "title": "第1回 PythonとJupyter（またはVS Code）の基礎",
     "section": "「エラー」はPythonからの返信",
     "text": "「エラー」はPythonからの返信\nプログラミング初心者にとって、赤い文字のエラーメッセージは怖いかもしれません。「お前は間違ってる」と怒られた気分になるからでしょう。 でも、誤解です。エラーはPythonからの「この指示だと、ここが分からなくて実行できません」という、ただの返信です。\n\nNameError：「その名前が見当たりません」（変数を作る前に使っていませんか？）\nModuleNotFoundError：「そのライブラリが見つかりません」（インストールし忘れていませんか？）\n\nエラーが出たら、まずはメッセージを読んでみてください。解決のヒントは必ずそこにあります。",
     "crumbs": [
-      "第1回 PythonとJupyter（/VS Code）の基礎"
+      "第1回 PythonとJupyter（またはVS Code）の基礎"
     ]
   },
   {
     "objectID": "01_intro.html#グラフを描いてみる",
     "href": "01_intro.html#グラフを描いてみる",
-    "title": "第1回 PythonとJupyter（/VS Code）の基礎",
+    "title": "第1回 PythonとJupyter（またはVS Code）の基礎",
     "section": "グラフを描いてみる",
     "text": "グラフを描いてみる\n最後に、Pythonの「華」、可視化を試してみます。 解説は省きますが、数行書くだけで美しい散布図が描けることを確認してください。\n\nimport pandas as pd\nimport seaborn as sns\nimport matplotlib.pyplot as plt\nimport japanize_matplotlib  # noqa: F401\n\nurl = \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv\"\ntips = pd.read_csv(url)\n\nax = sns.scatterplot(data=tips, x=\"total_bill\", y=\"tip\")\nax.set(title=\"支払総額とチップ\", xlabel=\"支払総額 ($)\", ylabel=\"チップ ($)\")\nplt.show()\n\n\n\n\n\n\n\n\nこのグラフも、コードの数値を少し変えるだけで、明日になっても（あるいは10年後でも）全く同じものを再現できます。",
     "crumbs": [
-      "第1回 PythonとJupyter（/VS Code）の基礎"
+      "第1回 PythonとJupyter（またはVS Code）の基礎"
     ]
   },
   {
     "objectID": "01_intro.html#課題",
     "href": "01_intro.html#課題",
-    "title": "第1回 PythonとJupyter（/VS Code）の基礎",
+    "title": "第1回 PythonとJupyter（またはVS Code）の基礎",
     "section": "課題",
     "text": "課題\n\n自身の年齢を変数 age に代入してください。\n変数 age を使って、10年後の年齢を計算してください。\n任意の数値を3つ格納したリストを作成し、その平均値を求めてください。",
     "crumbs": [
-      "第1回 PythonとJupyter（/VS Code）の基礎"
+      "第1回 PythonとJupyter（またはVS Code）の基礎"
     ]
   },
   {

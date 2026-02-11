@@ -1,4 +1,4 @@
-# 第1回 PythonとJupyter（/VS Code）の基礎 {.unnumbered}
+# 第1回 PythonとJupyter（またはVS Code）の基礎 {.unnumbered}
 
 ![PythonとJupyter（/VS Code）の基礎](figure/01_intro/infographic.png)
 
@@ -35,7 +35,7 @@ Excelでの分析は、どうしても「手作業」の連続になります。
 
 私だって、データの概観やちょっとした検算にはExcelを使います。でも、論文に載せる分析や、来月も同じ処理をする業務なら、迷わずPythonを選びます。
 
-## Jupyter（/VS Code）という「コックピット」
+## Jupyter（またはVS Code）という「コックピット」
 
 Python本体はただの「計算エンジン」です。人間が楽に扱うために、ノートブック環境の **Jupyter**（または統合開発環境のVS Code）を使います。
 画面は4分割されていますが、データの流れで考えると分かりやすいでしょう。
