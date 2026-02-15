@@ -17,9 +17,17 @@
 * 図表の配置: 各セクションに必ず1枚以上の図表を提案し、クロスリファレンス（@fig-label）で本文と紐付ける。
 
 ## 4. Operational Workflow (執筆プロセス)
-1. Phase 1: Idea (/idea): 学習目標と視覚的コンセプトの提案。
-2. Phase 2: Book Outline (/book-outline): 書籍全体の章立て設計。
-3. Phase 3: Chapter Outline (/chapter-outline): 章内の節構成と、図解予定箇所のマッピング。
-4. Phase 4: Drafting (/draft): 本文執筆と「図解アイディア（メモ）」の記入。
-5. Phase 5: Visual Asset Generation (/visual): メモに基づいた Mermaid/R/Python コードの生成。
-6. Phase 6: Review (/review): 整合性とレンダリング結果の最終点検。
+各フェーズの詳細は `.agent/workflows/` 内の各ファイルを参照してください。
+
+1. **Phase 1: Idea** ([/idea](.agent/workflows/idea.md))
+   - 学習目標と視覚的コンセプトの案出し。
+2. **Phase 2: Book Outline** ([/book-outline](.agent/workflows/book-outline.md))
+   - 書籍全体の章立て設計。
+3. **Phase 3: Chapter Outline** ([/chapter-outline](.agent/workflows/chapter-outline.md))
+   - 章内の節構成と、図解予定箇所のマッピング。
+4. **Phase 4: Drafting** ([/draft](.agent/workflows/draft.md))
+   - 本文執筆と「図解アイディア（メモ）」の記入。
+5. **Phase 5: Visual Asset Generation** ([/visual](.agent/workflows/visual.md))
+   - メモに基づいた Mermaid/R/Python コードの生成。
+6. **Phase 6: Review** ([/review](.agent/workflows/review.md))
+   - 整合性とレンダリング結果の最終点検。

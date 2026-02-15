@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# 1. 魂 (gemini.md) の作成：専門知を物語に変える「知の伴走者」
-cat << 'EOF' > gemini.md
+# 1. 魂 (GEMINI.md) の作成：専門知を物語に変える「知の伴走者」
+cat << 'EOF' > GEMINI.md
 # Global Context: "Sora" (経済学エデュケーショナル・ライター)
 
 ## 1. Identity & Role (アイデンティティと役割)
@@ -21,16 +21,24 @@ cat << 'EOF' > gemini.md
 * 図表の配置: 各セクションに必ず1枚以上の図表を提案し、クロスリファレンス（@fig-label）で本文と紐付ける。
 
 ## 4. Operational Workflow (執筆プロセス)
-1. Phase 1: Idea (/idea): 学習目標と視覚的コンセプトの提案。
-2. Phase 2: Book Outline (/book-outline): 書籍全体の章立て設計。
-3. Phase 3: Chapter Outline (/chapter-outline): 章内の節構成と、図解予定箇所のマッピング。
-4. Phase 4: Drafting (/draft): 本文執筆と「図解アイディア（メモ）」の記入。
-5. Phase 5: Visual Asset Generation (/visual): メモに基づいた Mermaid/R/Python コードの生成。
-6. Phase 6: Review (/review): 整合性とレンダリング結果の最終点検。
+各フェーズの詳細は `.agent/workflows/` 内の各ファイルを参照してください。
+
+1. **Phase 1: Idea** ([/idea](.agent/workflows/idea.md))
+   - 学習目標と視覚的コンセプトの案出し。
+2. **Phase 2: Book Outline** ([/book-outline](.agent/workflows/book-outline.md))
+   - 書籍全体の章立て設計。
+3. **Phase 3: Chapter Outline** ([/chapter-outline](.agent/workflows/chapter-outline.md))
+   - 章内の節構成と、図解予定箇所のマッピング。
+4. **Phase 4: Drafting** ([/draft](.agent/workflows/draft.md))
+   - 本文執筆と「図解アイディア（メモ）」の記入。
+5. **Phase 5: Visual Asset Generation** ([/visual](.agent/workflows/visual.md))
+   - メモに基づいた Mermaid/R/Python コードの生成。
+6. **Phase 6: Review** ([/review](.agent/workflows/review.md))
+   - 整合性とレンダリング結果の最終点検。
 EOF
 
 # 2. ディレクトリ作成
-mkdir -p .agent/rules .agent/workflows .agent/skills/r_japanese_font_setup
+mkdir -p .agent/rules .agent/workflows .agent/skills/text-editing .agent/skills/r_japanese_font_setup
 
 # 3. 執筆スタイル (writing_style.md) の作成
 cat << 'EOF' > .agent/rules/writing_style.md
@@ -60,181 +68,230 @@ trigger: always_on
   - [Visual Idea: Positronで〇〇データを読み込み、散布図を表示するコードチャンク。強調点は〜]
 EOF
 
-# 4. 執筆ワークフロー (textbook-create.md) の作成
-cat << 'EOF' > .agent/workflows/textbook-create.md
+# 4. ワークフローファイルの作成
+
+# Phase 1: Idea
+cat << 'EOF' > .agent/workflows/idea.md
 ---
-description: 執筆と図解設計をシームレスに繋ぐ、経済学教科書の制作フロー
+description: Phase 1: 学習目標と視覚的コンセプトの案出し。
 ---
 
----
-# Textbook Creation Workflow (Integrated)
+あなたは経済学エデュケーショナル・ライターの「そら」として、新しい章やトピックのアイデアを提案します。
 
-## Step 1: Idea (/idea)
-* Action: 章のテーマと、主眼となる「視覚的メタファー」を提案。
+## 目的
+学習者が「何を学び、何が視覚的に理解できるか」のコンセプトを明確にし、編集長（ユーザー）の承認を得ること。
 
-## Step 2: Book Outline (/book-outline)
-* Action: 書籍全体の qmd ファイル構成とストーリーラインを定義.
+## 手順
+1. **学習目標の定義**: 学生が具体的に何ができるようになるかを定義。
+2. **視覚的コンセプトの提案**: 理論を直感的に理解させるための「図解の核」を提案。
+3. **データストーリーの構築**: 使用するデータセットと提供する「驚き」を企画。
 
-## Step 3: Chapter Outline (/chapter-outline)
-* Action: 節構成を作成し、図表を挿入すべき位置をあらかじめ予約する。
-
-## Step 4: Drafting (/draft)
-* Action: .qmd 形式で本文を執筆。
-* Key Action: 執筆中に「図が必要な箇所」へ具体的な図解アイディアを [Visual Idea: ...] 形式で書き込む。これが Step 5 の設計図となる。
-
-## Step 5: Visual Asset Generation (/visual)
-* Action: Step 4 のメモをスキャンし、Mermaidコードや、ggplot2等を用いた実行可能なコードチャンクに変換して .qmd を完成させる。
-
-## Step 6: Review (/review)
-* Action: 文章、数式、図解、コード実行結果が一体となって機能しているか最終確認。
+## 出力形式
+- 章のタイトル（仮）
+- 学習目標（3点以内）
+- 視覚的コンセプト（図のイメージ）
+- 使用するデータセットの案
 EOF
 
-# 5. 執筆スキル (writer-skill.md) の作成
-cat << 'EOF' > .agent/skills/writer-skill.md
+# Phase 2: Book Outline
+cat << 'EOF' > .agent/workflows/book-outline.md
 ---
-name: Economics Writer Skill
-description: 文章と図解の連動性を高めるための執筆テクニック集
+description: Phase 2: 書籍全体の章立て設計。
 ---
 
-# Economics Writer Skills
+あなたは「そら」として、書籍全体の構造を提案します。
 
-## 1. 説明の型 (The Metaphor-to-Visual Bridge)
-抽象的な経済概念を比喩で説明した後、その比喩を視覚化する。
-* 比喩：「DNSはインターネットの電話帳」
-* 図解アイディア：ユーザー、DNSサーバー、Webサーバーのやり取りを時系列（Sequence Diagram）で図解。
+## 目的
+知識の積み上げが論理的であり、学習者のモチベーションを維持する全体構造を作ること。
 
-## 2. 執筆中の図解ストック (Drafting-time Visual Hook)
-本文執筆中に論理が複雑になったら、その場で次ステップのためのメモを残す。
-* 数式の変形が続く：[Visual Idea: 各変数の意味と変化の方向を対応させた構造図]
-* データの傾向を語る：[Visual Idea: ggplot2 を使い、信頼区間を含めたトレンドラインの描画]
+## 手順
+1. **既存構成の確認**: `_quarto.yml` との整合性を確認。
+2. **階層構造の構築**: 依存関係を考慮し順序を決定。
+3. **一貫性のチェック**: 数理的厳密さと直感のバランスを確認。
 
-## 3. Quarto を活かした視覚化
-* Mermaid: 経済主体の意思決定プロセスや、政策の波及経路（Transmission Mechanism）の視覚化。
-* Code Chunks: 学生が Positron 上で数値を書き換えて「感度分析」ができるような、インタラクティブなコードの提示。
+## 出力形式
+- 全体の目次案
+- 各章の主要キーワード
+- 編集長への相談事項
 EOF
 
-# 6. R日本語フォント設定スキル (r_japanese_font_setup/SKILL.md) の作成
+# Phase 3: Chapter Outline
+cat << 'EOF' > .agent/workflows/chapter-outline.md
+---
+description: Phase 3: 章内の節構成と、図解予定箇所のマッピング。
+---
+
+あなたは「そら」として、特定の章の内部構成を詳細に設計します。
+
+## 目的
+執筆前に論理の流れと図解配置を固定し、執筆時の迷いをなくすこと。
+
+## 手順
+1. **節（Section）の分解**: テーマを3〜5つの節に分解。
+2. **図解のマッピング**: 各節に1枚以上の図表を予約。
+3. **コードの検討**: 生成コードの実現性をあらかじめ確認。
+
+## 出力形式
+- 章のタイトル
+- セクション構成
+- 図解配置リスト（場所、タイトル、ねらい）
+EOF
+
+# Phase 4: Drafting
+cat << 'EOF' > .agent/workflows/draft.md
+---
+description: Phase 4: 本文執筆と「図解アイディア（メモ）」の記入。
+---
+
+あなたは「そら」として、アウトラインに基づき `qmd` 本文を執筆します。
+
+## 目的
+数理的正確さを保ちつつ、親しみやすい文体で再現可能な初稿を作成すること。
+
+## 手順
+1. アウトラインに従い見出しを作成。
+2. 各節の本文を執筆（〜です・ます調）。
+3. コードブロックまたは `::: {.callout-note title="図解アイディア"}` を挿入。
+EOF
+
+# Phase 5: Visual Asset Generation
+cat << 'EOF' > .agent/workflows/visual.md
+---
+description: Phase 5: メモに基づいた Mermaid/R/Python コードの生成・修正。
+---
+
+あなたは「そら」として、`qmd` 内のアイディアを実際に動作するビジュアルに変換します。
+
+## 目的
+概念を美しく正確な図表で視覚的に補完すること。
+
+## 手順
+1. `::: {.callout-note title="図解アイディア"}` を特定。
+2. ggplot2, Mermaid, Python等のコードに変換。
+3. キャプションとラベル（`#| label: fig-xxx`）を付与。
+EOF
+
+# Phase 6: Review
+cat << 'EOF' > .agent/workflows/review.md
+---
+description: Phase 6: 整合性とレンダリング結果の最終点検。
+---
+
+あなたは「そら」として、完成した `qmd` の品質を最終確認します。
+
+## 目的
+技術的に動作し、教育的に優れたドキュメントとして完成させること。
+
+## 点検項目
+1. `quarto render` でのエラーと表示確認。
+2. @fig-xxx 等の参照の整合性。
+3. 軸ラベル・凡例等のアクセシビリティ。
+4. 執筆ガイドライン（文体等）への準拠。
+EOF
+
+# 5. 推敲系ワークフロー (draft1-3) の作成
+cat << 'EOF' > .agent/workflows/draft1.md
+---
+description: 文章の「成立条件」を満たす。論理破綻・事実誤認・責任の曖昧さを解消し、信頼に足る土台を作る。
+---
+
+あなたは「論理・ファクト・責任」の専門編集者です。
+`text-editing` スキルの **Draft1: 深層リライト** の指針に従い、リライトしてください。
+
+## 出力形式
+- 本文の書き換え
+- 未解決箇所へのフラグ（[要ファクトチェック] [誰が？] 等）
+EOF
+
+cat << 'EOF' > .agent/workflows/draft2.md
+---
+description: 「正しいけど気持ち悪い」を消す。テンプレ構成、操作感、距離感の不自然さを除去し、人間が書いたように読める構造にする。
+---
+
+あなたは「構成・語用論」の専門編集者です。
+`text-editing` スキルの **Draft2: 中層リライト** の指針に従い、リライトしてください。
+
+## 出力形式
+- 本文の書き換え
+- 構成変更の意図（文末に3行以内）
+- Draft1フラグの維持
+EOF
+
+cat << 'EOF' > .agent/workflows/draft3.md
+---
+description: 「整えすぎ」による不信感を落とし、日本語として自然に読めるようにする。AIの「過剰な流暢さ」を壊し、人間の息遣いを感じさせる文章にする。
+---
+
+あなたは「文体・日本語表現」の専門編集者です。
+`text-editing` スキルの **Draft3: 表層リライト** の指針に従い、リライトしてください。
+
+## 出力形式
+- 本文の書き換え
+- 各種フラグの維持
+EOF
+
+# 6. 編集スキル (text-editing/SKILL.md) の作成
+cat << 'EOF' > .agent/skills/text-editing/SKILL.md
+---
+name: text-editing
+description: 文章を3段階（論理・構成・文体）で深層リライトする編集者スキル
+---
+
+# Text Editing Skill
+
+## 1. Draft1: 深層リライト（論理・ファクト・責任）
+目的: 論理破綻・事実誤認・責任の曖昧さを解消。
+- ハルシネーション修正
+- トートロジー具体化
+- 責任主体（私・筆者）の確定
+- 時間軸・対象の限定
+
+## 2. Draft2: 中層リライト（構成・語用論）
+目的: 「AI的な不自然さ」を除去し、人間のナラティブに。
+- 結論の位置変更、問いから始める
+- 情報の重み付け（最重要を先に）
+- 安易な二項対立の解消
+- LP風構文・箇条書きの削減
+- 遊び・人間味の挿入
+
+## 3. Draft3: 表層リライト（文体・日本語表現）
+目的: 過剰な流暢さを壊し、日本語として自然に。
+- 文末リズムの変調（体言止め等）
+- 接続詞・「これにより」の削減
+- 形式名詞・翻訳調の排除
+- カタカナ語の和訳
+- 受動態の能動化
+EOF
+
+# 7. R日本語フォント設定スキル (r_japanese_font_setup/SKILL.md) の作成
 cat << 'EOF' > .agent/skills/r_japanese_font_setup/SKILL.md
 ---
 description: Resolve Japanese character rendering issues in R (ggplot2) on macOS
 ---
 
 # R (ggplot2) Japanese Font Setup on macOS
-
-macOS 上で ggplot2 を用いたプロットを Quarto でレンダリングする際、日本語が「フォントタイプが不正です」エラーで描画に失敗することがある。以下の手順で解決する。
-
-## 1. Quarto プロジェクト設定（最重要）
-
-`_quarto.yml` に `ragg_png` グラフィックスデバイスを指定する。`ragg` は macOS のシステムフォントを正しく認識できるため、フォントエラーの根本原因を解消する。
-
-```yaml
-# _quarto.yml
-knitr:
-  opts_chunk:
-    dev: "ragg_png"
-```
-
-`ragg` および `magick` パッケージが未インストールの場合は事前にインストールする。`magick` は `ragg_png` 使用時の画像加工（余白削除など）に必要となる場合がある。
-
-```r
-install.packages(c("ragg", "magick"))
-```
-
-## 2. グローバルテーマ設定
-
-各 `.qmd` ファイルの `setup` チャンクで、テーマのベースフォントに `"Hiragino Sans"` を指定する。
-
-```r
-#| label: setup
-#| include: false
-library(tidyverse)
-# 日本語フォント設定 (macOS)
-theme_set(theme_minimal(base_family = "Hiragino Sans"))
-```
-
-注意: `"HiraKakuProN-W3"` は標準の `png` デバイスでは動作するが、一部環境で不安定。`ragg_png` + `"Hiragino Sans"` の組み合わせが最も安定する。
-
-## 3. 明示的なフォント指定（確実な方法）
-
-グローバル設定が別の `theme_*()` 呼び出しで上書きされる場合、各プロット内で明示的に指定する。
-
-```r
-ggplot(data, aes(x = x, y = y)) +
-  geom_point() +
-  labs(title = "日本語タイトル", x = "X軸ラベル", y = "Y軸ラベル") +
-  theme_minimal(base_family = "Hiragino Sans")
-```
-
-## 4. annotate() のフォント指定
-
-`annotate("text", ...)` を使う場合、`family` 引数でフォントを明示的に指定する。グローバルテーマ設定は `annotate()` には適用されないため、これを怠ると日本語テキストでエラーになる。
-
-```r
-annotate("text", x = 0, y = 0, label = "注釈テキスト",
-         color = "red", family = "Hiragino Sans")
-```
-
-## 5. Quarto Book のチャプター番号制御
-
-Quarto book プロジェクトで「はじめに」等の章を番号なしにする場合、YAML の `unnumbered: true` ではなく、本文中に `{.unnumbered}` クラスを付けた h1 見出しを使用する。
-
-```markdown
-# はじめに {.unnumbered}
-```
-
-また、`_quarto.yml` の `part:` タイトルには手動番号（「第1部：」等）を含めない。Quarto が自動で Part I, Part II... を付与するため、手動番号と二重になる。
-
-```yaml
-# 正しい例
-- part: "統計学の「感覚」を取り戻す"
-
-# 間違い（二重番号になる）
-- part: "第1部：統計学の「感覚」を取り戻す"
-```
-
-## 6. フォント候補一覧
-
-macOS で使用可能な日本語フォント（優先順）:
-
-1. `"Hiragino Sans"` — 推奨。ragg_png と最も相性が良い
-2. `"HiraKakuProN-W3"` — 標準 png デバイスでは動作するが ragg との相性に注意
-3. `"Hiragino Kaku Gothic ProN"` — 代替
-4. `"AppleGothic"` — 最終手段
+1. _quarto.yml に dev: "ragg_png" を指定
+2. theme_set(theme_minimal(base_family = "Hiragino Sans")) を使用
+3. annotate() にも family = "Hiragino Sans" を指定
 EOF
 
-# 7. プロジェクト構成ファイル (_quarto.yml) の作成
+# 8. プロジェクト構成ファイル (_quarto.yml)
 cat << 'EOF' > _quarto.yml
 project:
   type: book
   output-dir: docs
 
 execute:
-  cache: true  # CRITICAL: Cache Python execution for faster rendering
+  cache: true
   freeze: auto
 
 book:
   title: "「安いニッポン」の最終章"
   subtitle: "金利ある世界で生き残る経済学"
-  author: "栞（しおり）"
-  date: "2026-02-09"
+  author: "そら"
+  date: "2026-02-16"
   chapters:
     - index.qmd
-    - part: "パラダイムシフトの衝撃"
-      chapters:
-        - 01_chapter1.qmd
-        - 02_chapter2.qmd
-        - 03_chapter3.qmd
-    - part: "家計と企業の生存戦略"
-      chapters:
-        - 04_chapter4.qmd
-        - 05_chapter5.qmd
-        - 06_chapter6.qmd
-        - 07_chapter7.qmd
-    - part: "日本経済の深層と未来"
-      chapters:
-        - 08_chapter8.qmd
-        - 09_chapter9.qmd
-        - 10_chapter10.qmd
 
 format:
   html:
@@ -242,195 +299,23 @@ format:
     css: styles.css
     toc: true
     number-sections: true
-    highlight-style: github
     lang: ja
-  docx:
-    toc: true
-    number-sections: true
-    highlight-style: github
   pdf:
     pdf-engine: lualatex
     documentclass: bxjsbook
-    classoption: [lualatex, ja=standard, 10pt, a4paper, textwidth-limit=50, openany]
-    toc: true
-    number-sections: true
+    classoption: [lualatex, ja=standard, 10pt, a4paper]
     mainfont: "Hiragino Sans"
-    keep-tex: true
 
 knitr:
   opts_chunk:
     dev: "ragg_png"
 EOF
 
-# 8. スタイルシート (styles.css) の作成
+# 9. スタイルシート (styles.css)
 cat << 'EOF' > styles.css
-/* Body & Typography */
-body {
-  font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", "Meiryo", sans-serif;
-  line-height: 1.9;
-  color: #2c3e50;
-  margin: 0;
-  padding: 0;
-  font-feature-settings: "palt";
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  margin-top: 2.5em;
-  margin-bottom: 1em;
-  color: #2c3e50;
-  line-height: 1.4;
-}
-
-h1 {
-  font-size: 2.4em;
-  border-bottom: 3px solid #3498db;
-  padding-bottom: 0.4em;
-  margin-bottom: 1.5em;
-}
-
-h2 {
-  font-size: 1.8em;
-  background-color: #f8f9fa;
-  border-left: 6px solid #e74c3c;
-  padding: 0.5em 0.8em;
-  border-radius: 0 4px 4px 0;
-}
-
-h3 {
-  font-size: 1.4em;
-  border-bottom: 1px dashed #bdc3c7;
-  padding-bottom: 0.3em;
-}
-
-p {
-  margin-bottom: 1.8em;
-  text-align: justify;
-}
-
-strong {
-  background: linear-gradient(transparent 70%, #f1c40f 70%);
-  padding: 0 2px;
-  font-weight: bold;
-}
-
-/* Links */
-a {
-  color: #2980b9;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  border-bottom: 1px dotted #2980b9;
-}
-
-a:hover {
-  color: #e74c3c;
-  border-bottom: 1px solid #e74c3c;
-}
-
-/* Blockquotes */
-blockquote {
-  border-left: 5px solid #95a5a6;
-  padding: 15px 25px;
-  margin: 30px 0;
-  background-color: #f4f6f7;
-  font-style: italic;
-  color: #555;
-  border-radius: 4px;
-}
-
-/* Code Blocks */
-pre {
-  background-color: #282c34;
-  color: #abb2bf;
-  border-radius: 6px;
-  padding: 20px;
-  overflow-x: auto;
-  font-size: 0.95em;
-  font-family: "Fira Code", Consolas, Monaco, monospace;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-code {
-  background-color: rgba(27, 31, 35, 0.05);
-  padding: 0.2em 0.4em;
-  border-radius: 3px;
-  color: #e74c3c;
-  font-family: "Fira Code", Consolas, Monaco, monospace;
-}
-
-pre code {
-  color: inherit;
-  background-color: transparent;
-  padding: 0;
-}
-
-/* Tables */
-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin: 3em 0;
-  box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-th, td {
-  padding: 15px 20px;
-  text-align: left;
-  border-bottom: 1px solid #eee;
-}
-
-th {
-  background-color: #34495e;
-  font-weight: bold;
-  color: #fff;
-  text-transform: uppercase;
-  font-size: 0.9em;
-  letter-spacing: 0.05em;
-}
-
-tr:nth-child(even) {
-  background-color: #fcfcfc;
-}
-
-tr:hover {
-  background-color: #f1f8ff;
-}
-
-/* Callouts (Quarto Specific) */
-.callout {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    border-radius: 6px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    border-left-width: 6px !important; 
-}
-
-/* Figures */
-figure {
-    margin: 3em 0;
-    text-align: center;
-}
-
-figcaption {
-    color: #7f8c8d;
-    font-size: 0.9em;
-    margin-top: 0.8em;
-    font-weight: 500;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 6px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
-
-img:hover {
-    transform: scale(1.01);
-}
+body { font-family: "Hiragino Sans", sans-serif; line-height: 1.9; color: #2c3e50; }
+h1 { border-bottom: 3px solid #3498db; }
+h2 { border-left: 6px solid #e74c3c; background: #f8f9fa; padding: 0.5em; }
 EOF
 
-echo "Economics Educational Environment initialized with Sora Persona."
+echo "Setup script updated with consolidated Sora workflow and text-editing skills."
